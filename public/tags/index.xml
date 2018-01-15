@@ -20,5 +20,14 @@
       <description></description>
     </item>
     
+    <item>
+      <title>Testing</title>
+      <link>https://example.org/tags/testing/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.org/tags/testing/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

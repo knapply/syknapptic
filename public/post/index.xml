@@ -6,10 +6,19 @@
     <description>Recent content in Posts on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 02 Oct 2013 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://example.org/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Test Post</title>
+      <link>https://example.org/2018/01/a-test-post/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.org/2018/01/a-test-post/</guid>
+      <description>Here’s a test post</description>
+    </item>
     
     <item>
       <title>中文測試</title>

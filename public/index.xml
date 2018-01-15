@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>A Test Post</title>
+      <link>https://example.org/2018/01/a-test-post/</link>
+      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.org/2018/01/a-test-post/</guid>
+      <description>Here’s a test post</description>
+    </item>
+    
+    <item>
       <title>Welcome</title>
       <link>https://example.org/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
