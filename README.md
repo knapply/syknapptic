@@ -1,0 +1,3 @@
+# syknapptic
+
+Personal Blog
