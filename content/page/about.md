@@ -11,7 +11,7 @@ thumbnailImage: /img/profile.jpg
 
 # About Me
 
-I'm Brendan, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, and analyst and am proud to have developed a reputation for masterfully herding cats. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
+I'm Brendan, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, master of cat-hearding. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
 
 I'm interested in bridging the gap between open source intelligence/security policy and modern, so-called Data Science. I initially began teaching myself the Python programming language in late 2016, but switched to R in early 2017 when a professional network analysis project required statistical libraries unavailable within the Python ecosystem. I presented that project (titled "Evaluating Institutional Coalescence with the Aid of Exponential Random Graph Models") at the 1st North American Social Networks Conference of the International Network of Social Network Analysis.
 
