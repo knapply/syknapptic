@@ -1,0 +1,13 @@
+---
+title: 'Nuclear Twitter: Part 1'
+author: Brendan Knapp
+date: '2018-01-16'
+slug: nuclear-twitter-part-1
+categories:
+  - Network Analysis
+tags:
+  - twitter
+  - rtweet
+---
+
+here's a test
