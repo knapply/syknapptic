@@ -203,11 +203,19 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "Google+"
     icon = "fa-google-plus"
     url = "https://plus.google.com/share?url=%s"
+    
+  [[menu.main]]
+  weight = 5
+  identifier = "about"
+  name = "About"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-question\"></i>"
+  # url = "/#about"
+  url = "/page/about/"
 
-  [params.header.rightLink]
-    class = ""
-    icon = ""
-    url = "/#about"
+  #[params.header.rightLink]
+  #  class = ""
+  #  icon = ""
+  #  url = "/#about"
 
   # Customize link of author avatar in sidebar
   # [params.sidebar.profile]
