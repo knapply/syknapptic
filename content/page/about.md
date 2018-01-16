@@ -11,7 +11,7 @@ thumbnailImage: /img/profile.jpg
 
 # About Me
 
-I'm Brendan, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, and analyst with a reputation for herding cats and making things happen. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
+I'm Brendan, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, and analyst and am proud to have developed a reputation for masterfully herding cats. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
 
 I'm interested in bridging the gap between open source intelligence/security policy and modern, so-called Data Science. I initially began teaching myself the Python programming language in late 2016, but switched to R in early 2017 when a professional network analysis project required statistical libraries unavailable within the Python ecosystem. I presented that project (titled "Evaluating Institutional Coalescence with the Aid of Exponential Random Graph Models") at the 1st North American Social Networks Conference of the International Network of Social Network Analysis.
 
@@ -37,9 +37,13 @@ These opportunities reignited an enthusiasm for teaching that I held as a noncom
 
 Additionally, I am a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included a special emphasis on the processing and analysis of remote sensing imagery, the mining of North Korean media, and exploration of potential avenues through which they can bolster their open-source intelligence research.
 
+# Some of my Research
+
+My experience in Afghanistan included a significant amount of time personally interacting with enemy combatants due to a combination of my role as a medic and previous Dari language training I had received. This experience has informed much of my personal research in the operational and social organization of paramilitary groups. As a student at MIIS, I have dedicated a great deal of time researchcing and dissecting the ecosystem of these organizations, with a special emphasis on Salafi jihadist groups operating in Syria. This experience has taught me a great deal about of the current state of affairs in the formal research of contemporary conflict and the how rigorous study of such a topic can be improved. I suspect this will be addressed in a series of blog posts down the road.
+
 # About this Blog
 
-I am interested in sharing the knowledge I have developed since beginning my journey in analytics and programming. After I started being asked if I had a blog with expanded explanations of some work I had shared with others, I decided it was time to start publishing work in a centralized venue. With that in mind, I finally started this site.
+I am interested in sharing the knowledge I have developed since beginning my journey in analytics and programming. After I started being asked if I had a blog with expanded explanations of some work I had shared with others, I decided it was time to start showcasing work in a centralized venue. With that in mind, I finally started this site.
 
 This content will showcase some of the analyses I have been working on for personal projects as well as some for professional projects when possible. I will also be incorporating lessons I have learned throughout my journey while attempting to illuminate the traps potentially encountered by others trying to take the plunge. I also hope to share insights and motivation that are as awesome as so much of the inspirational work I have seen from others. 
 
@@ -51,7 +55,7 @@ If you haven't guessed, _syknapptic_ is simply a morphological derivation of _sy
 
 # Other
 
-In my personal life, I've made California's beautiful Monterey Peninsula my second home where I feed another passion that has developed in recent years: motorcycles.
+In my personal life, I've made California's beautiful Monterey Peninsula my second home where my husband and I feed another passion that has developed in recent years: motorcycles.
 
 ![](/img/beach_bikes.jpg)
 
