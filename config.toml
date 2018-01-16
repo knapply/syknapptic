@@ -72,6 +72,14 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   name = "Archives"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
   url = "/archives"
+  
+ [[menu.main]]		
+  weight = 5		
+  identifier = "about"		
+  name = "About"		
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-question\"></i>"		
+  # url = "/#about"		
+  url = "/page/about/"
 
 
 [[menu.links]]
@@ -204,14 +212,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     icon = "fa-google-plus"
     url = "https://plus.google.com/share?url=%s"
     
-  [[menu.main]]
-  weight = 5
-  identifier = "about"
-  name = "About"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-question\"></i>"
-  # url = "/#about"
-  url = "/page/about/"
-
+    
   #[params.header.rightLink]
   #  class = ""
   #  icon = ""
