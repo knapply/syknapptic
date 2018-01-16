@@ -11,29 +11,31 @@ thumbnailImage: /img/profile.jpg
 
 # About Me
 
-I'm Brendan Knapp, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, and analyst with a reputation for herding cats and accomplishing tasks way beyond those expected. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
+I'm Brendan, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, and analyst with a reputation for herding cats and making things happen. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
 
-I'm interested in bridging the gap between national security analysis and the modern "Data Science" workflows more commonly seen in other academic fields. I initially began teaching myself the Python programming language in late 2016, but switched to R in early 2017 when a professional network analysis project required statistical tools and techniques unavailable within the Python ecosystem. I presented that project, titled "Evaluating Institutional Coalescence with the Aid of Exponential Random Graph Models" at the 1st North American Social Networks Conference of the International Network of Social Network Analysis.
+I'm interested in bridging the gap between open source intelligence/security policy and modern, so-called Data Science. I initially began teaching myself the Python programming language in late 2016, but switched to R in early 2017 when a professional network analysis project required statistical libraries unavailable within the Python ecosystem. I presented that project (titled "Evaluating Institutional Coalescence with the Aid of Exponential Random Graph Models") at the 1st North American Social Networks Conference of the International Network of Social Network Analysis.
 
 Since then, I have taken a deep dive into R across a broad array of topics that include: 
 
 * Network Analysis
 * Text Mining and Natural Language Processing
-* Geospatial Analysis
+* Spatial Analysis
 * Web Application Development
 * Data Visualization and Communication
 
-Much of my most recent work involves the analysis of remote sensing imagery.
+Much of my most recent work involves remote sensing imagery where I am starting to explore the applications of deep learning.
 
-I want to connect academic theory and professional practice, as well as help others do the same. My interest in data began with the desire to deliver the rigorous, data-driven, and reproducible work I was seeing in other fields to the domains of security policy and intelligence. That said, my interests have expanded to other domains as I have a grown as an analyst, coder, and person.
+# Working with the MIIS META Lab
 
-Along the way, I was fortunate enough to be hired as an analyst at MIIS's META Lab, a homegrown data analytics center where I am currently a Lead Research Coordinator. The position provides me the opportunity to teach analytical workshops to other graduate students as well as host office hours for those taking analytical classes, including quantitative, qualitative, geospatial, and network coursework. I also get to help any staff or faculty seeking guidance with their research, which has ranged from the structuring of financial compliance data to programmatic ballistic missile simulation.
+I was fortunate enough to be hired as an analyst at MIIS's META Lab, a homegrown data analytics center where I am currently a Lead Research Coordinator. To paraphrase a colleague, the META Lab is a "student-run consulting firm" bolstered by those MIIS professors teaching applied statistics courses for policy and econcomics. The position provides me the opportunity to teach analytical workshops to other graduate students as well as host office hours for those taking analytical classes, including quantitative, qualitative, geospatial, and network coursework. I also get to help any staff or faculty seeking guidance with their research, which has ranged from the structuring of financial flow data to programmatic ballistic missile simulation.
 
 One of the most exciting aspects of my work with the META Lab has been my role as a Teaching Assistant for a Network Analysis course which has included writing code to transition the course from GUI platforms to R. My personal affinity for networks has made helping other students discover just how cool they are has been an incredibly rewarding experience.
 
-Additionally, I am a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included a special emphasis on the processing and analysis of remote sensing imagery and mining of North Korean media.
-
 These opportunities reignited an enthusiasm for teaching that I held as a noncomissioned officer in the U.S. Army. Much of my responsibility as an NCO included the training and mentoring of the next generation of enlisted professionals. This was often the most rewarding part of my military experience and I'm grateful to rediscover it.
+
+# Working with MIIS's Center for Nonproliferation Studies
+
+Additionally, I am a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included a special emphasis on the processing and analysis of remote sensing imagery, the mining of North Korean media, and exploration of potential avenues through which they can bolster their open-source intelligence research.
 
 # About this Blog
 

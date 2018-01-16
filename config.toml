@@ -80,6 +80,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # url = "/#about"
   url = "/page/about/"
 
+
 [[menu.links]]
   weight = 1
   identifier = "github"
