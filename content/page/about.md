@@ -29,7 +29,7 @@ After being asked if I had a blog with expanded explanations of projects I have 
 
 I can't overstate how beneficial data science blogs, public repositories, and #Rstats community members have been for my own growth. With that in mind, I hope to provide a similar resource for anyone struggling. I'd like to offer the same sort of inspiration I felt when I first started exploring the work of others.
 
-I also want to continue to grow as a programmer and analyst. As a self-taught coder who started about a year ago (and whose work has been overwhelmingly individual) I'm looking forward to feedback, advice, and constructive criticism from those willing to offer it. 
+I also want to continue to grow as a programmer and analyst. As a self-taught coder who finally took the plunge into R in February 2017 (and whose work has been overwhelmingly individual) I'm looking forward to feedback, advice, and constructive criticism from those willing to offer it. 
 
 # About Me
 
