@@ -32,7 +32,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   archive = "archives"
 
 [author]
-  name = "<b>synaptic</b><br>Brendan Knapp"
+  name = "<b> synaptic </b> <br> Brendan Knapp"
   #bio = "Data and OSINT Ninjery <br> Paramilitaries, WMD, and Modern Conflict <br> Rstats <br> "
   bio = "OSINT <br> Network|Spatial|Text Analysis <br> Data Ninjery <br> R"
   job = "Data Analyst <br> Decision Enabler"
