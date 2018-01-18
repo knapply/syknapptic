@@ -48,7 +48,7 @@ Much of my most recent work has caused me to start looking at deep learning.
 
 ## Current Work
 
-I was fortunate enough to be hired as an analyst at MIIS's META Lab. To paraphrase a colleague, the META Lab is a "student-run, faculty-led, data consulting firm". The position provides me the opportunity to teach analytical workshops to other graduate students and hold office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their projects. This has ranged from the structuring of financial flow data to brainstorming programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's Network Analysis course.
+I was fortunate enough to be hired as an analyst at MIIS's META Lab. To paraphrase a colleague, the META Lab is a "student-run and faculty-led data consulting firm". The position provides me the opportunity to teach analytical workshops to other graduate students and hold office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their projects. This has ranged from the structuring of financial flow data to brainstorming programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's Network Analysis course.
 
 These opportunities have reignited an enthusiasm for teaching that I held as a noncommissioned officer. Much of my responsibility as an NCO included the training and mentoring of the next generation of enlisted professionals. This was often the most rewarding part of the job and I'm grateful to rediscover it.
 
@@ -56,7 +56,7 @@ I am also a research assistant at MIIS's Center for Nonproliferation Studies. Th
 
 ## Other Research
 
-My experience deployed to Afghanistan included a significant amount of time interacting with enemy combatants. I would actually argue that my exposure was greater than anyone else at this time as a result of my location, role as a medic, and some previous Dari language training. This experience has informed much of my personal research in the operational and social organization of paramilitary groups. As a student at MIIS, I have dedicated a great deal of time dissecting the ecosystem in which these organizations exist, with a special emphasis on Salafi jihadist groups operating in Syria.
+My experience deployed to Afghanistan included a significant amount of time interacting with enemy combatants. I would actually argue that my exposure was greater than anyone else at during that period as a result of my location, role as a medic, and some previous Dari language training. This experience has informed much of my personal research in the operational and social organization of paramilitary groups. As a student at MIIS, I have dedicated a great deal of time dissecting the ecosystem in which these organizations exist, with a special emphasis on Salafi jihadist groups operating in Syria.
 
 # syknapptic?
 
