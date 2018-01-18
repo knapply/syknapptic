@@ -9,53 +9,60 @@ thumbnailImage: /img/profile.jpg
 
 ![](/img/at_greenbeans.jpg)
 
+Hi, I'm Brendan. I'm interested in bridging the gap between national security analysis and data science.
+
+I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS). During my time at MIIS, I have focussed on data-driven analysis of topics spanning counterterrorism, hybrid conflict, CBRN, and threat finance.
+
+In the past, I worked as a security mangager, combat medic, noncommissioned officer, linguist, and herder of cats.
+
 # About this Blog
 
-I am interested in sharing the knowledge I have developed since beginning my journey in analytics and programming. After I started being asked if I had a blog with expanded explanations of some work I had shared with others, I decided it was time to start showcasing work in a centralized venue. With that in mind, I finally started this site.
+![](/img/logo_small.png)
 
-This content will showcase some of the analyses I have been working on for personal projects as well as some for professional projects when possible. I will also be incorporating lessons I have learned throughout my journey while attempting to illuminate the traps potentially encountered by others trying to take the plunge. I also hope to share insights and motivation that are as awesome as so much of the inspirational work I have seen from others. 
+This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.
 
-The data sets will focus on issues either directly related (or tangentially relevant) to international security issues. As you might imagine, these data are not typically easy to find, access, or actually use, so I expect many of the posts to focus on data discovery and the process of transforming raw information into a structured format suitable for analysis. That said, I anticipate meandering departures into other topics.
+The topics will address issues that I (hesitantly) describe as open-source intelligence, along with inevitable depatures into various other areas. I also plan to have code-specific discussion.
+
+## Motivation
+
+After being asked if I had a blog with expanded explanations of projects I have discussed, I decided it was time to bite the bullet and start sharing.
+
+I can't overstate how beneficial data science blogs, public repositories, and #Rstats community members have been for my own growth. With that in mind, I hope to provide a similar resource for anyone struggling. I'd like to offer the same sort of inspiration I felt when I first started exploring the work of others.
+
+I also want to continue to grow as a programmer and analyst. As a self-taught coder who started about a year ago (and whose work has been overwhelmingly individual) I'm looking forward to feedback, advice, and constructive criticism from those willing to offer it. 
 
 # About Me
 
-I'm Brendan, a graduate student and analyst specializing in WMD, terrorism, and other security issues who discovered a passion for analytics and coding. In the past, I worked as a combat medic, Arabic linguist, and master of cat-herding. I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS).
+## Data Areas of Interest
 
-I'm interested in bridging the gap between security analysis and modern data analytics. I initially began teaching myself the Python programming language in late 2016, but switched to R in early 2017 when a professional network analysis project with one of my professors required statistical libraries unavailable within the Python ecosystem. I presented that project (titled "Evaluating Institutional Coalescence with the Aid of Exponential Random Graph Models") at the 1st North American Social Networks Conference of the International Network of Social Network Analysis.
+I started my journey in data-centric analysis by taking a dive into Network Analysis, a topic that continues to deeply resonate with me. I was even very fortunate to have the opportunity to present a research project titled "Evaluating Institutional Coalescence with the Use of Exponential Random Graph Models" at the 1st North American Social Networks Conference in July 2017. 
 
-Since then, I have taken a deep dive into R across a broad array of topics that include: 
+Since that time, I have expanded to an array of others areas, including:
 
-* Network Analysis
 * Text Mining and Natural Language Processing
 * Spatial Analysis
-* Web Application Development
 * Data Visualization and Communication
+* Web Application Development
 
-Much of my most recent work involves remote sensing imagery where I am starting to explore the applications of deep learning.
+Much of my most recent work has caused me to start looking at deep learning.
 
-# Working with the MIIS META Lab
+## Current Work
 
-I was fortunate enough to be hired as an analyst at MIIS's META Lab, a homegrown data analytics center where I am currently a Lead Research Coordinator. To paraphrase a colleague, the META Lab is a "student-run consulting firm" bolstered by MIIS professors who specialize in applied quantitative topics. The position provides me the opportunity to teach analytical workshops to other graduate students and host office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their research, which has ranged from the structuring of financial flow data to programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's network analysis course.
+I was fortunate enough to be hired as an analyst at MIIS's META Lab. To paraphrase a colleague, the META Lab is a "student-run, faculty-led, data consulting firm". The position provides me the opportunity to teach analytical workshops to other graduate students and hold office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their projects. This has ranged from the structuring of financial flow data to brainstorming programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's Network Analysis course.
 
-These opportunities have reignited an enthusiasm for teaching that I held as a noncommissioned officer. Much of my responsibility as an NCO included the training and mentoring of the next generation of enlisted professionals. This was often the most rewarding part of my military experience and I'm grateful to rediscover it.
+These opportunities have reignited an enthusiasm for teaching that I held as a noncommissioned officer. Much of my responsibility as an NCO included the training and mentoring of the next generation of enlisted professionals. This was often the most rewarding part of the job and I'm grateful to rediscover it.
 
-# Working with MIIS's Center for Nonproliferation Studies
+I am also a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included a special emphasis on the processing and analysis of remote sensing imagery along with the mining of North Korean media.
 
-Additionally, I am a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included a special emphasis on the processing and analysis of remote sensing imagery, the mining of North Korean media, and exploration of potential avenues to augment their research.
+## Other Research
 
-# Some of my Research
-
-My experience in Afghanistan included a significant amount of time personally interacting with enemy combatants, resulting from a combination of my role as a medic and previous Dari language training I had received. This experience has informed much of my personal research in the operational and social organization of paramilitary groups. As a student at MIIS, I have dedicated a great deal of time dissecting the ecosystem in which these organizations exist, with a special emphasis on Salafi jihadist groups operating in Syria.
+My experience deployed to Afghanistan included a significant amount of time interacting with enemy combatants. I would actually argue that my exposure was greater than anyone else at this time as a result of my location, role as a medic, and some previous Dari language training. This experience has informed much of my personal research in the operational and social organization of paramilitary groups. As a student at MIIS, I have dedicated a great deal of time dissecting the ecosystem in which these organizations exist, with a special emphasis on Salafi jihadist groups operating in Syria.
 
 # syknapptic?
 
-If you haven't guessed, _syknapptic_ is simply a morphological derivation of _synaptic_, as in __relating to a synapse__, which includes my last name. __They are the telephone lines of the nervous system that permit the transfer of information and provide an elegant analogy for connecting systems, communicating ideas, and bridging gaps between worlds and methodologies.__
+If you haven't guessed, _syknapptic_ is derived from _synaptic_.
 
-# Other
 
-In my personal life, I've made California's Monterey Peninsula my second home where my husband and I feed another passion that has developed in recent years: motorcycles.
-
-![](/img/beach_bikes.jpg)
 
 ---
 
