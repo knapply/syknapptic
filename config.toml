@@ -15,7 +15,7 @@
 baseURL = "/"
 languageCode = "en-us"
 defaultContentLanguage = "en-us"
-title = "@syknapptic"
+title = "syknapptic"
 theme = "hugo-tranquilpeak-theme"
 disqusShortname = "syknapptic"
 googleAnalytics = "UA-111554256-2"
