@@ -21,7 +21,7 @@ In the past, I worked as a security manager, combat medic, noncommissioned offic
 
 This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.
 
-The topics will address issues that I (hesitantly) describe as open-source intelligence, along with inevitable depatures into various other areas. I also plan to have code-specific discussion.
+The topics will address issues that are probably best described as open-source intelligence, along with inevitable depatures into various other areas and code-specific discussion.
 
 ## Motivation
 
