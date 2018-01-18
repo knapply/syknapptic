@@ -13,7 +13,7 @@ Hi, I'm Brendan. I'm interested in bridging the gap between national security an
 
 I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS). During my time at MIIS, I have focussed on data-driven analysis of topics spanning counterterrorism, hybrid conflict, CBRN, and threat finance.
 
-In the past, I worked as a security mangager, combat medic, noncommissioned officer, linguist, and herder of cats.
+In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.
 
 # About this Blog
 
