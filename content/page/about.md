@@ -23,7 +23,7 @@ In the past, I worked as a security manager, combat medic, noncommissioned offic
 
 This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.
 
-The topics will seek to address the interests of two audiences that are essentially distinct: those with an interest in data analysis (R enthusiasts in particular) and those interested in open-source intelligence. 
+The topics will seek to address the interests of two audiences that are oftentimes more distinct than I'd like: those with an interest in data analysis (R enthusiasts in particular) and those interested in open-source intelligence. 
 
 ## Motivation
 
@@ -46,13 +46,13 @@ Since that time, I have expanded to an array of others areas, including:
 * Data Visualization and Communication
 * Application Development
 
-## Current Work
+## Recent Work
 
 I am currently working at MIIS's META Lab. To paraphrase a colleague, the META Lab is a "student-run and faculty-led data consulting firm". The position provides me the opportunity to teach analytical workshops to other graduate students and hold office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their projects. This has ranged from the structuring of financial flow data, to extracting and formatting Ukrainian elections results, to brainstorming programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's Network Analysis course.
 
 These opportunities have reignited an enthusiasm for teaching that I held as a noncommissioned officer. Much of my responsibility as an NCO included the training and mentoring of the next generation of enlisted professionals. This was often the most rewarding part of the job and I'm grateful to rediscover it.
 
-I am also a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included a special emphasis on the processing and analysis of remote sensing imagery along with the mining of North Korean media.
+I am also a research assistant at MIIS's Center for Nonproliferation Studies. There, I support senior researchers in WMD-specific projects. This has included an emphasis on the processing and analysis of remote sensing imagery along with the mining of North Korean media.
 
 ## Other Research
 
