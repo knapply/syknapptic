@@ -136,6 +136,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   hierarchicalCategories = true
 
   description = "A blog on OSINT, Data Ninjery, and R."
+  Description = "A blog on OSINT, Data Ninjery, and R."
+
 
   # Customization
   # Define the behavior of the sidebar
