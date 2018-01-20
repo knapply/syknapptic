@@ -19,7 +19,7 @@ In the past, I worked as a security manager, combat medic, noncommissioned offic
 
 # About this Blog
 
-![](/img/logo_small.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png)
 
 This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.
 
