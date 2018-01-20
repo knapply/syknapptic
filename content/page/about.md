@@ -23,7 +23,7 @@ In the past, I worked as a security manager, combat medic, noncommissioned offic
 
 This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.
 
-The topics will seek to address the interests of two audiences that are essentially distinct: those with an interest in data analysis (in particular R enthusiasts) and those interested in open-source intelligence. 
+The topics will seek to address the interests of two audiences that are essentially distinct: those with an interest in data analysis (R enthusiasts in particular) and those interested in open-source intelligence. 
 
 ## Motivation
 
