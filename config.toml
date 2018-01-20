@@ -22,6 +22,7 @@ googleAnalytics = "UA-111554256-2"
 paginate = 7
 canonifyurls = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+description = "A blog on OSINT, R, and Data Ninja Wisdom."
 
 [permalinks]
   post = "/:year/:month/:slug/"
