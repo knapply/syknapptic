@@ -4,7 +4,7 @@ date: 2018-01-15
 comments:       false
 showMeta:       false
 showActions:    false
-thumbnailImage: /img/profile.jpg
+thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png
 ---
 
 ![](/img/at_greenbeans.jpg)
