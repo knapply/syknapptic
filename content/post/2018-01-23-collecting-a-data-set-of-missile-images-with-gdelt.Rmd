@@ -1,5 +1,6 @@
 ---
-title: Collecting a Data Set of Missile Images with GDELT
+title: GDELT, Missiles, and Image Collection
+draft: false
 author: Brendan Knapp
 date: '2018-01-23'
 slug: collecting-a-data-set-of-missile-images-with-gdelt
@@ -9,6 +10,7 @@ categories:
   - missiles
 tags:
   - gdelt
+thumbnailImagePosition: left
 thumbnailImage: /img/logo_extra_small.png
 coverImage: /img/logo_small.png
 metaAlignment: center
@@ -19,18 +21,8 @@ The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltp
 
 The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database's capabilities are notably absent...
 
-
-
-
-
-
-
-
-
-
-
 <br>
-<br>
+
 
 See:
 
