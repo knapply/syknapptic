@@ -11,7 +11,8 @@ categories:
 tags:
   - gdelt
 thumbnailImagePosition: left
-thumbnailImage: /img/logo_extra_small.png
+thumbnailImage: https://hadoopi.files.wordpress.com/2014/09/screen-shot-2014-09-24-at-20-55-34.png
+# thumbnailImage: /img/logo_extra_small.png
 # coverImage: /img/logo_small.png
 metaAlignment: center
 coverMeta: out
