@@ -15,7 +15,7 @@ thumbnailImage: /img/logo_extra_small.png
 # coverImage: /img/logo_small.png
 metaAlignment: center
 coverMeta: out
-description: Exploring automated, bulk collection of missile images through GDELT.
+summary: Exploring automated, bulk collection of missile images through GDELT.
 ---
 
 The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltproject.org/2), is "a realtime network diagram and database of global human society for open research".
