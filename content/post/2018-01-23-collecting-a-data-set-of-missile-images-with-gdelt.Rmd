@@ -22,6 +22,8 @@ The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltp
 
 The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database's capabilities are notably absent...
 
+<br>
+
 
 See:
 
