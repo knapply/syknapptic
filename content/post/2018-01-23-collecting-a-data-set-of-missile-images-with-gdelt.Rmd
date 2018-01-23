@@ -1,0 +1,85 @@
+---
+title: Collecting a Data Set of Missile Images with GDELT
+author: Brendan Knapp
+date: '2018-01-23'
+slug: collecting-a-data-set-of-missile-images-with-gdelt
+categories:
+  - GDELT
+  - data discovery
+  - missiles
+tags:
+  - gdelt
+---
+
+The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltproject.org/2), is "a realtime network diagram and database of global human society for open research".
+
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database's capabilities are notably absent. 
+
+See:
+
+* Foreign Policy's 2013 article [_How Well Does GDELT Follow Events in Syria?_](http://foreignpolicy.com/2013/07/09/how-well-does-gdelt-follow-events-in-syria/)
+* My __hasty__ walkthrough from November 2017, [_Evaluating GDELT: Syrian Conflict_](http://rpubs.com/BrendanKnapp/GDELT_Syrian_Conflict)
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+
+```{r}
+library(tidyverse)
+library(gdeltr2) # devtools::install_github("abresler/gdeltr2")
+library(trelliscopejs) # devtools::install_github("hafen/trelliscopejs")
+```
+
+
+
+```{r}
+search_terms <- "missile"
+
+langs <- get_gdelt_codebook_ft_api(code_book = "languages") %>%
+  pull(value)
+
+theme_regex <- c("nuclear", "missile", "wmd", "bomb") %>%
+  str_to_upper() %>%
+  str_c(collapse = "|")
+
+
+
+```
+
+
+```{r}
+# gkg_themes <- get_gdelt_codebook_ft_api(code_book = "gkg") %>%
+#   select(idGKGTheme, isMilitaryEvent, isCriminalEvent) %>%
+#   filter(str_detect(idGKGTheme, theme_regex)) %>%
+#   pull(idGKGTheme)
+# 
+# 
+# gdelt_mentions <- get_data_ft_v2_api(terms = search_terms,
+#                                      gkg_themes = gkg_themes,
+#                                      search_language = langs,
+#                                      visualize_results = FALSE)
+
+knitr::include_graphics("http://assets.nydailynews.com/polopoly_fs/1.3300193.1499184520!/img/httpImage/image.jpg_gen/derivatives/article_750/north-korea-koreas-tensions.jpg")
+```
+
+
+
+
+
+
+
+
+```{r}
+devtools::session_info()
+```
+
+
+
+
+
+
+
+
+
