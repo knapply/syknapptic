@@ -10,8 +10,6 @@ categories:
 tags:
   - gdelt
 thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png
-metaAlignment: center
-coverMeta: out
 ---
 
 
