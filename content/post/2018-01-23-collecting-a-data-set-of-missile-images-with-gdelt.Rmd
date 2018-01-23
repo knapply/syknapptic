@@ -2,6 +2,10 @@
 title: Collecting a Data Set of Missile Images with GDELT
 author: Brendan Knapp
 date: '2018-01-23'
+output:
+  blogdown::html_page:
+    toc: true
+    fig_width: 6
 slug: collecting-a-data-set-of-missile-images-with-gdelt
 categories:
   - GDELT
