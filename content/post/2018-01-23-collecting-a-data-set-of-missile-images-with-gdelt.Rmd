@@ -11,6 +11,8 @@ tags:
   - gdelt
 ---
 
+![](http://res.cloudinary.com/syknapptic/image/upload/v1516051268/sidebar_nmse27.png)
+
 The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltproject.org/2), is "a realtime network diagram and database of global human society for open research".
 
 The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database's capabilities are notably absent. 
@@ -71,9 +73,7 @@ knitr::include_graphics("http://assets.nydailynews.com/polopoly_fs/1.3300193.149
 
 
 
-```{r}
-devtools::session_info()
-```
+
 
 
 
