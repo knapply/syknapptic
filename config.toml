@@ -137,6 +137,8 @@ description = "A blog on OSINT, R, and Data Ninja Wisdom."
   hierarchicalCategories = true
 
   description = "a blog on OSINT, R, and Data Ninja Wisdom"
+  
+  summary_length = 100
 
   # Customization
   # Define the behavior of the sidebar
