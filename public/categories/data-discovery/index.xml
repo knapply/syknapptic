@@ -1,28 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Data Discovery on syknapptic</title>
-    <link>https://syknapptic.netlify.com/categories/data-discovery/</link>
-    <description>Recent content in Data Discovery on syknapptic</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jan 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://syknapptic.netlify.com/categories/data-discovery/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
-      <description>The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”.
-The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
-
-See:
-Foreign Policy’s 2013 article How Well Does GDELT Follow Events in Syria?My hasty walkthrough from November 2017, Evaluating GDELT: Syrian Conflictlibrary(tidyverse)library(gdeltr2) # devtools::install_github(&amp;quot;abresler/gdeltr2&amp;quot;)library(trelliscopejs) # devtools::install_github(&amp;quot;hafen/trelliscopejs&amp;quot;)search_terms &amp;lt;- &amp;quot;missile&amp;quot;langs &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;languages&amp;quot;) %&amp;gt;%pull(value)theme_regex &amp;lt;- c(&amp;quot;nuclear&amp;quot;, &amp;quot;missile&amp;quot;, &amp;quot;wmd&amp;quot;, &amp;quot;bomb&amp;quot;) %&amp;gt;%str_to_upper() %&amp;gt;%str_c(collapse = &amp;quot;|&amp;quot;)# gkg_themes &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;gkg&amp;quot;) %&amp;gt;%# select(idGKGTheme, isMilitaryEvent, isCriminalEvent) %&amp;gt;%# filter(str_detect(idGKGTheme, theme_regex)) %&amp;gt;%# pull(idGKGTheme)# # # gdelt_mentions &amp;lt;- get_data_ft_v2_api(terms = search_terms,# gkg_themes = gkg_themes,# search_language = langs,# visualize_results = FALSE)knitr::include_graphics(&amp;quot;http://assets.</description>
-    </item>
-    
-  </channel>
-</rss>
