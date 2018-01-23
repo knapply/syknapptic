@@ -9,9 +9,11 @@ categories:
   - missiles
 tags:
   - gdelt
+thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png
+metaAlignment: center
+coverMeta: out
 ---
 
-![](/img/logo_small.jpg)
 
 The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltproject.org/2), is "a realtime network diagram and database of global human society for open research".
 
