@@ -35,13 +35,13 @@
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/categories/gdelt/</loc>
+    <loc>https://syknapptic.netlify.com/categories/image-analysis/</loc>
     <lastmod>2018-01-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/categories/missiles/</loc>
+    <loc>https://syknapptic.netlify.com/tags/imager/</loc>
     <lastmod>2018-01-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -54,6 +54,12 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/post/</loc>
+    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://syknapptic.netlify.com/tags/purrr/</loc>
     <lastmod>2018-01-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

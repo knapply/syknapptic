@@ -1,27 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Gdelt on syknapptic</title>
-    <link>https://syknapptic.netlify.com/categories/gdelt/</link>
-    <description>Recent content in Gdelt on syknapptic</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jan 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://syknapptic.netlify.com/categories/gdelt/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
-      <description>----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
-The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
-See also:
-My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of missile images, ballistic missiles specifically, using a combination of packages:</description>
-    </item>
-    
-  </channel>
-</rss>

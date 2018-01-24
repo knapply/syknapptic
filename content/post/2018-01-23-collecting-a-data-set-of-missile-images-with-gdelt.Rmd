@@ -5,11 +5,12 @@ author: Brendan Knapp
 date: '2018-01-23'
 slug: collecting-a-data-set-of-missile-images-with-gdelt
 categories:
-  - GDELT
   - data discovery
-  - missiles
+  - image analysis
 tags:
-  - gdelt
+  - GDELT
+  - purrr
+  - imager
 thumbnailImagePosition: left
 thumbnailImage: https://hadoopi.files.wordpress.com/2014/09/screen-shot-2014-09-24-at-20-55-34.png
 # thumbnailImage: /img/logo_extra_small.png
@@ -39,20 +40,20 @@ See also:
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-Let's see how well we can scoop up a set of missile images, ballistic missiles specifically, using a combination of packages:
+Let's see how well we can scoop up a set of ballistic missile images using a combination of packages:
 
-* `gdeltr2`: a package that is decidedly buggy, but works for our purposes
+* `gdeltr2`: a package that is decidedly buggy, but works for these purposes
 * `tidyverse` suite:
     + `dplyr` for data carpentry
     + `stringr` for string processing
-    + `purrr` for functional enhancements and simple error-handling
+    + `purrr` for functional enhancements and simplified error-handling
 * `DT` for nicely rendered tabular data
 * `imager` for slick image processing tools
 
 ```{r}
 library(gdeltr2)       # devtools::install_github("abresler/gdeltr2")
 library(tidyverse)     # install.packages("tidyverse")
-library(DT)            # install.packages("DT")
+library(knitr)
 library(imager)        # install.packages("tidyverse")
 ```
 
@@ -61,14 +62,17 @@ Before we start extracting any data, let's refine our search as much as possible
 GDELT uses a set of codebooks that can be referenced with `get_gdelt_codebook_ft_api()`.
 
 # Query Variables
-## Languages
-    + `gdeltr2` will only query English articles by default, but we don't really care about the language of the article or even the article text
 
-We'll `pull()` all the languages from `code_book = "languages"` into a `vector` variable we can use as a search argument like so:
+## Languages
+
+`gdeltr2` will only query English articles by default, but we don't really care about the language of the article or even the article text
+
+We'll `pull()` all the languages from `code_book = "languages"` into a `vector` variable that we can use as a search argument like so:
 
 ```{r}
 langs <- get_gdelt_codebook_ft_api(code_book = "languages") %>%
   pull(value)
+
 langs
 ```
 
@@ -78,10 +82,12 @@ Since we're looking specifically for imagery, we can query the relevant codebook
 
 ```{r}
 get_gdelt_codebook_ft_api(code_book = "imagetags") %>%
-  DT::datatable(options = list(pageLength = 5))
+  head() %>%
+  kable()
 
 get_gdelt_codebook_ft_api(code_book = "imageweb") %>%
-  DT::datatable(options = list(pageLength = 5))
+  head() %>%
+  kable()
 ```
 
 We'll `filter()` the tags to retain only those that explicitly reference "missile" with a regex.
@@ -100,7 +106,8 @@ bind_rows(
     filter(str_detect(idImageWeb, tag_regex),
            !str_detect(idImageWeb, "\\d{2,}"))
   ) %>%
-  DT::datatable()
+  head() %>%
+  kable()
 ```
 
 We'll refine our results by excluding some of the tags that have a tendency to return less relevant images.
@@ -115,7 +122,7 @@ We'll refine our results by excluding some of the tags that have a tendency to r
     + _S-300 missile system_
     + _S-400 missile system_
     + _Buk missile system_
-* generalized _Surface-to-`"air"`_ doesn't seem "loose" enough to ever reference ballistic missiles
+* generalized _Surface-to-`"air"`_ doesn't seem fuzzy enough to ever reference ballistic missiles
 
 We'll use another regex to omit those tags, including the multiple digit regex used to exclude the buggy data that may leak into our results.
 
@@ -178,6 +185,8 @@ articles_df <- read_rds("data/GDELT_iran_parade.rds")
 
 ## Query Results
 
+Here's a summary of what we get back.
+
 ```{r}
 articles_df %>% 
   glimpse()
@@ -192,11 +201,10 @@ Now that we have a data frame of articles that includes a column of image URLs, 
 Let's assign a variable for our `dir`ectory.
 
 ```{r}
-# setwd("C:/Users/Windows/Documents/syknapptic/")
 dir <- "data/missile_images/"
 ```
 
-Then we'll actually create the directory.
+Then we'll actually create the `dir`ectory.
 
 ```{r eval=FALSE}
 dir.create(dir)
@@ -225,14 +233,12 @@ safe_plot <- safely(plot)
 
 ## Download Images
 
-Steps:
-
 1. `filter()`  images using a regex that confirms either a .jpg or .png extension and simultaneously validates a URL sequence that we can use for each image's eventual file path.
-2. select 100 random rows `sample_n(100)`
+2. select a sample of 100 random rows `sample_n(100)`
 3. `pull()` the `urlImage` column into a vector
-4. iterate (`walk()`) through each item of the vector
+4. iterate through each item of the vector with `walk()`
     + `safe_download()` each image's binary format (`mode = "wb"`)
-        + and write it to `dir` using its `valid_path_regex`
+        + and write it to `dir` using its match to `valid_path_regex`
 
 ```{r eval=FALSE}
 valid_path_regex <- "/[A-z0-9-_]+\\.(jpg|png)$"
@@ -253,31 +259,34 @@ articles_df %>%
 
 Let's insepct a sample of the downloaded images.
 
-Steps:
+Clearly the results are not perfect. There are images without anything resembling a missile as well as several duplicate or near-duplicate images. That said, manual renaming of files will allow filtering of useless images.
+
+This is a quick proof of concept that sets us up well for enhancing data sets established through other methods.
+
+More importantly,it demonstrates a basic workflow for bulk image processing that can be easily expanded to iteratively prepare a large dataset for many kinds of analyis.
+
+We can take a look at our results with the following:
 
 1. `list.files()` the full paths of all the files in `dir`
 2. iterate through the resulting `vector`, reading each file with `safe_image()` and `map()`ping the results to a `list`
-3. Select 10 `sample()`s
 3. remove a layer of the `list` hierarchy by `flatten()`ing it
 4. omit any resulting `NULL` values by `compact()`ing the list
 5. `walk()` through the list, plotting each image
 
 ```{r fig.height=8, fig.width=12}
-par(mfrow = c(2, 2))
+par(mfrow = c(1, 2))
 
 list.files(dir, full.names = TRUE) %>%
   map(safe_image) %>%
-  sample(10) %>%
   flatten() %>%
   compact() %>%
   walk(~ 
          safe_plot(.x, 
-                   asp = 0,
                    axes = FALSE, ann = FALSE)
-       ); dev.off()
+       )
 ```
 
-Clearly the results are not perfect. There are images without anything resembling a missile as well as near duplicate images. That said, we can manually name files in such a way to omit those that are not useful.
+
 
 
 
