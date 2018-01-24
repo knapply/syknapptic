@@ -48,7 +48,7 @@ Since that time, I have expanded to an array of others areas, including:
 
 ## Recent Work
 
-I am currently working at MIIS's META Lab. To paraphrase a colleague, the META Lab is a "student-run and faculty-led data consulting firm". The position provides me the opportunity to teach analytical workshops to other graduate students and hold office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their projects. This has ranged from the structuring of financial flow data, to extracting and formatting Ukrainian elections results, to brainstorming programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's Network Analysis course.
+I am currently the Lead Analytic Coordinator of MIIS's META Lab. To paraphrase a colleague, the META Lab is a "student-run and faculty-led data consulting firm". The position provides me the opportunity to teach analytical workshops to other graduate students and hold office hours for those taking quantitative analysis classes. I also get to help any staff or faculty seeking guidance with their projects. This has ranged from the structuring of financial flow data, to extracting and formatting Ukrainian elections results, to brainstorming programmatic ballistic missile simulation. I also work as the Teaching Assistant for MIIS's Network Analysis course.
 
 These opportunities have reignited an enthusiasm for teaching that I held as a noncommissioned officer. Much of my responsibility as an NCO included the training and mentoring of the next generation of enlisted professionals. This was often the most rewarding part of the job and I'm grateful to rediscover it.
 
