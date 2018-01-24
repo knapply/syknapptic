@@ -1,38 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>syknapptic</title>
-    <link>https://syknapptic.netlify.com/</link>
-    <description>Recent content on syknapptic</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jan 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://syknapptic.netlify.com/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
-      <description>----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
-The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
-See also:
-My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</description>
-    </item>
-    
-    <item>
-      <title>Welcome</title>
-      <link>https://syknapptic.netlify.com/page/about/</link>
-      <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/page/about/</guid>
-      <description>Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in developing the data-driven insights required to fully enable decision makers.
-My primary focus has been national security policy, but considering the interdisciplinary nature of such a topic, I am constantly exploring other fields.
-I&amp;rsquo;m currently finishing up a Master&amp;rsquo;s degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS). During my time at MIIS, I have focused on the fusion of quantitative methods with subject matter expertise in topics spanning hybrid conflict, terrorism, insurgency, CBRN, and threat finance.</description>
-    </item>
-    
-  </channel>
-</rss>

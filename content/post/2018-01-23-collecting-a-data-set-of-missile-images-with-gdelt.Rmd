@@ -47,7 +47,7 @@ Let's see how well we can scoop up a set of ballistic missile images using a com
     + `dplyr` for data carpentry
     + `stringr` for string processing
     + `purrr` for functional enhancements and simplified error-handling
-* `DT` for nicely rendered tabular data
+* `knitr` for nicely rendered tabular data
 * `imager` for slick image processing tools
 
 ```{r}
@@ -271,15 +271,17 @@ We can take a look at our results with the following:
 2. iterate through the resulting `vector`, reading each file with `safe_image()` and `map()`ping the results to a `list`
 3. remove a layer of the `list` hierarchy by `flatten()`ing it
 4. omit any resulting `NULL` values by `compact()`ing the list
+5. subset a `sample()` of half the images, just for demonstration
 5. `walk()` through the list, plotting each image
 
-```{r fig.height=8, fig.width=12}
-par(mfrow = c(1, 2))
+```{r fig.height=20, fig.width=12}
+par(mfrow = c(5, 2))
 
 list.files(dir, full.names = TRUE) %>%
   map(safe_image) %>%
   flatten() %>%
   compact() %>%
+  sample(50) %>%
   walk(~ 
          safe_plot(.x, 
                    axes = FALSE, ann = FALSE)
