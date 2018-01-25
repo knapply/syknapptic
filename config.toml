@@ -22,7 +22,6 @@ googleAnalytics = "UA-111554256-2"
 paginate = 7
 canonifyurls = true
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
-description = "A blog on OSINT, R, and Data Ninja Wisdom."
 
 [permalinks]
   post = "/:year/:month/:slug/"
@@ -35,7 +34,7 @@ description = "A blog on OSINT, R, and Data Ninja Wisdom."
 [author]
   name = "Brendan Knapp"
   #bio = "Data and OSINT Ninjery <br> Paramilitaries, WMD, and Modern Conflict <br> Rstats <br> "
-  bio = "OSINT <br> R <br (Network|Spatial|Data) Analysis <br> Data Ninjery"
+  bio = "OSINT <br> R <br \(Network|Spatial|Data\) Analysis <br> Data Ninjery"
   job = "Data Analyst <br> Decision Enabler"
   location = "California"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
