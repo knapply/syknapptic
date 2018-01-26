@@ -19,7 +19,7 @@ Hi, I'm Brendan. I'm interested in developing the data-driven insights required 
 
 My primary focus has been national security policy, but considering the interdisciplinary nature of such a topic, I am constantly exploring other fields.
 
-I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS). During my time at MIIS, I have focused on the fusion of quantitative methods with subject matter expertise in topics spanning hybrid conflict, terrorism, insurgency, CBRN, and threat finance.
+I'm currently finishing up a Master's degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS). During my time at MIIS, I have focused on the fusion of quantitative methods with rich domain knowledge in topics spanning hybrid conflict, terrorism, insurgency, WMD, and threat finance.
 
 In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.
 
