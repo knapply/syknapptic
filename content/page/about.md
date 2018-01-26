@@ -7,6 +7,12 @@ showActions:    false
 thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png
 ---
 
+<style>
+    body .main-container {
+        max-width: 700px;
+    }
+</style>
+
 ![](/img/at_greenbeans.jpg)
 
 Hi, I'm Brendan. I'm interested in developing the data-driven insights required to fully enable decision makers.
