@@ -2,21 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>syknapptic</title>
-    <link>https://syknapptic.netlify.com/</link>
+    <link>https://syknapptic.com/</link>
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://syknapptic.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>My Shiny Apps</title>
+      <link>https://syknapptic.com/page/shiny/</link>
+      <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.com/page/shiny/</guid>
+      <description>recon : Really Convenient Spatial Data
+ Search for locations by class or with a fuzzy name matching gazetteer.  Deep Learning Image Classifier
+ TensorFlow-powered image classification.  North Korea Threat Finance Explorer
+ A tool to facilitate access to DPRK sanctions data.  </description>
+    </item>
+    
+    <item>
+      <title>Tidyverse: Getting Your Feet Wet</title>
+      <link>https://syknapptic.com/2018/03/tidyverse-getting-your-feet-wet/</link>
+      <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.com/2018/03/tidyverse-getting-your-feet-wet/</guid>
+      <description>I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other languages, but it was the first time that the majority of participants had written a single line of code.
+In preparation for this workshop series, I found a lot of inspiration in Michael Levy’s presentation on teaching R, which itself echoes principles preached by other R advocates.</description>
+    </item>
+    
+    <item>
       <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
+      <link>https://syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
+      <guid>https://syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
       <description>----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
 The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
 See also:
@@ -25,13 +47,13 @@ See also:
     
     <item>
       <title>Welcome</title>
-      <link>https://syknapptic.netlify.com/page/about/</link>
+      <link>https://syknapptic.com/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/about/</guid>
-      <description>Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in developing the data-driven insights required to fully enable decision makers.
-My primary focus has been national security policy, but considering the interdisciplinary nature of such a topic, I am constantly exploring other fields.
-I&amp;rsquo;m currently finishing up a Master&amp;rsquo;s degree in Nonproliferation and Terrorism Studies at the Middlebury Institute of International Studies (MIIS). During my time at MIIS, I have focused on the fusion of quantitative methods with subject matter expertise in topics spanning hybrid conflict, terrorism, insurgency, CBRN, and threat finance.</description>
+      <guid>https://syknapptic.com/page/about/</guid>
+      <description>body .main-container { max-width: 700px; }  Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in developing the data-driven insights required to fully enable decision makers.
+Topically, I primarily focus on national security policy, but considering the interdisciplinary nature of such a topic, I am constantly exploring other fields.
+In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats. When I finally returned to formal academia, I developed a love for data analysis and programming.</description>
     </item>
     
   </channel>

@@ -1,5 +1,6 @@
 ---
 title: 'Tidyverse: Getting Your Feet Wet'
+draft: false
 author: Brendan Knapp
 date: '2018-03-15'
 slug: tidyverse-getting-your-feet-wet
