@@ -63,18 +63,13 @@ library(kableExtra)
 
 # Workflow
 
-```{r echo=FALSE}
-include_graphics("workflow_2.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow_2.png)
+
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow.png)
 
 
-```{r echo=FALSE}
-include_graphics("workflow.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidyverse_expanded.png)
 
-```{r echo=FALSE}
-include_graphics("tidyverse_expanded.png")
-```
 
 
 # Resources Up Front
@@ -85,9 +80,7 @@ include_graphics("tidyverse_expanded.png")
 
 * [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-```{r echo=FALSE}
-include_graphics("data_carpentry.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/data_carpentry.png)
 
 
 ## Plotting
@@ -96,16 +89,13 @@ include_graphics("data_carpentry.png")
 
 * [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
-```{r echo=FALSE}
-include_graphics("ggplot_cheat_sheet.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_cheat_sheet.png)
+
 
 
 * [R Graph Catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
 
-```{r echo=FALSE}
-include_graphics("r_graph_catalog.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/r_graph_catalog.png)
 
 
 <br><br><br><br>
@@ -149,10 +139,7 @@ gm_df
 
 # `%>%`
 
-```{r echo=FALSE}
-include_graphics("magrittr.png")
-```
-
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/magrittr.png)
 
 The pipe (`%>%`) is used to chain operations together. Underneath the hood, it's taking the value on the left-hand side of `%>%` and using it as the first argument of the function on the right-hand side of `%>%`.
 
@@ -264,25 +251,19 @@ sample_df %>%
 
 # "Tidy" Data
 
-```{r echo=FALSE}
-include_graphics("tidy_data.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidy_data.png)
 
-```{r echo=FALSE}
-include_graphics("tidy_data_2.png")
-```
 
-```{r echo=FALSE}
-include_graphics("messy_tidy.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidy_data_2.png)
+
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/messy_tidy.png)
+
 
 With `tibble`s, `%>%`, and the concept of tidy data covered, let's take a dive.
 
 # `{dplyr}`
 
-```{r echo=FALSE}
-include_graphics("dplyr.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/dplyr.png)
 
 
 `{dplyr}` provides a grammar of data manipulation and a set of verb functions that solve most common data carpentry challenges in a consistent fashion.
@@ -309,9 +290,7 @@ glimpse(gm_df)
 
 # `select()` columns
 
-```{r echo=FALSE}
-include_graphics("select.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/select.png)
 
 ## Quick Example
 
@@ -407,9 +386,8 @@ gm_df %>%
 
 * Basic Setup
 
-```{r echo=FALSE}
-include_graphics("ggplot_exercise_1.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
+
 
 `ggplot(`_your data_`, aes(x =`_x values_`, y =`_y values_`)) +` <br>
 `geom_boxplot()` _the type of plot geometry desired_
@@ -435,9 +413,7 @@ gm_df %>%                                     # data frame: Data
 
 # `filter()` Rows
 
-```{r echo=FALSE}
-include_graphics("filter.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/filter.png)
 
 ## Quick Example
 
@@ -502,9 +478,7 @@ gm_df %>%
 
 # `ggplot()` Exercise 2
 
-```{r echo=FALSE}
-include_graphics("ggplot_exercise_1.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
 
 Steps
 
@@ -526,9 +500,7 @@ gm_df %>%                                         # data frame: Data
 
 # `mutate()` Columns
 
-```{r echo=FALSE}
-include_graphics("mutate.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/mutate.pngs)
 
 ## Quick Example
 
@@ -613,9 +585,7 @@ Summary Functions |
 
 # `ggplot()` Exercise 3
 
-```{r echo=FALSE}
-include_graphics("ggplot_exercise_1.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
 
 Steps
 
@@ -694,9 +664,7 @@ gm_df %>%
 
 # `group_by()` for Grouped Data
 
-```{r echo=FALSE}
-include_graphics("group_by.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/group_by.png)
 
 ## Quick Example
 
@@ -744,9 +712,7 @@ gm_df %>%
 
 # `ggplot()` Exercise 4
 
-```{r echo=FALSE}
-include_graphics("ggplot_exercise_1.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
 
 Steps
 
@@ -776,9 +742,7 @@ gm_df %>%
 
 # `summarize()`
 
-```{r echo=FALSE}
-include_graphics("summarize.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/summarize.png)
 
 ## Quick Example
 
@@ -829,9 +793,7 @@ gm_df %>%
 
 # `ggplot()` Exercise 5
 
-```{r echo=FALSE}
-include_graphics("ggplot_layers_all.png")
-```
+![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_layers_all.png)
 
 Steps
 

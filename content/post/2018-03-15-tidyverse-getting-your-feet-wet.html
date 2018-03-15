@@ -47,9 +47,18 @@ library(kableExtra)
 # library(scales)</code></pre>
 <div id="workflow" class="section level1">
 <h1>Workflow</h1>
-<p><img src="workflow_2.png" width="468" style="display: block; margin: auto;" /></p>
-<p><img src="workflow.png" width="827" style="display: block; margin: auto;" /></p>
-<p><img src="tidyverse_expanded.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow_2.png" />
+
+</div>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow.png" />
+
+</div>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidyverse_expanded.png" />
+
+</div>
 </div>
 <div id="resources-up-front" class="section level1">
 <h1>Resources Up Front</h1>
@@ -59,7 +68,10 @@ library(kableExtra)
 <ul>
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Cheat Sheet</a></li>
 </ul>
-<p><img src="data_carpentry.png" width="1206" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/data_carpentry.png" />
+
+</div>
 </div>
 <div id="plotting" class="section level2">
 <h2>Plotting</h2>
@@ -67,11 +79,17 @@ library(kableExtra)
 <ul>
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Cheat Sheet</a></li>
 </ul>
-<p><img src="ggplot_cheat_sheet.png" width="1148" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_cheat_sheet.png" />
+
+</div>
 <ul>
 <li><a href="http://shiny.stat.ubc.ca/r-graph-catalog/">R Graph Catalog</a></li>
 </ul>
-<p><img src="r_graph_catalog.png" width="1908" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/r_graph_catalog.png" />
+
+</div>
 <p><br><br><br><br></p>
 </div>
 </div>
@@ -120,7 +138,10 @@ gm_df &lt;- gapminder</code></pre>
 </div>
 <div id="section" class="section level1">
 <h1><code>%&gt;%</code></h1>
-<p><img src="magrittr.png" width="90" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/magrittr.png" />
+
+</div>
 <p>The pipe (<code>%&gt;%</code>) is used to chain operations together. Underneath the hood, it’s taking the value on the left-hand side of <code>%&gt;%</code> and using it as the first argument of the function on the right-hand side of <code>%&gt;%</code>.</p>
 <p>For example, these 2 lines are doing the exact same thing.</p>
 <pre class="r"><code>head(gm_df)</code></pre>
@@ -794,14 +815,26 @@ Africa
 </div>
 <div id="tidy-data" class="section level1">
 <h1>“Tidy” Data</h1>
-<p><img src="tidy_data.png" width="490" style="display: block; margin: auto;" /></p>
-<p><img src="tidy_data_2.png" width="960" style="display: block; margin: auto;" /></p>
-<p><img src="messy_tidy.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidy_data.png" />
+
+</div>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidy_data_2.png" />
+
+</div>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/messy_tidy.png" />
+
+</div>
 <p>With <code>tibble</code>s, <code>%&gt;%</code>, and the concept of tidy data covered, let’s take a dive.</p>
 </div>
 <div id="dplyr" class="section level1">
 <h1><code>{dplyr}</code></h1>
-<p><img src="dplyr.png" width="60" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/dplyr.png" />
+
+</div>
 <p><code>{dplyr}</code> provides a grammar of data manipulation and a set of verb functions that solve most common data carpentry challenges in a consistent fashion.</p>
 <ul>
 <li><code>glimpse()</code></li>
@@ -855,7 +888,10 @@ Africa
 </div>
 <div id="select-columns" class="section level1">
 <h1><code>select()</code> columns</h1>
-<p><img src="select.png" width="703" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/select.png" />
+
+</div>
 <div id="quick-example" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data" class="section level3">
@@ -2250,7 +2286,10 @@ Asia
 <ul>
 <li>Basic Setup</li>
 </ul>
-<p><img src="ggplot_exercise_1.png" width="220" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png" />
+
+</div>
 <p><code>ggplot(</code><em>your data</em><code>, aes(x =</code><em>x values</em><code>, y =</code><em>y values</em><code>)) +</code> <br> <code>geom_boxplot()</code> <em>the type of plot geometry desired</em></p>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
@@ -2269,8 +2308,8 @@ Asia
   select(lifeExp) %&gt;%                         # columns to keep: Data
   ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
   geom_histogram()                            # histogram: Geometries</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
-<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-37-1.png" alt="Figure 1" width="1056" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-24-1.png" alt="Figure 1" width="1056" />
 <p class="caption">
 Figure 1: Figure 1
 </p>
@@ -2278,7 +2317,10 @@ Figure 1: Figure 1
 </div>
 <div id="filter-rows" class="section level1">
 <h1><code>filter()</code> Rows</h1>
-<p><img src="filter.png" width="751" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/filter.png" />
+
+</div>
 <div id="quick-example-1" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-1" class="section level3">
@@ -3202,7 +3244,10 @@ Europe
 </div>
 <div id="ggplot-exercise-2" class="section level1">
 <h1><code>ggplot()</code> Exercise 2</h1>
-<p><img src="ggplot_exercise_1.png" width="220" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png" />
+
+</div>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, select the <code>continent</code>, <code>country</code>, and <code>gdpPercap</code> columns</li>
@@ -3220,11 +3265,14 @@ Europe
   filter(continent == &quot;Oceania&quot;) %&gt;%              # rows to keep: Data
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-46-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-31-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mutate-columns" class="section level1">
 <h1><code>mutate()</code> Columns</h1>
-<p><img src="mutate.png" width="739" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<embed src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/mutate.pngs" />
+
+</div>
 <div id="quick-example-2" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-2" class="section level3">
@@ -4318,7 +4366,10 @@ Europe
 </div>
 <div id="ggplot-exercise-3" class="section level1">
 <h1><code>ggplot()</code> Exercise 3</h1>
-<p><img src="ggplot_exercise_1.png" width="220" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png" />
+
+</div>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, <code>select()</code> <code>country</code>, <code>year</code>, and <code>gdpPercap</code></li>
@@ -4341,7 +4392,7 @@ Europe
   ggplot(aes(x = year, y = gdpPercap, color = country)) +
   geom_line() +
   labs(title = &quot;GDP Over Time&quot;)</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-54-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-37-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="arrange-rows" class="section level1">
 <h1><code>arrange()</code> Rows</h1>
@@ -5260,7 +5311,10 @@ Americas
 </div>
 <div id="group_by-for-grouped-data" class="section level1">
 <h1><code>group_by()</code> for Grouped Data</h1>
-<p><img src="group_by.png" width="807" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/group_by.png" />
+
+</div>
 <div id="quick-example-4" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-4" class="section level3">
@@ -5687,7 +5741,10 @@ Belgium
 </div>
 <div id="ggplot-exercise-4" class="section level1">
 <h1><code>ggplot()</code> Exercise 4</h1>
-<p><img src="ggplot_exercise_1.png" width="220" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png" />
+
+</div>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, <code>group_by()</code> the <code>continent</code> and <code>year</code></li>
@@ -5713,11 +5770,14 @@ Belgium
   geom_line() +
   labs(title = &quot;Mean GDPs by Continent Over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-65-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-46-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="summarize" class="section level1">
 <h1><code>summarize()</code></h1>
-<p><img src="summarize.png" width="698" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/summarize.png" />
+
+</div>
 <div id="quick-example-5" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-5" class="section level3">
@@ -6111,7 +6171,10 @@ Oceania
 </div>
 <div id="ggplot-exercise-5" class="section level1">
 <h1><code>ggplot()</code> Exercise 5</h1>
-<p><img src="ggplot_layers_all.png" width="220" style="display: block; margin: auto;" /></p>
+<div class="figure">
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_layers_all.png" />
+
+</div>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, <code>filter()</code> the data to remove rows where <code>continent</code> is not <code>&quot;Oceania&quot;</code></li>
@@ -6147,5 +6210,5 @@ Oceania
   facet_wrap(~ continent) +
   labs(title = &quot;Mean Continent Populations over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-71-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-50-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
