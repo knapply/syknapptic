@@ -13,4 +13,4 @@ Here are a few Shiny apps I've built.
 
 A tool to facilitate access to DPRK sanctions data.
 
-![](/img/nktfe.gif)
+![](/img/nktfe_1.gif)
