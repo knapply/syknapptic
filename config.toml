@@ -81,7 +81,12 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   url = "/archives"
   
 
-
+[[menu.links]]
+  weight = 1
+  identifier = "shiny"
+  name = "My Shiny Apps"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-twitter\"></i>"
+  url = "https://twitter.com/syknapptic"
 [[menu.links]]
   weight = 1
   identifier = "twitter"
