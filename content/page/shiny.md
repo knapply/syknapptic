@@ -14,7 +14,7 @@ __[recon : Really Convenient Spatial Data](https://bknapp.shinyapps.io/recon/)__
 ![](/img/recon.gif)
 
 
-__![Deep Learning Image Classifier](https://bknapp.shinyapps.io/imagecrawler/)__
+__[Deep Learning Image Classifier](https://bknapp.shinyapps.io/imagecrawler/)__
 
 * TensorFlow-powered image classification.
 
