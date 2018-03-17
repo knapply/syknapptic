@@ -1,9 +1,9 @@
 ---
-title: 'Tidyverse: Getting Your Feet Wet'
+title: 'Thoughts on Teaching R and Yet Another Tidyverse Intro'
 draft: false
 author: Brendan Knapp
 date: '2018-03-17'
-slug: tidyverse-getting-your-feet-wet
+slug: yet-another-tidyverse-intro
 categories:
   - data carpentry
   - tutorial
@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
                       fig.align = "center", fig.height = 9, fig.width = 11)
 ```
 
-```{r}
+```{r echo=FALSE}
 knitr::include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png")
 ```
 
@@ -38,23 +38,37 @@ Image credit to [R Memes for Statistical Fiends](https://www.facebook.com/Rmemes
 
 # Context
 
-I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.
+I recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.
 
-For context, these were international policy graduate students. While some have completed a bit quantitative coursework, I would expect that the average student would not describe themself as having significant experience with data analysis. That said, they hold domain expertise in other critical areas such as WMD nonproliferation, international development, economic diplomacy, and environmental policy. Additionally, nearly half the participants were international students and everyone holds proficiency in at least two natural languages.
+A few things happened in the week following the last session that I didn't expect.
 
-These are folks who work on really important issues and will likely go on to participate in really important decisions. They're the kind of people that I want empowered by as manys skills and methodologies as possible.
+First,I saw a bit of R code written on a campus whiteboard that had nothing to do with myself, but was straight out of the workshop. It may have come from some of my data-centric colleagues who use R, so I didn't read too far into it.
 
-In the week since, I have seen some R code written on 2 campus whiteboards that had nothing to do with me. I also overheard multiple conversations involving R from those in a program that doesn't require any data-related coursework. Even a student who didn't attend came to me asking for resources as some folks he works with are now trying to incorporate R-powered analysis in their projects.
+Then, I overheard a conversation involving R from those in a program that doesn't require any data-related coursework. Many folks are familiar with the name as the school's primary data analysis course uses the `{Rcmdr}` GUI for statistical analysis, but these students would not have necessarily taken the course. I was cautiously optimistic.
 
-The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That's a total of 4.5 hours.
+Finally, a student who didn't even attend came to my office hours asking for resources. Why exactly? Some of his work colleagues attended. Apparently, they are now trying to incorporate some R-powered analysis in their work and he doesn't want to miss out.
 
-Even in that short amount of time, a gentle introduction to R was enough to convince a handful of people that they should take advantage of the power that a bit of data-centric coding can offer.
+The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That's only a total of 4.5 hours.
+
+Even in that short amount of time, a gentle introduction to R was enough to convince participants (and non-participants!) to take advantage of the power that a bit of data-centric coding can offer.
 
 # Reflection
 
-In preparation for this workshop series, I found a lot of inspiration in [Michael Levy's presentation on teaching R](http://michaellevy.name/blog/useR-talk-on-teaching-R/), which itself echoes principles preached by other R advocates. 
+I taught a similar 90 minute workshop last spring using R, but focussed on data types. 10 minutes in, I'm trying to explain the difference between `data.frame` and a `matrix` and the person asking the question says something along the lines of "I guess I'm kinda dumb. Don't worry about it."
 
-One of my biggest takeaways is that __live coding works__.
+For context, these were international policy graduate students. While some have completed a bit of quantitative coursework, most don't have a hardcore math or science background and programming is seen as something akin to wizardry. That said, they hold domain expertise in some rather important subjects. These include WMD nonproliferation, international development, economic diplomacy, conflict studies, and environmental policy. Nearly half of the participants were international students and everyone holds proficiency in minimally two natural languages. Most have already tackled big, critical problems in their careers and the others are on their way to doing so following graduation. In a nutshell, they're not dumb. The way I was teaching was dumb. After the workshop, I never heard anyone mention R outside my circle of fellow data folks.
+
+Since that time, I started using R more. _Like, a lot more_. I was still avoiding the strange "tidy" code I'd encounter on Stack Overflow, but I realized the error of my ways when I came across Julia Silge and David Robinson's [Text Mining with R]("https://www.tidytextmining.com/"). It was like discovering that you're still in the stone age while most people were off partying on spaceships.
+
+With that in mind, I knew if I ever had a chance to teach a bit of R code again, I would do so differently. The more code I wrote and the more insights from others I read, the more it became pretty obvious that `tidyverse` first makes sense.
+
+In preparation for this workshop series, I found a lot of inspiration in [Michael Levy's presentation on teaching R](http://michaellevy.name/blog/useR-talk-on-teaching-R/), which itself echoes principles preached by other `tidyverse` advocates.
+
+If I could go back in time, it would have been awesome to have participants fill out surveys after the `base` workshop and after the `tidyverse` workshop for a less anecdotal comparison. Regardless, the level of engagement and type of response could not be more different.
+
+<br>
+
+Another huge takeaway is that __live coding works__.
 
 Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.
 
@@ -64,7 +78,7 @@ Something that frustrated me when I first started is that code explanations ofte
 
 Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you're doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you _already_ suffered through them.
 
-I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.
+I also think that the benefits of live coding extend to the instructor as well. I found myself answering questions that framed things in ways that I had not even considered, but were exactly how multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.
 
 <br><br><br>
 
@@ -72,7 +86,7 @@ I also think that the benefits of live coding go both ways. I found myself answe
 
 Here is the workflow I used for the first session. The goal was to introduce the primary `{dplyr}` verbs, functions that accomplish tasks neccesary in nearly every project. Between each section is an exercise using `{ggplot}`. 
 
-The strategy is similar to many I've seen in the [#Rstats](https://twitter.com/search?q=%23rstats) community: introduce __useful__ tools individually and reinforce them through multiple passes in slightly different contexts. 
+The strategy is similar to many I've seen in the [#Rstats](https://twitter.com/search?q=%23rstats) community: introduce __useful__ tools immediately and reinforce them through multiple passes in slightly different contexts. 
 
 ```{r}
 tidyverse::tidyverse_logo()
@@ -101,13 +115,22 @@ library(kableExtra)
 
 ## Workflow
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png")
+```
+
 
 <br>
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png")
+```
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png)
+
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png")
+```
+
 
 
 # Resources Up Front
@@ -122,7 +145,9 @@ library(kableExtra)
 
 <br>
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/data_carpentry_f05agy.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304416/data_carpentry_f05agy.png")
+```
 
 <br>
 
@@ -134,14 +159,20 @@ library(kableExtra)
 
 * [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304418/ggplot_cheat_sheet_dvnj16.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304418/ggplot_cheat_sheet_dvnj16.png")
+```
+
 
 <br>
 
 
 * [R Graph Catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304415/r_graph_catalog_r5uiuf.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304415/r_graph_catalog_r5uiuf.png")
+```
+
 
 
 <br><br><br><br>
@@ -185,7 +216,9 @@ gm_df
 
 # `%>%`
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304412/magrittr_stxndz.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304412/magrittr_stxndz.png")
+```
 
 <br>
 
@@ -305,19 +338,26 @@ sample_df %>%
 
 If you're unsure of what "Tidy" data is actually describing and want to learn more, you can read Hadley Wickham's article [here](http://vita.had.co.nz/papers/tidy-data.html). Otherwise, these graphics are likely the most concise explanation you'll find.
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304415/tidy_data_u18bn6.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304415/tidy_data_u18bn6.png")
+```
 
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidy_data_2_mqba24.png")
+```
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidy_data_2_mqba24.png)
-
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304412/messy_tidy_qq4ba9.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304412/messy_tidy_qq4ba9.png")
+```
 
 
 With `tibble`s, `%>%`, and the concept of tidy data covered, let's take a dive.
 
 ## `{dplyr}`
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png")
+```
 
 
 `{dplyr}` provides a grammar of data manipulation and a set of verb functions that solve most common data carpentry challenges in a consistent fashion.
@@ -344,7 +384,10 @@ glimpse(gm_df)
 
 # `select()` columns
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304413/select_dtuw73.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304413/select_dtuw73.png")
+```
+
 
 ## Quick Example
 
@@ -439,7 +482,9 @@ gm_df %>%
 
 * Basic Setup
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png")
+```
 
 
 `ggplot(`_your data_`, aes(x =`_x values_`, y =`_y values_`)) +` <br>
@@ -466,7 +511,9 @@ gm_df %>%                                     # data frame: Data
 
 # `filter()` Rows
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png")
+```
 
 ## Quick Example
 
@@ -531,7 +578,9 @@ gm_df %>%
 
 ## `ggplot()` Exercise 2
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png")
+```
 
 Steps
 
@@ -553,7 +602,9 @@ gm_df %>%                                         # data frame: Data
 
 # `mutate()` Columns
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304413/mutate_cskmnx.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304413/mutate_cskmnx.png")
+```
 
 ## Quick Example
 
@@ -638,7 +689,9 @@ Summary Functions |
 
 ## `ggplot()` Exercise 3
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png")
+```
 
 Steps
 
@@ -717,7 +770,9 @@ gm_df %>%
 
 # `group_by()` for Grouped Data
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304412/group_by_oex4zw.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304412/group_by_oex4zw.png")
+```
 
 ## Quick Example
 
@@ -765,7 +820,9 @@ gm_df %>%
 
 ## `ggplot()` Exercise 4
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png")
+```
 
 Steps
 
@@ -795,7 +852,9 @@ gm_df %>%
 
 # `summarize()`
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304414/summarize_tq1nfp.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304414/summarize_tq1nfp.png")
+```
 
 ## Quick Example
 
@@ -846,7 +905,9 @@ gm_df %>%
 
 ## `ggplot()` Exercise 5
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png)
+```{r echo=FALSE}
+include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png")
+```
 
 Steps
 
@@ -882,5 +943,8 @@ gm_df %>%
   labs(title = "Mean Continent Populations over Time",
        caption = "Source: Free material from www.gapminder.org")
 ```
+
+
+__النهاية__
 
 

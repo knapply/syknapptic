@@ -1,9 +1,9 @@
 ---
-title: 'Tidyverse: Getting Your Feet Wet'
+title: 'Thoughts on Teaching R and Yet Another Tidyverse Intro'
 draft: false
 author: Brendan Knapp
 date: '2018-03-17'
-slug: tidyverse-getting-your-feet-wet
+slug: yet-another-tidyverse-intro
 categories:
   - data carpentry
   - tutorial
@@ -41,32 +41,38 @@ output:
 </ul>
 </div>
 
-<pre class="r"><code>knitr::include_graphics(&quot;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&quot;)</code></pre>
 <p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png" style="display: block; margin: auto;" /></p>
 <p>Image credit to <a href="https://www.facebook.com/Rmemes0/">R Memes for Statistical Fiends</a></p>
 <p><br></p>
 <div id="context" class="section level1">
 <h1>Context</h1>
-<p>I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.</p>
-<p>For context, these were international policy graduate students. While some have completed a bit quantitative coursework, I would expect that the average student would not describe themself as having significant experience with data analysis. That said, they hold domain expertise in other critical areas such as WMD nonproliferation, international development, economic diplomacy, and environmental policy. Additionally, nearly half the participants were international students and everyone holds proficiency in at least two natural languages.</p>
-<p>These are folks who work on really important issues and will likely go on to participate in really important decisions. They’re the kind of people that I want empowered by as manys skills and methodologies as possible.</p>
-<p>In the week since, I have seen some R code written on 2 campus whiteboards that had nothing to do with me. I also overheard multiple conversations involving R from those in a program that doesn’t require any data-related coursework. Even a student who didn’t attend came to me asking for resources as some folks he works with are now trying to incorporate R-powered analysis in their projects.</p>
-<p>The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That’s a total of 4.5 hours.</p>
-<p>Even in that short amount of time, a gentle introduction to R was enough to convince a handful of people that they should take advantage of the power that a bit of data-centric coding can offer.</p>
+<p>I recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.</p>
+<p>A few things happened in the week following the last session that I didn’t expect.</p>
+<p>First,I saw a bit of R code written on a campus whiteboard that had nothing to do with myself, but was straight out of the workshop. It may have come from some of my data-centric colleagues who use R, so I didn’t read too far into it.</p>
+<p>Then, I overheard a conversation involving R from those in a program that doesn’t require any data-related coursework. Many folks are familiar with the name as the school’s primary data analysis course uses the <code>{Rcmdr}</code> GUI for statistical analysis, but these students would not have necessarily taken the course. I was cautiously optimistic.</p>
+<p>Finally, a student who didn’t even attend came to my office hours asking for resources. Why exactly? Some of his work colleagues attended. Apparently, they are now trying to incorporate some R-powered analysis in their work and he doesn’t want to miss out.</p>
+<p>The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That’s only a total of 4.5 hours.</p>
+<p>Even in that short amount of time, a gentle introduction to R was enough to convince participants (and non-participants!) to take advantage of the power that a bit of data-centric coding can offer.</p>
 </div>
 <div id="reflection" class="section level1">
 <h1>Reflection</h1>
-<p>In preparation for this workshop series, I found a lot of inspiration in <a href="http://michaellevy.name/blog/useR-talk-on-teaching-R/">Michael Levy’s presentation on teaching R</a>, which itself echoes principles preached by other R advocates.</p>
-<p>One of my biggest takeaways is that <strong>live coding works</strong>.</p>
+<p>I taught a similar 90 minute workshop last spring using R, but focussed on data types. 10 minutes in, I’m trying to explain the difference between <code>data.frame</code> and a <code>matrix</code> and the person asking the question says something along the lines of “I guess I’m kinda dumb. Don’t worry about it.”</p>
+<p>For context, these were international policy graduate students. While some have completed a bit of quantitative coursework, most don’t have a hardcore math or science background and programming is seen as something akin to wizardry. That said, they hold domain expertise in some rather important subjects. These include WMD nonproliferation, international development, economic diplomacy, conflict studies, and environmental policy. Nearly half of the participants were international students and everyone holds proficiency in minimally two natural languages. Most have already tackled big, critical problems in their careers and the others are on their way to doing so following graduation. In a nutshell, they’re not dumb. The way I was teaching was dumb. After the workshop, I never heard anyone mention R outside my circle of fellow data folks.</p>
+<p>Since that time, I started using R more. <em>Like, a lot more</em>. I was still avoiding the strange “tidy” code I’d encounter on Stack Overflow, but I realized the error of my ways when I came across Julia Silge and David Robinson’s <a href="%22https://www.tidytextmining.com/%22">Text Mining with R</a>. It was like discovering that you’re still in the stone age while most people were off partying on spaceships.</p>
+<p>With that in mind, I knew if I ever had a chance to teach a bit of R code again, I would do so differently. The more code I wrote and the more insights from others I read, the more it became pretty obvious that <code>tidyverse</code> first makes sense.</p>
+<p>In preparation for this workshop series, I found a lot of inspiration in <a href="http://michaellevy.name/blog/useR-talk-on-teaching-R/">Michael Levy’s presentation on teaching R</a>, which itself echoes principles preached by other <code>tidyverse</code> advocates.</p>
+<p>If I could go back in time, it would have been awesome to have participants fill out surveys after the <code>base</code> workshop and after the <code>tidyverse</code> workshop for a less anecdotal comparison. Regardless, the level of engagement and type of response could not be more different.</p>
+<p><br></p>
+<p>Another huge takeaway is that <strong>live coding works</strong>.</p>
 <p>Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.</p>
-<p>Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
+<p>Within a few short weeks of learning to code, it might be surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
 <p>Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I’m half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn’t make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.</p>
 <p>Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you <em>already</em> suffered through them.</p>
-<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.</p>
+<p>I also think that the benefits of live coding extend to the instructor as well. I found myself answering questions that framed things in ways that I had not even considered, but were exactly how multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.</p>
 <p><br><br><br></p>
 <p>… and now that we got the bloggyness of a blog post out of the way…</p>
 <p>Here is the workflow I used for the first session. The goal was to introduce the primary <code>{dplyr}</code> verbs, functions that accomplish tasks neccesary in nearly every project. Between each section is an exercise using <code>{ggplot}</code>.</p>
-<p>The strategy is similar to many I’ve seen in the <a href="https://twitter.com/search?q=%23rstats">#Rstats</a> community: introduce <strong>useful</strong> tools individually and reinforce them through multiple passes in slightly different contexts.</p>
+<p>The strategy is similar to many I’ve seen in the <a href="https://twitter.com/search?q=%23rstats">#Rstats</a> community: introduce <strong>useful</strong> tools immediately and reinforce them through multiple passes in slightly different contexts.</p>
 <pre class="r"><code>tidyverse::tidyverse_logo()</code></pre>
 <pre><code>## * __  _    __   .    o           *  . 
 ##  / /_(_)__/ /_ ___  _____ _______ ___ 
@@ -87,19 +93,10 @@ library(knitr)
 library(kableExtra)</code></pre>
 <div id="workflow" class="section level2">
 <h2>Workflow</h2>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png" style="display: block; margin: auto;" /></p>
 <p><br></p>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png" />
-
-</div>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png" style="display: block; margin: auto;" /></p>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="resources-up-front" class="section level1">
@@ -112,10 +109,7 @@ library(kableExtra)</code></pre>
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">Cheat Sheet</a></li>
 </ul>
 <p><br></p>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/data_carpentry_f05agy.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/data_carpentry_f05agy.png" style="display: block; margin: auto;" /></p>
 <p><br></p>
 </div>
 <div id="plotting" class="section level2">
@@ -124,18 +118,12 @@ library(kableExtra)</code></pre>
 <ul>
 <li><a href="https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf">Cheat Sheet</a></li>
 </ul>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304418/ggplot_cheat_sheet_dvnj16.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304418/ggplot_cheat_sheet_dvnj16.png" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <ul>
 <li><a href="http://shiny.stat.ubc.ca/r-graph-catalog/">R Graph Catalog</a></li>
 </ul>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304415/r_graph_catalog_r5uiuf.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304415/r_graph_catalog_r5uiuf.png" style="display: block; margin: auto;" /></p>
 <p><br><br><br><br></p>
 </div>
 <div id="gapminder-data" class="section level2">
@@ -184,10 +172,7 @@ gm_df &lt;- gapminder</code></pre>
 </div>
 <div id="section" class="section level1">
 <h1><code>%&gt;%</code></h1>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304412/magrittr_stxndz.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304412/magrittr_stxndz.png" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <p>The pipe (<code>%&gt;%</code>) is used to chain operations together. Underneath the hood, it’s taking the value on the left-hand side of <code>%&gt;%</code> and using it as the first argument of the function on the right-hand side of <code>%&gt;%</code>.</p>
 <p>For example, these 2 lines are doing the exact same thing.</p>
@@ -865,25 +850,13 @@ Africa
 <div id="tidy-data" class="section level1">
 <h1>“Tidy” Data</h1>
 <p>If you’re unsure of what “Tidy” data is actually describing and want to learn more, you can read Hadley Wickham’s article <a href="http://vita.had.co.nz/papers/tidy-data.html">here</a>. Otherwise, these graphics are likely the most concise explanation you’ll find.</p>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304415/tidy_data_u18bn6.png" />
-
-</div>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidy_data_2_mqba24.png" />
-
-</div>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304412/messy_tidy_qq4ba9.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304415/tidy_data_u18bn6.png" style="display: block; margin: auto;" /></p>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidy_data_2_mqba24.png" style="display: block; margin: auto;" /></p>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304412/messy_tidy_qq4ba9.png" style="display: block; margin: auto;" /></p>
 <p>With <code>tibble</code>s, <code>%&gt;%</code>, and the concept of tidy data covered, let’s take a dive.</p>
 <div id="dplyr" class="section level2">
 <h2><code>{dplyr}</code></h2>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png" style="display: block; margin: auto;" /></p>
 <p><code>{dplyr}</code> provides a grammar of data manipulation and a set of verb functions that solve most common data carpentry challenges in a consistent fashion.</p>
 <ul>
 <li><code>glimpse()</code></li>
@@ -938,10 +911,7 @@ Africa
 </div>
 <div id="select-columns" class="section level1">
 <h1><code>select()</code> columns</h1>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304413/select_dtuw73.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304413/select_dtuw73.png" style="display: block; margin: auto;" /></p>
 <div id="quick-example" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data" class="section level3">
@@ -2335,10 +2305,7 @@ Asia
 <ul>
 <li>Basic Setup</li>
 </ul>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" style="display: block; margin: auto;" /></p>
 <p><code>ggplot(</code><em>your data</em><code>, aes(x =</code><em>x values</em><code>, y =</code><em>y values</em><code>)) +</code> <br> <code>geom_boxplot()</code> <em>the type of plot geometry desired</em></p>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
@@ -2357,8 +2324,8 @@ Asia
   select(lifeExp) %&gt;%                         # columns to keep: Data
   ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
   geom_histogram()                            # histogram: Geometries</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
-<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-26-1.png" alt="Figure 1" width="1056" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png" alt="Figure 1" width="1056" />
 <p class="caption">
 Figure 1: Figure 1
 </p>
@@ -2367,10 +2334,7 @@ Figure 1: Figure 1
 </div>
 <div id="filter-rows" class="section level1">
 <h1><code>filter()</code> Rows</h1>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png" style="display: block; margin: auto;" /></p>
 <div id="quick-example-1" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-1" class="section level3">
@@ -3293,10 +3257,7 @@ Europe
 </div>
 <div id="ggplot-exercise-2" class="section level2">
 <h2><code>ggplot()</code> Exercise 2</h2>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png" style="display: block; margin: auto;" /></p>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, select the <code>continent</code>, <code>country</code>, and <code>gdpPercap</code> columns</li>
@@ -3314,15 +3275,12 @@ Europe
   filter(continent == &quot;Oceania&quot;) %&gt;%              # rows to keep: Data
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-33-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="mutate-columns" class="section level1">
 <h1><code>mutate()</code> Columns</h1>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304413/mutate_cskmnx.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304413/mutate_cskmnx.png" style="display: block; margin: auto;" /></p>
 <div id="quick-example-2" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-2" class="section level3">
@@ -4415,10 +4373,7 @@ Europe
 </div>
 <div id="ggplot-exercise-3" class="section level2">
 <h2><code>ggplot()</code> Exercise 3</h2>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" style="display: block; margin: auto;" /></p>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, <code>select()</code> <code>country</code>, <code>year</code>, and <code>gdpPercap</code></li>
@@ -4441,7 +4396,7 @@ Europe
   ggplot(aes(x = year, y = gdpPercap, color = country)) +
   geom_line() +
   labs(title = &quot;GDP Over Time&quot;)</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="arrange-rows" class="section level1">
@@ -5361,10 +5316,7 @@ Americas
 </div>
 <div id="group_by-for-grouped-data" class="section level1">
 <h1><code>group_by()</code> for Grouped Data</h1>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304412/group_by_oex4zw.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304412/group_by_oex4zw.png" style="display: block; margin: auto;" /></p>
 <div id="quick-example-4" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-4" class="section level3">
@@ -5790,10 +5742,7 @@ Belgium
 </div>
 <div id="ggplot-exercise-4" class="section level2">
 <h2><code>ggplot()</code> Exercise 4</h2>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" style="display: block; margin: auto;" /></p>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, <code>group_by()</code> the <code>continent</code> and <code>year</code></li>
@@ -5819,15 +5768,12 @@ Belgium
   geom_line() +
   labs(title = &quot;Mean GDPs by Continent Over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="summarize" class="section level1">
 <h1><code>summarize()</code></h1>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304414/summarize_tq1nfp.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304414/summarize_tq1nfp.png" style="display: block; margin: auto;" /></p>
 <div id="quick-example-5" class="section level2">
 <h2>Quick Example</h2>
 <div id="initial-data-5" class="section level3">
@@ -6220,10 +6166,7 @@ Oceania
 </div>
 <div id="ggplot-exercise-5" class="section level2">
 <h2><code>ggplot()</code> Exercise 5</h2>
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png" />
-
-</div>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png" style="display: block; margin: auto;" /></p>
 <p>Steps</p>
 <ol style="list-style-type: decimal">
 <li>Using <code>gm_df</code>, <code>filter()</code> the data to remove rows where <code>continent</code> is not <code>&quot;Oceania&quot;</code></li>
@@ -6259,6 +6202,7 @@ Oceania
   facet_wrap(~ continent) +
   labs(title = &quot;Mean Continent Populations over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
-<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-52-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><strong>النهاية</strong></p>
 </div>
 </div>
