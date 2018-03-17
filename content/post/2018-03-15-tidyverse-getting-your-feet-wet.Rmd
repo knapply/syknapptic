@@ -28,9 +28,7 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
                       fig.align = "center", fig.height = 9, fig.width = 11)
 ```
 
-<!-- ![](http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg) -->
-
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg" alt="tidyverse!" class="center">
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png)
 
 Image credit to [R Memes for Statistical Fiends](https://www.facebook.com/Rmemes0/)
 
