@@ -28,7 +28,9 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
                       fig.align = "center", fig.height = 9, fig.width = 11)
 ```
 
-![](http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png)
+```{r}
+knitr::include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png")
+```
 
 Image credit to [R Memes for Statistical Fiends](https://www.facebook.com/Rmemes0/)
 
@@ -56,19 +58,28 @@ One of my biggest takeaways is that __live coding works__.
 
 Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.
 
-Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you're speaking in an entirely different language when you're explaining something requiring context they simply haven't yet encountered. Add a few years and... yeesh.
+Within a few short weeks of learning to code, it might be surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you're speaking in an entirely different language when you're explaining something requiring context they simply haven't yet encountered. Add a few years and... yeesh.
 
 Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I'm half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn't make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.
 
 Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you're doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you _already_ suffered through them.
 
-I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.
+I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.
 
+<br><br><br>
 
+... and now that we got the bloggyness of a blog post out of the way...
 
-Here is the workflow I used for the first session. The goal was to introduce the primary `{dplyr}` verbs, functions that accomplish tasks neccesary in nearly every project. Between each of these sections is an exercise using `{ggplot}`. 
+Here is the workflow I used for the first session. The goal was to introduce the primary `{dplyr}` verbs, functions that accomplish tasks neccesary in nearly every project. Between each section is an exercise using `{ggplot}`. 
 
 The strategy is similar to many I've seen in the [#Rstats](https://twitter.com/search?q=%23rstats) community: introduce __useful__ tools individually and reinforce them through multiple passes in slightly different contexts. 
+
+```{r}
+tidyverse::tidyverse_logo()
+```
+
+
+
 
 
 <br>
@@ -91,6 +102,8 @@ library(kableExtra)
 ## Workflow
 
 ![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png)
+
+<br>
 
 ![](http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png)
 
@@ -152,7 +165,7 @@ class(gm.data.frame)
 class(gm_df)
 ```
 
-`tibble`s are opinionated `data.frame`s that keep everything that is helpful about `data.frame`s, changes some of their quirks, and adds methods that makes thems even more useful.
+`tibble`s are opinionated `data.frame`s that keep everything that is helpful about `data.frame`s, changes some of their quirks, and adds methods that makes them even more useful.
 
 Printing `gm.data.frame` dumps the whole data set to the console, typically requiring `head()` to limit the output.
 

@@ -30,10 +30,10 @@
     
 
     
-    <meta name="description" content="ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+    <meta name="description" content="ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()knitr::include_graphics(&quot;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&quot;)Image credit to R Memes for Statistical Fiends
 
 ContextI recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.">
-    <meta property="og:description" content="ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+    <meta property="og:description" content="ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()knitr::include_graphics(&quot;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&quot;)Image credit to R Memes for Statistical Fiends
 
 ContextI recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.">
     <meta property="og:type" content="blog">
@@ -42,7 +42,7 @@ ContextI recently had the opportunity to teach some tidyverse code to colleague
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+    <meta name="twitter:description" content="ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()knitr::include_graphics(&quot;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&quot;)Image credit to R Memes for Statistical Fiends
 
 ContextI recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.">
     
@@ -297,10 +297,8 @@ ga('send', 'pageview');
 </ul>
 </div>
 
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png" />
-
-</div>
+<pre class="r"><code>knitr::include_graphics(&quot;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&quot;)</code></pre>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png" style="display: block; margin: auto;" /></p>
 <p>Image credit to <a href="https://www.facebook.com/Rmemes0/">R Memes for Statistical Fiends</a></p>
 <p><br></p>
 <div id="context" class="section level1">
@@ -320,9 +318,17 @@ ga('send', 'pageview');
 <p>Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
 <p>Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I’m half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn’t make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.</p>
 <p>Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you <em>already</em> suffered through them.</p>
-<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.</p>
-<p>Here is the workflow I used for the first session. The goal was to introduce the primary <code>{dplyr}</code> verbs, functions that accomplish tasks neccesary in nearly every project. Between each of these sections is an exercise using <code>{ggplot}</code>.</p>
+<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.</p>
+<p><br><br><br></p>
+<p>… and now that we got the bloggyness of a blog post out of the way…</p>
+<p>Here is the workflow I used for the first session. The goal was to introduce the primary <code>{dplyr}</code> verbs, functions that accomplish tasks neccesary in nearly every project. Between each section is an exercise using <code>{ggplot}</code>.</p>
 <p>The strategy is similar to many I’ve seen in the <a href="https://twitter.com/search?q=%23rstats">#Rstats</a> community: introduce <strong>useful</strong> tools individually and reinforce them through multiple passes in slightly different contexts.</p>
+<pre class="r"><code>tidyverse::tidyverse_logo()</code></pre>
+<pre><code>## * __  _    __   .    o           *  . 
+##  / /_(_)__/ /_ ___  _____ _______ ___ 
+## / __/ / _  / // / |/ / -_) __(_-&lt;/ -_)
+## \__/_/\_,_/\_, /|___/\__/_/ /___/\__/ 
+##      *  . /___/      o      .       *</code></pre>
 <p><br></p>
 <pre class="r"><code># install.packages(&quot;tidyverse&quot;)
 library(tidyverse)
@@ -341,6 +347,7 @@ library(kableExtra)</code></pre>
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png" />
 
 </div>
+<p><br></p>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png" />
 
@@ -401,7 +408,7 @@ gm_df &lt;- gapminder</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>class(gm_df)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<p><code>tibble</code>s are opinionated <code>data.frame</code>s that keep everything that is helpful about <code>data.frame</code>s, changes some of their quirks, and adds methods that makes thems even more useful.</p>
+<p><code>tibble</code>s are opinionated <code>data.frame</code>s that keep everything that is helpful about <code>data.frame</code>s, changes some of their quirks, and adds methods that makes them even more useful.</p>
 <p>Printing <code>gm.data.frame</code> dumps the whole data set to the console, typically requiring <code>head()</code> to limit the output.</p>
 <div id="printing" class="section level3">
 <h3>Printing</h3>
@@ -2606,8 +2613,8 @@ Asia
   select(lifeExp) %&gt;%                         # columns to keep: Data
   ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
   geom_histogram()                            # histogram: Geometries</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-24"></span>
-<img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-24-1.png" alt="Figure 1" width="1056" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-26-1.png" alt="Figure 1" width="1056" />
 <p class="caption">
 Figure 1: Figure 1
 </p>
@@ -3563,7 +3570,7 @@ Europe
   filter(continent == &quot;Oceania&quot;) %&gt;%              # rows to keep: Data
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries</code></pre>
-<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-31-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-33-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="mutate-columns" class="section level1">
@@ -4690,7 +4697,7 @@ Europe
   ggplot(aes(x = year, y = gdpPercap, color = country)) +
   geom_line() +
   labs(title = &quot;GDP Over Time&quot;)</code></pre>
-<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-37-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="arrange-rows" class="section level1">
@@ -6068,7 +6075,7 @@ Belgium
   geom_line() +
   labs(title = &quot;Mean GDPs by Continent Over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
-<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-46-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="summarize" class="section level1">
@@ -6508,7 +6515,7 @@ Oceania
   facet_wrap(~ continent) +
   labs(title = &quot;Mean Continent Populations over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
-<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-50-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-52-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 
@@ -6777,7 +6784,7 @@ Oceania
                   Mar 3, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+              <div class="media-content hide-xs font-merryweather">ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()knitr::include_graphics(&quot;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&quot;)Image credit to R Memes for Statistical Fiends
 
 ContextI recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.</div>
             </div>
