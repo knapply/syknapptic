@@ -17,8 +17,7 @@
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.com/2018/03/tidyverse-getting-your-feet-wet/</guid>
-      <description>I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other languages, but it was the first time that the majority of participants had written a single line of code.
-In preparation for this workshop series, I found a lot of inspiration in Michael Levy’s presentation on teaching R, which itself echoes principles preached by other R advocates.</description>
+      <description>WorkflowResources Up FrontData CarpentryPlottingGapminder DatatibblesPrinting%&amp;gt;%Sample Data“Tidy” Data{dplyr}Taking a glimpse()select() columnsQuick ExampleInitial DataEnd Dataggplot() Exercise 1filter() RowsQuick ExampleInitial DataEnd Dataggplot() Exercise 2mutate() ColumnsQuick ExampleInitial DataEnd Dataggplot() Exercise 3arrange() RowsQuick ExampleInitial DataEnd Datagroup_by() for Grouped DataQuick ExampleInitial DataEnd Dataggplot() Exercise 4summarize()Quick ExampleInitial Dataggplot() Exercise 5</description>
     </item>
     
     <item>

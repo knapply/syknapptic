@@ -6,6 +6,7 @@ date: '2018-03-15'
 slug: tidyverse-getting-your-feet-wet
 categories:
   - data carpentry
+  - tutorial
 tags:
   - tidyverse
   - ggplot
@@ -15,13 +16,20 @@ thumbnailImagePosition: left
 thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1521124488/tidyverse_awesome_dukagq.png
 metaAlignment: center
 coverMeta: out
-summary: A (hopefully) gentle introduction to R's tidyverse that I as a primer for a short series of workshops I taught.
+summary: A (hopefully) gentle introduction to R's tidyverse that I used as a primer for a short workshop series I taught.
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, 
                       fig.align = "center", fig.height = 9, fig.width = 11)
 ```
+
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg)
+
+<br>
 
 I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other languages, but it was the first time that the majority of participants had written a single line of code.
 
@@ -63,11 +71,11 @@ library(kableExtra)
 
 # Workflow
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow_2.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png)
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png)
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidyverse_expanded.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png)
 
 
 # Resources Up Front
@@ -76,24 +84,32 @@ library(kableExtra)
 
 [![](https://raw.githubusercontent.com/tidyverse/tidyr/master/man/figures/logo.png)](http://tidyr.tidyverse.org/) [![](https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png)](http://dplyr.tidyverse.org/)
 
+<br>
+
 * [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/data_carpentry.png)
+<br>
 
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/data_carpentry_f05agy.png)
+
+<br>
 
 ## Plotting
 
 [![](https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png)](http://ggplot2.tidyverse.org/)
 
+
+
 * [Cheat Sheet](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_cheat_sheet.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304418/ggplot_cheat_sheet_dvnj16.png)
 
+<br>
 
 
 * [R Graph Catalog](http://shiny.stat.ubc.ca/r-graph-catalog/)
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/r_graph_catalog.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304415/r_graph_catalog_r5uiuf.png)
 
 
 <br><br><br><br>
@@ -137,7 +153,9 @@ gm_df
 
 # `%>%`
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/magrittr.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304412/magrittr_stxndz.png)
+
+<br>
 
 The pipe (`%>%`) is used to chain operations together. Underneath the hood, it's taking the value on the left-hand side of `%>%` and using it as the first argument of the function on the right-hand side of `%>%`.
 
@@ -149,9 +167,9 @@ head(gm_df)
 gm_df %>% head()
 ```
 
-For simple operations involving 1 function, `%>%` is only slightly beneficial in that it improves readability as the flow of operations go from left to right.
+For simple operations involving 1 function, `%>%` is only arguably beneficial in that it improves readability as the flow of operations go from left to right.
 
-`%>%` become truly useful when you need to perform multiple operations in succession.
+`%>%` become truly useful when you need to perform multiple operations in succession, which is the vast majority of data carpentry.
 
 As an arbitrary example, let's say that we want to select the `head()` (first 6 rows) of `gm.data.frame` and convert it to a `tibble`.
 
@@ -169,7 +187,7 @@ no_pipe_2 <- as_tibble(no_pipe_1)
 no_pipe_2
 ```
 
-2. Nest `head()` inside of `as_tibble()`.
+2. Nest `gm.data.frame` inside of `head()`, which is itself nested inside of `as_tibble()`.
 
 ```{r}
 as_tibble(head(gm.data.frame))
@@ -194,9 +212,11 @@ gm_df %>%
   head()
 ```
 
+> I'm choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set `echo=FALSE`, but it can be nice to seethe author's code without hunting through their GitHub.
+
 From here on, you'll notice `prettify()`. This is only being used to print tables in a clean format when the document is `knit()`ted. 
 
-`data.frame`s will print a default maximum of 3 rows while `tibble`s will print a default maximum of 10 rows.
+`data.frame`s will print a default maximum of `3` rows while `tibble`s will print a default maximum of `10` rows.
 
 ```{r}
 prettify <- function(df, n = NULL, cols_changed = NULL, rows_changed = NULL){
@@ -249,19 +269,21 @@ sample_df %>%
 
 # "Tidy" Data
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidy_data.png)
+If you're unsure of what "Tidy" data is actually describing and want to learn more, you can read Hadley Wickham's article [here](http://vita.had.co.nz/papers/tidy-data.html). Otherwise, these graphics are likely the most concise explanation you'll find.
+
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304415/tidy_data_u18bn6.png)
 
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidy_data_2.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidy_data_2_mqba24.png)
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/messy_tidy.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304412/messy_tidy_qq4ba9.png)
 
 
 With `tibble`s, `%>%`, and the concept of tidy data covered, let's take a dive.
 
 # `{dplyr}`
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/dplyr.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png)
 
 
 `{dplyr}` provides a grammar of data manipulation and a set of verb functions that solve most common data carpentry challenges in a consistent fashion.
@@ -288,7 +310,7 @@ glimpse(gm_df)
 
 # `select()` columns
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/select.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304413/select_dtuw73.png)
 
 ## Quick Example
 
@@ -308,7 +330,6 @@ sample_df %>%
 ```
 
 
-
 The `select()` family is used to choose columns to keep. You can use bare (unquoted) names.
 
 * `select()` columns by specific names.
@@ -316,7 +337,7 @@ The `select()` family is used to choose columns to keep. You can use bare (unquo
 
 ```{r}
 gm_df %>%
-  select(country, year, pop) %>%                  # select columns by specific names
+  select(country, year, pop) %>%            # select columns by specific names
   prettify()
 ```
 
@@ -343,7 +364,7 @@ gm_df %>%
 
 ```{r}
 gm_df %>%
-  select(-c(lifeExp:gdpPercap)) %>%            # deselect column by name range
+  select(-c(lifeExp:gdpPercap)) %>%         # deselect column by name range
   prettify()
 ```
 
@@ -361,7 +382,7 @@ gm_df %>%
 
 ```{r}
 gm_df %>%
-  select(-4) %>%                            # deselect column by index
+  select(-4) %>%                         # deselect column by index
   prettify()
 ```
 
@@ -384,7 +405,7 @@ gm_df %>%
 
 * Basic Setup
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png)
 
 
 `ggplot(`_your data_`, aes(x =`_x values_`, y =`_y values_`)) +` <br>
@@ -411,7 +432,7 @@ gm_df %>%                                     # data frame: Data
 
 # `filter()` Rows
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/filter.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png)
 
 ## Quick Example
 
@@ -476,7 +497,7 @@ gm_df %>%
 
 # `ggplot()` Exercise 2
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png)
 
 Steps
 
@@ -498,7 +519,7 @@ gm_df %>%                                         # data frame: Data
 
 # `mutate()` Columns
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/mutate.pngs)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304413/mutate_cskmnx.png)
 
 ## Quick Example
 
@@ -583,7 +604,7 @@ Summary Functions |
 
 # `ggplot()` Exercise 3
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png)
 
 Steps
 
@@ -662,7 +683,7 @@ gm_df %>%
 
 # `group_by()` for Grouped Data
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/group_by.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304412/group_by_oex4zw.png)
 
 ## Quick Example
 
@@ -710,7 +731,7 @@ gm_df %>%
 
 # `ggplot()` Exercise 4
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_exercise_1.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png)
 
 Steps
 
@@ -740,7 +761,7 @@ gm_df %>%
 
 # `summarize()`
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/summarize.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304414/summarize_tq1nfp.png)
 
 ## Quick Example
 
@@ -791,7 +812,7 @@ gm_df %>%
 
 # `ggplot()` Exercise 5
 
-![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/ggplot_layers_all.png)
+![](http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png)
 
 Steps
 
