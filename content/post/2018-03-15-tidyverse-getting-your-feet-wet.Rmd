@@ -2,7 +2,7 @@
 title: 'Tidyverse: Getting Your Feet Wet'
 draft: false
 author: Brendan Knapp
-date: '2018-03-15'
+date: '2018-03-17'
 slug: tidyverse-getting-your-feet-wet
 categories:
   - data carpentry
@@ -20,6 +20,7 @@ summary: A (hopefully) gentle introduction to R's tidyverse that I used as a pri
 output:
   blogdown::html_page:
     toc: true
+    toc_depth: 1
 ---
 
 ```{r setup, include=FALSE}
@@ -29,43 +30,42 @@ knitr::opts_chunk$set(echo = TRUE, message = FALSE,
 
 ![](http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg)
 
+Image credit to [R Memes for Statistical Fiends](https://www.facebook.com/Rmemes0/)
+
 <br>
 
-I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other languages, but it was the first time that the majority of participants had written a single line of code.
+I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.
 
-In preparation for this workshop series, I found a lot of inspiration in [Michael Levy's presentation on teaching R](http://michaellevy.name/blog/useR-talk-on-teaching-R/), which itself echoes principles preached by other R advocates. 
+For context, these were international policy graduate students. While some have completed a bit quantitative coursework, I would expect that the average student would not describe themself as having significant experience with data analysis. That said, they hold domain expertise in other critical areas such as WMD nonproliferation, international development, economic diplomacy, and environmental policy. Additionally, nearly half the participants were international students and everyone holds proficiency in at least two natural languages.
 
-One of my biggest takeaways is that __live coding works__.
+These are folks who work on really important issues and will likely go on to participate in really important decisions. They're the kind of people that I want empowered by as manys skills and methodologies as possible.
 
-Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report.
+In the week since, I have seen some R code written on 2 campus whiteboards that had nothing to do with me. I also overheard multiple conversations involving R from those in a program that doesn't require any data-related coursework. Even a student who didn't attend came to me asking for resources as some folks he works with are now trying to incorporate R-powered analysis in their projects.
 
-Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you're speaking in an entirely different language when you're explaining something requiring context they simply haven't yet encountered. Add a few years and... yeesh.
+The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That's a total of 4.5 hours.
 
-Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult the basics can be. I'm half-convinced that for some folks, the trauma was so great that they have simply blocked it from memory.
+Even in that short amount of time, a gentle introduction to R was enough to convince a handful of people that they should take advantage of the power that a bit of data-centric coding can offer.
 
-Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you're doing. It also provides more opportunity to for them to ask questions on details you might find trivial, but only because you _already_ suffered through them.
 
-I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered. Additionally, I have a better sense now of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.
+Here is the workflow I used for the first session. The goal was to introduce the primary `{dplyr}` verbs, functions that accomplish tasks neccesary in nearly every project. Between each of these sections is an exercise using `{ggplot}`. 
 
-I'll cut the bloggyness of this blog post here, and get to the meat of what we covered.
+The strategy is similar to many I've seen in the [#Rstats](https://twitter.com/search?q=%23rstats) community: introduce __useful__ tools individually and reinforce them through multiple passes in slightly different contexts. 
+
+
+<br>
 
 ```{r}
-# install.packages("devtools")
 # install.packages("tidyverse")
 library(tidyverse)
-# loads {ggplot2}, {tibble}, {tidyr}, {readr}, {purrr}, {dplyr}, {stringr}, and {forcats}
 
 # install.packages("gapminder")
 library(gapminder)
 # loads the gapminder data set
 
-
+## just to prettify printed tables when knitting
 # install.packages("kableExtra")
 library(knitr)
 library(kableExtra)
-# just to prettify printed tables when knitting
-
-# library(scales)
 ```
 
 
@@ -114,7 +114,7 @@ library(kableExtra)
 
 <br><br><br><br>
 
-# Gapminder Data
+## Gapminder Data
 
 In the following exercises, `gm.data.frame` will be used to demonstrate actions that use `{base}` R methods for `data.frame` operations while `gm_df` will be used to to demonstrate `{tidyverse}` methods for `tibble` operations.
 
@@ -296,7 +296,7 @@ With `tibble`s, `%>%`, and the concept of tidy data covered, let's take a dive.
 * `summarize()`
 * `group_by()`
 
-# Taking a `glimpse()`
+## Taking a `glimpse()`
 
 In addition to the `summary()`, `dim()`ensions, and `str()`ucture functions that can be used to inspect data, you can now use `{dplyr}`'s `glimpse()`.
 
@@ -849,5 +849,20 @@ gm_df %>%
        caption = "Source: Free material from www.gapminder.org")
 ```
 
+# Reflection
+
+In preparation for this workshop series, I found a lot of inspiration in [Michael Levy's presentation on teaching R](http://michaellevy.name/blog/useR-talk-on-teaching-R/), which itself echoes principles preached by other R advocates. 
+
+One of my biggest takeaways is that __live coding works__.
+
+Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.
+
+Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you're speaking in an entirely different language when you're explaining something requiring context they simply haven't yet encountered. Add a few years and... yeesh.
+
+Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I'm half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn't make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.
+
+Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you're doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you _already_ suffered through them.
+
+I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.
 
 

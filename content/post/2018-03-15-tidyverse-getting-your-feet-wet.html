@@ -2,7 +2,7 @@
 title: 'Tidyverse: Getting Your Feet Wet'
 draft: false
 author: Brendan Knapp
-date: '2018-03-15'
+date: '2018-03-17'
 slug: tidyverse-getting-your-feet-wet
 categories:
   - data carpentry
@@ -20,65 +20,31 @@ summary: A (hopefully) gentle introduction to R's tidyverse that I used as a pri
 output:
   blogdown::html_page:
     toc: true
+    toc_depth: 1
 ---
 
 
 <div id="TOC">
 <ul>
 <li><a href="#workflow">Workflow</a></li>
-<li><a href="#resources-up-front">Resources Up Front</a><ul>
-<li><a href="#data-carpentry">Data Carpentry</a></li>
-<li><a href="#plotting">Plotting</a></li>
-</ul></li>
-<li><a href="#gapminder-data">Gapminder Data</a></li>
-<li><a href="#tibbles"><code>tibble</code>s</a><ul>
-<li><a href="#printing">Printing</a></li>
-</ul></li>
+<li><a href="#resources-up-front">Resources Up Front</a></li>
+<li><a href="#tibbles"><code>tibble</code>s</a></li>
 <li><a href="#section"><code>%&gt;%</code></a></li>
 <li><a href="#sample-data">Sample Data</a></li>
 <li><a href="#tidy-data">“Tidy” Data</a></li>
 <li><a href="#dplyr"><code>{dplyr}</code></a></li>
-<li><a href="#taking-a-glimpse">Taking a <code>glimpse()</code></a></li>
-<li><a href="#select-columns"><code>select()</code> columns</a><ul>
-<li><a href="#quick-example">Quick Example</a><ul>
-<li><a href="#initial-data">Initial Data</a></li>
-<li><a href="#end-data">End Data</a></li>
-</ul></li>
-</ul></li>
+<li><a href="#select-columns"><code>select()</code> columns</a></li>
 <li><a href="#ggplot-exercise-1"><code>ggplot()</code> Exercise 1</a></li>
-<li><a href="#filter-rows"><code>filter()</code> Rows</a><ul>
-<li><a href="#quick-example-1">Quick Example</a><ul>
-<li><a href="#initial-data-1">Initial Data</a></li>
-<li><a href="#end-data-1">End Data</a></li>
-</ul></li>
-</ul></li>
+<li><a href="#filter-rows"><code>filter()</code> Rows</a></li>
 <li><a href="#ggplot-exercise-2"><code>ggplot()</code> Exercise 2</a></li>
-<li><a href="#mutate-columns"><code>mutate()</code> Columns</a><ul>
-<li><a href="#quick-example-2">Quick Example</a><ul>
-<li><a href="#initial-data-2">Initial Data</a></li>
-<li><a href="#end-data-2">End Data</a></li>
-</ul></li>
-</ul></li>
+<li><a href="#mutate-columns"><code>mutate()</code> Columns</a></li>
 <li><a href="#ggplot-exercise-3"><code>ggplot()</code> Exercise 3</a></li>
-<li><a href="#arrange-rows"><code>arrange()</code> Rows</a><ul>
-<li><a href="#quick-example-3">Quick Example</a><ul>
-<li><a href="#initial-data-3">Initial Data</a></li>
-<li><a href="#end-data-3">End Data</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#group_by-for-grouped-data"><code>group_by()</code> for Grouped Data</a><ul>
-<li><a href="#quick-example-4">Quick Example</a><ul>
-<li><a href="#initial-data-4">Initial Data</a></li>
-<li><a href="#end-data-4">End Data</a></li>
-</ul></li>
-</ul></li>
+<li><a href="#arrange-rows"><code>arrange()</code> Rows</a></li>
+<li><a href="#group_by-for-grouped-data"><code>group_by()</code> for Grouped Data</a></li>
 <li><a href="#ggplot-exercise-4"><code>ggplot()</code> Exercise 4</a></li>
-<li><a href="#summarize"><code>summarize()</code></a><ul>
-<li><a href="#quick-example-5">Quick Example</a><ul>
-<li><a href="#initial-data-5">Initial Data</a></li>
-</ul></li>
-</ul></li>
+<li><a href="#summarize"><code>summarize()</code></a></li>
 <li><a href="#ggplot-exercise-5"><code>ggplot()</code> Exercise 5</a></li>
+<li><a href="#reflection">Reflection</a></li>
 </ul>
 </div>
 
@@ -86,32 +52,28 @@ output:
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg" />
 
 </div>
+<p>Image credit to <a href="https://www.facebook.com/Rmemes0/">R Memes for Statistical Fiends</a></p>
 <p><br></p>
-<p>I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other languages, but it was the first time that the majority of participants had written a single line of code.</p>
-<p>In preparation for this workshop series, I found a lot of inspiration in <a href="http://michaellevy.name/blog/useR-talk-on-teaching-R/">Michael Levy’s presentation on teaching R</a>, which itself echoes principles preached by other R advocates.</p>
-<p>One of my biggest takeaways is that <strong>live coding works</strong>.</p>
-<p>Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report.</p>
-<p>Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
-<p>Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult the basics can be. I’m half-convinced that for some folks, the trauma was so great that they have simply blocked it from memory.</p>
-<p>Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunity to for them to ask questions on details you might find trivial, but only because you <em>already</em> suffered through them.</p>
-<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered. Additionally, I have a better sense now of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.</p>
-<p>I’ll cut the bloggyness of this blog post here, and get to the meat of what we covered.</p>
-<pre class="r"><code># install.packages(&quot;devtools&quot;)
-# install.packages(&quot;tidyverse&quot;)
+<p>I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.</p>
+<p>For context, these were international policy graduate students. While some have completed a bit quantitative coursework, I would expect that the average student would not describe themself as having significant experience with data analysis. That said, they hold domain expertise in other critical areas such as WMD nonproliferation, international development, economic diplomacy, and environmental policy. Additionally, nearly half the participants were international students and everyone holds proficiency in at least two natural languages.</p>
+<p>These are folks who work on really important issues and will likely go on to participate in really important decisions. They’re the kind of people that I want empowered by as manys skills and methodologies as possible.</p>
+<p>In the week since, I have seen some R code written on 2 campus whiteboards that had nothing to do with me. I also overheard multiple conversations involving R from those in a program that doesn’t require any data-related coursework. Even a student who didn’t attend came to me asking for resources as some folks he works with are now trying to incorporate R-powered analysis in their projects.</p>
+<p>The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That’s a total of 4.5 hours.</p>
+<p>Even in that short amount of time, a gentle introduction to R was enough to convince a handful of people that they should take advantage of the power that a bit of data-centric coding can offer.</p>
+<p>Here is the workflow I used for the first session. The goal was to introduce the primary <code>{dplyr}</code> verbs, functions that accomplish tasks neccesary in nearly every project. Between each of these sections is an exercise using <code>{ggplot}</code>.</p>
+<p>The strategy is similar to many I’ve seen in the <a href="https://twitter.com/search?q=%23rstats">#Rstats</a> community: introduce <strong>useful</strong> tools individually and reinforce them through multiple passes in slightly different contexts.</p>
+<p><br></p>
+<pre class="r"><code># install.packages(&quot;tidyverse&quot;)
 library(tidyverse)
-# loads {ggplot2}, {tibble}, {tidyr}, {readr}, {purrr}, {dplyr}, {stringr}, and {forcats}
 
 # install.packages(&quot;gapminder&quot;)
 library(gapminder)
 # loads the gapminder data set
 
-
+## just to prettify printed tables when knitting
 # install.packages(&quot;kableExtra&quot;)
 library(knitr)
-library(kableExtra)
-# just to prettify printed tables when knitting
-
-# library(scales)</code></pre>
+library(kableExtra)</code></pre>
 <div id="workflow" class="section level1">
 <h1>Workflow</h1>
 <div class="figure">
@@ -163,13 +125,13 @@ library(kableExtra)
 </div>
 <p><br><br><br><br></p>
 </div>
-</div>
-<div id="gapminder-data" class="section level1">
-<h1>Gapminder Data</h1>
+<div id="gapminder-data" class="section level2">
+<h2>Gapminder Data</h2>
 <p>In the following exercises, <code>gm.data.frame</code> will be used to demonstrate actions that use <code>{base}</code> R methods for <code>data.frame</code> operations while <code>gm_df</code> will be used to to demonstrate <code>{tidyverse}</code> methods for <code>tibble</code> operations.</p>
 <pre class="r"><code>gm.data.frame &lt;- as.data.frame(gapminder)
 
 gm_df &lt;- gapminder</code></pre>
+</div>
 </div>
 <div id="tibbles" class="section level1">
 <h1><code>tibble</code>s</h1>
@@ -921,9 +883,8 @@ Africa
 <li><code>summarize()</code></li>
 <li><code>group_by()</code></li>
 </ul>
-</div>
-<div id="taking-a-glimpse" class="section level1">
-<h1>Taking a <code>glimpse()</code></h1>
+<div id="taking-a-glimpse" class="section level2">
+<h2>Taking a <code>glimpse()</code></h2>
 <p>In addition to the <code>summary()</code>, <code>dim()</code>ensions, and <code>str()</code>ucture functions that can be used to inspect data, you can now use <code>{dplyr}</code>’s <code>glimpse()</code>.</p>
 <pre class="r"><code>summary(gm.data.frame)</code></pre>
 <pre><code>##         country        continent        year         lifeExp     
@@ -961,6 +922,7 @@ Africa
 ## $ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.8...
 ## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 1488...
 ## $ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 78...</code></pre>
+</div>
 </div>
 <div id="select-columns" class="section level1">
 <h1><code>select()</code> columns</h1>
@@ -6287,4 +6249,14 @@ Oceania
   labs(title = &quot;Mean Continent Populations over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
 <p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-50-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="reflection" class="section level1">
+<h1>Reflection</h1>
+<p>In preparation for this workshop series, I found a lot of inspiration in <a href="http://michaellevy.name/blog/useR-talk-on-teaching-R/">Michael Levy’s presentation on teaching R</a>, which itself echoes principles preached by other R advocates.</p>
+<p>One of my biggest takeaways is that <strong>live coding works</strong>.</p>
+<p>Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.</p>
+<p>Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
+<p>Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I’m half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn’t make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.</p>
+<p>Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you <em>already</em> suffered through them.</p>
+<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.</p>
 </div>
