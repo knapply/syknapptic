@@ -125,7 +125,7 @@ gm_df <- gapminder
 ```
 
 
-# `tibble`s
+# `tibble`
 
 ```{r}
 class(gm.data.frame)
@@ -133,7 +133,7 @@ class(gm.data.frame)
 class(gm_df)
 ```
 
-`tibble`s are opinionated `data.frame`s that keep everything that is helpful about `data.frames` changes what is unhelpful, and adds methods that makes thems even more useful.
+`tibble`s are opinionated `data.frame`s that keep everything that is helpful about `data.frame`s, changes some of their quirks, and adds methods that makes thems even more useful.
 
 Printing `gm.data.frame` dumps the whole data set to the console, typically requiring `head()` to limit the output.
 
@@ -167,7 +167,7 @@ head(gm_df)
 gm_df %>% head()
 ```
 
-For simple operations involving 1 function, `%>%` is only arguably beneficial in that it improves readability as the flow of operations go from left to right.
+For simple operations involving 1 function, `%>%` is only (arguably) beneficial in that it improves readability as the flow of operations go from left to right.
 
 `%>%` become truly useful when you need to perform multiple operations in succession, which is the vast majority of data carpentry.
 
@@ -212,11 +212,12 @@ gm_df %>%
   head()
 ```
 
-> I'm choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set `echo=FALSE`, but it can be nice to seethe author's code without hunting through their GitHub.
 
-From here on, you'll notice `prettify()`. This is only being used to print tables in a clean format when the document is `knit()`ted. 
+_From here on, you'll notice `prettify()`. This is only being used to print tables in a clean format when the document is `knit()`ted._
 
-`data.frame`s will print a default maximum of `3` rows while `tibble`s will print a default maximum of `10` rows.
+_I'm choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set `echo=FALSE`, but it can be nice to see the underlying code without having to hunt through their GitHub._
+
+_`data.frame`s will print a default maximum of `3` rows while `tibble`s will print a default maximum of `10` rows._
 
 ```{r}
 prettify <- function(df, n = NULL, cols_changed = NULL, rows_changed = NULL){
@@ -255,8 +256,9 @@ gm_df %>%
 You'll also see a toy data set for the introductory examples that start each section.
 
 ```{r}
-sample_countries <- c("Tunisia", "Nicaragua", "Singapore", "Hungary", "New Zealand",
-                      "Nigeria", "Brazil", "Sri Lanka", "Ireland", "Australia")
+sample_countries <- c("Tunisia", "Nicaragua", "Singapore", "Hungary",
+                      "New Zealand", "Nigeria", "Brazil", "Sri Lanka",
+                      "Ireland", "Australia")
   
 sample_df <- gm_df %>%
   filter(year == 2007,
@@ -399,7 +401,7 @@ gm_df %>%
 
 `{ggplot2}` is monster of a package used for data visualization that follows [The Grammar of Graphics](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448). 
 
-`{ggplot2}` takes R's powerful graphics capabilities and makes them more accessible by taking care of many plotting tasks that are often tedious, while allowing for deep, lower-level customization.
+`{ggplot2}` takes R's powerful graphics capabilities and makes them more accessible by taking care of many plotting tasks that are often tedious, while still allowing for lower-level customization.
 
 
 

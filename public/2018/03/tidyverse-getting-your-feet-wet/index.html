@@ -30,10 +30,10 @@
     
 
     
-    <meta name="description" content="WorkflowResources Up Fronttibbles%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
+    <meta name="description" content="WorkflowResources Up Fronttibble%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
 
 I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops.">
-    <meta property="og:description" content="WorkflowResources Up Fronttibbles%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
+    <meta property="og:description" content="WorkflowResources Up Fronttibble%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
 
 I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops.">
     <meta property="og:type" content="blog">
@@ -42,7 +42,7 @@ I recently had the opportunity to teach some tidyverse code to colleagues and cl
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="WorkflowResources Up Fronttibbles%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
+    <meta name="twitter:description" content="WorkflowResources Up Fronttibble%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
 
 I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops.">
     
@@ -284,7 +284,7 @@ ga('send', 'pageview');
 <ul>
 <li><a href="#workflow">Workflow</a></li>
 <li><a href="#resources-up-front">Resources Up Front</a></li>
-<li><a href="#tibbles"><code>tibble</code>s</a></li>
+<li><a href="#tibble"><code>tibble</code></a></li>
 <li><a href="#section"><code>%&gt;%</code></a></li>
 <li><a href="#sample-data">Sample Data</a></li>
 <li><a href="#tidy-data">“Tidy” Data</a></li>
@@ -389,13 +389,13 @@ library(kableExtra)</code></pre>
 gm_df &lt;- gapminder</code></pre>
 </div>
 </div>
-<div id="tibbles" class="section level1">
-<h1><code>tibble</code>s</h1>
+<div id="tibble" class="section level1">
+<h1><code>tibble</code></h1>
 <pre class="r"><code>class(gm.data.frame)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>class(gm_df)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
-<p><code>tibble</code>s are opinionated <code>data.frame</code>s that keep everything that is helpful about <code>data.frames</code> changes what is unhelpful, and adds methods that makes thems even more useful.</p>
+<p><code>tibble</code>s are opinionated <code>data.frame</code>s that keep everything that is helpful about <code>data.frame</code>s, changes some of their quirks, and adds methods that makes thems even more useful.</p>
 <p>Printing <code>gm.data.frame</code> dumps the whole data set to the console, typically requiring <code>head()</code> to limit the output.</p>
 <div id="printing" class="section level3">
 <h3>Printing</h3>
@@ -454,7 +454,7 @@ gm_df &lt;- gapminder</code></pre>
 ## 4 Afghanistan Asia       1967    34.0 11537966       836
 ## 5 Afghanistan Asia       1972    36.1 13079460       740
 ## 6 Afghanistan Asia       1977    38.4 14880372       786</code></pre>
-<p>For simple operations involving 1 function, <code>%&gt;%</code> is only arguably beneficial in that it improves readability as the flow of operations go from left to right.</p>
+<p>For simple operations involving 1 function, <code>%&gt;%</code> is only (arguably) beneficial in that it improves readability as the flow of operations go from left to right.</p>
 <p><code>%&gt;%</code> become truly useful when you need to perform multiple operations in succession, which is the vast majority of data carpentry.</p>
 <p>As an arbitrary example, let’s say that we want to select the <code>head()</code> (first 6 rows) of <code>gm.data.frame</code> and convert it to a <code>tibble</code>.</p>
 <p>Without <code>%&gt;%</code>, we can do this in a few ways.</p>
@@ -524,11 +524,9 @@ no_pipe_2</code></pre>
 ## 4 Afghanistan Asia       1967    34.0 11537966       836
 ## 5 Afghanistan Asia       1972    36.1 13079460       740
 ## 6 Afghanistan Asia       1977    38.4 14880372       786</code></pre>
-<blockquote>
-<p>I’m choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set <code>echo=FALSE</code>, but it can be nice to seethe author’s code without hunting through their GitHub.</p>
-</blockquote>
-<p>From here on, you’ll notice <code>prettify()</code>. This is only being used to print tables in a clean format when the document is <code>knit()</code>ted.</p>
-<p><code>data.frame</code>s will print a default maximum of <code>3</code> rows while <code>tibble</code>s will print a default maximum of <code>10</code> rows.</p>
+<p><em>From here on, you’ll notice <code>prettify()</code>. This is only being used to print tables in a clean format when the document is <code>knit()</code>ted.</em></p>
+<p><em>I’m choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set <code>echo=FALSE</code>, but it can be nice to see the underlying code without having to hunt through their GitHub.</em></p>
+<p><em><code>data.frame</code>s will print a default maximum of <code>3</code> rows while <code>tibble</code>s will print a default maximum of <code>10</code> rows.</em></p>
 <pre class="r"><code>prettify &lt;- function(df, n = NULL, cols_changed = NULL, rows_changed = NULL){
   if(is.null(n)) n &lt;- ifelse(is.tibble(df), 10, 3)
   pretty_df &lt;- df %&gt;%
@@ -870,8 +868,9 @@ Asia
 <div id="sample-data" class="section level1">
 <h1>Sample Data</h1>
 <p>You’ll also see a toy data set for the introductory examples that start each section.</p>
-<pre class="r"><code>sample_countries &lt;- c(&quot;Tunisia&quot;, &quot;Nicaragua&quot;, &quot;Singapore&quot;, &quot;Hungary&quot;, &quot;New Zealand&quot;,
-                      &quot;Nigeria&quot;, &quot;Brazil&quot;, &quot;Sri Lanka&quot;, &quot;Ireland&quot;, &quot;Australia&quot;)
+<pre class="r"><code>sample_countries &lt;- c(&quot;Tunisia&quot;, &quot;Nicaragua&quot;, &quot;Singapore&quot;, &quot;Hungary&quot;,
+                      &quot;New Zealand&quot;, &quot;Nigeria&quot;, &quot;Brazil&quot;, &quot;Sri Lanka&quot;,
+                      &quot;Ireland&quot;, &quot;Australia&quot;)
   
 sample_df &lt;- gm_df %&gt;%
   filter(year == 2007,
@@ -2576,7 +2575,7 @@ Asia
 <div id="ggplot-exercise-1" class="section level1">
 <h1><code>ggplot()</code> Exercise 1</h1>
 <p><code>{ggplot2}</code> is monster of a package used for data visualization that follows <a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448">The Grammar of Graphics</a>.</p>
-<p><code>{ggplot2}</code> takes R’s powerful graphics capabilities and makes them more accessible by taking care of many plotting tasks that are often tedious, while allowing for deep, lower-level customization.</p>
+<p><code>{ggplot2}</code> takes R’s powerful graphics capabilities and makes them more accessible by taking care of many plotting tasks that are often tedious, while still allowing for lower-level customization.</p>
 <ul>
 <li>Basic Setup</li>
 </ul>
@@ -6782,7 +6781,7 @@ Oceania
                   Mar 3, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">WorkflowResources Up Fronttibbles%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
+              <div class="media-content hide-xs font-merryweather">WorkflowResources Up Fronttibble%&gt;%Sample Data“Tidy” Data{dplyr}select() columnsggplot() Exercise 1filter() Rowsggplot() Exercise 2mutate() Columnsggplot() Exercise 3arrange() Rowsgroup_by() for Grouped Dataggplot() Exercise 4summarize()ggplot() Exercise 5ReflectionImage credit to R Memes for Statistical Fiends
 
 I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops.</div>
             </div>
