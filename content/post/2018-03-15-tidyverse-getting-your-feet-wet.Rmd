@@ -67,9 +67,7 @@ library(kableExtra)
 
 ![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/workflow.png)
 
-
 ![](/post/2018-03-15-tidyverse-getting-your-feet-wet_files/tidyverse_expanded.png)
-
 
 
 # Resources Up Front
