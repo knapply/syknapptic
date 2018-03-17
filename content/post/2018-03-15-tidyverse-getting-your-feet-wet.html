@@ -26,40 +26,43 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#workflow">Workflow</a></li>
+<li><a href="#context">Context</a></li>
+<li><a href="#reflection">Reflection</a></li>
 <li><a href="#resources-up-front">Resources Up Front</a></li>
 <li><a href="#tibble"><code>tibble</code></a></li>
 <li><a href="#section"><code>%&gt;%</code></a></li>
-<li><a href="#sample-data">Sample Data</a></li>
 <li><a href="#tidy-data">“Tidy” Data</a></li>
-<li><a href="#dplyr"><code>{dplyr}</code></a></li>
 <li><a href="#select-columns"><code>select()</code> columns</a></li>
-<li><a href="#ggplot-exercise-1"><code>ggplot()</code> Exercise 1</a></li>
 <li><a href="#filter-rows"><code>filter()</code> Rows</a></li>
-<li><a href="#ggplot-exercise-2"><code>ggplot()</code> Exercise 2</a></li>
 <li><a href="#mutate-columns"><code>mutate()</code> Columns</a></li>
-<li><a href="#ggplot-exercise-3"><code>ggplot()</code> Exercise 3</a></li>
 <li><a href="#arrange-rows"><code>arrange()</code> Rows</a></li>
 <li><a href="#group_by-for-grouped-data"><code>group_by()</code> for Grouped Data</a></li>
-<li><a href="#ggplot-exercise-4"><code>ggplot()</code> Exercise 4</a></li>
 <li><a href="#summarize"><code>summarize()</code></a></li>
-<li><a href="#ggplot-exercise-5"><code>ggplot()</code> Exercise 5</a></li>
-<li><a href="#reflection">Reflection</a></li>
 </ul>
 </div>
 
-<div class="figure">
-<img src="http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg" />
-
-</div>
+<!-- ![](http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg) -->
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1521305505/r_memes_stats_fiends_pndvt3.jpg" alt="tidyverse!" class="center"></p>
 <p>Image credit to <a href="https://www.facebook.com/Rmemes0/">R Memes for Statistical Fiends</a></p>
 <p><br></p>
+<div id="context" class="section level1">
+<h1>Context</h1>
 <p>I recently had the opportunity to teach some tidyverse code to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.</p>
 <p>For context, these were international policy graduate students. While some have completed a bit quantitative coursework, I would expect that the average student would not describe themself as having significant experience with data analysis. That said, they hold domain expertise in other critical areas such as WMD nonproliferation, international development, economic diplomacy, and environmental policy. Additionally, nearly half the participants were international students and everyone holds proficiency in at least two natural languages.</p>
 <p>These are folks who work on really important issues and will likely go on to participate in really important decisions. They’re the kind of people that I want empowered by as manys skills and methodologies as possible.</p>
 <p>In the week since, I have seen some R code written on 2 campus whiteboards that had nothing to do with me. I also overheard multiple conversations involving R from those in a program that doesn’t require any data-related coursework. Even a student who didn’t attend came to me asking for resources as some folks he works with are now trying to incorporate R-powered analysis in their projects.</p>
 <p>The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That’s a total of 4.5 hours.</p>
 <p>Even in that short amount of time, a gentle introduction to R was enough to convince a handful of people that they should take advantage of the power that a bit of data-centric coding can offer.</p>
+</div>
+<div id="reflection" class="section level1">
+<h1>Reflection</h1>
+<p>In preparation for this workshop series, I found a lot of inspiration in <a href="http://michaellevy.name/blog/useR-talk-on-teaching-R/">Michael Levy’s presentation on teaching R</a>, which itself echoes principles preached by other R advocates.</p>
+<p>One of my biggest takeaways is that <strong>live coding works</strong>.</p>
+<p>Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.</p>
+<p>Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
+<p>Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I’m half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn’t make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.</p>
+<p>Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you <em>already</em> suffered through them.</p>
+<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.</p>
 <p>Here is the workflow I used for the first session. The goal was to introduce the primary <code>{dplyr}</code> verbs, functions that accomplish tasks neccesary in nearly every project. Between each of these sections is an exercise using <code>{ggplot}</code>.</p>
 <p>The strategy is similar to many I’ve seen in the <a href="https://twitter.com/search?q=%23rstats">#Rstats</a> community: introduce <strong>useful</strong> tools individually and reinforce them through multiple passes in slightly different contexts.</p>
 <p><br></p>
@@ -74,8 +77,8 @@ library(gapminder)
 # install.packages(&quot;kableExtra&quot;)
 library(knitr)
 library(kableExtra)</code></pre>
-<div id="workflow" class="section level1">
-<h1>Workflow</h1>
+<div id="workflow" class="section level2">
+<h2>Workflow</h2>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png" />
 
@@ -87,6 +90,7 @@ library(kableExtra)</code></pre>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png" />
 
+</div>
 </div>
 </div>
 <div id="resources-up-front" class="section level1">
@@ -608,9 +612,8 @@ Asia
 </tr>
 </tbody>
 </table>
-</div>
-<div id="sample-data" class="section level1">
-<h1>Sample Data</h1>
+<div id="sample-data" class="section level2">
+<h2>Sample Data</h2>
 <p>You’ll also see a toy data set for the introductory examples that start each section.</p>
 <pre class="r"><code>sample_countries &lt;- c(&quot;Tunisia&quot;, &quot;Nicaragua&quot;, &quot;Singapore&quot;, &quot;Hungary&quot;,
                       &quot;New Zealand&quot;, &quot;Nigeria&quot;, &quot;Brazil&quot;, &quot;Sri Lanka&quot;,
@@ -849,6 +852,7 @@ Africa
 </tbody>
 </table>
 </div>
+</div>
 <div id="tidy-data" class="section level1">
 <h1>“Tidy” Data</h1>
 <p>If you’re unsure of what “Tidy” data is actually describing and want to learn more, you can read Hadley Wickham’s article <a href="http://vita.had.co.nz/papers/tidy-data.html">here</a>. Otherwise, these graphics are likely the most concise explanation you’ll find.</p>
@@ -865,9 +869,8 @@ Africa
 
 </div>
 <p>With <code>tibble</code>s, <code>%&gt;%</code>, and the concept of tidy data covered, let’s take a dive.</p>
-</div>
-<div id="dplyr" class="section level1">
-<h1><code>{dplyr}</code></h1>
+<div id="dplyr" class="section level2">
+<h2><code>{dplyr}</code></h2>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png" />
 
@@ -882,6 +885,7 @@ Africa
 <li><code>summarize()</code></li>
 <li><code>group_by()</code></li>
 </ul>
+</div>
 <div id="taking-a-glimpse" class="section level2">
 <h2>Taking a <code>glimpse()</code></h2>
 <p>In addition to the <code>summary()</code>, <code>dim()</code>ensions, and <code>str()</code>ucture functions that can be used to inspect data, you can now use <code>{dplyr}</code>’s <code>glimpse()</code>.</p>
@@ -2315,9 +2319,8 @@ Asia
 </table>
 </div>
 </div>
-</div>
-<div id="ggplot-exercise-1" class="section level1">
-<h1><code>ggplot()</code> Exercise 1</h1>
+<div id="ggplot-exercise-1" class="section level2">
+<h2><code>ggplot()</code> Exercise 1</h2>
 <p><code>{ggplot2}</code> is monster of a package used for data visualization that follows <a href="https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448">The Grammar of Graphics</a>.</p>
 <p><code>{ggplot2}</code> takes R’s powerful graphics capabilities and makes them more accessible by taking care of many plotting tasks that are often tedious, while still allowing for lower-level customization.</p>
 <ul>
@@ -2350,6 +2353,7 @@ Asia
 <p class="caption">
 Figure 1: Figure 1
 </p>
+</div>
 </div>
 </div>
 <div id="filter-rows" class="section level1">
@@ -3278,9 +3282,8 @@ Europe
 </table>
 </div>
 </div>
-</div>
-<div id="ggplot-exercise-2" class="section level1">
-<h1><code>ggplot()</code> Exercise 2</h1>
+<div id="ggplot-exercise-2" class="section level2">
+<h2><code>ggplot()</code> Exercise 2</h2>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png" />
 
@@ -3303,6 +3306,7 @@ Europe
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries</code></pre>
 <p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-31-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="mutate-columns" class="section level1">
 <h1><code>mutate()</code> Columns</h1>
@@ -4400,9 +4404,8 @@ Europe
 </table>
 </div>
 </div>
-</div>
-<div id="ggplot-exercise-3" class="section level1">
-<h1><code>ggplot()</code> Exercise 3</h1>
+<div id="ggplot-exercise-3" class="section level2">
+<h2><code>ggplot()</code> Exercise 3</h2>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" />
 
@@ -4430,6 +4433,7 @@ Europe
   geom_line() +
   labs(title = &quot;GDP Over Time&quot;)</code></pre>
 <p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-37-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="arrange-rows" class="section level1">
 <h1><code>arrange()</code> Rows</h1>
@@ -5775,9 +5779,8 @@ Belgium
 </table>
 </div>
 </div>
-</div>
-<div id="ggplot-exercise-4" class="section level1">
-<h1><code>ggplot()</code> Exercise 4</h1>
+<div id="ggplot-exercise-4" class="section level2">
+<h2><code>ggplot()</code> Exercise 4</h2>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png" />
 
@@ -5808,6 +5811,7 @@ Belgium
   labs(title = &quot;Mean GDPs by Continent Over Time&quot;,
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
 <p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-46-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="summarize" class="section level1">
 <h1><code>summarize()</code></h1>
@@ -6205,9 +6209,8 @@ Oceania
 </table>
 </div>
 </div>
-</div>
-<div id="ggplot-exercise-5" class="section level1">
-<h1><code>ggplot()</code> Exercise 5</h1>
+<div id="ggplot-exercise-5" class="section level2">
+<h2><code>ggplot()</code> Exercise 5</h2>
 <div class="figure">
 <img src="http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png" />
 
@@ -6249,13 +6252,4 @@ Oceania
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
 <p><img src="/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-50-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
-<div id="reflection" class="section level1">
-<h1>Reflection</h1>
-<p>In preparation for this workshop series, I found a lot of inspiration in <a href="http://michaellevy.name/blog/useR-talk-on-teaching-R/">Michael Levy’s presentation on teaching R</a>, which itself echoes principles preached by other R advocates.</p>
-<p>One of my biggest takeaways is that <strong>live coding works</strong>.</p>
-<p>Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.</p>
-<p>Within a few short weeks of learning to code, it is surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language when you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.</p>
-<p>Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I’m half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn’t make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.</p>
-<p>Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you <em>already</em> suffered through them.</p>
-<p>I also think that the benefits of live coding go both ways. I found myself answering questions that framed things in ways that I had not even considered, but were exactly the way multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as inuitive for others as they were for me. On the flip-side, concepts that I remember struggling with may not be difficult at all for others to understand.</p>
 </div>
