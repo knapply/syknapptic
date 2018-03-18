@@ -68,7 +68,7 @@ If I could go back in time, it would have been awesome to have participants fill
 
 <br>
 
-Another huge takeaway is that __live coding works__.
+Another huge takeaway: __live coding works__.
 
 Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.
 
@@ -80,7 +80,7 @@ Live coding enforces a maximum speed in moving through exercises, which not only
 
 I also think that the benefits of live coding extend to the instructor as well. I found myself answering questions that framed things in ways that I had not even considered, but were exactly how multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.
 
-<br><br><br>
+<br>
 
 ... and now that we got the bloggyness of a blog post out of the way...
 
