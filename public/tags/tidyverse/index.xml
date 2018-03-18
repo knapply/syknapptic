@@ -8,7 +8,7 @@
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.com/tags/tidyverse/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://syknapptic.com/tags/tidyverse/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -17,10 +17,6187 @@
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.com/2018/03/yet-another-tidyverse-intro/</guid>
-      <description>ContextReflectionResources Up Fronttibble%&amp;gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+      <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#context&#34;&gt;Context&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#reflection&#34;&gt;Reflection&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#resources-up-front&#34;&gt;Resources Up Front&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tibble&#34;&gt;&lt;code&gt;tibble&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#section&#34;&gt;&lt;code&gt;%&amp;gt;%&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tidy-data&#34;&gt;“Tidy” Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#select-columns&#34;&gt;&lt;code&gt;select()&lt;/code&gt; columns&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#filter-rows&#34;&gt;&lt;code&gt;filter()&lt;/code&gt; Rows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mutate-columns&#34;&gt;&lt;code&gt;mutate()&lt;/code&gt; Columns&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#arrange-rows&#34;&gt;&lt;code&gt;arrange()&lt;/code&gt; Rows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#group_by-for-grouped-data&#34;&gt;&lt;code&gt;group_by()&lt;/code&gt; for Grouped Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#summarize&#34;&gt;&lt;code&gt;summarize()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 
-Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
-ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</description>
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521320144/tidyverse_meme_oceake.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Image credit to &lt;a href=&#34;https://www.facebook.com/Rmemes0/&#34;&gt;R Memes for Statistical Fiends&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.&lt;/p&gt;
+&lt;div id=&#34;context&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Context&lt;/h1&gt;
+&lt;p&gt;I recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.&lt;/p&gt;
+&lt;p&gt;A few things happened in the week following the last session that I didn’t expect.&lt;/p&gt;
+&lt;p&gt;First, I saw a bit of R code written on a campus whiteboard that had nothing to do with me, but was straight out of the workshop. It may have come from some of my data-centric colleagues who use R, so I didn’t think too much of it.&lt;/p&gt;
+&lt;p&gt;Then, I overheard a conversation involving R from those in a program that doesn’t require any data-related coursework. Many folks are familiar with the name as the school’s primary data analysis course uses the &lt;code&gt;{Rcmdr}&lt;/code&gt; GUI for statistical analysis, but these students would not have necessarily taken the course. I wondered if there was a connection.&lt;/p&gt;
+&lt;p&gt;Finally, a student who didn’t even attend came to my office hours asking for resources. Why exactly? Some of his work colleagues attended. It turns out that they are now trying to incorporate some R-powered analysis in their work and he doesn’t want to miss out.&lt;/p&gt;
+&lt;p&gt;The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That’s only a total of 4.5 hours.&lt;/p&gt;
+&lt;p&gt;That relatively tiny amount of time, but it was enough to convince participants &lt;em&gt;and non-participants&lt;/em&gt; that they should take advantage of the power that a bit of data-centric coding can offer.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reflection&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Reflection&lt;/h1&gt;
+&lt;p&gt;I taught a similar 90 minute workshop last spring using R, but focused on base R and a few data types. 10 minutes in, I’m trying to explain the difference between a &lt;code&gt;data.frame&lt;/code&gt; and a &lt;code&gt;matrix&lt;/code&gt; and the person asking the question says something along the lines of “I guess I’m kinda dumb. Don’t worry about it.”&lt;/p&gt;
+&lt;p&gt;For context, these were international policy graduate students. While some have completed a bit of quantitative coursework, most don’t have a hardcore math or science background and programming is seen as something akin to wizardry. However, they hold domain expertise in some rather important subjects. These include WMD nonproliferation, international development, economic diplomacy, conflict studies, and environmental policy. Nearly half of the participants were international students and everyone is proficient in at least a second natural languages. Most have already tackled big, complicated problems in their careers and the others are on their way to doing so following graduation. In a nutshell, they’re not dumb. The way I was teaching was dumb. They knew that they’re &lt;em&gt;supposed&lt;/em&gt; to want to learn new skills, but they didn’t know &lt;em&gt;why&lt;/em&gt;. Focusing on the “basics” didn’t show them anything immediately useful. It didn’t show them the &lt;em&gt;why&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;After the workshop, I never heard anyone mention R outside my circle of fellow data folks.&lt;/p&gt;
+&lt;p&gt;Since that time, I started using R more. &lt;em&gt;Like, a lot more&lt;/em&gt;. I have found a way to use R in nearly everything I’ve done since May 2017. As a policy student myself, that has not always been very straightforward and I was still avoiding the strange “tidy” code I’d encounter on Stack Overflow and elsewhere. I realized the error of my ways when I came across Julia Silge and David Robinson’s &lt;a href=&#34;%22https://www.tidytextmining.com/%22&#34;&gt;Text Mining with R&lt;/a&gt;. &lt;em&gt;It was like discovering that you’re still in the stone age while most people are off partying on spaceships.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In preparation for this workshop series, I found a lot of inspiration in &lt;a href=&#34;http://michaellevy.name/blog/useR-talk-on-teaching-R/&#34;&gt;Michael Levy’s presentation on teaching R&lt;/a&gt;, which itself echoes principles preached by other &lt;code&gt;tidyverse&lt;/code&gt; advocates.&lt;/p&gt;
+&lt;p&gt;A huge takeaway: &lt;strong&gt;live coding works&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report.&lt;/p&gt;
+&lt;p&gt;Within a few short weeks of learning to code, it might be surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you’re speaking in an entirely different language because you’re explaining something requiring context they simply haven’t yet encountered. Add a few years and… yeesh.&lt;/p&gt;
+&lt;p&gt;Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I’m half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn’t make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.&lt;/p&gt;
+&lt;p&gt;Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you’re doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you &lt;em&gt;already&lt;/em&gt; suffered through them.&lt;/p&gt;
+&lt;p&gt;I also think that the benefits of live coding extend to the instructor as well. I found myself answering questions that framed things in ways that I had not even considered, but were exactly how multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren’t necessarily as intuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;… and now that we got the bloggyness of a blog post out of the way…&lt;/p&gt;
+&lt;p&gt;Here is the workflow I used for the first session. The goal was to introduce the primary &lt;code&gt;{dplyr}&lt;/code&gt; verbs, functions that accomplish tasks necessary in nearly every project. Between each section is an exercise using &lt;code&gt;{ggplot}&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidyverse::tidyverse_logo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## * __  _    __   .    o           *  . 
+##  / /_(_)__/ /_ ___  _____ _______ ___ 
+## / __/ / _  / // / |/ / -_) __(_-&amp;lt;/ -_)
+## \__/_/\_,_/\_, /|___/\__/_/ /___/\__/ 
+##      *  . /___/      o      .       *&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# install.packages(&amp;quot;tidyverse&amp;quot;)
+library(tidyverse)
+
+# install.packages(&amp;quot;gapminder&amp;quot;)
+library(gapminder)
+# loads the gapminder data set
+
+## just to prettify printed tables when knitting
+# install.packages(&amp;quot;kableExtra&amp;quot;)
+library(knitr)
+library(kableExtra)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304416/workflow_2_wgqucd.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304418/workflow_i8nnfz.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidyverse_expanded_fhzkss.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;resources-up-front&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Resources Up Front&lt;/h1&gt;
+&lt;div id=&#34;data-carpentry&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data Carpentry&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://tidyr.tidyverse.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/tidyverse/tidyr/master/man/figures/logo.png&#34; /&gt;&lt;/a&gt; &lt;a href=&#34;http://dplyr.tidyverse.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/tidyverse/dplyr/master/man/figures/logo.png&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf&#34;&gt;Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304416/data_carpentry_f05agy.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plotting&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://ggplot2.tidyverse.org/&#34;&gt;&lt;img src=&#34;https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png&#34; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf&#34;&gt;Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304418/ggplot_cheat_sheet_dvnj16.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://shiny.stat.ubc.ca/r-graph-catalog/&#34;&gt;R Graph Catalog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304415/r_graph_catalog_r5uiuf.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;our-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Our Data&lt;/h2&gt;
+&lt;p&gt;In the following exercises, &lt;code&gt;gm.data.frame&lt;/code&gt; will be used to demonstrate actions that use &lt;code&gt;{base}&lt;/code&gt; R methods for &lt;code&gt;data.frame&lt;/code&gt; operations while &lt;code&gt;gm_df&lt;/code&gt; will be used to to demonstrate &lt;code&gt;{tidyverse}&lt;/code&gt; methods for &lt;code&gt;tibble&lt;/code&gt; operations.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm.data.frame &amp;lt;- as.data.frame(gapminder)
+
+gm_df &amp;lt;- gapminder&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tibble&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;tibble&lt;/code&gt;&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;class(gm.data.frame)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;data.frame&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;class(gm_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;tbl_df&amp;quot;     &amp;quot;tbl&amp;quot;        &amp;quot;data.frame&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;tibble&lt;/code&gt;s are opinionated &lt;code&gt;data.frame&lt;/code&gt;s that keep everything that is helpful about &lt;code&gt;data.frame&lt;/code&gt;s, changes some of their quirks, and adds methods that makes them even more useful.&lt;/p&gt;
+&lt;p&gt;Printing &lt;code&gt;gm.data.frame&lt;/code&gt; dumps the whole data set to the console, typically requiring &lt;code&gt;head()&lt;/code&gt; to limit the output.&lt;/p&gt;
+&lt;div id=&#34;printing&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Printing&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(gm.data.frame)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##       country continent year lifeExp      pop gdpPercap
+## 1 Afghanistan      Asia 1952  28.801  8425333  779.4453
+## 2 Afghanistan      Asia 1957  30.332  9240934  820.8530
+## 3 Afghanistan      Asia 1962  31.997 10267083  853.1007
+## 4 Afghanistan      Asia 1967  34.020 11537966  836.1971
+## 5 Afghanistan      Asia 1972  36.088 13079460  739.9811
+## 6 Afghanistan      Asia 1977  38.438 14880372  786.1134&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Printing &lt;code&gt;gm_df&lt;/code&gt; provides the dimensions, data type of each column, and only prints the first 10 rows.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1,704 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+##  1 Afghanistan Asia       1952    28.8  8425333       779
+##  2 Afghanistan Asia       1957    30.3  9240934       821
+##  3 Afghanistan Asia       1962    32.0 10267083       853
+##  4 Afghanistan Asia       1967    34.0 11537966       836
+##  5 Afghanistan Asia       1972    36.1 13079460       740
+##  6 Afghanistan Asia       1977    38.4 14880372       786
+##  7 Afghanistan Asia       1982    39.9 12881816       978
+##  8 Afghanistan Asia       1987    40.8 13867957       852
+##  9 Afghanistan Asia       1992    41.7 16317921       649
+## 10 Afghanistan Asia       1997    41.8 22227415       635
+## # ... with 1,694 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;section&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;%&amp;gt;%&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304412/magrittr_stxndz.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;The pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) is used to chain operations together. Underneath the hood, it’s taking the value on the left-hand side of &lt;code&gt;%&amp;gt;%&lt;/code&gt; and using it as the first argument of the function on the right-hand side of &lt;code&gt;%&amp;gt;%&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example, these 2 lines are doing the exact same thing.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(gm_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+## 4 Afghanistan Asia       1967    34.0 11537966       836
+## 5 Afghanistan Asia       1972    36.1 13079460       740
+## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;% head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+## 4 Afghanistan Asia       1967    34.0 11537966       836
+## 5 Afghanistan Asia       1972    36.1 13079460       740
+## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For simple operations involving 1 function, &lt;code&gt;%&amp;gt;%&lt;/code&gt; is only (arguably) beneficial in that it improves readability as the flow of operations go from left to right.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;%&amp;gt;%&lt;/code&gt; become truly useful when you need to perform multiple operations in succession, which is the vast majority of data carpentry.&lt;/p&gt;
+&lt;p&gt;As an arbitrary example, let’s say that we want to select the &lt;code&gt;head()&lt;/code&gt; (first 6 rows) of &lt;code&gt;gm.data.frame&lt;/code&gt; and convert it to a &lt;code&gt;tibble&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Without &lt;code&gt;%&amp;gt;%&lt;/code&gt;, we can do this in a few ways.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Use intermediate variables.
+&lt;ul&gt;
+&lt;li&gt;get &lt;code&gt;gm.data.frame&lt;/code&gt;’s &lt;code&gt;head()&lt;/code&gt; and assign it to &lt;code&gt;no_pipe_1&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;convert &lt;code&gt;no_pipe_1&lt;/code&gt; to a &lt;code&gt;tibble&lt;/code&gt; with &lt;code&gt;as_tibble()&lt;/code&gt; and assign it to &lt;code&gt;no_pipe_2&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;no_pipe_1 &amp;lt;- head(gm.data.frame)
+
+no_pipe_2 &amp;lt;- as_tibble(no_pipe_1)
+
+no_pipe_2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+## * &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+## 4 Afghanistan Asia       1967    34.0 11537966       836
+## 5 Afghanistan Asia       1972    36.1 13079460       740
+## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Nest &lt;code&gt;gm.data.frame&lt;/code&gt; inside of &lt;code&gt;head()&lt;/code&gt;, which is itself nested inside of &lt;code&gt;as_tibble()&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;as_tibble(head(gm.data.frame))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+## * &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+## 4 Afghanistan Asia       1967    34.0 11537966       836
+## 5 Afghanistan Asia       1972    36.1 13079460       740
+## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With &lt;code&gt;%&amp;gt;%&lt;/code&gt;, we can chain these actions together in the order in which they occur, which is also the way we read English.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Here, we do the same thing by:
+&lt;ul&gt;
+&lt;li&gt;taking &lt;code&gt;gm_df&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;piping it to &lt;code&gt;head()&lt;/code&gt; (keeping the top 6 rows)&lt;/li&gt;
+&lt;li&gt;piping it to &lt;code&gt;as_tibble()&lt;/code&gt; (converting it to a &lt;code&gt;tibble&lt;/code&gt; data frame)&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;% head() %&amp;gt;% as_tibble()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+## 4 Afghanistan Asia       1967    34.0 11537966       836
+## 5 Afghanistan Asia       1972    36.1 13079460       740
+## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In practice, it’s usually best to place each of the functions on a separate line as it facilitates debugging and further improves readability.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  as_tibble() %&amp;gt;%
+  head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
+## 1 Afghanistan Asia       1952    28.8  8425333       779
+## 2 Afghanistan Asia       1957    30.3  9240934       821
+## 3 Afghanistan Asia       1962    32.0 10267083       853
+## 4 Afghanistan Asia       1967    34.0 11537966       836
+## 5 Afghanistan Asia       1972    36.1 13079460       740
+## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;From here on, you’ll notice &lt;code&gt;prettify()&lt;/code&gt;. This is only being used to print tables in a clean format when the document is &lt;code&gt;knit()&lt;/code&gt;ted.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;I’m choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set &lt;code&gt;echo=FALSE&lt;/code&gt;, but it can be nice to see the underlying code without having to hunt through their GitHub.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;code&gt;data.frame&lt;/code&gt;s will print a default maximum of &lt;code&gt;3&lt;/code&gt; rows while &lt;code&gt;tibble&lt;/code&gt;s will print a default maximum of &lt;code&gt;10&lt;/code&gt; rows.&lt;/em&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;prettify &amp;lt;- function(df, n = NULL, cols_changed = NULL, rows_changed = NULL){
+  if(is.null(n)) n &amp;lt;- ifelse(is.tibble(df), 10, 3)
+  pretty_df &amp;lt;- df %&amp;gt;%
+    head(n) %&amp;gt;%
+    kable(format = &amp;quot;html&amp;quot;) %&amp;gt;%
+    kable_styling(bootstrap_options = c(&amp;quot;striped&amp;quot;, &amp;quot;bordered&amp;quot;, &amp;quot;condensed&amp;quot;,
+                                        &amp;quot;hover&amp;quot;, &amp;quot;responsive&amp;quot;),
+                  full_width = FALSE)
+  
+  if(!is.null(cols_changed)){
+    pretty_df &amp;lt;- pretty_df %&amp;gt;%
+      column_spec(cols_changed, bold = T, color = &amp;quot;black&amp;quot;, background = &amp;quot;#C8FAE3&amp;quot;)
+  }
+  
+  if(!is.null(rows_changed)){
+    pretty_df &amp;lt;- pretty_df %&amp;gt;%
+      row_spec(rows_changed, bold = T, color = &amp;quot;black&amp;quot;, background = &amp;quot;#C8FAE3&amp;quot;)
+  }
+  
+  return(pretty_df)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm.data.frame %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.801
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.801
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.020
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.088
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.438
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.854
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.822
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.674
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.763
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id=&#34;sample-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sample Data&lt;/h2&gt;
+&lt;p&gt;You’ll also see a toy data set for the introductory examples that start each section.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_countries &amp;lt;- c(&amp;quot;Tunisia&amp;quot;, &amp;quot;Nicaragua&amp;quot;, &amp;quot;Singapore&amp;quot;, &amp;quot;Hungary&amp;quot;,
+                      &amp;quot;New Zealand&amp;quot;, &amp;quot;Nigeria&amp;quot;, &amp;quot;Brazil&amp;quot;, &amp;quot;Sri Lanka&amp;quot;,
+                      &amp;quot;Ireland&amp;quot;, &amp;quot;Australia&amp;quot;)
+  
+sample_df &amp;lt;- gm_df %&amp;gt;%
+  filter(year == 2007,
+         country %in% sample_countries)
+
+sample_df %&amp;gt;%     
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81.235
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34435.367
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.390
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9065.801
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.338
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18008.944
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.885
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40675.996
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80.204
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25185.009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.899
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2749.321
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.859
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2013.977
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+79.972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47143.180
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.396
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3970.095
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.923
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7092.923
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidy-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;“Tidy” Data&lt;/h1&gt;
+&lt;p&gt;If you’re unsure of what “Tidy” data is actually describing and want to learn more, you can read Hadley Wickham’s article &lt;a href=&#34;http://vita.had.co.nz/papers/tidy-data.html&#34;&gt;here&lt;/a&gt;. Otherwise, these graphics are likely the most concise explanation you’ll find.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304415/tidy_data_u18bn6.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304416/tidy_data_2_mqba24.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304412/messy_tidy_qq4ba9.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;With &lt;code&gt;tibble&lt;/code&gt;s, &lt;code&gt;%&amp;gt;%&lt;/code&gt;, and the concept of tidy data covered, let’s take a dive.&lt;/p&gt;
+&lt;div id=&#34;dplyr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;{dplyr}&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/dplyr_xbk3wo.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;{dplyr}&lt;/code&gt; provides a grammar of data manipulation and a set of verb functions that solve most common data carpentry challenges in a consistent fashion.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;glimpse()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mutate()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;summarize()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_by()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;taking-a-glimpse&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Taking a &lt;code&gt;glimpse()&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;In addition to the &lt;code&gt;summary()&lt;/code&gt;, &lt;code&gt;dim()&lt;/code&gt;ensions, and &lt;code&gt;str()&lt;/code&gt;ucture functions that can be used to inspect data, you can now use &lt;code&gt;{dplyr}&lt;/code&gt;’s &lt;code&gt;glimpse()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(gm.data.frame)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##         country        continent        year         lifeExp     
+##  Afghanistan:  12   Africa  :624   Min.   :1952   Min.   :23.60  
+##  Albania    :  12   Americas:300   1st Qu.:1966   1st Qu.:48.20  
+##  Algeria    :  12   Asia    :396   Median :1980   Median :60.71  
+##  Angola     :  12   Europe  :360   Mean   :1980   Mean   :59.47  
+##  Argentina  :  12   Oceania : 24   3rd Qu.:1993   3rd Qu.:70.85  
+##  Australia  :  12                  Max.   :2007   Max.   :82.60  
+##  (Other)    :1632                                                
+##       pop              gdpPercap       
+##  Min.   :6.001e+04   Min.   :   241.2  
+##  1st Qu.:2.794e+06   1st Qu.:  1202.1  
+##  Median :7.024e+06   Median :  3531.8  
+##  Mean   :2.960e+07   Mean   :  7215.3  
+##  3rd Qu.:1.959e+07   3rd Qu.:  9325.5  
+##  Max.   :1.319e+09   Max.   :113523.1  
+## &lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(gm.data.frame)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1704    6&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(gm.data.frame)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;data.frame&amp;#39;:    1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels &amp;quot;Afghanistan&amp;quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels &amp;quot;Africa&amp;quot;,&amp;quot;Americas&amp;quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(gm_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Observations: 1,704
+## Variables: 6
+## $ country   &amp;lt;fct&amp;gt; Afghanistan, Afghanistan, Afghanistan, Afghanistan, ...
+## $ continent &amp;lt;fct&amp;gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia...
+## $ year      &amp;lt;int&amp;gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992...
+## $ lifeExp   &amp;lt;dbl&amp;gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.8...
+## $ pop       &amp;lt;int&amp;gt; 8425333, 9240934, 10267083, 11537966, 13079460, 1488...
+## $ gdpPercap &amp;lt;dbl&amp;gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 78...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;select-columns&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;select()&lt;/code&gt; columns&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304413/select_dtuw73.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;quick-example&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quick Example&lt;/h2&gt;
+&lt;div id=&#34;initial-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initial Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81.235
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34435.367
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.390
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9065.801
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.338
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18008.944
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.885
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40675.996
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80.204
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25185.009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.899
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2749.321
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.859
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2013.977
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+79.972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47143.180
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.396
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3970.095
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.923
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7092.923
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;end-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;End Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, pop) %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The &lt;code&gt;select()&lt;/code&gt; family is used to choose columns to keep. You can use bare (unquoted) names.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; columns by specific names.
+&lt;ul&gt;
+&lt;li&gt;select only &lt;code&gt;gm_df&lt;/code&gt;’s &lt;code&gt;country&lt;/code&gt; and &lt;code&gt;pop&lt;/code&gt; columns&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(country, year, pop) %&amp;gt;%            # select columns by specific names
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; a range of columns by name
+&lt;ul&gt;
+&lt;li&gt;select &lt;code&gt;gm_df&lt;/code&gt;’s &lt;code&gt;continent&lt;/code&gt; column and all columns from &lt;code&gt;lifeExp&lt;/code&gt; to &lt;code&gt;gdpPercap&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(continent, lifeExp:gdpPercap) %&amp;gt;%  # select columns name range
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.801
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.020
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.088
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.438
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.854
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.822
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.674
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.763
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;de&lt;code&gt;select()&lt;/code&gt; a column with &lt;code&gt;-&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; all of &lt;code&gt;gm_df&lt;/code&gt;’s columns except &lt;code&gt;lifeExp&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(-lifeExp) %&amp;gt;%                      # deselect column by name
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;de&lt;code&gt;select()&lt;/code&gt; a range of columns by name
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; all of &lt;code&gt;gm_df&lt;/code&gt;’s columns except those between &lt;code&gt;lifeExp&lt;/code&gt; and &lt;code&gt;gdpPercap&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(-c(lifeExp:gdpPercap)) %&amp;gt;%         # deselect column by name range
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; column by index
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt;’s &lt;code&gt;4&lt;/code&gt;th column&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(4) %&amp;gt;%                             # select column by index
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.801
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.332
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.997
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.020
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.088
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.438
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.854
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.822
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.674
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.763
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;de&lt;code&gt;select()&lt;/code&gt; a column by index
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; all of &lt;code&gt;gm_df&lt;/code&gt;’s columns except for the &lt;code&gt;4&lt;/code&gt;th column&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(-4) %&amp;gt;%                         # deselect column by index
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;de&lt;code&gt;select()&lt;/code&gt; a range of columns by index
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;select()&lt;/code&gt; all of &lt;code&gt;gm_df&lt;/code&gt;’s columns except those between the &lt;code&gt;3&lt;/code&gt;rd and &lt;code&gt;5&lt;/code&gt;th columns&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  select(-c(3:5)) %&amp;gt;%                    # deselect columns by index range
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot-exercise-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;ggplot()&lt;/code&gt; Exercise 1&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;{ggplot2}&lt;/code&gt; is monster of a package used for data visualization that follows &lt;a href=&#34;https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448&#34;&gt;The Grammar of Graphics&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;{ggplot2}&lt;/code&gt; takes R’s powerful graphics capabilities and makes them more accessible by taking care of many plotting tasks that are often tedious, while still allowing for lower-level customization.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Basic Setup&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;ggplot(&lt;/code&gt;&lt;em&gt;your data&lt;/em&gt;&lt;code&gt;, aes(x =&lt;/code&gt;&lt;em&gt;x values&lt;/em&gt;&lt;code&gt;, y =&lt;/code&gt;&lt;em&gt;y values&lt;/em&gt;&lt;code&gt;)) +&lt;/code&gt; &lt;br&gt; &lt;code&gt;geom_boxplot()&lt;/code&gt; &lt;em&gt;the type of plot geometry desired&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Steps&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Using &lt;code&gt;gm_df&lt;/code&gt;, select the &lt;code&gt;lifeExp&lt;/code&gt; column&lt;/li&gt;
+&lt;li&gt;Pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) the result to &lt;code&gt;ggplot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the plot’s &lt;code&gt;aes()&lt;/code&gt;thetic values
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;lifeExp&lt;/code&gt; for the &lt;code&gt;x&lt;/code&gt; values
+&lt;ul&gt;
+&lt;li&gt;a histogram’s &lt;code&gt;y&lt;/code&gt; are counts of its &lt;code&gt;x&lt;/code&gt; values, so we don’t provide them here&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;geom_histogram()&lt;/code&gt; as the geometry of the plot&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%                                     # data frame: Data
+  select(lifeExp) %&amp;gt;%                         # columns to keep: Data
+  ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
+  geom_histogram()                            # histogram: Geometries&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-39&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: Figure 1
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;filter-rows&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;filter()&lt;/code&gt; Rows&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;quick-example-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quick Example&lt;/h2&gt;
+&lt;div id=&#34;initial-data-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initial Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, lifeExp) %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81.235
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.390
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.338
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.885
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80.204
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.899
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.859
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+79.972
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.396
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.923
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;end-data-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;End Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, lifeExp) %&amp;gt;%
+  filter(lifeExp &amp;gt; 75) %&amp;gt;%
+  prettify(cols_changed = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+81.235
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+78.885
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+80.204
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+79.972
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Use &lt;code&gt;filter()&lt;/code&gt; to select rows using logic. Rows where a logical expression returns &lt;code&gt;TRUE&lt;/code&gt; are kept and others are dropped.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; rows where &lt;code&gt;numeric()&lt;/code&gt; values are greater or lesser than another value
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to only keep rows where &lt;code&gt;gdpPercap &amp;lt; 500&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(gdpPercap &amp;lt; 500) %&amp;gt;%
+  prettify(cols_changed = 6)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.031
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2445618
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+339.2965
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.533
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2667518
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+379.5646
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42.045
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2961915
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+355.2032
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43.548
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3330989
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+412.9775
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44.057
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3529983
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+464.0995
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+45.326
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6121610
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+463.1151
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2002
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.360
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7021078
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+446.4035
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Burundi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49.580
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8390505
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+430.0707
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Cambodia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.417
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4693836
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+368.4693
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Cambodia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.366
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5322536
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+434.0383
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; rows using multiple logical expressions where all must be &lt;code&gt;TRUE&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to only keep rows where &lt;code&gt;year &amp;gt; 1990&lt;/code&gt; &lt;em&gt;and&lt;/em&gt; &lt;code&gt;lifeExp &amp;lt; 40&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;,&lt;/code&gt; and &lt;code&gt;&amp;amp;&lt;/code&gt; are evaluated identically in &lt;code&gt;filter()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(year &amp;gt; 1990, lifeExp &amp;lt; 40) %&amp;gt;%
+  prettify(cols_changed = 3:4)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rwanda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+23.599
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7290203
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+737.0686
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Rwanda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+36.087
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7212583
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+589.9445
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sierra Leone
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+38.333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4260884
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1068.6963
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sierra Leone
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+39.897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4578212
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+574.6482
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Somalia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+39.658
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6099799
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+926.9603
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Swaziland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+39.613
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1133066
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4513.4806
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Zambia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2002
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+39.193
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10595811
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1071.6139
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Zimbabwe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2002
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+39.989
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11926563
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+672.0386
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; rows using multiple logical expressions where one must be &lt;code&gt;TRUE&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to only keep rows where &lt;code&gt;pop &amp;lt; 10000&lt;/code&gt; &lt;em&gt;or&lt;/em&gt; &lt;code&gt;gdpPercap &amp;gt; 100000&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;|&lt;/code&gt; means &lt;em&gt;or&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(pop &amp;lt; 10000 | gdpPercap &amp;gt; 100000) %&amp;gt;%
+  prettify(cols_changed = 5:6)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Kuwait
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55.565
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+160000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+108382.4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Kuwait
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58.033
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+212846
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+113523.1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Kuwait
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67.712
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+841934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+109347.9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; rows using a string
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to only keep rows where &lt;code&gt;year&lt;/code&gt; is &lt;code&gt;1999&lt;/code&gt; and &lt;code&gt;continent&lt;/code&gt; is &lt;code&gt;&amp;quot;Europe&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;==&lt;/code&gt; means &lt;em&gt;is equal to&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(year == 1997 &amp;amp; continent == &amp;quot;Europe&amp;quot;) %&amp;gt;%
+  prettify(cols_changed = 2:3)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Albania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.950
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3428038
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3193.055
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Austria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+77.510
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8069876
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29095.921
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Belgium
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+77.530
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10199787
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27561.197
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bosnia and Herzegovina
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.244
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3607000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4766.356
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bulgaria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.320
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8066057
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5970.389
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Croatia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.680
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4444595
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9875.605
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Czech Republic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74.010
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10300707
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16048.514
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Denmark
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+76.110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5283663
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29804.346
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Finland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+77.130
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5134406
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23723.950
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+France
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.640
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58623428
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25889.785
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot-exercise-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;ggplot()&lt;/code&gt; Exercise 2&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/filter_rbnuxp.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Steps&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Using &lt;code&gt;gm_df&lt;/code&gt;, select the &lt;code&gt;continent&lt;/code&gt;, &lt;code&gt;country&lt;/code&gt;, and &lt;code&gt;gdpPercap&lt;/code&gt; columns&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; the rows to only keep those where &lt;code&gt;continent == &amp;quot;Oceania&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pipe (&lt;code&gt;%&amp;gt;%&lt;/code&gt;) the result to &lt;code&gt;ggplot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the plot’s &lt;code&gt;aes()&lt;/code&gt;thetic values
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;country&lt;/code&gt; for the &lt;code&gt;x&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gdpPercap&lt;/code&gt; for the &lt;code&gt;y&lt;/code&gt; values&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;geom_boxplot()&lt;/code&gt; as the geometry of the plot&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%                                         # data frame: Data
+  select(continent, country, gdpPercap) %&amp;gt;%       # columns to keep: Data
+  filter(continent == &amp;quot;Oceania&amp;quot;) %&amp;gt;%              # rows to keep: Data
+  ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
+  geom_boxplot()                                  # box plot: Geometries&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mutate-columns&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;mutate()&lt;/code&gt; Columns&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304413/mutate_cskmnx.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;quick-example-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quick Example&lt;/h2&gt;
+&lt;div id=&#34;initial-data-2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initial Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, pop) %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;end-data-2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;End Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, pop) %&amp;gt;%
+  mutate(pop_in_thousands = pop / 1000) %&amp;gt;%
+  prettify(cols_changed = 3)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop_in_thousands
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+20434.176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+190010.647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9956.108
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+4109.086
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+4115.771
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+5675.356
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+135031.164
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+4553.009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+20378.239
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+10276.158
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Use &lt;code&gt;mutate()&lt;/code&gt; to manipulate column values and create new columns.&lt;/p&gt;
+&lt;p&gt;In order to &lt;code&gt;mutate()&lt;/code&gt; a column, use the name of the column you are manipulating and set its value using &lt;code&gt;=&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here’s a silly example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add a new column to &lt;code&gt;gm_df&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mutate()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to create a column named &lt;code&gt;planet&lt;/code&gt; and set its value to &lt;code&gt;&amp;quot;Earth&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  mutate(planet = &amp;quot;Earth&amp;quot;) %&amp;gt;%
+  prettify(cols_changed = 7)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+planet
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.801
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.020
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.088
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.438
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.854
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.822
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.674
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.763
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Earth
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Since we have &lt;code&gt;gdpPercap&lt;/code&gt; and &lt;code&gt;pop&lt;/code&gt;, we can calculate the values for a &lt;code&gt;total_GDP&lt;/code&gt; column.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;mutate()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to set the results of a calculation on each row to a new column
+&lt;ul&gt;
+&lt;li&gt;multiply &lt;code&gt;pop * gdpPercap&lt;/code&gt; and assign the result to &lt;code&gt;total_GDP&lt;/code&gt; inside &lt;code&gt;mutate()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  mutate(total_GDP = pop * gdpPercap) %&amp;gt;%
+  prettify(cols_changed = 7)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+total_GDP
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28.801
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8425333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+779.4453
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+6567086330
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30.332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9240934
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+820.8530
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+7585448670
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31.997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10267083
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+853.1007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+8758855797
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.020
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11537966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+836.1971
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9648014150
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.088
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13079460
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+739.9811
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9678553274
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.438
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+11697659231
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.854
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12881816
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+978.0114
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+12598563401
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40.822
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13867957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+852.3959
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+11820990309
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1992
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.674
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16317921
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+649.3414
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+10595901589
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1997
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.763
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22227415
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+635.3414
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+14121995875
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Typically, &lt;code&gt;mutate()&lt;/code&gt; is used to perform operations across columns in each individual row. You can also use &lt;em&gt;summary functions&lt;/em&gt; to perform operations on individual columns (acting as vectors) that result in a vector that can be assigned to a column.&lt;/p&gt;
+&lt;p&gt;Makes sense, right??&lt;/p&gt;
+&lt;p&gt;Let’s calculate the &lt;em&gt;z-score&lt;/em&gt; of each &lt;code&gt;gdpPercap&lt;/code&gt; value for a specific year.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[ z = \frac {x_i -\mu_x} {\sigma_x}\]&lt;/span&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; = &lt;code&gt;gdpPercap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&#34;math inline&#34;&gt;\(\mu_x\)&lt;/span&gt; = the mean of &lt;span class=&#34;math inline&#34;&gt;\(x\)&lt;/span&gt; = &lt;code&gt;mean(gdpPercap)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(\sigma_x\)&lt;/span&gt; = the standard deviation of x = &lt;code&gt;sd(gdpPercap)&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;Use a &lt;em&gt;summary function&lt;/em&gt; to perform a a calculation involving summary statistics of a column
+&lt;ul&gt;
+&lt;li&gt;subtract &lt;code&gt;mean(gdpPercap)&lt;/code&gt; from &lt;code&gt;gdpPercap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;divide the result by &lt;code&gt;sd(gdpPercap)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;set the results as the values of a new column called &lt;code&gt;gdp_per_cap_z_score&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(year == 1977) %&amp;gt;%
+  mutate(gdp_per_cap_z_score = (gdpPercap - mean(gdpPercap)) / sd(gdpPercap)) %&amp;gt;%
+  prettify(cols_changed = 7)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdp_per_cap_z_score
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38.438
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14880372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+786.1134
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+-0.7805156
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Albania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.930
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2509048
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3533.0039
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+-0.4520380
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Algeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58.014
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17152804
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4910.4168
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+-0.2873247
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Angola
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.483
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6162675
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3008.6474
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+-0.5147414
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Argentina
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.481
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26983828
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10079.0267
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+0.3307461
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.490
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14074100
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18334.1975
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1.3179128
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Austria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.170
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7568430
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19749.4223
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1.4871476
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bahrain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65.593
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+297410
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19340.1020
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1.4382004
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bangladesh
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.923
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80428306
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+659.8772
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+-0.7956111
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Belgium
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.800
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9821800
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19117.9745
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+1.4116381
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Here are other functions that can be used similarly:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Summary Functions&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;first()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;min()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;last()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;max()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;nth()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mean()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;n()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;median()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;n_distinct()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;var()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;IQR()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;sd()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot-exercise-3&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;ggplot()&lt;/code&gt; Exercise 3&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Steps&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Using &lt;code&gt;gm_df&lt;/code&gt;, &lt;code&gt;select()&lt;/code&gt; &lt;code&gt;country&lt;/code&gt;, &lt;code&gt;year&lt;/code&gt;, and &lt;code&gt;gdpPercap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; the rows to keep only those where &lt;code&gt;country&lt;/code&gt; is &lt;code&gt;&amp;quot;Korea, Rep.&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;Korea, Dem. Rep.&amp;quot;&lt;/code&gt;, &lt;code&gt;&amp;quot;Japan&amp;quot;&lt;/code&gt;, or &lt;code&gt;&amp;quot;China&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pipe the result to &lt;code&gt;ggplot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the plot’s &lt;code&gt;aes()&lt;/code&gt;thetic values
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;year&lt;/code&gt; for the &lt;code&gt;x&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;gdpPercap&lt;/code&gt; for the &lt;code&gt;y&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;country&lt;/code&gt; for the &lt;code&gt;color&lt;/code&gt; values&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;Add &lt;code&gt;geom_line()&lt;/code&gt; as the geometry of the plot&lt;/li&gt;
+&lt;li&gt;Add a &lt;code&gt;title&lt;/code&gt; to the plot with &lt;code&gt;labs()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(country %in% c(&amp;quot;Korea, Rep.&amp;quot;, &amp;quot;Korea, Dem. Rep.&amp;quot;, &amp;quot;Japan&amp;quot;, &amp;quot;China&amp;quot;)) %&amp;gt;%
+  mutate(total_GDP = pop * gdpPercap) %&amp;gt;%
+  ggplot(aes(x = year, y = gdpPercap, color = country)) +
+  geom_line() +
+  labs(title = &amp;quot;GDP Over Time&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;arrange-rows&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;arrange()&lt;/code&gt; Rows&lt;/h1&gt;
+&lt;div id=&#34;quick-example-3&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quick Example&lt;/h2&gt;
+&lt;div id=&#34;initial-data-3&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initial Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, gdpPercap) %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34435.367
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9065.801
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18008.944
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40675.996
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25185.009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2749.321
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2013.977
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47143.180
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3970.095
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7092.923
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;end-data-3&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;End Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, gdpPercap)%&amp;gt;%
+  arrange(gdpPercap) %&amp;gt;%
+  prettify(cols_changed = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2013.977
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2749.321
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+3970.095
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+7092.923
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9065.801
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+18008.944
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+25185.009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+34435.367
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+40675.996
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+47143.180
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Use &lt;code&gt;arrange()&lt;/code&gt; to sort rows.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt; by ascending number (smallest to largest)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt;’s &lt;code&gt;pop&lt;/code&gt; column so that smallest populations are on top&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  arrange(pop) %&amp;gt;%
+  prettify(cols_changed = 5)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.471
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+60011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+879.5836
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+48.945
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+61325
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+860.7369
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Djibouti
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.812
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+63149
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2669.5295
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51.893
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+65345
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1071.5511
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1967
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+54.425
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+70787
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1384.8406
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Djibouti
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1957
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37.328
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+71851
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2864.9691
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+56.480
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+76595
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1532.9853
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1977
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58.550
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+86796
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1737.5617
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Djibouti
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1962
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.693
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+89898
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3020.9893
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sao Tome and Principe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1982
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+60.351
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+98593
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1890.2181
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt; by &lt;code&gt;desc()&lt;/code&gt; number (largest to smallest)
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt; the &lt;code&gt;lifeExp&lt;/code&gt; column so that largest values are on top&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  arrange(desc(lifeExp)) %&amp;gt;%
+  prettify(cols_changed = 4)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Japan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+82.603
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+127467972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31656.07
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hong Kong, China
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+82.208
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6980412
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39724.98
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Japan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2002
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+82.000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+127065841
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28604.59
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Iceland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+81.757
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+301931
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36180.79
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Switzerland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+81.701
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7554661
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37506.42
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hong Kong, China
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2002
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+81.495
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6762476
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30209.02
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+81.235
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34435.37
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Spain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+80.941
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40448191
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28821.06
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sweden
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+80.884
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9031088
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33859.75
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Israel
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+80.745
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6426679
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25523.28
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt; alphabetically
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; &lt;code&gt;gm_df&lt;/code&gt; to keep only those rows where &lt;code&gt;year == 2007&lt;/code&gt; and &lt;code&gt;continent == &amp;quot;Americas&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;arrange()&lt;/code&gt; the &lt;code&gt;country&lt;/code&gt; column alphabetically&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(year == 2007, continent == &amp;quot;Americas&amp;quot;) %&amp;gt;%
+  arrange(country) %&amp;gt;%
+  prettify(cols_changed = 2:3)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+gdpPercap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Argentina
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+75.320
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40301927
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12779.380
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bolivia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65.554
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9119152
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3822.137
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.390
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9065.801
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Canada
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80.653
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33390141
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36319.235
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Chile
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.553
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16284741
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13171.639
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Colombia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.889
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44227550
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7006.580
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Costa Rica
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.782
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4133884
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9645.061
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Cuba
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.273
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11416987
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8948.103
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Dominican Republic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.235
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9319622
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6025.375
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ecuador
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+2007
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74.994
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13755680
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6873.262
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;group_by-for-grouped-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;group_by()&lt;/code&gt; for Grouped Data&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304412/group_by_oex4zw.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;quick-example-4&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quick Example&lt;/h2&gt;
+&lt;div id=&#34;initial-data-4&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initial Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, continent, pop) %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;end-data-4&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;End Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, continent, pop) %&amp;gt;%
+  group_by(continent) %&amp;gt;%
+  mutate(pop_by_continent = sum(pop)) %&amp;gt;%
+  ungroup() %&amp;gt;%
+  arrange(pop_by_continent) %&amp;gt;%
+  prettify(cols_changed = 4)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop_by_continent
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+14065194
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+14065194
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+24549947
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+24549947
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+24931248
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+24931248
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+145307322
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+145307322
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+195686003
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+195686003
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;code&gt;group_by()&lt;/code&gt; allows us to group rows together based on column values.&lt;/p&gt;
+&lt;p&gt;Let’s say we wanted to compute summary values for each country for all years.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Calculate the &lt;code&gt;mean_gdp_per_cap&lt;/code&gt; of each &lt;code&gt;country&lt;/code&gt; with &lt;code&gt;group_by()&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;take &lt;code&gt;gm_df&lt;/code&gt; and &lt;code&gt;group_by()&lt;/code&gt; &lt;code&gt;country&lt;/code&gt; to group rows of the same country together&lt;/li&gt;
+&lt;li&gt;use &lt;code&gt;mean()&lt;/code&gt; to calculate the &lt;code&gt;mean_gdp_per_cap&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ungroup()&lt;/code&gt; the rows
+&lt;ul&gt;
+&lt;li&gt;a habit you want&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;keep only those rows with &lt;code&gt;distinct()&lt;/code&gt; combinations of &lt;code&gt;country&lt;/code&gt; and &lt;code&gt;mean_gdp_per_cap&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;distinct()&lt;/code&gt;’s default is to only keep columns used as arguments&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  group_by(country) %&amp;gt;%
+  mutate(mean_gdp_per_cap = median(gdpPercap)) %&amp;gt;% 
+  ungroup() %&amp;gt;%
+  distinct(country, mean_gdp_per_cap) %&amp;gt;% 
+  prettify(cols_changed = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+mean_gdp_per_cap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Afghanistan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+803.4832
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Albania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+3253.2384
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Algeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+4853.8559
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Angola
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+3264.6288
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Argentina
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9068.7844
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+18905.6034
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Austria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+20673.2530
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bahrain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+18779.8016
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Bangladesh
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+703.7638
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Belgium
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+20048.9102
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot-exercise-4&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;ggplot()&lt;/code&gt; Exercise 4&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_exercise_1_zaiiv1.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Steps&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Using &lt;code&gt;gm_df&lt;/code&gt;, &lt;code&gt;group_by()&lt;/code&gt; the &lt;code&gt;continent&lt;/code&gt; and &lt;code&gt;year&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mutate()&lt;/code&gt; to add a column called &lt;code&gt;mean_gdp&lt;/code&gt; for the average GDP of each continent&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ungroup()&lt;/code&gt; the data, because this is a habit that will save you headaches later&lt;/li&gt;
+&lt;li&gt;Keep only &lt;code&gt;distinct()&lt;/code&gt; combinations of &lt;code&gt;continent&lt;/code&gt;, &lt;code&gt;year&lt;/code&gt;, and &lt;code&gt;mean_gdp&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Pipe the result to &lt;code&gt;ggplot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the plot’s &lt;code&gt;aes()&lt;/code&gt;thetic values
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;year&lt;/code&gt; for the &lt;code&gt;x&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mean_gdp&lt;/code&gt; for the &lt;code&gt;y&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;continent&lt;/code&gt; for the &lt;code&gt;color&lt;/code&gt; values&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;geom_line()&lt;/code&gt; as the geometry of the plot&lt;/li&gt;
+&lt;li&gt;Add a &lt;code&gt;title&lt;/code&gt; and a &lt;code&gt;caption&lt;/code&gt; (for the source of the data) to the plot with &lt;code&gt;labs()&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  group_by(year, continent) %&amp;gt;%
+  mutate(mean_gdp = mean(gdpPercap)) %&amp;gt;%
+  ungroup() %&amp;gt;%
+  distinct(continent, year, mean_gdp) %&amp;gt;%
+  ggplot(aes(x = year, y = mean_gdp, color = continent)) +
+  geom_line() +
+  labs(title = &amp;quot;Mean GDPs by Continent Over Time&amp;quot;,
+       caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summarize&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;code&gt;summarize()&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304414/summarize_tq1nfp.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;quick-example-5&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quick Example&lt;/h2&gt;
+&lt;div id=&#34;initial-data-5&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Initial Data&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, continent, lifeExp, pop) %&amp;gt;%
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+country
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+lifeExp
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+pop
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Australia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+81.235
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brazil
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.390
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hungary
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.338
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Ireland
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78.885
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4109086
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+New Zealand
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80.204
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4115771
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nicaragua
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.899
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5675356
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Nigeria
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46.859
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Singapore
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+79.972
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4553009
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sri Lanka
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72.396
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tunisia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+73.923
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10276158
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_df %&amp;gt;%
+  select(country, continent, lifeExp, pop) %&amp;gt;%
+  group_by(continent) %&amp;gt;%
+  summarise(max_pop = max(pop),
+            mean_life_exp = mean(lifeExp)) %&amp;gt;%
+  prettify(cols_changed = 2:3)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+max_pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+mean_life_exp
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+135031164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+60.3910
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+190010647
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+72.6445
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+20378239
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+76.1840
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9956108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+76.1115
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+20434176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+80.7195
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Now that we know how to use &lt;code&gt;group_by()&lt;/code&gt;, we can &lt;code&gt;summarize()&lt;/code&gt; data by group. This can be done using all of the &lt;em&gt;summary functions&lt;/em&gt; seen earlier.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Summary Functions&lt;/th&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;first()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;min()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;last()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;max()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;nth()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;mean()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;n()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;median()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;&lt;code&gt;n_distinct()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;var()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;&lt;code&gt;IQR()&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;sd()&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;ul&gt;
+&lt;li&gt;Calculate some summary statistics for each continent.
+&lt;ul&gt;
+&lt;li&gt;take &lt;code&gt;gm_df&lt;/code&gt; and &lt;code&gt;group_by()&lt;/code&gt; &lt;code&gt;continent&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;using &lt;code&gt;summarize()&lt;/code&gt; or &lt;code&gt;summarise()&lt;/code&gt;, calculate:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;count&lt;/code&gt; with &lt;code&gt;n()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mean_pop&lt;/code&gt; with &lt;code&gt;mean()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;max_gdp_per_cap&lt;/code&gt; with &lt;code&gt;max()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  group_by(continent) %&amp;gt;%
+  summarise(count = n(),
+            mean_pop = mean(pop),
+            max_gdp_per_cap = max(gdpPercap)) %&amp;gt;%
+  prettify(cols_changed = 2:4)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-bordered table-condensed table-hover table-responsive&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+continent
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+count
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+mean_pop
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+max_gdp_per_cap
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Africa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+624
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+9916003
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+21951.21
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Americas
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+300
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+24504795
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+42951.65
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Asia
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+396
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+77038722
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+113523.13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Europe
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+360
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+17169765
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+49357.19
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Oceania
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+8874672
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;font-weight: bold;color: black;background-color: #C8FAE3;&#34;&gt;
+34435.37
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot-exercise-5&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;ggplot()&lt;/code&gt; Exercise 5&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521304410/ggplot_layers_all_qdmz44.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Steps&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Using &lt;code&gt;gm_df&lt;/code&gt;, &lt;code&gt;filter()&lt;/code&gt; the data to remove rows where &lt;code&gt;continent&lt;/code&gt; is not &lt;code&gt;&amp;quot;Oceania&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;group_by()&lt;/code&gt; &lt;code&gt;continent&lt;/code&gt; and &lt;code&gt;year&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;summarize()&lt;/code&gt; the groups by calculating them &lt;code&gt;mean()&lt;/code&gt; of &lt;code&gt;pop&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ungroup()&lt;/code&gt; the data, because this is a habit that will save you headaches later&lt;/li&gt;
+&lt;li&gt;Pipe the results to &lt;code&gt;ggplot()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select the plot’s &lt;code&gt;aes()&lt;/code&gt;thetics
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;year&lt;/code&gt; for the &lt;code&gt;x&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mean_pop&lt;/code&gt; for the &lt;code&gt;y&lt;/code&gt; values&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;continent&lt;/code&gt; for the &lt;code&gt;color&lt;/code&gt; values&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;geom_line()&lt;/code&gt; for the first geometry&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;geom_point()&lt;/code&gt; for the second geometry&lt;/li&gt;
+&lt;li&gt;Change the theme by adding &lt;code&gt;theme_minimal()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Using &lt;code&gt;facet_wrap()&lt;/code&gt;, split the plot into panels for each &lt;code&gt;continent&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;~&lt;/code&gt; is used as a &lt;code&gt;formula&lt;/code&gt; to select the facet variable&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Add a &lt;code&gt;title&lt;/code&gt; and a &lt;code&gt;caption&lt;/code&gt; with &lt;code&gt;labs()&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
+  filter(continent != &amp;quot;Oceania&amp;quot;) %&amp;gt;%
+  group_by(continent, year) %&amp;gt;%
+  summarise(mean_pop = mean(pop)) %&amp;gt;%
+  ungroup() %&amp;gt;%
+  ggplot(aes(x = year, y = mean_pop,
+             color = continent)) +
+  geom_line() +
+  geom_point() +
+  theme_minimal() +
+  facet_wrap(~ continent) +
+  labs(title = &amp;quot;Mean Continent Populations over Time&amp;quot;,
+       caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;النهاية&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>
