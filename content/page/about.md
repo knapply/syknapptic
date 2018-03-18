@@ -15,7 +15,7 @@ thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/lo
 
 Hi, I'm Brendan. I'm interested in developing the data-driven insights required to fully enable decision makers.
 
-Topically, my primarily focus is national security issues. Considering the wildly interdisciplinary nature of such work, I am constantly exploring different fields.
+Topically, I primarily focus on national security issues. Considering the wildly interdisciplinary nature of such work, I am constantly exploring different fields.
 
 In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats. When I finally returned to formal academia, I developed a love for data analysis and programming. Since then, I have focused on the fusion of computational and quantitative methods with rich domain knowledge in topics spanning hybrid conflict, terrorism, insurgency, WMD, and threat finance.
 
