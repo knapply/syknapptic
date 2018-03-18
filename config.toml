@@ -117,6 +117,15 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
   url = "/index.xml"
+  
+  [[menu.misc]]
+  weight = 1
+  identifier = "rbloggers"
+  name = "R-bloggers"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
+  url = "https://www.r-bloggers.com/"
+  
+  
 
 [params]
   # Customize date format use to render blog post date, categories and other
