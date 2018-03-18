@@ -36,6 +36,8 @@ Image credit to [R Memes for Statistical Fiends](https://www.facebook.com/Rmemes
 
 <br>
 
+Considering this is a blog post, I'm going to get all bloggy here before jumping into the code.
+
 # Context
 
 I recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops. Some had already dabbled in R or other programming languages, but it was the first time that the majority of participants had written a single line of code.
@@ -44,49 +46,43 @@ A few things happened in the week following the last session that I didn't expec
 
 First,I saw a bit of R code written on a campus whiteboard that had nothing to do with myself, but was straight out of the workshop. It may have come from some of my data-centric colleagues who use R, so I didn't read too far into it.
 
-Then, I overheard a conversation involving R from those in a program that doesn't require any data-related coursework. Many folks are familiar with the name as the school's primary data analysis course uses the `{Rcmdr}` GUI for statistical analysis, but these students would not have necessarily taken the course. I was cautiously optimistic.
+Then, I overheard a conversation involving R from those in a program that doesn't require any data-related coursework. Many folks are familiar with the name as the school's primary data analysis course uses the `{Rcmdr}` GUI for statistical analysis, but these students would not have necessarily taken the course. I wondered if there was a connection.
 
-Finally, a student who didn't even attend came to my office hours asking for resources. Why exactly? Some of his work colleagues attended. Apparently, they are now trying to incorporate some R-powered analysis in their work and he doesn't want to miss out.
+Finally, a student who didn't even attend came to my office hours asking for resources. Why exactly? Some of his work colleagues attended. It turns out that they are now trying to incorporate some R-powered analysis in their work and he doesn't want to miss out.
 
 The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That's only a total of 4.5 hours.
 
-Even in that short amount of time, a gentle introduction to R was enough to convince participants (and non-participants!) to take advantage of the power that a bit of data-centric coding can offer.
+That relatively tiny amount of time was enough to convince participants _and non-participants_ that they should take advantage of the power that a bit of data-centric coding can offer.
 
 # Reflection
 
-I taught a similar 90 minute workshop last spring using R, but focussed on data types. 10 minutes in, I'm trying to explain the difference between `data.frame` and a `matrix` and the person asking the question says something along the lines of "I guess I'm kinda dumb. Don't worry about it."
+I taught a similar 90 minute workshop last spring using R, but focused on base R and a few data types. 10 minutes in, I'm trying to explain the difference between a `data.frame` and a `matrix` and the person asking the question says something along the lines of "I guess I'm kinda dumb. Don't worry about it."
 
-For context, these were international policy graduate students. While some have completed a bit of quantitative coursework, most don't have a hardcore math or science background and programming is seen as something akin to wizardry. That said, they hold domain expertise in some rather important subjects. These include WMD nonproliferation, international development, economic diplomacy, conflict studies, and environmental policy. Nearly half of the participants were international students and everyone holds proficiency in minimally two natural languages. Most have already tackled big, critical problems in their careers and the others are on their way to doing so following graduation. In a nutshell, they're not dumb. The way I was teaching was dumb. After the workshop, I never heard anyone mention R outside my circle of fellow data folks.
+For context, these were international policy graduate students. While some have completed a bit of quantitative coursework, most don't have a hardcore math or science background and programming is seen as something akin to wizardry. However, they hold domain expertise in some rather important subjects. These include WMD nonproliferation, international development, economic diplomacy, conflict studies, and environmental policy. Nearly half of the participants were international students and everyone is proficient in at least a second natural languages. Most have already tackled big, complicated problems in their careers and the others are on their way to doing so following graduation. In a nutshell, they're not dumb. The way I was teaching was dumb. They knew that they're _supposed_ to want to learn new skills, but they didn't know _why_. Focusing on the "basics" didn't show them anything immediately useful. It didn't show them the _why_.
 
-Since that time, I started using R more. _Like, a lot more_. I was still avoiding the strange "tidy" code I'd encounter on Stack Overflow, but I realized the error of my ways when I came across Julia Silge and David Robinson's [Text Mining with R]("https://www.tidytextmining.com/"). It was like discovering that you're still in the stone age while most people were off partying on spaceships.
+After the workshop, I never heard anyone mention R outside my circle of fellow data folks.
 
-With that in mind, I knew if I ever had a chance to teach a bit of R code again, I would do so differently. The more code I wrote and the more insights from others I read, the more it became pretty obvious that `tidyverse` first makes sense.
+Since that time, I started using R more. _Like, a lot more_. I have found a way to use R in nearly everything I've done since May 2017. As a policy student myself, that has not always been very straightforward and I was still avoiding the strange "tidy" code I'd encounter on Stack Overflow and elsewhere. I realized the error of my ways when I came across Julia Silge and David Robinson's [Text Mining with R]("https://www.tidytextmining.com/"). _It was like discovering that you're still in the stone age while most people are off partying on spaceships._
 
 In preparation for this workshop series, I found a lot of inspiration in [Michael Levy's presentation on teaching R](http://michaellevy.name/blog/useR-talk-on-teaching-R/), which itself echoes principles preached by other `tidyverse` advocates.
 
-If I could go back in time, it would have been awesome to have participants fill out surveys after the `base` workshop and after the `tidyverse` workshop for a less anecdotal comparison. Regardless, the level of engagement and type of response could not be more different.
+A huge takeaway: __live coding works__.
 
-<br>
+Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report.
 
-Another huge takeaway: __live coding works__.
-
-Writing code in real time shows every single step we make from opening the IDE, to reshaping the data, to debugging inevitable errors, to rendering a final report to communicate results.
-
-Within a few short weeks of learning to code, it might be surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you're speaking in an entirely different language when you're explaining something requiring context they simply haven't yet encountered. Add a few years and... yeesh.
+Within a few short weeks of learning to code, it might be surprising how many tiny steps become automatic and taken for granted. Tack on a couple more months and newcomers will think you're speaking in an entirely different language because you're explaining something requiring context they simply haven't yet encountered. Add a few years and... yeesh.
 
 Something that frustrated me when I first started is that code explanations often seem to be written in such a way that dismisses how difficult establishing the basics can be. I'm half-convinced that, for some folks, the trauma was so great that they have simply blocked it from memory. Code is intimidating enough, but if an instructor doesn't make a conscious effort to empathize, students will question their ability to learn. The goal is empowerment, not intimidation.
 
 Live coding enforces a maximum speed in moving through exercises, which not only gives students more time to digest what you're doing. It also provides more opportunities for them to ask questions on details you might find trivial, but only because you _already_ suffered through them.
 
-I also think that the benefits of live coding extend to the instructor as well. I found myself answering questions that framed things in ways that I had not even considered, but were exactly how multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as inuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.
+I also think that the benefits of live coding extend to the instructor as well. I found myself answering questions that framed things in ways that I had not even considered, but were exactly how multiple participants saw the task. Additionally, I have a better sense of which concepts need to be covered in more detail, as they weren't necessarily as intuitive for others as they were for me. On the flip-side, concepts with which I remember struggling may not be difficult at all for others to understand.
 
 <br>
 
 ... and now that we got the bloggyness of a blog post out of the way...
 
-Here is the workflow I used for the first session. The goal was to introduce the primary `{dplyr}` verbs, functions that accomplish tasks neccesary in nearly every project. Between each section is an exercise using `{ggplot}`. 
-
-The strategy is similar to many I've seen in the [#Rstats](https://twitter.com/search?q=%23rstats) community: introduce __useful__ tools immediately and reinforce them through multiple passes in slightly different contexts. 
+Here is the workflow I used for the first session. The goal was to introduce the primary `{dplyr}` verbs, functions that accomplish tasks necessary in nearly every project. Between each section is an exercise using `{ggplot}`. 
 
 ```{r}
 tidyverse::tidyverse_logo()
@@ -175,9 +171,9 @@ include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1521304415/
 
 
 
-<br><br><br><br>
+<br>
 
-## Gapminder Data
+## Our Data
 
 In the following exercises, `gm.data.frame` will be used to demonstrate actions that use `{base}` R methods for `data.frame` operations while `gm_df` will be used to to demonstrate `{tidyverse}` methods for `tibble` operations.
 
@@ -887,7 +883,7 @@ Summary Functions |
 `n_distinct()`    | `var()`
 `IQR()`           | `sd()`
 
-* Calculate some summary statitics for each continent.
+* Calculate some summary statistics for each continent.
     + take `gm_df` and `group_by()` `continent`
     + using `summarize()` or `summarise()`, calculate:
         + `count` with `n()`
