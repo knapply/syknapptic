@@ -13,19 +13,26 @@ thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/lo
     }
 </style>
 
-Hi, I'm Brendan. I'm interested in developing the data-driven insights required to fully enable decision makers.
+Hi, I'm Brendan. I'm interested in using data to develop evidence-based insights.
 
-Topically, I primarily focus on national security issues. Considering the wildly interdisciplinary nature of such work, I am constantly exploring different fields.
+I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I'm constantly exploring theories and methods that developed in other fields.
 
-In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats. When I finally returned to formal academia, I developed a love for data analysis and programming. Since then, I have focused on the fusion of computational and quantitative methods with rich domain knowledge in topics spanning hybrid conflict, terrorism, insurgency, WMD, and threat finance.
+In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.
+
+When I finally had a chance to return to academia, I developed a love for data analysis and programming. This was primarily fueled by a fascination with network analysis. 
+
+Since then, I have focused on the fusion of computational methods with domain expertise in topics spanning hybrid conflict, insurgency, WMD, and threat finance.
+
+Disciplines that I've used in my work include network analysis, spatial statistics, remote sensing, natural language processing, and machine learning. 
 
 # About this Blog
 
 ![](http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png)
 
-This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.
+My goal is to address the interests of two audiences that are oftentimes more distinct than I'd like: 
 
-The topics will seek to address the interests of two audiences that are oftentimes more distinct than I'd like: those with an interest in data analysis (R enthusiasts in particular) and those interested in open-source intelligence. 
+* those with an interest in modern data analysis (R enthusiasts in particular)
+* those interested in open-source intelligence.
 
 ## Motivation
 
