@@ -52,7 +52,13 @@ Finally, a student who didn't even attend came to my office hours asking for res
 
 The workshop consisted of 3 consecutive Fridays lasting 90 minutes each. That's only a total of 4.5 hours.
 
-That relatively tiny amount of time, but it was enough to convince participants _and non-participants_ that they should take advantage of the power that a bit of data-centric coding can offer.
+That's relatively tiny amount of time. 
+
+Wait. Scratch that.
+
+That's a __negligible__ amount of time.
+
+... but it was enough to convince some participants _and non-participants_ that they should take advantage of the power that a bit of data-centric coding can offer.
 
 # Reflection
 
