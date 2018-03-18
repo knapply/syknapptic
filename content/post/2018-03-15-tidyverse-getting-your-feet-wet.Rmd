@@ -44,7 +44,7 @@ I recently had the opportunity to teach some R coding to colleagues and classmat
 
 A few things happened in the week following the last session that I didn't expect.
 
-First,I saw a bit of R code written on a campus whiteboard that had nothing to do with myself, but was straight out of the workshop. It may have come from some of my data-centric colleagues who use R, so I didn't read too far into it.
+First, I saw a bit of R code written on a campus whiteboard that had nothing to do with me, but was straight out of the workshop. It may have come from some of my data-centric colleagues who use R, so I didn't think too much of it.
 
 Then, I overheard a conversation involving R from those in a program that doesn't require any data-related coursework. Many folks are familiar with the name as the school's primary data analysis course uses the `{Rcmdr}` GUI for statistical analysis, but these students would not have necessarily taken the course. I wondered if there was a connection.
 
