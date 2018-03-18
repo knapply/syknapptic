@@ -203,7 +203,7 @@ head(gm.data.frame)
 ```
 
 
-Printing the `gm_df` provides the dimensions, data type of each column, and only prints the first 10 rows.
+Printing `gm_df` provides the dimensions, data type of each column, and only prints the first 10 rows.
 
 ```{r}
 gm_df
