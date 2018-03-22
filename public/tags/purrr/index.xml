@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Purrr on syknapptic</title>
+    <link>https://syknapptic.com/tags/purrr/</link>
+    <description>Recent content in Purrr on syknapptic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 23 Jan 2018 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://syknapptic.com/tags/purrr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>GDELT, Missiles, and Image Collection</title>
+      <link>https://syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
+      <description>&lt;!-- &lt;style&gt; --&gt;
+&lt;!--     body .main-container { --&gt;
+&lt;!--         max-width: 1920px; --&gt;
+&lt;!--     } --&gt;
+&lt;!-- &lt;/style&gt; --&gt;
+&lt;p&gt;The Global Database of Events, Language, and Tone, or &lt;a href=&#34;https://www.gdeltproject.org/2&#34;&gt;GDELT&lt;/a&gt;, is “a realtime network diagram and database of global human society for open research”. &lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…&lt;/p&gt;
+&lt;p&gt;See also:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;My &lt;strong&gt;hasty&lt;/strong&gt; walkthrough from November 2017, &lt;a href=&#34;http://rpubs.com/BrendanKnapp/GDELT_Syrian_Conflict&#34;&gt;&lt;em&gt;Evaluating GDELT: Syrian Conflict&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Let’s see how well we can scoop up a set of ballistic missile images using a combination of packages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;gdeltr2&lt;/code&gt;: a package that is decidedly buggy, but works for these purposes&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;tidyverse&lt;/code&gt; suite:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dplyr&lt;/code&gt; for data carpentry&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;stringr&lt;/code&gt; for string processing&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;purrr&lt;/code&gt; for functional enhancements and simplified error-handling&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;knitr&lt;/code&gt; for nicely rendered tabular data&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;imager&lt;/code&gt; for slick image processing tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gdeltr2)       # devtools::install_github(&amp;quot;abresler/gdeltr2&amp;quot;)
+library(tidyverse)     # install.packages(&amp;quot;tidyverse&amp;quot;)
+library(knitr)
+library(imager)        # install.packages(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Before we start extracting any data, let’s refine our search as much as possible by assigning a handful of variables that we can use in the API call.&lt;/p&gt;
+&lt;p&gt;GDELT uses a set of codebooks that can be referenced with &lt;code&gt;get_gdelt_codebook_ft_api()&lt;/code&gt;.&lt;/p&gt;
+&lt;div id=&#34;query-variables&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Query Variables&lt;/h1&gt;
+&lt;div id=&#34;languages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Languages&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;gdeltr2&lt;/code&gt; will only query English articles by default, but we don’t really care about the language of the article or even the article text&lt;/p&gt;
+&lt;p&gt;We’ll &lt;code&gt;pull()&lt;/code&gt; all the languages from &lt;code&gt;code_book = &amp;quot;languages&amp;quot;&lt;/code&gt; into a &lt;code&gt;vector&lt;/code&gt; variable that we can use as a search argument like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;langs &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;languages&amp;quot;) %&amp;gt;%
+  pull(value)
+
+langs&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Afrikaans&amp;quot;        &amp;quot;Albanian&amp;quot;         &amp;quot;Arabic&amp;quot;          
+##  [4] &amp;quot;Armenian&amp;quot;         &amp;quot;Azerbaijani&amp;quot;      &amp;quot;Bengali&amp;quot;         
+##  [7] &amp;quot;Bosnian&amp;quot;          &amp;quot;Bulgarian&amp;quot;        &amp;quot;Catalan&amp;quot;         
+## [10] &amp;quot;Chinese&amp;quot;          &amp;quot;Croatian&amp;quot;         &amp;quot;Czech&amp;quot;           
+## [13] &amp;quot;Danish&amp;quot;           &amp;quot;Dutch&amp;quot;            &amp;quot;Estonian&amp;quot;        
+## [16] &amp;quot;Finnish&amp;quot;          &amp;quot;French&amp;quot;           &amp;quot;Galician&amp;quot;        
+## [19] &amp;quot;Georgian&amp;quot;         &amp;quot;German&amp;quot;           &amp;quot;Greek&amp;quot;           
+## [22] &amp;quot;Gujarati&amp;quot;         &amp;quot;Hebrew&amp;quot;           &amp;quot;Hindi&amp;quot;           
+## [25] &amp;quot;Hungarian&amp;quot;        &amp;quot;Icelandic&amp;quot;        &amp;quot;Indonesian&amp;quot;      
+## [28] &amp;quot;Italian&amp;quot;          &amp;quot;Japanese&amp;quot;         &amp;quot;Kannada&amp;quot;         
+## [31] &amp;quot;Kazakh&amp;quot;           &amp;quot;Korean&amp;quot;           &amp;quot;Latvian&amp;quot;         
+## [34] &amp;quot;Lithuanian&amp;quot;       &amp;quot;Macedonian&amp;quot;       &amp;quot;Malay&amp;quot;           
+## [37] &amp;quot;Malayalam&amp;quot;        &amp;quot;Marathi&amp;quot;          &amp;quot;Mongolian&amp;quot;       
+## [40] &amp;quot;Nepali&amp;quot;           &amp;quot;Norwegian&amp;quot;        &amp;quot;NorwegianNynorsk&amp;quot;
+## [43] &amp;quot;Persian&amp;quot;          &amp;quot;Polish&amp;quot;           &amp;quot;Portuguese&amp;quot;      
+## [46] &amp;quot;Punjabi&amp;quot;          &amp;quot;Romanian&amp;quot;         &amp;quot;Russian&amp;quot;         
+## [49] &amp;quot;Serbian&amp;quot;          &amp;quot;Sinhalese&amp;quot;        &amp;quot;Slovak&amp;quot;          
+## [52] &amp;quot;Slovenian&amp;quot;        &amp;quot;Somali&amp;quot;           &amp;quot;Spanish&amp;quot;         
+## [55] &amp;quot;Swahili&amp;quot;          &amp;quot;Swedish&amp;quot;          &amp;quot;Tamil&amp;quot;           
+## [58] &amp;quot;Telugu&amp;quot;           &amp;quot;Thai&amp;quot;             &amp;quot;Tibetan&amp;quot;         
+## [61] &amp;quot;Turkish&amp;quot;          &amp;quot;Ukrainian&amp;quot;        &amp;quot;Urdu&amp;quot;            
+## [64] &amp;quot;Vietnamese&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;image-tags&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Image Tags&lt;/h2&gt;
+&lt;p&gt;Since we’re looking specifically for imagery, we can query the relevant codebooks with &lt;code&gt;code_book = &amp;quot;imagetags&amp;quot;&lt;/code&gt; and &lt;code&gt;code_book = &amp;quot;imageweb&amp;quot;&lt;/code&gt; like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_gdelt_codebook_ft_api(code_book = &amp;quot;imagetags&amp;quot;) %&amp;gt;%
+  head() %&amp;gt;%
+  kable()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;nameCodebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;idImageTag&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;person&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;65791693&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;profession&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;33553949&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;vehicle&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;25342998&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;sports&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;17180851&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;speech&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16976988&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;people&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;13358317&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_gdelt_codebook_ft_api(code_book = &amp;quot;imageweb&amp;quot;) %&amp;gt;%
+  head() %&amp;gt;%
+  kable()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;nameCodebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;idImageWeb&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Image&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2198300&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;News&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2136894&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Photograph&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1027341&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;United States of America&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;659847&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Speech&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;649292&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Car&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;621304&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We’ll &lt;code&gt;filter()&lt;/code&gt; the tags to retain only those that explicitly reference “missile” with a regex.&lt;/p&gt;
+&lt;p&gt;We also want to handle a bug in &lt;code&gt;gdeltr2&lt;/code&gt;’s query functions where sometimes a a large amount of incorrect information makes it into tag lists. Fortunately, we can omit that by excluding results containing blocks of multiple digits.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tag_regex &amp;lt;- &amp;quot;\\b[Mm]issile\\b&amp;quot;
+
+bind_rows(
+  get_gdelt_codebook_ft_api(code_book = &amp;quot;imagetags&amp;quot;) %&amp;gt;%
+    filter(str_detect(idImageTag, tag_regex),
+           !str_detect(idImageTag, &amp;quot;\\d{2,}&amp;quot;)),
+  
+  get_gdelt_codebook_ft_api(code_book = &amp;quot;imageweb&amp;quot;) %&amp;gt;%
+    filter(str_detect(idImageWeb, tag_regex),
+           !str_detect(idImageWeb, &amp;quot;\\d{2,}&amp;quot;))
+  ) %&amp;gt;%
+  head() %&amp;gt;%
+  kable()&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;nameCodebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;idImageTag&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;idImageWeb&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;missile&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;247486&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;guided missile destroyer&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;194660&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;missile boat&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;147549&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;ballistic missile submarine&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;55996&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;cruise missile submarine&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;11508&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;77637&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Missile&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;We’ll refine our results by excluding some of the tags that have a tendency to return less relevant images.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;vehicle terms tend to emphasize the vehicle itself, rather than weapon systems
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;boat&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;submarine&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;tank&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;&amp;quot;destroyer&amp;quot;&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Missile &lt;code&gt;&amp;quot;defense&amp;quot;&lt;/code&gt;&lt;/em&gt; emphasizes politics over hardware&lt;/li&gt;
+&lt;li&gt;specific &lt;code&gt;&amp;quot;system&amp;quot;&lt;/code&gt; tags are all in reference to surface-to-air platforms
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;S-300 missile system&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;S-400 missile system&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Buk missile system&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;generalized &lt;em&gt;Surface-to-&lt;code&gt;&amp;quot;air&amp;quot;&lt;/code&gt;&lt;/em&gt; doesn’t seem fuzzy enough to ever reference ballistic missiles&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We’ll use another regex to omit those tags, including the multiple digit regex used to exclude the buggy data that may leak into our results.&lt;/p&gt;
+&lt;div id=&#34;junk-tag-filtering&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Junk Tag Filtering&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;junk_tag_regex &amp;lt;- c(&amp;quot;boat&amp;quot;, &amp;quot;[Ss]ubmarine&amp;quot;, &amp;quot;tank&amp;quot;, &amp;quot;destroyer&amp;quot;,
+                    &amp;quot;defense&amp;quot;,
+                    &amp;quot;system&amp;quot;,
+                    &amp;quot;air&amp;quot;) %&amp;gt;%
+  paste0(&amp;quot;\\b&amp;quot;, ., &amp;quot;\\b&amp;quot;) %&amp;gt;%
+  str_c(collapse = &amp;quot;|&amp;quot;) %&amp;gt;%
+  paste0(&amp;quot;|\\d{2,}&amp;quot;)
+
+junk_tag_regex&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;\\bboat\\b|\\b[Ss]ubmarine\\b|\\btank\\b|\\bdestroyer\\b|\\bdefense\\b|\\bsystem\\b|\\bair\\b|\\d{2,}&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With some parameters in mind and filtering variables assigned, let’s &lt;code&gt;pull()&lt;/code&gt; the desired tags from each codebook into a pair of variables which we will use to query GDELT’s API.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;image_tags &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;imagetags&amp;quot;) %&amp;gt;%
+  filter(str_detect(idImageTag, tag_regex),
+         !str_detect(idImageTag, junk_tag_regex)) %&amp;gt;%
+  pull(idImageTag)
+
+imageweb_tags &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;imageweb&amp;quot;) %&amp;gt;%
+  filter(str_detect(idImageWeb, tag_regex),
+         !str_detect(idImageWeb, junk_tag_regex)) %&amp;gt;%
+  pull(idImageWeb)
+
+combine(image_tags, imageweb_tags)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;missile&amp;quot;                           
+##  [2] &amp;quot;Missile&amp;quot;                           
+##  [3] &amp;quot;Ballistic missile&amp;quot;                 
+##  [4] &amp;quot;Cruise missile&amp;quot;                    
+##  [5] &amp;quot;Intercontinental ballistic missile&amp;quot;
+##  [6] &amp;quot;Anti-ballistic missile&amp;quot;            
+##  [7] &amp;quot;Missile launch facility&amp;quot;           
+##  [8] &amp;quot;Medium-range ballistic missile&amp;quot;    
+##  [9] &amp;quot;Land-attack missile&amp;quot;               
+## [10] &amp;quot;Short-range ballistic missile&amp;quot;     
+## [11] &amp;quot;Surface-to-surface missile&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;dates&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dates&lt;/h2&gt;
+&lt;p&gt;We’ll specify a time period using &lt;code&gt;gdeltr2::generate_dates()&lt;/code&gt;. For this example, we’ll select September 22-23 of 2017 to see if we can capture coverage of an Iranian military parade.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;target_dates &amp;lt;- generate_dates(start_date = &amp;quot;2017-09-22&amp;quot;,
+                               end_date = &amp;quot;2017-09-23&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;api-call&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;API Call&lt;/h1&gt;
+&lt;p&gt;With all of our query variables prepared, we’ll call GDELT’s API using &lt;code&gt;get_data_ft_v2_api()&lt;/code&gt;. As duplicate articles are commonly published in many venues, we’ll omit results to only include &lt;code&gt;distinct()&lt;/code&gt; &lt;code&gt;titleArticle&lt;/code&gt;s.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;articles_df &amp;lt;- get_data_ft_v2_api(images_tag = image_tags,
+                                  images_web_tag = imageweb_tags,
+                                  search_language = langs,
+                                  dates = target_dates, 
+                                  visualize_results = FALSE) %&amp;gt;%
+  distinct(titleArticle, .keep_all = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;query-results&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Query Results&lt;/h2&gt;
+&lt;p&gt;Here’s a summary of what we get back.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;articles_df %&amp;gt;% 
+  glimpse()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Observations: 393
+## Variables: 16
+## $ modeSearch          &amp;lt;chr&amp;gt; &amp;quot;ArtList&amp;quot;, &amp;quot;ArtList&amp;quot;, &amp;quot;ArtList&amp;quot;, &amp;quot;ArtList&amp;quot;...
+## $ imagewebtagSearch   &amp;lt;chr&amp;gt; &amp;quot;Missile&amp;quot;, &amp;quot;Missile&amp;quot;, &amp;quot;Missile&amp;quot;, &amp;quot;Missile&amp;quot;...
+## $ datetimeStartSearch &amp;lt;chr&amp;gt; &amp;quot;2017-09-22 12:00:00&amp;quot;, &amp;quot;2017-09-22 12:00:0...
+## $ datetimeEndSearch   &amp;lt;chr&amp;gt; &amp;quot;2017-09-23 11:59:59&amp;quot;, &amp;quot;2017-09-23 11:59:5...
+## $ imagetagSearch      &amp;lt;chr&amp;gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
+## $ isOR                &amp;lt;lgl&amp;gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, ...
+## $ countMaximumRecords &amp;lt;dbl&amp;gt; 250, 250, 250, 250, 250, 250, 250, 250, 25...
+## $ urlGDELTV2FTAPI     &amp;lt;chr&amp;gt; &amp;quot;https://api.gdeltproject.org/api/v2/doc/d...
+## $ urlArticle          &amp;lt;chr&amp;gt; &amp;quot;http://www.iranherald.com/news/254804227/...
+## $ urlArticleMobile    &amp;lt;chr&amp;gt; NA, &amp;quot;http://m.alarab.com/Article/825920&amp;quot;, ...
+## $ titleArticle        &amp;lt;chr&amp;gt; &amp;quot;Iran Herald&amp;quot;, &amp;quot;&amp;lt;U+0647&amp;gt;&amp;lt;U+0632&amp;gt;&amp;lt;U+0629&amp;gt; &amp;lt;U+0623&amp;gt;&amp;lt;U+0631&amp;gt;&amp;lt;U+0636&amp;gt;&amp;lt;U+064A&amp;gt;&amp;lt;U+0629&amp;gt; &amp;lt;U+062B&amp;gt;&amp;lt;U+0627&amp;gt;&amp;lt;U+0646&amp;gt;&amp;lt;U+064A&amp;gt;&amp;lt;U+0629&amp;gt; &amp;lt;U+0641&amp;gt;&amp;lt;U+064A&amp;gt; &amp;lt;U+0643&amp;gt;&amp;lt;U+0648&amp;gt;&amp;lt;U+064A&amp;gt;&amp;lt;U+0627&amp;gt; &amp;lt;U+0627&amp;gt;&amp;lt;U+0644&amp;gt;...
+## $ datetimeArticle     &amp;lt;dttm&amp;gt; 2017-09-23 05:00:00, 2017-09-23 05:00:00,...
+## $ urlImage            &amp;lt;chr&amp;gt; &amp;quot;http://cdn.bignewsnetwork.com/voa15061647...
+## $ domainArticle       &amp;lt;chr&amp;gt; &amp;quot;iranherald.com&amp;quot;, &amp;quot;alarab.com&amp;quot;, &amp;quot;baomoi.co...
+## $ languageArticle     &amp;lt;chr&amp;gt; &amp;quot;English&amp;quot;, &amp;quot;Arabic&amp;quot;, &amp;quot;Vietnamese&amp;quot;, &amp;quot;Nepali...
+## $ countryArticle      &amp;lt;chr&amp;gt; &amp;quot;Iran&amp;quot;, &amp;quot;Israel&amp;quot;, &amp;quot;Vietnam&amp;quot;, &amp;quot;Tuvalu&amp;quot;, &amp;quot;Un...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;extracting-images&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Extracting Images&lt;/h1&gt;
+&lt;p&gt;Now that we have a data frame of articles that includes a column of image URLs, we can download the data.&lt;/p&gt;
+&lt;div id=&#34;directory&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Directory&lt;/h2&gt;
+&lt;p&gt;Let’s assign a variable for our &lt;code&gt;dir&lt;/code&gt;ectory.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dir &amp;lt;- &amp;quot;data/missile_images/&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we’ll actually create the &lt;code&gt;dir&lt;/code&gt;ectory.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dir.create(dir)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;We’re going to take advantage of the magic of the &lt;code&gt;purrr&lt;/code&gt; package in several ways to stabilize our workflow.&lt;/p&gt;
+&lt;div id=&#34;error-handling&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Error Handling&lt;/h3&gt;
+&lt;p&gt;The Internet is littered with broken links and webpages, which becomes more likely the further back in time we go. We’ll use one of &lt;code&gt;purrr&lt;/code&gt;’s adverbs, &lt;code&gt;safely()&lt;/code&gt;, to handle the inevitable download errors that will occur by creating a new function called &lt;code&gt;safe_download()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;safe_download &amp;lt;- safely(download.file)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We’re also going to create safe versions of functions we’ll use for loading and plotting images. Although most of the valid URLs will link to clean images, it’s not uncommon for otherwise successful downloads to actually come from already corrupted sources.&lt;/p&gt;
+&lt;p&gt;To handle this, we’ll create &lt;code&gt;safe_image()&lt;/code&gt; and &lt;code&gt;safe_plot()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;safe_image &amp;lt;- safely(load.image)
+safe_plot &amp;lt;- safely(plot)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;download-images&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Download Images&lt;/h2&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; images using a regex that confirms either a .jpg or .png extension and simultaneously validates a URL sequence that we can use for each image’s eventual file path.&lt;/li&gt;
+&lt;li&gt;select a sample of 100 random rows &lt;code&gt;sample_n(100)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pull()&lt;/code&gt; the &lt;code&gt;urlImage&lt;/code&gt; column into a vector&lt;/li&gt;
+&lt;li&gt;iterate through each item of the vector with &lt;code&gt;walk()&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;safe_download()&lt;/code&gt; each image’s binary format (&lt;code&gt;mode = &amp;quot;wb&amp;quot;&lt;/code&gt;)
+&lt;ul&gt;
+&lt;li&gt;and write it to &lt;code&gt;dir&lt;/code&gt; using its match to &lt;code&gt;valid_path_regex&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;valid_path_regex &amp;lt;- &amp;quot;/[A-z0-9-_]+\\.(jpg|png)$&amp;quot;
+
+articles_df %&amp;gt;%
+  filter(str_detect(urlImage, valid_path_regex)) %&amp;gt;%
+  sample_n(100) %&amp;gt;%
+  pull(urlImage) %&amp;gt;%
+  walk(~
+         safe_download(.x,
+                       paste0(dir, 
+                              str_extract(.x, valid_path_regex)),
+                       mode = &amp;quot;wb&amp;quot;)
+         )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;inspect-images&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Inspect Images&lt;/h2&gt;
+&lt;p&gt;Let’s insepct a sample of the downloaded images.&lt;/p&gt;
+&lt;p&gt;Clearly the results are not perfect. There are images without anything resembling a missile as well as several duplicate or near-duplicate images. That said, manual renaming of files will allow filtering of useless images.&lt;/p&gt;
+&lt;p&gt;This is a quick proof of concept that sets us up well for enhancing data sets established through other methods.&lt;/p&gt;
+&lt;p&gt;More importantly,it demonstrates a basic workflow for bulk image processing that can be easily expanded to iteratively prepare a large dataset for many kinds of analyis.&lt;/p&gt;
+&lt;p&gt;We can take a look at our results with the following:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;code&gt;list.files()&lt;/code&gt; the full paths of all the files in &lt;code&gt;dir&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;iterate through the resulting &lt;code&gt;vector&lt;/code&gt;, reading each file with &lt;code&gt;safe_image()&lt;/code&gt; and &lt;code&gt;map()&lt;/code&gt;ping the results to a &lt;code&gt;list&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;remove a layer of the &lt;code&gt;list&lt;/code&gt; hierarchy by &lt;code&gt;flatten()&lt;/code&gt;ing it&lt;/li&gt;
+&lt;li&gt;omit any resulting &lt;code&gt;NULL&lt;/code&gt; values by &lt;code&gt;compact()&lt;/code&gt;ing the list&lt;/li&gt;
+&lt;li&gt;subset a &lt;code&gt;sample()&lt;/code&gt; of half the images, just for demonstration&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;walk()&lt;/code&gt; through the list, plotting each image&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mfrow = c(5, 2))
+
+list.files(dir, full.names = TRUE) %&amp;gt;%
+  map(safe_image) %&amp;gt;%
+  flatten() %&amp;gt;%
+  compact() %&amp;gt;%
+  sample(50) %&amp;gt;%
+  walk(~ 
+         safe_plot(.x, 
+                   axes = FALSE, ann = FALSE)
+       )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-2.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-3.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-4.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-5.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
