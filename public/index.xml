@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>syknapptic</title>
-    <link>https://syknapptic.com/</link>
+    <link>https://www.syknapptic.com/</link>
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://syknapptic.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://www.syknapptic.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
-      <link>https://syknapptic.com/2018/03/yet-another-tidyverse-intro/</link>
+      <link>https://www.syknapptic.com/2018/03/yet-another-tidyverse-intro/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/2018/03/yet-another-tidyverse-intro/</guid>
+      <guid>https://www.syknapptic.com/2018/03/yet-another-tidyverse-intro/</guid>
       <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#context&#34;&gt;Context&lt;/a&gt;&lt;/li&gt;
@@ -151,16 +151,16 @@ gm_df &amp;lt;- gapminder&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 1,704 x 6
 ##    country     continent  year lifeExp      pop gdpPercap
 ##    &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-##  1 Afghanistan Asia       1952    28.8  8425333       779
-##  2 Afghanistan Asia       1957    30.3  9240934       821
-##  3 Afghanistan Asia       1962    32.0 10267083       853
-##  4 Afghanistan Asia       1967    34.0 11537966       836
-##  5 Afghanistan Asia       1972    36.1 13079460       740
-##  6 Afghanistan Asia       1977    38.4 14880372       786
-##  7 Afghanistan Asia       1982    39.9 12881816       978
-##  8 Afghanistan Asia       1987    40.8 13867957       852
-##  9 Afghanistan Asia       1992    41.7 16317921       649
-## 10 Afghanistan Asia       1997    41.8 22227415       635
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
 ## # ... with 1,694 more rows&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -174,22 +174,22 @@ gm_df &amp;lt;- gapminder&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
 ##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 Afghanistan Asia       1952    28.8  8425333       779
-## 2 Afghanistan Asia       1957    30.3  9240934       821
-## 3 Afghanistan Asia       1962    32.0 10267083       853
-## 4 Afghanistan Asia       1967    34.0 11537966       836
-## 5 Afghanistan Asia       1972    36.1 13079460       740
-## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;% head()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
 ##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 Afghanistan Asia       1952    28.8  8425333       779
-## 2 Afghanistan Asia       1957    30.3  9240934       821
-## 3 Afghanistan Asia       1962    32.0 10267083       853
-## 4 Afghanistan Asia       1967    34.0 11537966       836
-## 5 Afghanistan Asia       1972    36.1 13079460       740
-## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For simple operations involving 1 function, &lt;code&gt;%&amp;gt;%&lt;/code&gt; is only (arguably) beneficial in that it improves readability as the flow of operations go from left to right.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;%&amp;gt;%&lt;/code&gt; become truly useful when you need to perform multiple operations in succession, which is the vast majority of data carpentry.&lt;/p&gt;
 &lt;p&gt;As an arbitrary example, let’s say that we want to select the &lt;code&gt;head()&lt;/code&gt; (first 6 rows) of &lt;code&gt;gm.data.frame&lt;/code&gt; and convert it to a &lt;code&gt;tibble&lt;/code&gt;.&lt;/p&gt;
@@ -209,12 +209,12 @@ no_pipe_2&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
 ## * &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 Afghanistan Asia       1952    28.8  8425333       779
-## 2 Afghanistan Asia       1957    30.3  9240934       821
-## 3 Afghanistan Asia       1962    32.0 10267083       853
-## 4 Afghanistan Asia       1967    34.0 11537966       836
-## 5 Afghanistan Asia       1972    36.1 13079460       740
-## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.&lt;/code&gt;&lt;/pre&gt;
 &lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Nest &lt;code&gt;gm.data.frame&lt;/code&gt; inside of &lt;code&gt;head()&lt;/code&gt;, which is itself nested inside of &lt;code&gt;as_tibble()&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
@@ -222,12 +222,12 @@ no_pipe_2&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
 ## * &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 Afghanistan Asia       1952    28.8  8425333       779
-## 2 Afghanistan Asia       1957    30.3  9240934       821
-## 3 Afghanistan Asia       1962    32.0 10267083       853
-## 4 Afghanistan Asia       1967    34.0 11537966       836
-## 5 Afghanistan Asia       1972    36.1 13079460       740
-## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;With &lt;code&gt;%&amp;gt;%&lt;/code&gt;, we can chain these actions together in the order in which they occur, which is also the way we read English.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Here, we do the same thing by:
@@ -241,12 +241,12 @@ no_pipe_2&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
 ##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 Afghanistan Asia       1952    28.8  8425333       779
-## 2 Afghanistan Asia       1957    30.3  9240934       821
-## 3 Afghanistan Asia       1962    32.0 10267083       853
-## 4 Afghanistan Asia       1967    34.0 11537966       836
-## 5 Afghanistan Asia       1972    36.1 13079460       740
-## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In practice, it’s usually best to place each of the functions on a separate line as it facilitates debugging and further improves readability.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gm_df %&amp;gt;%
   as_tibble() %&amp;gt;%
@@ -254,12 +254,12 @@ no_pipe_2&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 6
 ##   country     continent  year lifeExp      pop gdpPercap
 ##   &amp;lt;fct&amp;gt;       &amp;lt;fct&amp;gt;     &amp;lt;int&amp;gt;   &amp;lt;dbl&amp;gt;    &amp;lt;int&amp;gt;     &amp;lt;dbl&amp;gt;
-## 1 Afghanistan Asia       1952    28.8  8425333       779
-## 2 Afghanistan Asia       1957    30.3  9240934       821
-## 3 Afghanistan Asia       1962    32.0 10267083       853
-## 4 Afghanistan Asia       1967    34.0 11537966       836
-## 5 Afghanistan Asia       1972    36.1 13079460       740
-## 6 Afghanistan Asia       1977    38.4 14880372       786&lt;/code&gt;&lt;/pre&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;em&gt;From here on, you’ll notice &lt;code&gt;prettify()&lt;/code&gt;. This is only being used to print tables in a clean format when the document is &lt;code&gt;knit()&lt;/code&gt;ted.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;I’m choosing to include it here as I often find myself reading similar pages where I come across a really effective way to format some output. I understand why the author chooses to set &lt;code&gt;echo=FALSE&lt;/code&gt;, but it can be nice to see the underlying code without having to hunt through their GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;&lt;code&gt;data.frame&lt;/code&gt;s will print a default maximum of &lt;code&gt;3&lt;/code&gt; rows while &lt;code&gt;tibble&lt;/code&gt;s will print a default maximum of &lt;code&gt;10&lt;/code&gt; rows.&lt;/em&gt;&lt;/p&gt;
@@ -2319,7 +2319,7 @@ Asia
   ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
   geom_histogram()                            # histogram: Geometries&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-39&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
+&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Figure 1
 &lt;/p&gt;
@@ -3269,7 +3269,7 @@ Europe
   filter(continent == &amp;quot;Oceania&amp;quot;) %&amp;gt;%              # rows to keep: Data
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;mutate-columns&#34; class=&#34;section level1&#34;&gt;
@@ -4390,7 +4390,7 @@ Europe
   ggplot(aes(x = year, y = gdpPercap, color = country)) +
   geom_line() +
   labs(title = &amp;quot;GDP Over Time&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;arrange-rows&#34; class=&#34;section level1&#34;&gt;
@@ -5762,7 +5762,7 @@ Belgium
   geom_line() +
   labs(title = &amp;quot;Mean GDPs by Continent Over Time&amp;quot;,
        caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summarize&#34; class=&#34;section level1&#34;&gt;
@@ -6196,7 +6196,7 @@ Oceania
   facet_wrap(~ continent) +
   labs(title = &amp;quot;Mean Continent Populations over Time&amp;quot;,
        caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;النهاية&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -6205,10 +6205,10 @@ Oceania
     
     <item>
       <title>My Shiny Apps</title>
-      <link>https://syknapptic.com/page/shiny/</link>
+      <link>https://www.syknapptic.com/page/shiny/</link>
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/page/shiny/</guid>
+      <guid>https://www.syknapptic.com/page/shiny/</guid>
       <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/recon/&#34;&gt;recon : Really Convenient Spatial Data&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -6237,10 +6237,10 @@ Oceania
     
     <item>
       <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
+      <link>https://www.syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
+      <guid>https://www.syknapptic.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
       <description>&lt;!-- &lt;style&gt; --&gt;
 &lt;!--     body .main-container { --&gt;
 &lt;!--         max-width: 1920px; --&gt;
@@ -6630,7 +6630,7 @@ list.files(dir, full.names = TRUE) %&amp;gt;%
          safe_plot(.x, 
                    axes = FALSE, ann = FALSE)
        )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-2.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-3.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-4.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-5.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-2.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-3.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-4.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-5.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -6638,10 +6638,10 @@ list.files(dir, full.names = TRUE) %&amp;gt;%
     
     <item>
       <title>Welcome</title>
-      <link>https://syknapptic.com/page/about/</link>
+      <link>https://www.syknapptic.com/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/page/about/</guid>
+      <guid>https://www.syknapptic.com/page/about/</guid>
       <description>
 
 &lt;style&gt;
@@ -6650,19 +6650,28 @@ list.files(dir, full.names = TRUE) %&amp;gt;%
     }
 &lt;/style&gt;
 
-&lt;p&gt;Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in developing the data-driven insights required to fully enable decision makers.&lt;/p&gt;
+&lt;p&gt;Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in using data to develop evidence-based insights.&lt;/p&gt;
 
-&lt;p&gt;Topically, I primarily focus on national security issues. Considering the wildly interdisciplinary nature of such work, I am constantly exploring different fields.&lt;/p&gt;
+&lt;p&gt;I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I&amp;rsquo;m constantly exploring theories and methods that developed in other fields.&lt;/p&gt;
 
-&lt;p&gt;In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats. When I finally returned to formal academia, I developed a love for data analysis and programming. Since then, I have focused on the fusion of computational and quantitative methods with rich domain knowledge in topics spanning hybrid conflict, terrorism, insurgency, WMD, and threat finance.&lt;/p&gt;
+&lt;p&gt;In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.&lt;/p&gt;
+
+&lt;p&gt;When I finally had a chance to return to academia, I developed a love for data analysis and programming. This was primarily fueled by a fascination with network analysis.&lt;/p&gt;
+
+&lt;p&gt;Since then, I have focused on the fusion of computational methods with domain expertise in topics spanning hybrid conflict, insurgency, WMD, and threat finance.&lt;/p&gt;
+
+&lt;p&gt;Disciplines that I&amp;rsquo;ve used in my work include network analysis, spatial statistics, remote sensing, natural language processing, and machine learning.&lt;/p&gt;
 
 &lt;h1 id=&#34;about-this-blog&#34;&gt;About this Blog&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.&lt;/p&gt;
+&lt;p&gt;My goal is to address the interests of two audiences that are oftentimes more distinct than I&amp;rsquo;d like:&lt;/p&gt;
 
-&lt;p&gt;The topics will seek to address the interests of two audiences that are oftentimes more distinct than I&amp;rsquo;d like: those with an interest in data analysis (R enthusiasts in particular) and those interested in open-source intelligence.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;those with an interest in modern data analysis (R enthusiasts in particular)&lt;/li&gt;
+&lt;li&gt;those interested in open-source intelligence.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
 

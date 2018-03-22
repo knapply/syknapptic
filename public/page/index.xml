@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on syknapptic</title>
-    <link>https://syknapptic.com/page/</link>
+    <link>https://www.syknapptic.com/page/</link>
     <description>Recent content in Pages on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://syknapptic.com/page/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://www.syknapptic.com/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My Shiny Apps</title>
-      <link>https://syknapptic.com/page/shiny/</link>
+      <link>https://www.syknapptic.com/page/shiny/</link>
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/page/shiny/</guid>
+      <guid>https://www.syknapptic.com/page/shiny/</guid>
       <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/recon/&#34;&gt;recon : Really Convenient Spatial Data&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -45,10 +45,10 @@
     
     <item>
       <title>Welcome</title>
-      <link>https://syknapptic.com/page/about/</link>
+      <link>https://www.syknapptic.com/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/page/about/</guid>
+      <guid>https://www.syknapptic.com/page/about/</guid>
       <description>
 
 &lt;style&gt;
@@ -57,19 +57,28 @@
     }
 &lt;/style&gt;
 
-&lt;p&gt;Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in developing the data-driven insights required to fully enable decision makers.&lt;/p&gt;
+&lt;p&gt;Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in using data to develop evidence-based insights.&lt;/p&gt;
 
-&lt;p&gt;Topically, I primarily focus on national security issues. Considering the wildly interdisciplinary nature of such work, I am constantly exploring different fields.&lt;/p&gt;
+&lt;p&gt;I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I&amp;rsquo;m constantly exploring theories and methods that developed in other fields.&lt;/p&gt;
 
-&lt;p&gt;In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats. When I finally returned to formal academia, I developed a love for data analysis and programming. Since then, I have focused on the fusion of computational and quantitative methods with rich domain knowledge in topics spanning hybrid conflict, terrorism, insurgency, WMD, and threat finance.&lt;/p&gt;
+&lt;p&gt;In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.&lt;/p&gt;
+
+&lt;p&gt;When I finally had a chance to return to academia, I developed a love for data analysis and programming. This was primarily fueled by a fascination with network analysis.&lt;/p&gt;
+
+&lt;p&gt;Since then, I have focused on the fusion of computational methods with domain expertise in topics spanning hybrid conflict, insurgency, WMD, and threat finance.&lt;/p&gt;
+
+&lt;p&gt;Disciplines that I&amp;rsquo;ve used in my work include network analysis, spatial statistics, remote sensing, natural language processing, and machine learning.&lt;/p&gt;
 
 &lt;h1 id=&#34;about-this-blog&#34;&gt;About this Blog&lt;/h1&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This site is intended to showcase analysis, code, walkthroughs, and lessons-learned from data-centric projects.&lt;/p&gt;
+&lt;p&gt;My goal is to address the interests of two audiences that are oftentimes more distinct than I&amp;rsquo;d like:&lt;/p&gt;
 
-&lt;p&gt;The topics will seek to address the interests of two audiences that are oftentimes more distinct than I&amp;rsquo;d like: those with an interest in data analysis (R enthusiasts in particular) and those interested in open-source intelligence.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;those with an interest in modern data analysis (R enthusiasts in particular)&lt;/li&gt;
+&lt;li&gt;those interested in open-source intelligence.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
 
