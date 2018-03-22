@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Dplyr on syknapptic</title>
-    <link>https://syknapptic.com/tags/dplyr/</link>
+    <link>https://www.syknapptic.com/tags/dplyr/</link>
     <description>Recent content in Dplyr on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://syknapptic.com/tags/dplyr/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://www.syknapptic.com/tags/dplyr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
-      <link>https://syknapptic.com/2018/03/yet-another-tidyverse-intro/</link>
+      <link>https://www.syknapptic.com/2018/03/yet-another-tidyverse-intro/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/2018/03/yet-another-tidyverse-intro/</guid>
+      <guid>https://www.syknapptic.com/2018/03/yet-another-tidyverse-intro/</guid>
       <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#context&#34;&gt;Context&lt;/a&gt;&lt;/li&gt;
@@ -2319,7 +2319,7 @@ Asia
   ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
   geom_histogram()                            # histogram: Geometries&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-39&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
+&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Figure 1
 &lt;/p&gt;
@@ -3269,7 +3269,7 @@ Europe
   filter(continent == &amp;quot;Oceania&amp;quot;) %&amp;gt;%              # rows to keep: Data
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;mutate-columns&#34; class=&#34;section level1&#34;&gt;
@@ -4390,7 +4390,7 @@ Europe
   ggplot(aes(x = year, y = gdpPercap, color = country)) +
   geom_line() +
   labs(title = &amp;quot;GDP Over Time&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;arrange-rows&#34; class=&#34;section level1&#34;&gt;
@@ -5762,7 +5762,7 @@ Belgium
   geom_line() +
   labs(title = &amp;quot;Mean GDPs by Continent Over Time&amp;quot;,
        caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summarize&#34; class=&#34;section level1&#34;&gt;
@@ -6196,7 +6196,7 @@ Oceania
   facet_wrap(~ continent) +
   labs(title = &amp;quot;Mean Continent Populations over Time&amp;quot;,
        caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.syknapptic.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;النهاية&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
