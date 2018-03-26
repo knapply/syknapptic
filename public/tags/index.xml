@@ -2,75 +2,75 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on syknapptic</title>
-    <link>https://syknapptic.com/tags/</link>
+    <link>syknapptic.netlify.com/tags/</link>
     <description>Recent content in Tags on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://syknapptic.com/tags/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="syknapptic.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Dplyr</title>
-      <link>https://syknapptic.com/tags/dplyr/</link>
+      <link>syknapptic.netlify.com/tags/dplyr/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/dplyr/</guid>
+      <guid>syknapptic.netlify.com/tags/dplyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Gdelt</title>
-      <link>https://syknapptic.com/tags/gdelt/</link>
+      <link>syknapptic.netlify.com/tags/gdelt/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/gdelt/</guid>
+      <guid>syknapptic.netlify.com/tags/gdelt/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ggplot</title>
-      <link>https://syknapptic.com/tags/ggplot/</link>
+      <link>syknapptic.netlify.com/tags/ggplot/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/ggplot/</guid>
+      <guid>syknapptic.netlify.com/tags/ggplot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Imager</title>
-      <link>https://syknapptic.com/tags/imager/</link>
+      <link>syknapptic.netlify.com/tags/imager/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/imager/</guid>
+      <guid>syknapptic.netlify.com/tags/imager/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Purrr</title>
-      <link>https://syknapptic.com/tags/purrr/</link>
+      <link>syknapptic.netlify.com/tags/purrr/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/purrr/</guid>
+      <guid>syknapptic.netlify.com/tags/purrr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tidyr</title>
-      <link>https://syknapptic.com/tags/tidyr/</link>
+      <link>syknapptic.netlify.com/tags/tidyr/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/tidyr/</guid>
+      <guid>syknapptic.netlify.com/tags/tidyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tidyverse</title>
-      <link>https://syknapptic.com/tags/tidyverse/</link>
+      <link>syknapptic.netlify.com/tags/tidyverse/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.com/tags/tidyverse/</guid>
+      <guid>syknapptic.netlify.com/tags/tidyverse/</guid>
       <description></description>
     </item>
     
