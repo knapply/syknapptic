@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Purrr on syknapptic</title>
-    <link>/tags/purrr/</link>
+    <link>https://syknapptic.netlify.com/tags/purrr/</link>
     <description>Recent content in Purrr on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 23 Jan 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/purrr/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://syknapptic.netlify.com/tags/purrr/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>GDELT, Missiles, and Image Collection</title>
-      <link>/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
+      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
+      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
       <description>&lt;!-- &lt;style&gt; --&gt;
 &lt;!--     body .main-container { --&gt;
 &lt;!--         max-width: 1920px; --&gt;
@@ -406,7 +406,7 @@ list.files(dir, full.names = TRUE) %&amp;gt;%
          safe_plot(.x, 
                    axes = FALSE, ann = FALSE)
        )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-2.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-3.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-4.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-5.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-2.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-3.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-4.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-5.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>

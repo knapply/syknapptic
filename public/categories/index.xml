@@ -2,65 +2,65 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on syknapptic</title>
-    <link>/categories/</link>
+    <link>https://syknapptic.netlify.com/categories/</link>
     <description>Recent content in Categories on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-        <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://syknapptic.netlify.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Data Carpentry</title>
-      <link>/categories/data-carpentry/</link>
-      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      <link>https://syknapptic.netlify.com/categories/data-carpentry/</link>
+      <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/data-carpentry/</guid>
+      <guid>https://syknapptic.netlify.com/categories/data-carpentry/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Discovery</title>
-      <link>/categories/data-discovery/</link>
+      <link>https://syknapptic.netlify.com/categories/data-discovery/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/data-discovery/</guid>
+      <guid>https://syknapptic.netlify.com/categories/data-discovery/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Image Analysis</title>
-      <link>/categories/image-analysis/</link>
+      <link>https://syknapptic.netlify.com/categories/image-analysis/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/image-analysis/</guid>
+      <guid>https://syknapptic.netlify.com/categories/image-analysis/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Tidytuesday</title>
-      <link>/categories/tidytuesday/</link>
-      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      <title>Programming</title>
+      <link>https://syknapptic.netlify.com/categories/programming/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/tidytuesday/</guid>
+      <guid>https://syknapptic.netlify.com/categories/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://syknapptic.netlify.com/categories/python/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/categories/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tutorial</title>
-      <link>/categories/tutorial/</link>
+      <link>https://syknapptic.netlify.com/categories/tutorial/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>/categories/tutorial/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Visualization</title>
-      <link>/categories/visualization/</link>
-      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/visualization/</guid>
+      <guid>https://syknapptic.netlify.com/categories/tutorial/</guid>
       <description></description>
     </item>
     

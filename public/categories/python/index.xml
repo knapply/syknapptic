@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Python on syknapptic</title>
+    <link>https://syknapptic.netlify.com/categories/python/</link>
+    <description>Recent content in Python on syknapptic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 May 2018 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="https://syknapptic.netlify.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>reticulate: Taking the Dragon for a Test Ride</title>
+      <link>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</guid>
+      <description>&lt;p&gt;I started coding with Python.&lt;/p&gt;
+&lt;p&gt;The choice seemed obvious at first. It’s a general programming language so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.&lt;/p&gt;
+&lt;p&gt;A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project. So I transitioned to R because, surprise, a framework for this simply doesn’t exist in Python (which is too bad because the time to convergence on a GPU would be likely be a game-changer for the network community). Since my coding went from “productive hobby” to “you need to get this done”, I decided I should try and master (using the loosest of definitions) one language instead of risk being a forever-noob in both.&lt;/p&gt;
+&lt;p&gt;I learned why R is awesome along the way and am now pretty biased toward R for data analysis. The language’s lazy evaluation combined with the expressive syntax of the core tidyverse packages offer straightforward solutions to 90% of the tasks necessary in every project. {&lt;code&gt;dplyr&lt;/code&gt;} turns the labor of data carpentry into a series of rewarding puzzles. {&lt;code&gt;ggplot2&lt;/code&gt;} turns rookies into skilled artists. {&lt;code&gt;purrr&lt;/code&gt;} (&lt;em&gt;swoon&lt;/em&gt;) turns code into something that I can only describe as a mix of a playground at recess and poetry.&lt;/p&gt;
+&lt;p&gt;With the expanded ecosystem of {&lt;code&gt;sf&lt;/code&gt;} for spatial data and {&lt;code&gt;tidygraph&lt;/code&gt;} for networks, I’m more than skeptical that Python offers anything better for most data analysis. That’s not even getting into the unrivaled statistical test ecosystem or some “cultural” cultural differences (TensorBros, le sigh)…&lt;/p&gt;
+&lt;p&gt;… but it’s 2018 and everyone is tired of the whole R vs Python war. Neither has it all and the initiatives being taken to bridge the two should leave everyone &lt;em&gt;very&lt;/em&gt; optimistic about the futre.&lt;/p&gt;
+&lt;p&gt;There are things that Python offers that require me to stumble down the rabbit hole of unfamiliar paradigms and syntax. This is something I’ll be doing more and more in the near future as I’ll (finally? … hopefully?) have time to learn how to take advantage of the many Python goodies over which I’ve been salivating.&lt;/p&gt;
+&lt;p&gt;That’s why I am excited for {&lt;code&gt;reticulate&lt;/code&gt;}. A way of integrating the best of both worlds? sign me up!&lt;/p&gt;
+&lt;p&gt;So, while taking a break from the race of finishing a final semester, I decided to see just how easy they’ve made it.&lt;/p&gt;
+&lt;p&gt;It is better than I hoped.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://media1.tenor.com/images/21774c49405bbaf6b2255da1a74bdfa7/tenor.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;I have no idea which version is on CRAN, but I grabbed the development version from GitHub. You can do the same by running:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;devtools&amp;quot;)
+devtools::install_github(&amp;quot;rstudio/reticulate&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reticulate)
+library(knitr)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Right up front, I’m going to create an arbitrary numeric vector and get the &lt;code&gt;mean()&lt;/code&gt; using plain ol’ R.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_numbers &amp;lt;- c(1.01, 100.10, 20.23, 1000.56, 95.94)
+mean(sample_numbers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 243.568&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Python’s &lt;code&gt;mean()&lt;/code&gt; function is part of the &lt;code&gt;statistics&lt;/code&gt; module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here’s how we import just the &lt;code&gt;mean()&lt;/code&gt; function, assign the same values to a &lt;code&gt;list()&lt;/code&gt; (base Python doesn’t have vectors) and get the &lt;code&gt;mean()&lt;/code&gt; from that variable. Depending on the environment you’re using, you likely have to explicitly &lt;code&gt;print()&lt;/code&gt; the result to see the output.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from statistics import mean
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
+print(mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That said, I’m going to load the entire package when calling Python from R. In Python it would just look like this:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
+print(statistics.mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A difference to notice here is that for us to use &lt;code&gt;mean()&lt;/code&gt;, we need to prefix it with &lt;code&gt;statistics&lt;/code&gt;. This is similar to calling a function from an R package without loading the entire package with &lt;code&gt;library()&lt;/code&gt;, such as using &lt;code&gt;dplyr::mutate()&lt;/code&gt; or &lt;code&gt;purrr::map()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We can save some typing giving the loaded package a nickname on import. Here, we’ll name &lt;code&gt;statistics&lt;/code&gt; &lt;code&gt;stats&lt;/code&gt;, so we can call &lt;code&gt;stats.mean()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics as stats
+print(stats.mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What if we don’t want to define the variable in Python?&lt;/p&gt;
+&lt;p&gt;We can use &lt;code&gt;r_to_py()&lt;/code&gt; to make variables accessible in Python.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_sample_numbers &amp;lt;- r_to_py(sample_numbers)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And just like that, Python can access the variable as &lt;code&gt;r.py_sample_numbers&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(r.py_sample_numbers)                   # this is a Python code chunk&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1.01, 100.1, 20.23, 1000.56, 95.94]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from statistics import mean                  # still Python
+print(mean(r.py_sample_numbers))             # still Python&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you didn’t notice, the Python outputs aren’t &lt;em&gt;exactly&lt;/em&gt; the same as R’s. This had me concerned about how values calculated in one language and passed to the other may be handled as this would cause issues with certain workflows… Hold that thought…&lt;/p&gt;
+&lt;p&gt;Rather than jumping back and forth between the languages, let’s use {&lt;code&gt;reticulate&lt;/code&gt;} to take care of that for us.&lt;/p&gt;
+&lt;p&gt;First, we’ll import &lt;code&gt;statistics&lt;/code&gt; in a similar way, except we’ll assign it to a variable called &lt;code&gt;py_stats&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_stats &amp;lt;- import(&amp;quot;statistics&amp;quot;)     # import Python module&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we have a Python module as an R object.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;class(py_stats)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;python.builtin.module&amp;quot; &amp;quot;python.builtin.object&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there, we can check out the functions that &lt;code&gt;py_stats&lt;/code&gt; makes available in the same way we can check the &lt;code&gt;names()&lt;/code&gt; of a native R object.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;names(py_stats)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;bisect_left&amp;quot;     &amp;quot;bisect_right&amp;quot;    &amp;quot;chain&amp;quot;          
+##  [4] &amp;quot;collections&amp;quot;     &amp;quot;decimal&amp;quot;         &amp;quot;Decimal&amp;quot;        
+##  [7] &amp;quot;Fraction&amp;quot;        &amp;quot;groupby&amp;quot;         &amp;quot;harmonic_mean&amp;quot;  
+## [10] &amp;quot;math&amp;quot;            &amp;quot;mean&amp;quot;            &amp;quot;median&amp;quot;         
+## [13] &amp;quot;median_grouped&amp;quot;  &amp;quot;median_high&amp;quot;     &amp;quot;median_low&amp;quot;     
+## [16] &amp;quot;mode&amp;quot;            &amp;quot;numbers&amp;quot;         &amp;quot;pstdev&amp;quot;         
+## [19] &amp;quot;pvariance&amp;quot;       &amp;quot;StatisticsError&amp;quot; &amp;quot;stdev&amp;quot;          
+## [22] &amp;quot;variance&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Similarly, we can use R’s &lt;code&gt;$&lt;/code&gt; to access the &lt;code&gt;names()&lt;/code&gt; of the functions.&lt;/p&gt;
+&lt;p&gt;Let’s see how we can use Python’s &lt;code&gt;statistics.mean()&lt;/code&gt; on an R variable.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_stats$mean(sample_numbers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 243.568&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Pretty straightforward. &lt;code&gt;$&lt;/code&gt; acts like Python’s object-oriented dot (&lt;code&gt;.&lt;/code&gt;) notation. We can also take this a step further by converting the whole thing into an ordinary-looking R function with &lt;code&gt;py_to_r()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_mean &amp;lt;- py_to_r(py_stats$mean)    # convert Python function 
+py_mean(sample_numbers)              # use as if it&amp;#39;s native to R&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 243.568&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I’m assuming that this will make it so much easier for developers to port individual functions and entire packages from Python to R.&lt;/p&gt;
+&lt;p&gt;So. Freaking. Awesome.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1525814209/tenor_fewq6s.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Notice the number of digits included in the output. I was concerned about being able to use boolean operators on values that may have been generated in the different languages, but it appears that this was taken into account. Is it really that convenient??!!&lt;/p&gt;
+&lt;p&gt;Just to make sure the outputs aren’t being formatted underneath the hood, we can take a peak.&lt;/p&gt;
+&lt;p&gt;This is where I got really excited…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all(py_stats$mean(sample_numbers) == py_mean(sample_numbers),
+    py_stats$mean(sample_numbers) == mean(sample_numbers),
+    py_mean(sample_numbers) == mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all.equal(py_stats$mean(sample_numbers),
+          py_mean(sample_numbers),
+          mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;identical(mean(sample_numbers),                               # O.
+          py_stats$mean(sample_numbers),                      # M.
+          py_mean(sample_numbers))                            # G.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;So, it’s pretty clear that {&lt;code&gt;reticulate&lt;/code&gt;} allows for easy use of Python functions in R. I didn’t expect it to be this simple at all, but what else can it do?&lt;/p&gt;
+&lt;p&gt;Can we write our own Python object classes on the fly and use them in R?&lt;/p&gt;
+&lt;p&gt;Yes!&lt;/p&gt;
+&lt;p&gt;We can source a Python script if available with &lt;code&gt;py_run_file()&lt;/code&gt;, but we can also crunch one out in an R script and run it with &lt;code&gt;py_run_string()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Here’s a simple &lt;code&gt;date()&lt;/code&gt; &lt;code&gt;class&lt;/code&gt; that has two methods, &lt;code&gt;set_date()&lt;/code&gt; and &lt;code&gt;show_date()&lt;/code&gt;, which are pretty self-explanatory.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(&amp;#39;
+class date:                                              # a basic Python class
+  def __init__(self, date = &amp;quot;1999-12-31&amp;quot;):
+    date = date.split(&amp;quot;-&amp;quot;)
+    self.year = date[0]
+    self.month = date[1]
+    self.day = date[2]
+    
+  def set_date(self, new_date):                          # set_date() method
+    new_date = new_date.split(&amp;quot;-&amp;quot;)
+    self.year = new_date[0]
+    self.month = new_date[1]
+    self.day = new_date[2]
+    
+  def show_date(self):                                   # show_date() method
+    return(&amp;quot;-&amp;quot;.join([self.year, self.month, self.day]))
+&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With the class ready to go, we can instantiate a &lt;code&gt;date()&lt;/code&gt; object by just assigning it to a variable, like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(&amp;#39;example_date = date()&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So, how do we access &lt;code&gt;example_date&lt;/code&gt; from R? Similar to how we used &lt;code&gt;py_stats$mean()&lt;/code&gt; earlier, we can use &lt;code&gt;py&lt;/code&gt; and &lt;code&gt;$&lt;/code&gt; to access Python variables.&lt;/p&gt;
+&lt;p&gt;Here’s &lt;code&gt;py$example_date&lt;/code&gt;’s object information.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py$example_date&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;lt;__main__.date&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we want to output its value, we can use the &lt;code&gt;show_date()&lt;/code&gt; method that we defined.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py$example_date$show_date()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;1999-12-31&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What about the &lt;code&gt;set_date()&lt;/code&gt; method? Let’s use a function call to obtain a value, specifically today’s date, and pass it to &lt;code&gt;set_date()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Note that R’s &lt;code&gt;Sys.Date()&lt;/code&gt; looks like a &lt;code&gt;character&lt;/code&gt; when printed, but it’s stored as a &lt;code&gt;numeric&lt;/code&gt; &lt;code&gt;double&lt;/code&gt; underneath.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mode(Sys.Date())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;numeric&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;storage.mode(Sys.Date())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;double&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can address that by just converting it with &lt;code&gt;as.character()&lt;/code&gt;, like so:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py$example_date$set_date(new_date = as.character(Sys.Date()))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Python (and most languages to my knowledge) handles objects &lt;em&gt;very&lt;/em&gt; differently than R, so we don’t need to reassign the result.&lt;/p&gt;
+&lt;p&gt;Here’s today’s date:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py$example_date$show_date()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2018-05-10&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So. Awesome.&lt;/p&gt;
+&lt;!-- What about matrices and data frames? How easy is it to go back and forth between R and Python&#39;s {`numpy`} and {`pandas`}? --&gt;
+&lt;!-- Let&#39;s see. --&gt;
+&lt;!-- Here&#39;s an r `matrix`. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- r_matrix &lt;- matrix(runif(100, 0, 100), --&gt;
+&lt;!--                    nrow = 10, ncol = 10) --&gt;
+&lt;!-- kable(r_matrix, col.names = paste0(&#34;[,&#34;, 1:10, &#34;]&#34;)) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Let&#39;s send it to Python. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- py_matrix &lt;- r_to_py(r_matrix) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Just like that, it&#39;s a {`numpy`} object! --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- class(py_matrix) --&gt;
+&lt;!-- py_matrix --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- And we can now access all of its methods in R. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- names(py_matrix) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- As an example, here we multiply the matrix by its transpose, $A \times A^T$. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- py_matrix$dot(py_matrix$T) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- Going back and forth isn&#39;t _perfect_... --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- kable( --&gt;
+&lt;!--   py_to_r(py_matrix$dot(py_matrix$T)) == tcrossprod(r_matrix), --&gt;
+&lt;!--   col.names = paste0(&#34;[,&#34;, 1:10, &#34;]&#34;)) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ... but it&#39;s awfully close. The only hiccup I encountered was precision, for which there is probably a quick fix that I&#39;m not aware of. --&gt;
+&lt;!-- In the mean time, manually setting `digits=` does the trick. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- options(digits = 7) --&gt;
+&lt;!-- py_to_r(py_matrix$dot(py_matrix$T)$round(getOption(&#34;digits&#34;))) ==  round(tcrossprod(r_matrix),  --&gt;
+&lt;!--                                                                          digits = getOption(&#34;digits&#34;)) --&gt;
+&lt;!-- identical( --&gt;
+&lt;!--   py_to_r(py_matrix$dot(py_matrix$T)$round(getOption(&#34;digits&#34;))), --&gt;
+&lt;!--   round(tcrossprod(r_matrix), digits = getOption(&#34;digits&#34;)) --&gt;
+&lt;!--   ) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- How about converting a `data.frame`? --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- r_df &lt;- mtcars --&gt;
+&lt;!-- kable(r_df) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- py_df &lt;- r_to_py(r_df) --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- class(py_df) --&gt;
+&lt;!-- py_df$head() --&gt;
+&lt;!-- ``` --&gt;
+&lt;!-- `data.frame`s are automatically converted to {`pandas`} objects. --&gt;
+&lt;!-- ```{r} --&gt;
+&lt;!-- summary(r_df) --&gt;
+&lt;!-- py_df$describe() --&gt;
+&lt;!-- ``` --&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.imgur.com/RJ6S6eY.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

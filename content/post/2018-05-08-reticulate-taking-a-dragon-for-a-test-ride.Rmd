@@ -2,18 +2,18 @@
 title: 'reticulate: Taking the Dragon for a Test Ride'
 author: Brendan Knapp
 date: '2018-05-08'
-slug: reticulate-taking-the-dragon-for-a-test-ride
 categories:
   - programming
   - python
 tags:
   - reticulate
+slug: reticulate-taking-the-dragon-for-a-test-ride
 thumbnailImagePosition: left
 thumbnailImage: https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG
 metaAlignment: center
 coverMeta: out
 summary: Taking a quick spin with the awesomeness that is {reticulate}.
-editor_options: 
+editor_options:
   chunk_output_type: console
 ---
 

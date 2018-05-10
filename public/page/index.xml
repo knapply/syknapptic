@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on syknapptic</title>
-    <link>/page/</link>
+    <link>https://syknapptic.netlify.com/page/</link>
     <description>Recent content in Pages on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://syknapptic.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>My Shiny Apps</title>
-      <link>/page/shiny/</link>
+      <link>https://syknapptic.netlify.com/page/shiny/</link>
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>/page/shiny/</guid>
+      <guid>https://syknapptic.netlify.com/page/shiny/</guid>
       <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/recon/&#34;&gt;recon : Really Convenient Spatial Data&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -45,10 +45,10 @@
     
     <item>
       <title>Welcome</title>
-      <link>/page/about/</link>
+      <link>https://syknapptic.netlify.com/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/page/about/</guid>
+      <guid>https://syknapptic.netlify.com/page/about/</guid>
       <description>
 
 &lt;style&gt;

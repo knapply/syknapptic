@@ -1,0 +1,872 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.32.4 with theme Tranquilpeak 0.4.3-BETA">
+    <title>reticulate: Taking the Dragon for a Test Ride</title>
+    <meta name="author" content="Brendan Knapp">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://syknapptic.netlify.com/favicon.png">
+    
+
+    
+    <meta name="description" content="I started coding with Python.
+The choice seemed obvious at first. It’s a general programming language so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.
+A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project.">
+    <meta property="og:description" content="I started coding with Python.
+The choice seemed obvious at first. It’s a general programming language so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.
+A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="reticulate: Taking the Dragon for a Test Ride">
+    <meta property="og:url" content="/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+    <meta property="og:site_name" content="syknapptic">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="syknapptic">
+    <meta name="twitter:description" content="I started coding with Python.
+The choice seemed obvious at first. It’s a general programming language so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.
+A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project.">
+    
+      <meta name="twitter:creator" content="@syknapptic">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=640">
+    
+
+    
+      <meta property="og:image" content="https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://syknapptic.netlify.com/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-115043043-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://syknapptic.netlify.com/">syknapptic</a>
+  </div>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://syknapptic.netlify.com/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Brendan Knapp</h4>
+        
+          <h5 class="sidebar-profile-bio">Data Ninjery <br> (Network|Spatial|Text) Analysis <br> R</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/shiny/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-code"></i>
+      
+      <span class="sidebar-button-desc">Shiny Apps</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/syknapptic" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/syknapptic" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/7678928/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/knappbrendan/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      reticulate: Taking the Dragon for a Test Ride
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-05-08T00:00:00Z">
+        
+  May 8, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://syknapptic.netlify.com/categories/programming">programming</a>, 
+    
+      <a class="category-link" href="https://syknapptic.netlify.com/categories/python">python</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>I started coding with Python.</p>
+<p>The choice seemed obvious at first. It’s a general programming language so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.</p>
+<p>A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project. So I transitioned to R because, surprise, a framework for this simply doesn’t exist in Python (which is too bad because the time to convergence on a GPU would be likely be a game-changer for the network community). Since my coding went from “productive hobby” to “you need to get this done”, I decided I should try and master (using the loosest of definitions) one language instead of risk being a forever-noob in both.</p>
+<p>I learned why R is awesome along the way and am now pretty biased toward R for data analysis. The language’s lazy evaluation combined with the expressive syntax of the core tidyverse packages offer straightforward solutions to 90% of the tasks necessary in every project. {<code>dplyr</code>} turns the labor of data carpentry into a series of rewarding puzzles. {<code>ggplot2</code>} turns rookies into skilled artists. {<code>purrr</code>} (<em>swoon</em>) turns code into something that I can only describe as a mix of a playground at recess and poetry.</p>
+<p>With the expanded ecosystem of {<code>sf</code>} for spatial data and {<code>tidygraph</code>} for networks, I’m more than skeptical that Python offers anything better for most data analysis. That’s not even getting into the unrivaled statistical test ecosystem or some “cultural” cultural differences (TensorBros, le sigh)…</p>
+<p>… but it’s 2018 and everyone is tired of the whole R vs Python war. Neither has it all and the initiatives being taken to bridge the two should leave everyone <em>very</em> optimistic about the futre.</p>
+<p>There are things that Python offers that require me to stumble down the rabbit hole of unfamiliar paradigms and syntax. This is something I’ll be doing more and more in the near future as I’ll (finally? … hopefully?) have time to learn how to take advantage of the many Python goodies over which I’ve been salivating.</p>
+<p>That’s why I am excited for {<code>reticulate</code>}. A way of integrating the best of both worlds? sign me up!</p>
+<p>So, while taking a break from the race of finishing a final semester, I decided to see just how easy they’ve made it.</p>
+<p>It is better than I hoped.</p>
+<p><img src="https://media1.tenor.com/images/21774c49405bbaf6b2255da1a74bdfa7/tenor.gif" style="display: block; margin: auto;" /></p>
+<p>I have no idea which version is on CRAN, but I grabbed the development version from GitHub. You can do the same by running:</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;)
+devtools::install_github(&quot;rstudio/reticulate&quot;)</code></pre>
+<pre class="r"><code>library(reticulate)
+library(knitr)</code></pre>
+<p>Right up front, I’m going to create an arbitrary numeric vector and get the <code>mean()</code> using plain ol’ R.</p>
+<pre class="r"><code>sample_numbers &lt;- c(1.01, 100.10, 20.23, 1000.56, 95.94)
+mean(sample_numbers)</code></pre>
+<pre><code>## [1] 243.568</code></pre>
+<p>Python’s <code>mean()</code> function is part of the <code>statistics</code> module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here’s how we import just the <code>mean()</code> function, assign the same values to a <code>list()</code> (base Python doesn’t have vectors) and get the <code>mean()</code> from that variable. Depending on the environment you’re using, you likely have to explicitly <code>print()</code> the result to see the output.</p>
+<pre class="python"><code>from statistics import mean
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
+print(mean(sample_numbers))</code></pre>
+<pre><code>## 243.56799999999998</code></pre>
+<p>That said, I’m going to load the entire package when calling Python from R. In Python it would just look like this:</p>
+<pre class="python"><code>import statistics
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
+print(statistics.mean(sample_numbers))</code></pre>
+<pre><code>## 243.56799999999998</code></pre>
+<p>A difference to notice here is that for us to use <code>mean()</code>, we need to prefix it with <code>statistics</code>. This is similar to calling a function from an R package without loading the entire package with <code>library()</code>, such as using <code>dplyr::mutate()</code> or <code>purrr::map()</code>.</p>
+<p>We can save some typing giving the loaded package a nickname on import. Here, we’ll name <code>statistics</code> <code>stats</code>, so we can call <code>stats.mean()</code>.</p>
+<pre class="python"><code>import statistics as stats
+print(stats.mean(sample_numbers))</code></pre>
+<pre><code>## 243.56799999999998</code></pre>
+<p>What if we don’t want to define the variable in Python?</p>
+<p>We can use <code>r_to_py()</code> to make variables accessible in Python.</p>
+<pre class="r"><code>py_sample_numbers &lt;- r_to_py(sample_numbers)</code></pre>
+<p>And just like that, Python can access the variable as <code>r.py_sample_numbers</code>.</p>
+<pre class="python"><code>print(r.py_sample_numbers)                   # this is a Python code chunk</code></pre>
+<pre><code>## [1.01, 100.1, 20.23, 1000.56, 95.94]</code></pre>
+<pre class="python"><code>from statistics import mean                  # still Python
+print(mean(r.py_sample_numbers))             # still Python</code></pre>
+<pre><code>## 243.56799999999998</code></pre>
+<p>If you didn’t notice, the Python outputs aren’t <em>exactly</em> the same as R’s. This had me concerned about how values calculated in one language and passed to the other may be handled as this would cause issues with certain workflows… Hold that thought…</p>
+<p>Rather than jumping back and forth between the languages, let’s use {<code>reticulate</code>} to take care of that for us.</p>
+<p>First, we’ll import <code>statistics</code> in a similar way, except we’ll assign it to a variable called <code>py_stats</code>.</p>
+<pre class="r"><code>py_stats &lt;- import(&quot;statistics&quot;)     # import Python module</code></pre>
+<p>Now we have a Python module as an R object.</p>
+<pre class="r"><code>class(py_stats)</code></pre>
+<pre><code>## [1] &quot;python.builtin.module&quot; &quot;python.builtin.object&quot;</code></pre>
+<p>From there, we can check out the functions that <code>py_stats</code> makes available in the same way we can check the <code>names()</code> of a native R object.</p>
+<pre class="r"><code>names(py_stats)</code></pre>
+<pre><code>##  [1] &quot;bisect_left&quot;     &quot;bisect_right&quot;    &quot;chain&quot;          
+##  [4] &quot;collections&quot;     &quot;decimal&quot;         &quot;Decimal&quot;        
+##  [7] &quot;Fraction&quot;        &quot;groupby&quot;         &quot;harmonic_mean&quot;  
+## [10] &quot;math&quot;            &quot;mean&quot;            &quot;median&quot;         
+## [13] &quot;median_grouped&quot;  &quot;median_high&quot;     &quot;median_low&quot;     
+## [16] &quot;mode&quot;            &quot;numbers&quot;         &quot;pstdev&quot;         
+## [19] &quot;pvariance&quot;       &quot;StatisticsError&quot; &quot;stdev&quot;          
+## [22] &quot;variance&quot;</code></pre>
+<p>Similarly, we can use R’s <code>$</code> to access the <code>names()</code> of the functions.</p>
+<p>Let’s see how we can use Python’s <code>statistics.mean()</code> on an R variable.</p>
+<pre class="r"><code>py_stats$mean(sample_numbers)</code></pre>
+<pre><code>## [1] 243.568</code></pre>
+<p>Pretty straightforward. <code>$</code> acts like Python’s object-oriented dot (<code>.</code>) notation. We can also take this a step further by converting the whole thing into an ordinary-looking R function with <code>py_to_r()</code>.</p>
+<pre class="r"><code>py_mean &lt;- py_to_r(py_stats$mean)    # convert Python function 
+py_mean(sample_numbers)              # use as if it&#39;s native to R</code></pre>
+<pre><code>## [1] 243.568</code></pre>
+<p>I’m assuming that this will make it so much easier for developers to port individual functions and entire packages from Python to R.</p>
+<p>So. Freaking. Awesome.</p>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1525814209/tenor_fewq6s.gif" style="display: block; margin: auto;" /></p>
+<p>Notice the number of digits included in the output. I was concerned about being able to use boolean operators on values that may have been generated in the different languages, but it appears that this was taken into account. Is it really that convenient??!!</p>
+<p>Just to make sure the outputs aren’t being formatted underneath the hood, we can take a peak.</p>
+<p>This is where I got really excited…</p>
+<pre class="r"><code>all(py_stats$mean(sample_numbers) == py_mean(sample_numbers),
+    py_stats$mean(sample_numbers) == mean(sample_numbers),
+    py_mean(sample_numbers) == mean(sample_numbers))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>all.equal(py_stats$mean(sample_numbers),
+          py_mean(sample_numbers),
+          mean(sample_numbers))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>identical(mean(sample_numbers),                               # O.
+          py_stats$mean(sample_numbers),                      # M.
+          py_mean(sample_numbers))                            # G.</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p><img src="https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif" style="display: block; margin: auto;" /></p>
+<p>So, it’s pretty clear that {<code>reticulate</code>} allows for easy use of Python functions in R. I didn’t expect it to be this simple at all, but what else can it do?</p>
+<p>Can we write our own Python object classes on the fly and use them in R?</p>
+<p>Yes!</p>
+<p>We can source a Python script if available with <code>py_run_file()</code>, but we can also crunch one out in an R script and run it with <code>py_run_string()</code>.</p>
+<p>Here’s a simple <code>date()</code> <code>class</code> that has two methods, <code>set_date()</code> and <code>show_date()</code>, which are pretty self-explanatory.</p>
+<pre class="r"><code>py_run_string(&#39;
+class date:                                              # a basic Python class
+  def __init__(self, date = &quot;1999-12-31&quot;):
+    date = date.split(&quot;-&quot;)
+    self.year = date[0]
+    self.month = date[1]
+    self.day = date[2]
+    
+  def set_date(self, new_date):                          # set_date() method
+    new_date = new_date.split(&quot;-&quot;)
+    self.year = new_date[0]
+    self.month = new_date[1]
+    self.day = new_date[2]
+    
+  def show_date(self):                                   # show_date() method
+    return(&quot;-&quot;.join([self.year, self.month, self.day]))
+&#39;)</code></pre>
+<p>With the class ready to go, we can instantiate a <code>date()</code> object by just assigning it to a variable, like so:</p>
+<pre class="r"><code>py_run_string(&#39;example_date = date()&#39;)</code></pre>
+<p>So, how do we access <code>example_date</code> from R? Similar to how we used <code>py_stats$mean()</code> earlier, we can use <code>py</code> and <code>$</code> to access Python variables.</p>
+<p>Here’s <code>py$example_date</code>’s object information.</p>
+<pre class="r"><code>py$example_date</code></pre>
+<pre><code>## &lt;__main__.date&gt;</code></pre>
+<p>If we want to output its value, we can use the <code>show_date()</code> method that we defined.</p>
+<pre class="r"><code>py$example_date$show_date()</code></pre>
+<pre><code>## [1] &quot;1999-12-31&quot;</code></pre>
+<p>What about the <code>set_date()</code> method? Let’s use a function call to obtain a value, specifically today’s date, and pass it to <code>set_date()</code>.</p>
+<p>Note that R’s <code>Sys.Date()</code> looks like a <code>character</code> when printed, but it’s stored as a <code>numeric</code> <code>double</code> underneath.</p>
+<pre class="r"><code>mode(Sys.Date())</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>storage.mode(Sys.Date())</code></pre>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<p>We can address that by just converting it with <code>as.character()</code>, like so:</p>
+<pre class="r"><code>py$example_date$set_date(new_date = as.character(Sys.Date()))</code></pre>
+<p>Python (and most languages to my knowledge) handles objects <em>very</em> differently than R, so we don’t need to reassign the result.</p>
+<p>Here’s today’s date:</p>
+<pre class="r"><code>py$example_date$show_date()</code></pre>
+<pre><code>## [1] &quot;2018-05-10&quot;</code></pre>
+<p>So. Awesome.</p>
+<!-- What about matrices and data frames? How easy is it to go back and forth between R and Python's {`numpy`} and {`pandas`}? -->
+<!-- Let's see. -->
+<!-- Here's an r `matrix`. -->
+<!-- ```{r} -->
+<!-- r_matrix <- matrix(runif(100, 0, 100), -->
+<!--                    nrow = 10, ncol = 10) -->
+<!-- kable(r_matrix, col.names = paste0("[,", 1:10, "]")) -->
+<!-- ``` -->
+<!-- Let's send it to Python. -->
+<!-- ```{r} -->
+<!-- py_matrix <- r_to_py(r_matrix) -->
+<!-- ``` -->
+<!-- Just like that, it's a {`numpy`} object! -->
+<!-- ```{r} -->
+<!-- class(py_matrix) -->
+<!-- py_matrix -->
+<!-- ``` -->
+<!-- And we can now access all of its methods in R. -->
+<!-- ```{r} -->
+<!-- names(py_matrix) -->
+<!-- ``` -->
+<!-- As an example, here we multiply the matrix by its transpose, $A \times A^T$. -->
+<!-- ```{r} -->
+<!-- py_matrix$dot(py_matrix$T) -->
+<!-- ``` -->
+<!-- Going back and forth isn't _perfect_... -->
+<!-- ```{r} -->
+<!-- kable( -->
+<!--   py_to_r(py_matrix$dot(py_matrix$T)) == tcrossprod(r_matrix), -->
+<!--   col.names = paste0("[,", 1:10, "]")) -->
+<!-- ``` -->
+<!-- ... but it's awfully close. The only hiccup I encountered was precision, for which there is probably a quick fix that I'm not aware of. -->
+<!-- In the mean time, manually setting `digits=` does the trick. -->
+<!-- ```{r} -->
+<!-- options(digits = 7) -->
+<!-- py_to_r(py_matrix$dot(py_matrix$T)$round(getOption("digits"))) ==  round(tcrossprod(r_matrix),  -->
+<!--                                                                          digits = getOption("digits")) -->
+<!-- identical( -->
+<!--   py_to_r(py_matrix$dot(py_matrix$T)$round(getOption("digits"))), -->
+<!--   round(tcrossprod(r_matrix), digits = getOption("digits")) -->
+<!--   ) -->
+<!-- ``` -->
+<!-- How about converting a `data.frame`? -->
+<!-- ```{r} -->
+<!-- r_df <- mtcars -->
+<!-- kable(r_df) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- py_df <- r_to_py(r_df) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- class(py_df) -->
+<!-- py_df$head() -->
+<!-- ``` -->
+<!-- `data.frame`s are automatically converted to {`pandas`} objects. -->
+<!-- ```{r} -->
+<!-- summary(r_df) -->
+<!-- py_df$describe() -->
+<!-- ``` -->
+<p><img src="https://i.imgur.com/RJ6S6eY.gif" style="display: block; margin: auto;" /></p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://syknapptic.netlify.com/tags/reticulate/">reticulate</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/" data-tooltip="Thoughts on Teaching R and Yet Another Tidyverse Intro">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Brendan Knapp. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/" data-tooltip="Thoughts on Teaching R and Yet Another Tidyverse Intro">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsyknapptic.netlify.com%2F2018%2F05%2Freticulate-taking-the-dragon-for-a-test-ride%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fsyknapptic.netlify.com%2F2018%2F05%2Freticulate-taking-the-dragon-for-a-test-ride%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fsyknapptic.netlify.com%2F2018%2F05%2Freticulate-taking-the-dragon-for-a-test-ride%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Brendan Knapp</h4>
+    
+      <div id="about-card-bio">Data Ninjery <br> (Network|Spatial|Text) Analysis <br> R</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Analyst <br> Decision Enabler
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        California
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+                <h3 class="media-heading">reticulate: Taking the Dragon for a Test Ride</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">I started coding with Python.
+The choice seemed obvious at first. It’s a general programming language so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.
+A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/">
+                <h3 class="media-heading">Thoughts on Teaching R and Yet Another Tidyverse Intro</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+
+Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
+ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/">
+                <h3 class="media-heading">GDELT, Missiles, and Image Collection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
+See also:
+My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         3 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('http://res.cloudinary.com/syknapptic/image/upload/v1516051268/sidebar_nmse27.png');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://syknapptic.netlify.com/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/syknapptic.netlify.com\/2018\/05\/reticulate-taking-the-dragon-for-a-test-ride\/';
+          
+            this.page.identifier = '\/2018\/05\/reticulate-taking-the-dragon-for-a-test-ride\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'syknapptic';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    
+  </body>
+</html>
+
