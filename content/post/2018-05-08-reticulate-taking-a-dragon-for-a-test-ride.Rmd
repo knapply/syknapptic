@@ -27,15 +27,13 @@ I started coding with Python.
 
 The choice seemed obvious at first. It's a general programming language so I wouldn't be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.
 
-A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project. So I transitioned to R because, surprise, a framework for this simply doesn't exist in Python (which is too bad because the time to convergence on a GPU would be likely be a game-changer for the network community). Since my coding went from "productive hobby" to "you need to get this done", I decided I should try and master (using the loosest of definitions) one language instead of risk being a forever-noob in both.
+A few weeks later, I found myself needing network analysis capabilities that simply doesn't exist in Python. Since my coding went from "productive hobby" to "you need to get this done", I decided I should try and master (using the loosest of definitions) one language instead of risk being a forever-noob in both.
 
-I learned why R is awesome along the way and am now pretty biased toward R for data analysis. The language's lazy evaluation combined with the expressive syntax of the core tidyverse packages offer straightforward solutions to 90% of the tasks necessary in every project. {`dplyr`} turns the labor of data carpentry into a series of rewarding puzzles. {`ggplot2`} turns rookies into skilled artists. {`purrr`} (_swoon_) turns code into something that I can only describe as a mix of a playground at recess and poetry.
+Along the way, I learned why R is awesome and am now pretty biased toward it for data analysis. The language's lazy evaluation combined with the expressive syntax of the core tidyverse packages offer straightforward solutions to 90% of the tasks required in every project. {`dplyr`} turns the labor of data carpentry into a series of rewarding puzzles. {`ggplot2`} turns rookies into artists. {`purrr`} (_swoon_) turns code into something that I can only describe as a mix of a playground at recess and poetry.
 
-With the expanded ecosystem of {`sf`} for spatial data and {`tidygraph`} for networks, I'm more than skeptical that Python offers anything better for most data analysis. That's not even getting into the unrivaled statistical test ecosystem or some "cultural" cultural differences (TensorBros, le sigh)...
+With the expanded ecosystem of {`sf`} for spatial data and {`tidygraph`} for networks, I'm more than skeptical that Python offers anything better for most data analysis. That's not even getting into the unrivaled statistical test ecosystem.
 
-... but it's 2018 and everyone is tired of the whole R vs Python war. Neither has it all and the initiatives being taken to bridge the two should leave everyone _very_ optimistic about the futre.
-
-There are things that Python offers that require me to stumble down the rabbit hole of unfamiliar paradigms and syntax. This is something I'll be doing more and more in the near future as I'll (finally? ... hopefully?) have time to learn how to take advantage of the many Python goodies over which I've been salivating.
+That said, there are things that Python offers that require me to stumble down the rabbit hole of unfamiliar paradigms and syntax. This is something I'll be doing more and more in the near future as I'll (finally? ... hopefully?) have time to learn how to take advantage of the many Python goodies over which I've been salivating. R may not be _only_ data analysis like it apparently once was, but Python it is not. 
 
 That's why I am excited for {`reticulate`}. A way of integrating the best of both worlds? sign me up!
 
@@ -66,7 +64,7 @@ sample_numbers <- c(1.01, 100.10, 20.23, 1000.56, 95.94)
 mean(sample_numbers)
 ```
 
-Python's `mean()` function is part of the `statistics` module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here's how we import just the `mean()` function, assign the same values to a `list()` (base Python doesn't have vectors) and get the `mean()` from that variable. Depending on the environment you're using, you likely have to explicitly `print()` the result to see the output.
+Python's `mean()` function is part of the `statistics` module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here's how we import just the `mean()` function, assign the same values as above to a `list()`, and calculate the `mean()` from that variable. Depending on the environment you're using, you likely have to explicitly `print()` the result to see the output.
 
 ```{python}
 from statistics import mean
@@ -84,9 +82,9 @@ sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
 print(statistics.mean(sample_numbers))
 ```
 
-A difference to notice here is that for us to use `mean()`, we need to prefix it with `statistics`. This is similar to calling a function from an R package without loading the entire package with `library()`, such as using `dplyr::mutate()` or `purrr::map()`.
+A difference to notice here is that for us to use `mean()`, we need to prefix it with `statistics`. This is similar to calling a function from an R package without loading the entire package with `library()`, such as using `purrr::map()`. I can't be the only one shaking their fist when getting `select()` errors because {`raster`} snatched the namespace from {`dplyr`}!
 
-We can save some typing giving the loaded package a nickname on import. Here, we'll name `statistics` `stats`, so we can call `stats.mean()`.
+We can save some typing by giving the loaded package a nickname on import. Here, we'll name `statistics` as `stats`, so we can call `stats.mean()`.
 
 ```{python}
 import statistics as stats
@@ -94,9 +92,9 @@ import statistics as stats
 print(stats.mean(sample_numbers))
 ```
 
-What if we don't want to define the variable in Python?
+What if we don't want to manually define the variable in Python?
 
-We can use `r_to_py()` to make variables accessible in Python.
+We can use `r_to_py()` to make variables accessible.
 
 ```{r}
 py_sample_numbers <- r_to_py(sample_numbers)
@@ -112,7 +110,7 @@ from statistics import mean                  # still Python
 print(mean(r.py_sample_numbers))             # still Python
 ```
 
-If you didn't notice, the Python outputs aren't _exactly_ the same as R's. This had me concerned about how values calculated in one language and passed to the other may be handled as this would cause issues with certain workflows... Hold that thought...
+If you didn't notice, the Python outputs aren't _exactly_ the same as R's. This had me concerned about how values calculated in one language and passed to the other may be handled as this would cause issues with certain workflows, like anything using very precise boolean masking... Hold that thought...
 
 Rather than jumping back and forth between the languages, let's use {`reticulate`} to take care of that for us.
 
@@ -149,7 +147,7 @@ py_mean <- py_to_r(py_stats$mean)    # convert Python function
 py_mean(sample_numbers)              # use as if it's native to R
 ```
 
-I'm assuming that this will make it so much easier for developers to port individual functions and entire packages from Python to R.
+I'm sure that this will make it so much easier for developers to port individual functions and entire packages from Python to R.
 
 So. Freaking. Awesome.
 
@@ -158,11 +156,9 @@ knitr::include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1525
 ```
 
 
-Notice the number of digits included in the output. I was concerned about being able to use boolean operators on values that may have been generated in the different languages, but it appears that this was taken into account. Is it really that convenient??!!
+Notice the number of digits included in the output. I was concerned about slight differences in values generated in the different languages, but it appears that this was taken into account. Is it really that convenient??!!
 
 Just to make sure the outputs aren't being formatted underneath the hood, we can take a peak.
-
-This is where I got really excited...
 
 
 ```{r}
@@ -179,17 +175,19 @@ identical(mean(sample_numbers),                               # O.
           py_mean(sample_numbers))                            # G.
 ```
 
+
+
 ```{r echo=FALSE}
 knitr::include_graphics("https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif")
 ```
 
-So, it's pretty clear that {`reticulate`} allows for easy use of Python functions in R. I didn't expect it to be this simple at all, but what else can it do?
+So, it's pretty clear that {`reticulate`} allows for easy use of Python functions in R, way easier than I anticipated, but What else can it do?
 
 Can we write our own Python object classes on the fly and use them in R? 
 
 Yes!
 
-We can source a Python script if available with `py_run_file()`, but we can also crunch one out in an R script and run it with `py_run_string()`.
+We can source a Python script if available with `py_run_file()`, but we can also crunch one out in an R and run it with `py_run_string()`.
 
 Here's a simple `date()` `class` that has two methods, `set_date()` and `show_date()`, which are pretty self-explanatory.
 
