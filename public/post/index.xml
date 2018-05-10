@@ -30,26 +30,25 @@
 &lt;p&gt;I have no idea which version is on CRAN, but I grabbed the development version from GitHub. You can do the same by running:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;install.packages(&amp;quot;devtools&amp;quot;)
 devtools::install_github(&amp;quot;rstudio/reticulate&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reticulate)
-library(knitr)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reticulate)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Right up front, I’m going to create an arbitrary numeric vector and get the &lt;code&gt;mean()&lt;/code&gt; using plain ol’ R.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sample_numbers &amp;lt;- c(1.01, 100.10, 20.23, 1000.56, 95.94)
 mean(sample_numbers)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 243.568&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Python’s &lt;code&gt;mean()&lt;/code&gt; function is part of the &lt;code&gt;statistics&lt;/code&gt; module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here’s how we import just the &lt;code&gt;mean()&lt;/code&gt; function, assign the same values as above to a &lt;code&gt;list()&lt;/code&gt;, and calculate the &lt;code&gt;mean()&lt;/code&gt; from that variable. Depending on the environment you’re using, you likely have to explicitly &lt;code&gt;print()&lt;/code&gt; the result to see the output.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from statistics import mean
-sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
-print(mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from statistics import mean                                # Python code
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]     # Python code
+print(mean(sample_numbers))                                # Python code&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That said, I’m going to load the entire package when calling Python from R. In Python it would just look like this:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics
-sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
-print(statistics.mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics                                          # Python code
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]     # Python code
+print(statistics.mean(sample_numbers))                     # Python code&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A difference to notice here is that for us to use &lt;code&gt;mean()&lt;/code&gt;, we need to prefix it with &lt;code&gt;statistics&lt;/code&gt;. This is similar to calling a function from an R package without loading the entire package with &lt;code&gt;library()&lt;/code&gt;, such as using &lt;code&gt;purrr::map()&lt;/code&gt;. I can’t be the only one shaking their fist when getting &lt;code&gt;select()&lt;/code&gt; errors because {&lt;code&gt;raster&lt;/code&gt;} snatched the namespace from {&lt;code&gt;dplyr&lt;/code&gt;}!&lt;/p&gt;
 &lt;p&gt;We can save some typing by giving the loaded package a nickname on import. Here, we’ll name &lt;code&gt;statistics&lt;/code&gt; as &lt;code&gt;stats&lt;/code&gt;, so we can call &lt;code&gt;stats.mean()&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics as stats
-print(stats.mean(sample_numbers))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics as stats                                  # Python code
+print(stats.mean(sample_numbers))                           # Python code&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 243.56799999999998&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;What if we don’t want to manually define the variable in Python?&lt;/p&gt;
 &lt;p&gt;We can use &lt;code&gt;r_to_py()&lt;/code&gt; to make variables accessible.&lt;/p&gt;
@@ -103,7 +102,7 @@ py_mean(sample_numbers)              # use as if it&amp;#39;s native to R&lt;/co
           py_mean(sample_numbers))                            # G.&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;So, it’s pretty clear that {&lt;code&gt;reticulate&lt;/code&gt;} allows for easy use of Python functions in R, way easier than I anticipated, but What else can it do?&lt;/p&gt;
+&lt;p&gt;So, it’s pretty clear that {&lt;code&gt;reticulate&lt;/code&gt;} allows for easy use of Python functions in R, way easier than I anticipated, but what else can it do?&lt;/p&gt;
 &lt;p&gt;Can we write our own Python object classes on the fly and use them in R?&lt;/p&gt;
 &lt;p&gt;Yes!&lt;/p&gt;
 &lt;p&gt;We can source a Python script if available with &lt;code&gt;py_run_file()&lt;/code&gt;, but we can also crunch one out in an R and run it with &lt;code&gt;py_run_string()&lt;/code&gt;.&lt;/p&gt;

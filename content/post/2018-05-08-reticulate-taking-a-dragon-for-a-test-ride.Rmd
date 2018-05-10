@@ -55,7 +55,6 @@ devtools::install_github("rstudio/reticulate")
 
 ```{r}
 library(reticulate)
-library(knitr)
 ```
 
 Right up front, I'm going to create an arbitrary numeric vector and get the `mean()` using plain ol' R.
@@ -68,19 +67,19 @@ mean(sample_numbers)
 Python's `mean()` function is part of the `statistics` module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here's how we import just the `mean()` function, assign the same values as above to a `list()`, and calculate the `mean()` from that variable. Depending on the environment you're using, you likely have to explicitly `print()` the result to see the output.
 
 ```{python}
-from statistics import mean
+from statistics import mean                                # Python code
 
-sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
-print(mean(sample_numbers))
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]     # Python code
+print(mean(sample_numbers))                                # Python code
 ```
 
 That said, I'm going to load the entire package when calling Python from R. In Python it would just look like this:
 
 ```{python}
-import statistics
+import statistics                                          # Python code
 
-sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
-print(statistics.mean(sample_numbers))
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]     # Python code
+print(statistics.mean(sample_numbers))                     # Python code
 ```
 
 A difference to notice here is that for us to use `mean()`, we need to prefix it with `statistics`. This is similar to calling a function from an R package without loading the entire package with `library()`, such as using `purrr::map()`. I can't be the only one shaking their fist when getting `select()` errors because {`raster`} snatched the namespace from {`dplyr`}!
@@ -88,9 +87,9 @@ A difference to notice here is that for us to use `mean()`, we need to prefix it
 We can save some typing by giving the loaded package a nickname on import. Here, we'll name `statistics` as `stats`, so we can call `stats.mean()`.
 
 ```{python}
-import statistics as stats
+import statistics as stats                                  # Python code
 
-print(stats.mean(sample_numbers))
+print(stats.mean(sample_numbers))                           # Python code
 ```
 
 What if we don't want to manually define the variable in Python?
@@ -182,7 +181,7 @@ identical(mean(sample_numbers),                               # O.
 knitr::include_graphics("https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif")
 ```
 
-So, it's pretty clear that {`reticulate`} allows for easy use of Python functions in R, way easier than I anticipated, but What else can it do?
+So, it's pretty clear that {`reticulate`} allows for easy use of Python functions in R, way easier than I anticipated, but what else can it do?
 
 Can we write our own Python object classes on the fly and use them in R? 
 
