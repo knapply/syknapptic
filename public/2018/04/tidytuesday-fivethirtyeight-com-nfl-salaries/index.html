@@ -1,0 +1,1369 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.32.4 with theme Tranquilpeak 0.4.3-BETA">
+    <title>TidyTuesday: fivethirtyeight.com NFL Salaries</title>
+    <meta name="author" content="Brendan Knapp">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+    <meta name="description" content="Load PackagesGet That DataSet Better Column NamesTidy UpOffense vs DefenseLoad PackagesOur trusty {tidyverse} team of packages for a ninjillion helpful functions.{readxl}, as the data are stored in a .xlsx file with readxl::read_xlsx}.{httr}, to programtically access the data with httr::GET().I recall reading somewhere that updates were in store for {readxl} that would allow it to to read files directly from URLs, but I honestly haven’t gotten around to looking.">
+    <meta property="og:description" content="Load PackagesGet That DataSet Better Column NamesTidy UpOffense vs DefenseLoad PackagesOur trusty {tidyverse} team of packages for a ninjillion helpful functions.{readxl}, as the data are stored in a .xlsx file with readxl::read_xlsx}.{httr}, to programtically access the data with httr::GET().I recall reading somewhere that updates were in store for {readxl} that would allow it to to read files directly from URLs, but I honestly haven’t gotten around to looking.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="TidyTuesday: fivethirtyeight.com NFL Salaries">
+    <meta property="og:url" content="/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+    <meta property="og:site_name" content="syknapptic">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="syknapptic">
+    <meta name="twitter:description" content="Load PackagesGet That DataSet Better Column NamesTidy UpOffense vs DefenseLoad PackagesOur trusty {tidyverse} team of packages for a ninjillion helpful functions.{readxl}, as the data are stored in a .xlsx file with readxl::read_xlsx}.{httr}, to programtically access the data with httr::GET().I recall reading somewhere that updates were in store for {readxl} that would allow it to to read files directly from URLs, but I honestly haven’t gotten around to looking.">
+    
+      <meta name="twitter:creator" content="@syknapptic">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=640">
+    
+
+    
+      <meta property="og:image" content="https://espnfivethirtyeight.files.wordpress.com/2017/05/morris-nflrb-1.png">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-115043043-2', 'auto');
+ga('send', 'pageview');
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">syknapptic</a>
+  </div>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Brendan Knapp</h4>
+        
+          <h5 class="sidebar-profile-bio">Data Ninjery <br> (Network|Spatial|Text) Analysis <br> R</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/shiny/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-code"></i>
+      
+      <span class="sidebar-button-desc">Shiny Apps</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/syknapptic">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/syknapptic">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/7678928/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/knappbrendan/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      TidyTuesday: fivethirtyeight.com NFL Salaries
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-04-10T00:00:00Z">
+        
+  April 10, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/tidytuesday">TidyTuesday</a>, 
+    
+      <a class="category-link" href="/categories/data-carpentry">data carpentry</a>, 
+    
+      <a class="category-link" href="/categories/visualization">visualization</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <div id="TOC">
+<ul>
+<li><a href="#load-packages">Load Packages</a></li>
+<li><a href="#get-that-data">Get That Data</a></li>
+<li><a href="#set-better-column-names">Set Better Column Names</a></li>
+<li><a href="#tidy-up">Tidy Up</a></li>
+<li><a href="#offense-vs-defense">Offense vs Defense</a></li>
+</ul>
+</div>
+
+<div id="load-packages" class="section level1">
+<h1>Load Packages</h1>
+<ul>
+<li>Our trusty {<code>tidyverse</code>} team of packages for a ninjillion helpful functions.</li>
+<li>{<code>readxl</code>}, as the data are stored in a .xlsx file with <code>readxl::read_xlsx</code>}.</li>
+<li>{<code>httr</code>}, to programtically access the data with <code>httr::GET()</code>.
+<ul>
+<li>I recall reading somewhere that updates were in store for {<code>readxl</code>} that would allow it to to read files directly from URLs, but I honestly haven’t gotten around to looking.</li>
+</ul></li>
+<li>{<code>webshot</code>}, to be able to easily give context to the webpages mentioned in the beginning with <code>webshot::webshot()</code>.</li>
+<li>{<code>knitr</code>} and {<code>kableExtra</code>}, to prettify outputted tables with <code>knitr::kable()</code> and <code>kableExtra::kablestyling()</code></li>
+</ul>
+<pre class="r"><code>library(tidyverse)
+library(readxl)
+library(httr)
+library(webshot)
+library(knitr)
+library(kableExtra)</code></pre>
+</div>
+<div id="get-that-data" class="section level1">
+<h1>Get That Data</h1>
+<p>If you navigate to the referenced <a href="https://github.com/rfordatascience/tidytuesday">GitHub page</a> where the data are kept, you’ll see the following:</p>
+<pre class="r"><code>webshot(&quot;https://github.com/rfordatascience/tidytuesday&quot;, 
+        vheight = 1200,
+        cliprect = &quot;viewport&quot;)</code></pre>
+<p><img src="/post/2018-04-10-tidytuesday-fivethirtyeight-com-nfl-salaries_files/figure-html/unnamed-chunk-2-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Click the <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data">data link</a>, which will take you here:</p>
+<pre class="r"><code>webshot(&quot;https://github.com/rfordatascience/tidytuesday/tree/master/data&quot;)</code></pre>
+<p><img src="/post/2018-04-10-tidytuesday-fivethirtyeight-com-nfl-salaries_files/figure-html/unnamed-chunk-3-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>We want the file named “tidy_tuesday_week2.xlsx”. Go ahead and click that <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/tidy_tuesday_week2.xlsx">link</a>, taking you here:</p>
+<pre class="r"><code>webshot(&quot;https://github.com/rfordatascience/tidytuesday/blob/master/data/tidy_tuesday_week2.xlsx&quot;)</code></pre>
+<p><img src="/post/2018-04-10-tidytuesday-fivethirtyeight-com-nfl-salaries_files/figure-html/unnamed-chunk-4-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p>Instead of manually downloading the file and putting it in a folder somewhere, right-click on “View Raw” and copy the link’s address. We’ll use that to access the data from within R.</p>
+<p>Once you have that, let’s assign it to variable that I’ll call <code>data_url</code>.</p>
+<pre class="r"><code>data_url &lt;- &quot;https://github.com/rfordatascience/tidytuesday/blob/master/data/tidy_tuesday_week2.xlsx?raw=true&quot;</code></pre>
+<p>There is likely (read: probably) a better way to do this, but I’m going to take <code>data_url</code> and pipe it <code>%&gt;%</code> to {<code>httr</code>}’s <code>GET()</code>. I’ll then set <code>GET()</code>’s <code>config =</code> argument to write it (with <code>httr::write_disk()</code> to a temporary file (that I create with <code>base::tempfile()</code>). I’ll also give the that file a a <code>&quot;.xlsx&quot;</code> extension with the <code>fileext =</code> argument. I’ll then assign the result to a global variable that I’ll call <code>temp_file</code> with <code>&lt;&lt;-</code> (HEAVEN FORBIRD!).</p>
+<p>That’s a lot, but here’s what it looks like:</p>
+<pre class="r"><code>data_url %&gt;% 
+  GET(config = write_disk(temp_file &lt;&lt;- tempfile(fileext = &quot;.xlsx&quot;)))</code></pre>
+<pre><code>## Response [https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/tidy_tuesday_week2.xlsx]
+##   Date: 2018-04-10 13:40
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 70.7 kB
+## &lt;ON DISK&gt;  C:\Users\Windows\AppData\Local\Temp\RtmpyMXbdi\file1a38773e80.xlsx</code></pre>
+<p>We now have the .xlsx file stored in our <code>temp_file</code>, which we can read into R as a <code>tibble</code> with <code>readxl::read_xlsx()</code>. The column headers are, shall we say, very Excel user, so I’m going to clean those up immediately to save headaches and endless variable-referencing with a bunch of ticks (`).</p>
+</div>
+<div id="set-better-column-names" class="section level1">
+<h1>Set Better Column Names</h1>
+<p>By using <code>dplyr::rename_all()</code>, we can rename all of our columns with a function. If we wrap them in <code>dplyr::funs()</code>, we can pass multiple functions to <code>rename_all()</code> and reference the column headers with <code>.</code>. My habit is to keep variable names in lower case and separate words with <code>_</code>.</p>
+<p>For string processing, {<code>stringr</code>} will be our workhorse. <code>str_to_lower()</code> will convert our characters to lower-case, and <code>str_replace_all()</code> will take care of of the pesky spaces in our column names.</p>
+<p>Here’s reading in the file, renaming all the columns, and assigning the result to a variable that I’m going to call <code>nfl_df</code>:</p>
+<pre class="r"><code>nfl_df &lt;- read_xlsx(temp_file) %&gt;% 
+  rename_all(funs(str_to_lower(str_replace_all(., &quot; &quot;, &quot;_&quot;))))</code></pre>
+<p>Phew. After all that, what’s the data actually look like? I’m going to use <code>knitr::kable()</code> and <code>kableExtra::kable_styling()</code> to render nice looking tables, which requires that I use <code>head()</code> to limit output. Otherwise, all the rows will print and you’ll be scrolling forever. That said, you don’t need to use <code>head()</code> inside of R.</p>
+<pre class="r"><code>nfl_df %&gt;%
+  head(10) %&gt;% # keep only the first 10 rows
+  kable(format = &quot;html&quot;) %&gt;% 
+  kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),
+                font_size = 11,
+                full_width = FALSE)</code></pre>
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+cornerback
+</th>
+<th style="text-align:right;">
+defensive_lineman
+</th>
+<th style="text-align:right;">
+linebacker
+</th>
+<th style="text-align:right;">
+offensive_lineman
+</th>
+<th style="text-align:right;">
+quarterback
+</th>
+<th style="text-align:right;">
+running_back
+</th>
+<th style="text-align:right;">
+safety
+</th>
+<th style="text-align:right;">
+special_teamer
+</th>
+<th style="text-align:right;">
+tight_end
+</th>
+<th style="text-align:right;">
+wide_receiver
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+11265916
+</td>
+<td style="text-align:right;">
+17818000
+</td>
+<td style="text-align:right;">
+16420000
+</td>
+<td style="text-align:right;">
+15960000
+</td>
+<td style="text-align:right;">
+17228125
+</td>
+<td style="text-align:right;">
+12955000
+</td>
+<td style="text-align:right;">
+8871428
+</td>
+<td style="text-align:right;">
+4300000
+</td>
+<td style="text-align:right;">
+8734375
+</td>
+<td style="text-align:right;">
+16250000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+11000000
+</td>
+<td style="text-align:right;">
+16200000
+</td>
+<td style="text-align:right;">
+15623000
+</td>
+<td style="text-align:right;">
+12800000
+</td>
+<td style="text-align:right;">
+16000000
+</td>
+<td style="text-align:right;">
+10873833
+</td>
+<td style="text-align:right;">
+8787500
+</td>
+<td style="text-align:right;">
+3725000
+</td>
+<td style="text-align:right;">
+8591000
+</td>
+<td style="text-align:right;">
+14175000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+<td style="text-align:right;">
+12476000
+</td>
+<td style="text-align:right;">
+11825000
+</td>
+<td style="text-align:right;">
+11767500
+</td>
+<td style="text-align:right;">
+14400000
+</td>
+<td style="text-align:right;">
+9479000
+</td>
+<td style="text-align:right;">
+8282500
+</td>
+<td style="text-align:right;">
+3556176
+</td>
+<td style="text-align:right;">
+8290000
+</td>
+<td style="text-align:right;">
+11424000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+<td style="text-align:right;">
+11904706
+</td>
+<td style="text-align:right;">
+10083333
+</td>
+<td style="text-align:right;">
+10358200
+</td>
+<td style="text-align:right;">
+14100000
+</td>
+<td style="text-align:right;">
+7700000
+</td>
+<td style="text-align:right;">
+8000000
+</td>
+<td style="text-align:right;">
+3500000
+</td>
+<td style="text-align:right;">
+7723333
+</td>
+<td style="text-align:right;">
+11415000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+<td style="text-align:right;">
+11762782
+</td>
+<td style="text-align:right;">
+10020000
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+<td style="text-align:right;">
+13510000
+</td>
+<td style="text-align:right;">
+7500000
+</td>
+<td style="text-align:right;">
+7804333
+</td>
+<td style="text-align:right;">
+3250000
+</td>
+<td style="text-align:right;">
+6974666
+</td>
+<td style="text-align:right;">
+10800000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+9244117
+</td>
+<td style="text-align:right;">
+11340000
+</td>
+<td style="text-align:right;">
+8150000
+</td>
+<td style="text-align:right;">
+9859166
+</td>
+<td style="text-align:right;">
+13250000
+</td>
+<td style="text-align:right;">
+7033000
+</td>
+<td style="text-align:right;">
+7652700
+</td>
+<td style="text-align:right;">
+3225000
+</td>
+<td style="text-align:right;">
+6133333
+</td>
+<td style="text-align:right;">
+9993750
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+8000000
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+<td style="text-align:right;">
+7812500
+</td>
+<td style="text-align:right;">
+9500000
+</td>
+<td style="text-align:right;">
+12950000
+</td>
+<td style="text-align:right;">
+6750000
+</td>
+<td style="text-align:right;">
+7550000
+</td>
+<td style="text-align:right;">
+2900000
+</td>
+<td style="text-align:right;">
+5962500
+</td>
+<td style="text-align:right;">
+8605200
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+7900000
+</td>
+<td style="text-align:right;">
+9482500
+</td>
+<td style="text-align:right;">
+7700000
+</td>
+<td style="text-align:right;">
+9420000
+</td>
+<td style="text-align:right;">
+12574700
+</td>
+<td style="text-align:right;">
+6370002
+</td>
+<td style="text-align:right;">
+7500000
+</td>
+<td style="text-align:right;">
+2850000
+</td>
+<td style="text-align:right;">
+4687500
+</td>
+<td style="text-align:right;">
+8273333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+7400000
+</td>
+<td style="text-align:right;">
+8450000
+</td>
+<td style="text-align:right;">
+7200000
+</td>
+<td style="text-align:right;">
+8880000
+</td>
+<td style="text-align:right;">
+12465000
+</td>
+<td style="text-align:right;">
+6000000
+</td>
+<td style="text-align:right;">
+5745000
+</td>
+<td style="text-align:right;">
+2600000
+</td>
+<td style="text-align:right;">
+4536666
+</td>
+<td style="text-align:right;">
+7827500
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:right;">
+7000000
+</td>
+<td style="text-align:right;">
+8383266
+</td>
+<td style="text-align:right;">
+7100000
+</td>
+<td style="text-align:right;">
+8686750
+</td>
+<td style="text-align:right;">
+11320000
+</td>
+<td style="text-align:right;">
+4933333
+</td>
+<td style="text-align:right;">
+5250000
+</td>
+<td style="text-align:right;">
+2600000
+</td>
+<td style="text-align:right;">
+4200000
+</td>
+<td style="text-align:right;">
+7531250
+</td>
+</tr>
+</tbody>
+</table>
+<p>To make life easier, I’m going to wrap the table formatting into a function that I’ll call <code>prettify()</code>.</p>
+<pre class="r"><code>prettify &lt;- function(df){
+  df %&gt;%
+    head(10) %&gt;% 
+    kable(format = &quot;html&quot;) %&gt;% 
+    kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;),
+                  font_size = 11,
+                  full_width = FALSE)
+}</code></pre>
+</div>
+<div id="tidy-up" class="section level1">
+<h1>Tidy Up</h1>
+<p>You’ll notice that the variables (column names) are <code>year</code> and then a bunch of player positions. To get the most out of the data set, we want those positions to be all in one variable, which we’re going to call <code>position</code>.</p>
+<p>To do that, we can use <code>tidyr::gather()</code>. <code>gather()</code> takes the arguments <code>key =</code> and <code>value =</code>. Our <code>key =</code> are the player positions and our <code>value =</code> are their salaries. We could name all of those positions explicitly, but there’s an easier way. Since we want to gather all the variables except for <code>year</code>, we can do so by using <code>-year</code>. R will interpret that as “all the columns minus <code>year</code>”.</p>
+<p>Here’s what what it looks like in action:</p>
+<pre class="r"><code>gathered_df &lt;- nfl_df %&gt;% 
+  gather(key = position, value = salary, -year)</code></pre>
+<p>… and here are our results:</p>
+<pre class="r"><code>gathered_df %&gt;% 
+  prettify()</code></pre>
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:left;">
+position
+</th>
+<th style="text-align:right;">
+salary
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+11265916
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+11000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+10000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+9244117
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+8000000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+7900000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+7400000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+cornerback
+</td>
+<td style="text-align:right;">
+7000000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Pretty wicked for a single function!</p>
+</div>
+<div id="offense-vs-defense" class="section level1">
+<h1>Offense vs Defense</h1>
+<p>Let’s add a variable specifying whether each position is on offense or on defense. But first, we can check for all the unique positions in the data with <code>dplyr::distinct()</code>.</p>
+<pre class="r"><code>gathered_df %&gt;% 
+  distinct(position) %&gt;% 
+  prettify()</code></pre>
+<table class="table table-striped table-hover table-condensed" style="font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+position
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+cornerback
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+defensive_lineman
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+linebacker
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+offensive_lineman
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+quarterback
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+running_back
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+safety
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+special_teamer
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tight_end
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wide_receiver
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>offense &lt;- c(&quot;running_back&quot;, &quot;quarterback&quot;, &quot;offensive_lineman&quot;,
+             &quot;tight_end&quot;, &quot;wide_receiver&quot;)
+
+defense &lt;- c(&quot;cornerback&quot;, &quot;defensive_lineman&quot;, &quot;linebacker&quot;,
+             &quot;safety&quot;)
+# off_def_df &lt;- 
+# gathered_df %&gt;% 
+#   mutate(off_def = case_when(
+#     positions 
+#   ))</code></pre>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/tidyverse/">tidyverse</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/fivethirtyeight/">fivethirtyeight</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/dplyr/">dplyr</a>
+
+  <a class="tag tag--primary tag--small" href="/tags/ggplot/">ggplot</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/yet-another-tidyverse-intro/" data-tooltip="Thoughts on Teaching R and Yet Another Tidyverse Intro">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Brendan Knapp. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/yet-another-tidyverse-intro/" data-tooltip="Thoughts on Teaching R and Yet Another Tidyverse Intro">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F04%2Ftidytuesday-fivethirtyeight-com-nfl-salaries%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F04%2Ftidytuesday-fivethirtyeight-com-nfl-salaries%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F04%2Ftidytuesday-fivethirtyeight-com-nfl-salaries%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Brendan Knapp</h4>
+    
+      <div id="about-card-bio">Data Ninjery <br> (Network|Spatial|Text) Analysis <br> R</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Data Analyst <br> Decision Enabler
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        California
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/">
+                <h3 class="media-heading">TidyTuesday: fivethirtyeight.com NFL Salaries</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Apr 4, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Load PackagesGet That DataSet Better Column NamesTidy UpOffense vs DefenseLoad PackagesOur trusty {tidyverse} team of packages for a ninjillion helpful functions.{readxl}, as the data are stored in a .xlsx file with readxl::read_xlsx}.{httr}, to programtically access the data with httr::GET().I recall reading somewhere that updates were in store for {readxl} that would allow it to to read files directly from URLs, but I honestly haven’t gotten around to looking.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/03/yet-another-tidyverse-intro/">
+                <h3 class="media-heading">Thoughts on Teaching R and Yet Another Tidyverse Intro</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+
+Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
+ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/">
+                <h3 class="media-heading">GDELT, Missiles, and Image Collection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
+See also:
+My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         3 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('http://res.cloudinary.com/syknapptic/image/upload/v1516051268/sidebar_nmse27.png');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2018\/04\/tidytuesday-fivethirtyeight-com-nfl-salaries\/';
+          
+            this.page.identifier = '\/2018\/04\/tidytuesday-fivethirtyeight-com-nfl-salaries\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'syknapptic';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    
+  </body>
+</html>
+

@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fivethirtyeight on syknapptic</title>
+    <link>/tags/fivethirtyeight/</link>
+    <description>Recent content in Fivethirtyeight on syknapptic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 10 Apr 2018 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="/tags/fivethirtyeight/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TidyTuesday: fivethirtyeight.com NFL Salaries</title>
+      <link>/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/</link>
+      <pubDate>Tue, 10 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/04/tidytuesday-fivethirtyeight-com-nfl-salaries/</guid>
+      <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#load-packages&#34;&gt;Load Packages&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#get-that-data&#34;&gt;Get That Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#set-better-column-names&#34;&gt;Set Better Column Names&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tidy-up&#34;&gt;Tidy Up&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#offense-vs-defense&#34;&gt;Offense vs Defense&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;load-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Load Packages&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Our trusty {&lt;code&gt;tidyverse&lt;/code&gt;} team of packages for a ninjillion helpful functions.&lt;/li&gt;
+&lt;li&gt;{&lt;code&gt;readxl&lt;/code&gt;}, as the data are stored in a .xlsx file with &lt;code&gt;readxl::read_xlsx&lt;/code&gt;}.&lt;/li&gt;
+&lt;li&gt;{&lt;code&gt;httr&lt;/code&gt;}, to programtically access the data with &lt;code&gt;httr::GET()&lt;/code&gt;.
+&lt;ul&gt;
+&lt;li&gt;I recall reading somewhere that updates were in store for {&lt;code&gt;readxl&lt;/code&gt;} that would allow it to to read files directly from URLs, but I honestly haven’t gotten around to looking.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;{&lt;code&gt;webshot&lt;/code&gt;}, to be able to easily give context to the webpages mentioned in the beginning with &lt;code&gt;webshot::webshot()&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;{&lt;code&gt;knitr&lt;/code&gt;} and {&lt;code&gt;kableExtra&lt;/code&gt;}, to prettify outputted tables with &lt;code&gt;knitr::kable()&lt;/code&gt; and &lt;code&gt;kableExtra::kablestyling()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(readxl)
+library(httr)
+library(webshot)
+library(knitr)
+library(kableExtra)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;get-that-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Get That Data&lt;/h1&gt;
+&lt;p&gt;If you navigate to the referenced &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday&#34;&gt;GitHub page&lt;/a&gt; where the data are kept, you’ll see the following:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;webshot(&amp;quot;https://github.com/rfordatascience/tidytuesday&amp;quot;, 
+        vheight = 1200,
+        cliprect = &amp;quot;viewport&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-04-10-tidytuesday-fivethirtyeight-com-nfl-salaries_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Click the &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/tree/master/data&#34;&gt;data link&lt;/a&gt;, which will take you here:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;webshot(&amp;quot;https://github.com/rfordatascience/tidytuesday/tree/master/data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-04-10-tidytuesday-fivethirtyeight-com-nfl-salaries_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We want the file named “tidy_tuesday_week2.xlsx”. Go ahead and click that &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/tidy_tuesday_week2.xlsx&#34;&gt;link&lt;/a&gt;, taking you here:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;webshot(&amp;quot;https://github.com/rfordatascience/tidytuesday/blob/master/data/tidy_tuesday_week2.xlsx&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-04-10-tidytuesday-fivethirtyeight-com-nfl-salaries_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Instead of manually downloading the file and putting it in a folder somewhere, right-click on “View Raw” and copy the link’s address. We’ll use that to access the data from within R.&lt;/p&gt;
+&lt;p&gt;Once you have that, let’s assign it to variable that I’ll call &lt;code&gt;data_url&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_url &amp;lt;- &amp;quot;https://github.com/rfordatascience/tidytuesday/blob/master/data/tidy_tuesday_week2.xlsx?raw=true&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There is likely (read: probably) a better way to do this, but I’m going to take &lt;code&gt;data_url&lt;/code&gt; and pipe it &lt;code&gt;%&amp;gt;%&lt;/code&gt; to {&lt;code&gt;httr&lt;/code&gt;}’s &lt;code&gt;GET()&lt;/code&gt;. I’ll then set &lt;code&gt;GET()&lt;/code&gt;’s &lt;code&gt;config =&lt;/code&gt; argument to write it (with &lt;code&gt;httr::write_disk()&lt;/code&gt; to a temporary file (that I create with &lt;code&gt;base::tempfile()&lt;/code&gt;). I’ll also give the that file a a &lt;code&gt;&amp;quot;.xlsx&amp;quot;&lt;/code&gt; extension with the &lt;code&gt;fileext =&lt;/code&gt; argument. I’ll then assign the result to a global variable that I’ll call &lt;code&gt;temp_file&lt;/code&gt; with &lt;code&gt;&amp;lt;&amp;lt;-&lt;/code&gt; (HEAVEN FORBIRD!).&lt;/p&gt;
+&lt;p&gt;That’s a lot, but here’s what it looks like:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_url %&amp;gt;% 
+  GET(config = write_disk(temp_file &amp;lt;&amp;lt;- tempfile(fileext = &amp;quot;.xlsx&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Response [https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/tidy_tuesday_week2.xlsx]
+##   Date: 2018-04-10 13:40
+##   Status: 200
+##   Content-Type: application/octet-stream
+##   Size: 70.7 kB
+## &amp;lt;ON DISK&amp;gt;  C:\Users\Windows\AppData\Local\Temp\RtmpyMXbdi\file1a38773e80.xlsx&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We now have the .xlsx file stored in our &lt;code&gt;temp_file&lt;/code&gt;, which we can read into R as a &lt;code&gt;tibble&lt;/code&gt; with &lt;code&gt;readxl::read_xlsx()&lt;/code&gt;. The column headers are, shall we say, very Excel user, so I’m going to clean those up immediately to save headaches and endless variable-referencing with a bunch of ticks (`).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;set-better-column-names&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Set Better Column Names&lt;/h1&gt;
+&lt;p&gt;By using &lt;code&gt;dplyr::rename_all()&lt;/code&gt;, we can rename all of our columns with a function. If we wrap them in &lt;code&gt;dplyr::funs()&lt;/code&gt;, we can pass multiple functions to &lt;code&gt;rename_all()&lt;/code&gt; and reference the column headers with &lt;code&gt;.&lt;/code&gt;. My habit is to keep variable names in lower case and separate words with &lt;code&gt;_&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For string processing, {&lt;code&gt;stringr&lt;/code&gt;} will be our workhorse. &lt;code&gt;str_to_lower()&lt;/code&gt; will convert our characters to lower-case, and &lt;code&gt;str_replace_all()&lt;/code&gt; will take care of of the pesky spaces in our column names.&lt;/p&gt;
+&lt;p&gt;Here’s reading in the file, renaming all the columns, and assigning the result to a variable that I’m going to call &lt;code&gt;nfl_df&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nfl_df &amp;lt;- read_xlsx(temp_file) %&amp;gt;% 
+  rename_all(funs(str_to_lower(str_replace_all(., &amp;quot; &amp;quot;, &amp;quot;_&amp;quot;))))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Phew. After all that, what’s the data actually look like? I’m going to use &lt;code&gt;knitr::kable()&lt;/code&gt; and &lt;code&gt;kableExtra::kable_styling()&lt;/code&gt; to render nice looking tables, which requires that I use &lt;code&gt;head()&lt;/code&gt; to limit output. Otherwise, all the rows will print and you’ll be scrolling forever. That said, you don’t need to use &lt;code&gt;head()&lt;/code&gt; inside of R.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;nfl_df %&amp;gt;%
+  head(10) %&amp;gt;% # keep only the first 10 rows
+  kable(format = &amp;quot;html&amp;quot;) %&amp;gt;% 
+  kable_styling(bootstrap_options = c(&amp;quot;striped&amp;quot;, &amp;quot;hover&amp;quot;, &amp;quot;condensed&amp;quot;),
+                font_size = 11,
+                full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-hover table-condensed&#34; style=&#34;font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+cornerback
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+defensive_lineman
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+linebacker
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+offensive_lineman
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+quarterback
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+running_back
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+safety
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+special_teamer
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+tight_end
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+wide_receiver
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11265916
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17818000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16420000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15960000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17228125
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12955000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8871428
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4300000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8734375
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16250000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16200000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15623000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12800000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10873833
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8787500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3725000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8591000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14175000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12476000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11825000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11767500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14400000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9479000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8282500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3556176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8290000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11424000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11904706
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10083333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10358200
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14100000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7700000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3500000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7723333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11415000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11762782
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10020000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13510000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7500000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7804333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3250000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6974666
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10800000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9244117
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11340000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8150000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9859166
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13250000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7033000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7652700
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3225000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6133333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9993750
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7812500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9500000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12950000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6750000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7550000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2900000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5962500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8605200
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7900000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9482500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7700000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9420000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12574700
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6370002
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7500000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2850000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4687500
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8273333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7400000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8450000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7200000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8880000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12465000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5745000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2600000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4536666
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7827500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8383266
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7100000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8686750
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11320000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4933333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5250000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2600000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4200000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7531250
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;To make life easier, I’m going to wrap the table formatting into a function that I’ll call &lt;code&gt;prettify()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;prettify &amp;lt;- function(df){
+  df %&amp;gt;%
+    head(10) %&amp;gt;% 
+    kable(format = &amp;quot;html&amp;quot;) %&amp;gt;% 
+    kable_styling(bootstrap_options = c(&amp;quot;striped&amp;quot;, &amp;quot;hover&amp;quot;, &amp;quot;condensed&amp;quot;),
+                  font_size = 11,
+                  full_width = FALSE)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidy-up&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Tidy Up&lt;/h1&gt;
+&lt;p&gt;You’ll notice that the variables (column names) are &lt;code&gt;year&lt;/code&gt; and then a bunch of player positions. To get the most out of the data set, we want those positions to be all in one variable, which we’re going to call &lt;code&gt;position&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To do that, we can use &lt;code&gt;tidyr::gather()&lt;/code&gt;. &lt;code&gt;gather()&lt;/code&gt; takes the arguments &lt;code&gt;key =&lt;/code&gt; and &lt;code&gt;value =&lt;/code&gt;. Our &lt;code&gt;key =&lt;/code&gt; are the player positions and our &lt;code&gt;value =&lt;/code&gt; are their salaries. We could name all of those positions explicitly, but there’s an easier way. Since we want to gather all the variables except for &lt;code&gt;year&lt;/code&gt;, we can do so by using &lt;code&gt;-year&lt;/code&gt;. R will interpret that as “all the columns minus &lt;code&gt;year&lt;/code&gt;”.&lt;/p&gt;
+&lt;p&gt;Here’s what what it looks like in action:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gathered_df &amp;lt;- nfl_df %&amp;gt;% 
+  gather(key = position, value = salary, -year)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… and here are our results:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gathered_df %&amp;gt;% 
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-hover table-condensed&#34; style=&#34;font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+year
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+position
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+salary
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11265916
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9244117
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7900000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7400000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2011
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Pretty wicked for a single function!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;offense-vs-defense&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Offense vs Defense&lt;/h1&gt;
+&lt;p&gt;Let’s add a variable specifying whether each position is on offense or on defense. But first, we can check for all the unique positions in the data with &lt;code&gt;dplyr::distinct()&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gathered_df %&amp;gt;% 
+  distinct(position) %&amp;gt;% 
+  prettify()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped table-hover table-condensed&#34; style=&#34;font-size: 11px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+cornerback
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+defensive_lineman
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+linebacker
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+offensive_lineman
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+quarterback
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+running_back
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+safety
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+special_teamer
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+tight_end
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wide_receiver
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;offense &amp;lt;- c(&amp;quot;running_back&amp;quot;, &amp;quot;quarterback&amp;quot;, &amp;quot;offensive_lineman&amp;quot;,
+             &amp;quot;tight_end&amp;quot;, &amp;quot;wide_receiver&amp;quot;)
+
+defense &amp;lt;- c(&amp;quot;cornerback&amp;quot;, &amp;quot;defensive_lineman&amp;quot;, &amp;quot;linebacker&amp;quot;,
+             &amp;quot;safety&amp;quot;)
+# off_def_df &amp;lt;- 
+# gathered_df %&amp;gt;% 
+#   mutate(off_def = case_when(
+#     positions 
+#   ))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

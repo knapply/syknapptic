@@ -1,0 +1,352 @@
+---
+title: 'reticulate: Taking the Dragon for a Test Ride'
+author: Brendan Knapp
+date: '2018-05-08'
+slug: reticulate-taking-the-dragon-for-a-test-ride
+categories:
+  - programming
+  - python
+tags:
+  - reticulate
+thumbnailImagePosition: left
+thumbnailImage: https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG
+metaAlignment: center
+coverMeta: out
+summary: Taking a quick spin with the awesomeness that is {reticulate}.
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 11, fig.height = 8, fig.align = "center",
+                      message = FALSE, warning = FALSE)
+```
+
+I started coding with Python.
+
+The choice seemed obvious at first. It's a general programming language so I wouldn't be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy and I went for Python instead.
+
+A few weeks later, I was informed that I needed to use exponential random graph models (ERGMs) for a network analysis project. So I transitioned to R because, surprise, a framework for this simply doesn't exist in Python (which is too bad because the time to convergence on a GPU would be likely be a game-changer for the network community). Since my coding went from "productive hobby" to "you need to get this done", I decided I should try and master (using the loosest of definitions) one language instead of risk being a forever-noob in both.
+
+I learned why R is awesome along the way and am now pretty biased toward R for data analysis. The language's lazy evaluation combined with the expressive syntax of the core tidyverse packages offer straightforward solutions to 90% of the tasks necessary in every project. {`dplyr`} turns the labor of data carpentry into a series of rewarding puzzles. {`ggplot2`} turns rookies into skilled artists. {`purrr`} (_swoon_) turns code into something that I can only describe as a mix of a playground at recess and poetry.
+
+With the expanded ecosystem of {`sf`} for spatial data and {`tidygraph`} for networks, I'm more than skeptical that Python offers anything better for most data analysis. That's not even getting into the unrivaled statistical test ecosystem or some "cultural" cultural differences (TensorBros, le sigh)...
+
+... but it's 2018 and everyone is tired of the whole R vs Python war. Neither has it all and the initiatives being taken to bridge the two should leave everyone _very_ optimistic about the futre.
+
+There are things that Python offers that require me to stumble down the rabbit hole of unfamiliar paradigms and syntax. This is something I'll be doing more and more in the near future as I'll (finally? ... hopefully?) have time to learn how to take advantage of the many Python goodies over which I've been salivating.
+
+That's why I am excited for {`reticulate`}. A way of integrating the best of both worlds? sign me up!
+
+So, while taking a break from the race of finishing a final semester, I decided to see just how easy they've made it.
+
+It is better than I hoped.
+
+```{r echo=FALSE}
+knitr::include_graphics("https://media1.tenor.com/images/21774c49405bbaf6b2255da1a74bdfa7/tenor.gif")
+```
+
+I have no idea which version is on CRAN, but I grabbed the development version from GitHub. You can do the same by running:
+
+```{r eval=FALSE}
+install.packages("devtools")
+devtools::install_github("rstudio/reticulate")
+```
+
+```{r}
+library(reticulate)
+library(knitr)
+```
+
+Right up front, I'm going to create an arbitrary numeric vector and get the `mean()` using plain ol' R.
+
+```{r}
+sample_numbers <- c(1.01, 100.10, 20.23, 1000.56, 95.94)
+mean(sample_numbers)
+```
+
+Python's `mean()` function is part of the `statistics` module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here's how we import just the `mean()` function, assign the same values to a `list()` (base Python doesn't have vectors) and get the `mean()` from that variable. Depending on the environment you're using, you likely have to explicitly `print()` the result to see the output.
+
+```{python}
+from statistics import mean
+
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
+print(mean(sample_numbers))
+```
+
+That said, I'm going to load the entire package when calling Python from R. In Python it would just look like this:
+
+```{python}
+import statistics
+
+sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]
+print(statistics.mean(sample_numbers))
+```
+
+A difference to notice here is that for us to use `mean()`, we need to prefix it with `statistics`. This is similar to calling a function from an R package without loading the entire package with `library()`, such as using `dplyr::mutate()` or `purrr::map()`.
+
+We can save some typing giving the loaded package a nickname on import. Here, we'll name `statistics` `stats`, so we can call `stats.mean()`.
+
+```{python}
+import statistics as stats
+
+print(stats.mean(sample_numbers))
+```
+
+What if we don't want to define the variable in Python?
+
+We can use `r_to_py()` to make variables accessible in Python.
+
+```{r}
+py_sample_numbers <- r_to_py(sample_numbers)
+```
+
+And just like that, Python can access the variable as `r.py_sample_numbers`.
+
+```{python}
+print(r.py_sample_numbers)                   # this is a Python code chunk
+
+from statistics import mean                  # still Python
+
+print(mean(r.py_sample_numbers))             # still Python
+```
+
+If you didn't notice, the Python outputs aren't _exactly_ the same as R's. This had me concerned about how values calculated in one language and passed to the other may be handled as this would cause issues with certain workflows... Hold that thought...
+
+Rather than jumping back and forth between the languages, let's use {`reticulate`} to take care of that for us.
+
+First, we'll import `statistics` in a similar way, except we'll assign it to a variable called `py_stats`.
+
+```{r}
+py_stats <- import("statistics")     # import Python module
+```
+
+Now we have a Python module as an R object.
+
+```{r}
+class(py_stats)
+```
+
+From there, we can check out the functions that `py_stats` makes available in the same way we can check the `names()` of a native R object.
+
+```{r}
+names(py_stats)
+```
+
+Similarly, we can use R's `$` to access the `names()` of the functions. 
+
+Let's see how we can use Python's `statistics.mean()` on an R variable.
+
+```{r}
+py_stats$mean(sample_numbers)
+```
+
+Pretty straightforward. `$` acts like Python's object-oriented dot (`.`) notation. We can also take this a step further by converting the whole thing into an ordinary-looking R function with `py_to_r()`.
+
+```{r}
+py_mean <- py_to_r(py_stats$mean)    # convert Python function 
+py_mean(sample_numbers)              # use as if it's native to R
+```
+
+I'm assuming that this will make it so much easier for developers to port individual functions and entire packages from Python to R.
+
+So. Freaking. Awesome.
+
+```{r echo=FALSE}
+knitr::include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1525814209/tenor_fewq6s.gif")
+```
+
+
+Notice the number of digits included in the output. I was concerned about being able to use boolean operators on values that may have been generated in the different languages, but it appears that this was taken into account. Is it really that convenient??!!
+
+Just to make sure the outputs aren't being formatted underneath the hood, we can take a peak.
+
+This is where I got really excited...
+
+
+```{r}
+all(py_stats$mean(sample_numbers) == py_mean(sample_numbers),
+    py_stats$mean(sample_numbers) == mean(sample_numbers),
+    py_mean(sample_numbers) == mean(sample_numbers))
+
+all.equal(py_stats$mean(sample_numbers),
+          py_mean(sample_numbers),
+          mean(sample_numbers))
+
+identical(mean(sample_numbers),                               # O.
+          py_stats$mean(sample_numbers),                      # M.
+          py_mean(sample_numbers))                            # G.
+```
+
+```{r echo=FALSE}
+knitr::include_graphics("https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif")
+```
+
+So, it's pretty clear that {`reticulate`} allows for easy use of Python functions in R. I didn't expect it to be this simple at all, but what else can it do?
+
+Can we write our own Python object classes on the fly and use them in R? 
+
+Yes!
+
+We can source a Python script if available with `py_run_file()`, but we can also crunch one out in an R script and run it with `py_run_string()`.
+
+Here's a simple `date()` `class` that has two methods, `set_date()` and `show_date()`, which are pretty self-explanatory.
+
+```{r}
+py_run_string('
+class date:                                              # a basic Python class
+  def __init__(self, date = "1999-12-31"):
+    date = date.split("-")
+    self.year = date[0]
+    self.month = date[1]
+    self.day = date[2]
+    
+  def set_date(self, new_date):                          # set_date() method
+    new_date = new_date.split("-")
+    self.year = new_date[0]
+    self.month = new_date[1]
+    self.day = new_date[2]
+    
+  def show_date(self):                                   # show_date() method
+    return("-".join([self.year, self.month, self.day]))
+')
+```
+
+With the class ready to go, we can instantiate a `date()` object by just assigning it to a variable, like so:
+
+```{r}
+py_run_string('example_date = date()')
+```
+
+So, how do we access `example_date` from R? Similar to how we used `py_stats$mean()` earlier, we can use `py` and `$` to access Python variables.
+
+Here's `py$example_date`'s object information.
+
+```{r}
+py$example_date
+```
+
+If we want to output its value, we can use the `show_date()` method that we defined.
+
+```{r}
+py$example_date$show_date()
+```
+
+What about the `set_date()` method? Let's use a function call to obtain a value, specifically today's date, and pass it to `set_date()`.
+
+Note that R's `Sys.Date()` looks like a `character` when printed, but it's stored as a `numeric` `double` underneath.
+
+```{r}
+mode(Sys.Date())
+storage.mode(Sys.Date())
+```
+
+We can address that by just converting it with `as.character()`, like so:
+
+```{r}
+py$example_date$set_date(new_date = as.character(Sys.Date()))
+```
+
+Python (and most languages to my knowledge) handles objects _very_ differently than R, so we don't need to reassign the result.
+
+Here's today's date:
+
+```{r}
+py$example_date$show_date()
+```
+
+So. Awesome.
+
+<!-- What about matrices and data frames? How easy is it to go back and forth between R and Python's {`numpy`} and {`pandas`}? -->
+
+<!-- Let's see. -->
+
+<!-- Here's an r `matrix`. -->
+
+<!-- ```{r} -->
+<!-- r_matrix <- matrix(runif(100, 0, 100), -->
+<!--                    nrow = 10, ncol = 10) -->
+
+<!-- kable(r_matrix, col.names = paste0("[,", 1:10, "]")) -->
+<!-- ``` -->
+
+<!-- Let's send it to Python. -->
+
+<!-- ```{r} -->
+<!-- py_matrix <- r_to_py(r_matrix) -->
+<!-- ``` -->
+
+<!-- Just like that, it's a {`numpy`} object! -->
+
+<!-- ```{r} -->
+<!-- class(py_matrix) -->
+
+<!-- py_matrix -->
+<!-- ``` -->
+
+<!-- And we can now access all of its methods in R. -->
+
+<!-- ```{r} -->
+<!-- names(py_matrix) -->
+<!-- ``` -->
+
+<!-- As an example, here we multiply the matrix by its transpose, $A \times A^T$. -->
+
+<!-- ```{r} -->
+<!-- py_matrix$dot(py_matrix$T) -->
+<!-- ``` -->
+
+<!-- Going back and forth isn't _perfect_... -->
+
+<!-- ```{r} -->
+<!-- kable( -->
+
+<!--   py_to_r(py_matrix$dot(py_matrix$T)) == tcrossprod(r_matrix), -->
+
+<!--   col.names = paste0("[,", 1:10, "]")) -->
+<!-- ``` -->
+
+<!-- ... but it's awfully close. The only hiccup I encountered was precision, for which there is probably a quick fix that I'm not aware of. -->
+
+<!-- In the mean time, manually setting `digits=` does the trick. -->
+
+<!-- ```{r} -->
+<!-- options(digits = 7) -->
+
+<!-- py_to_r(py_matrix$dot(py_matrix$T)$round(getOption("digits"))) ==  round(tcrossprod(r_matrix),  -->
+<!--                                                                          digits = getOption("digits")) -->
+<!-- identical( -->
+<!--   py_to_r(py_matrix$dot(py_matrix$T)$round(getOption("digits"))), -->
+<!--   round(tcrossprod(r_matrix), digits = getOption("digits")) -->
+<!--   ) -->
+<!-- ``` -->
+
+<!-- How about converting a `data.frame`? -->
+
+<!-- ```{r} -->
+<!-- r_df <- mtcars -->
+<!-- kable(r_df) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- py_df <- r_to_py(r_df) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- class(py_df) -->
+<!-- py_df$head() -->
+<!-- ``` -->
+
+<!-- `data.frame`s are automatically converted to {`pandas`} objects. -->
+
+<!-- ```{r} -->
+<!-- summary(r_df) -->
+<!-- py_df$describe() -->
+<!-- ``` -->
+
+
+
+```{r echo=FALSE}
+knitr::include_graphics("https://i.imgur.com/RJ6S6eY.gif")
+```
