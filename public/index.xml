@@ -144,7 +144,7 @@ class date:                                              # a basic Python class
 &lt;p&gt;Python (and most languages to my knowledge) handles objects &lt;em&gt;very&lt;/em&gt; differently than R, so we don’t need to reassign the result.&lt;/p&gt;
 &lt;p&gt;Here’s today’s date:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py$example_date$show_date()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2018-05-10&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2018-05-25&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So. Awesome.&lt;/p&gt;
 &lt;!-- What about matrices and data frames? How easy is it to go back and forth between R and Python&#39;s {`numpy`} and {`pandas`}? --&gt;
 &lt;!-- Let&#39;s see. --&gt;
@@ -215,7 +215,9 @@ class date:                                              # a basic Python class
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</guid>
-      <description>&lt;div id=&#34;TOC&#34;&gt;
+      <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#context&#34;&gt;Context&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#reflection&#34;&gt;Reflection&lt;/a&gt;&lt;/li&gt;

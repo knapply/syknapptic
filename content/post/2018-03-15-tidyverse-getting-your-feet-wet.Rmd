@@ -5,6 +5,8 @@ author: Brendan Knapp
 date: '2018-03-17'
 slug: yet-another-tidyverse-intro
 categories:
+  - R
+  - R-bloggers
   - data carpentry
   - tutorial
 tags:

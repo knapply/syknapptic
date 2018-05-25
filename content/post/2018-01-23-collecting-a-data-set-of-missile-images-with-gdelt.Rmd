@@ -5,7 +5,7 @@ author: Brendan Knapp
 date: '2018-01-23'
 slug: collecting-a-data-set-of-missile-images-with-gdelt
 categories:
-  - data discovery
+  - R-bloggers
   - image analysis
 tags:
   - GDELT

@@ -3,8 +3,9 @@ title: 'reticulate: Taking the Dragon for a Test Ride'
 author: Brendan Knapp
 date: '2018-05-08'
 categories:
-  - programming
-  - python
+  - R-bloggers
+  - R
+  - Python
 tags:
   - reticulate
 slug: reticulate-taking-the-dragon-for-a-test-ride
