@@ -1,7 +1,3 @@
-# Tranquilpeak
-# Version : 0.4.3-BETA
-# Author : Thibaud Leprêtre
-
 # I STRONGLY recommend you to use a CDN to speed up loading of pages.
 # There is many free CDN like Cloudinary or you can also use indirectly
 # by using services like Google Photos.
@@ -114,10 +110,10 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [[menu.misc]]
   weight = 1
-  identifier = "datascience"
+  identifier = "datasciencefromscratch"
   name = "Data Science"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-line-chart\"></i>"
-  url = "/page/datascience/"
+  url = "/data-science-from-scratch/"
 [[menu.misc]]
   weight = 1
   identifier = "rss"
@@ -154,7 +150,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # If false it will flat categories.
   hierarchicalCategories = true
 
-  description = "A blog on R, OSINT, and Applied Data Ninjery."
+  description = "A blog on R, OSINT, and Applied Data Science."
   
   summary_length = 100
 

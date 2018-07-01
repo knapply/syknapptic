@@ -6,19 +6,10 @@
     <description>Recent content in Pages on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://syknapptic.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Data Science from Scratch</title>
-      <link>https://syknapptic.netlify.com/page/datascience/</link>
-      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/page/datascience/</guid>
-      <description> Statistics Correlation </description>
-    </item>
     
     <item>
       <title>My Shiny Apps</title>
