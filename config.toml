@@ -80,6 +80,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
   url = "/archives"
 
+
+[[menu.links]]
+  weight = 1
+  identifier = "DataScienceFromScratch"
+  name = "Data Science from Scratch"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-code\"></i>"
+  url = "/page/DataScienceFromScratch/"
 [[menu.links]]
   weight = 1
   identifier = "shiny"

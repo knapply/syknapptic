@@ -1,4 +1,5 @@
 ---
+draft: yes
 title: 'reticulate: Taking the Dragon for a Test Ride'
 author: Brendan Knapp
 date: '2018-05-08'
@@ -147,7 +148,7 @@ class date:                                              # a basic Python class
 <p>Python (and most languages to my knowledge) handles objects <em>very</em> differently than R, so we don’t need to reassign the result.</p>
 <p>Here’s today’s date:</p>
 <pre class="r"><code>py$example_date$show_date()</code></pre>
-<pre><code>## [1] &quot;2018-05-25&quot;</code></pre>
+<pre><code>## [1] &quot;2018-07-01&quot;</code></pre>
 <p>So. Awesome.</p>
 <!-- What about matrices and data frames? How easy is it to go back and forth between R and Python's {`numpy`} and {`pandas`}? -->
 <!-- Let's see. -->
@@ -209,3 +210,30 @@ class date:                                              # a basic Python class
 <!-- py_df$describe() -->
 <!-- ``` -->
 <p><img src="https://i.imgur.com/RJ6S6eY.gif" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] reticulate_1.7.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17    bookdown_0.7    lattice_0.20-35 digest_0.6.15  
+##  [5] rprojroot_1.3-2 grid_3.5.0      jsonlite_1.5    backports_1.1.2
+##  [9] magrittr_1.5    evaluate_0.10.1 blogdown_0.6.14 stringi_1.2.2  
+## [13] Matrix_1.2-14   rmarkdown_1.10  tools_3.5.0     stringr_1.3.1  
+## [17] xfun_0.2.7      yaml_2.1.19     compiler_3.5.0  htmltools_0.3.6
+## [21] knitr_1.20.7</code></pre>

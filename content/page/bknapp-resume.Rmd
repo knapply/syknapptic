@@ -1,0 +1,124 @@
+---
+output: 
+  pdf_document:
+    latex_engine: pdflatex
+    template: bknapp-latex-cv.tex
+geometry: margin=.75in
+
+title: "Resume"
+author: Brendan G. Knapp
+# jobtitle: "Data and Intelligence Analyst"
+address: "513 Congress Avenue · Pacific Grove · CA · 93950"
+fontawesome: yes
+email: brendan.g.knapp@gmail.com
+github: syknapptic
+phone: "585-245-4741"
+web: syknapptic.netlify.com
+# updated: yes
+
+keywords: RMarkdown, CV, resume, template
+
+fontfamily: mathpazo
+fontfamilyoptions: sc, osf
+fontsize: 10pt
+linkcolor: blue
+urlcolor: blue
+---
+
+
+
+# Experience and Technical Skills
+
+| Statistics                | Data Science        | Analytical Domains                 |
+|---------------------------|---------------------|------------------------------------|
+| Parametric Models         | R                   | Structure and Unstructured         |
+| Linear Models             | SQL                 | Networks/Graphs                    |
+| Generalized Linear Models | Python              | Text Mining and NLP                |
+| Factor Analysis           | Git                 | Vector and Raster Spatial Analysis |
+| Time Series Analysis      | Package Development | Remote Sensing                     |
+
+# EDUCATION
+
+_Middlebury Institute of International Studies_, M.A. Nonproliferation and Terrorism Studies \hfill May 2018  
+_Middlebury Institute of International Studies_, B.A. International Studies \hfill December 2017
+
+# EMPLOYMENT
+
+__Mixed-Methods Evaluation, Training and Analysis (META) Lab, Middlebury Institute:__ \hfill _Monterey, CA_  
+
+_Lead Analytic Coordinator_ \hfill  January 2018--May 2018
+
+\begin{itemize}
+\item Acted as programming lead for a student
+\end{itemize}
+    
+_Graduate Research Analyst_ \hfill February 2017--December 2017
+ 
+_Network Analysis Teaching Assistant_ \hfill September 2017--December 2017
+
+__James Martin Center for Nonproliferation Studies, Middlebury Institute:__ \hfill _Monterey, CA_  
+
+_Graduate Research Assistant_ \hfill  May 2017--May 2018
+ 
+\begin{itemize}
+\item Enabled evidence-based policy research by providing network, spatial, remote sensing, and natural language analysis capabilities.
+\end{itemize}
+
+__U.S. Army, HHC 369th Sustainment BDE:__ \hfill _Camp Smith, NY_  
+
+_Intelligence Staff Section Manager_ (S2 NCOIC) \hfill  May 2015--December 2015  
+ 
+\begin{itemize}
+\item Served as the senior enlisted leader of a Sustainment Brigade’s Intelligence and Security Staff Section (S2).
+\item Recognized for professionalism and resourcefulness with the highest possible ratings on the Noncommissioned Officer Evaluation Report.
+\end{itemize}  
+ 
+
+__U.S. Army, C Co. 229th Military Intelligence BN:__ \hfill _Monterey, CA_  
+
+_Military Skills Trainer and Class Leader_ \hfill April 2013--March 2015     
+
+__U.S. Army, C Co. (MED) 427th BSB:__ \hfill _Buffalo, NY; Camp Shelby, MS; Kandahar and Bagram, Afghanistan_    
+
+_Emergency Medical Sergeant_ \hfill January 2012--September 2012  
+
+# PRESENTATIONS AND WORKSHOPS
+
+_Presenter: "Data in the Wild, Text Mining, and Illuminating North Korean Threat Networks"_ \hfill April 2018  
+
+\begin{itemize}
+\item International Workshop on the Applicability of New Tools and Technologies for Non-Proliferation  
+\end{itemize}
+
+_Lead Instructor, "R for Data Carpentry and Analysis"_ \hfill March 2018  
+
+\begin{itemize}
+\item A three part series on programmatic data carpentry, visualization, and reproducible research using R for graduate students at the Middlebury Institute.  
+\end{itemize}
+  
+_Lead Instructor, "Programming with R and RStudio"_ \hfill September 2017  
+
+\begin{itemize}
+\item An introduction to programming fundamentals using R for graduate students at the Middlebury Institute.  
+\end{itemize}
+
+_Presenter, "Evaluating Institutional Coalescence with the Use of Exponential Random Graph Models"_ \hfill June 2017  
+
+\begin{itemize}
+\item North American Social Networks Conference of the International Network For Social Network Analysis  
+\end{itemize}
+
+_Lead Instructor, "Introduction to Python"_ \hfill March 2017  
+
+\begin{itemize}
+\item An introduction to programming fundamentals using Python for graduate students at the Middlebury Institute.  
+\end{itemize}
+
+_Lead Instructor, "Understanding Hypovolemic Hypoperfusion"_ \hfill March 2012
+
+\begin{itemize}
+\item A lecture on battlefield-relevant pathophysiological processes for combat medics preparing to deploy to Afghanistan.
+\end{itemize}
+
+
+

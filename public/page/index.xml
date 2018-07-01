@@ -6,10 +6,19 @@
     <description>Recent content in Pages on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 01 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://syknapptic.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://syknapptic.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data Science from Scratch</title>
+      <link>https://syknapptic.netlify.com/page/datasciencefromscratch/</link>
+      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/page/datasciencefromscratch/</guid>
+      <description> Statistics Analysis of Variance Chi-Squared Correlation Regression </description>
+    </item>
     
     <item>
       <title>My Shiny Apps</title>
@@ -17,30 +26,10 @@
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/page/shiny/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/recon/&#34;&gt;recon : Really Convenient Spatial Data&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Search for locations by class or with a fuzzy name matching gazetteer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521317064/recon_mp6q3x.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/imagecrawler/&#34;&gt;Deep Learning Image Classifier&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;TensorFlow-powered image classification.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521317572/imagecrawler_ofvc9e.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/dprk/&#34;&gt;North Korea Threat Finance Explorer&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;A tool to facilitate access to DPRK sanctions data.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521316059/nktfe_nwdc95.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-</description>
+      <description>recon : Really Convenient Spatial Data
+ Search for locations by class or with a fuzzy name matching gazetteer.  Deep Learning Image Classifier
+ TensorFlow-powered image classification.  North Korea Threat Finance Explorer
+ A tool to facilitate access to DPRK sanctions data.  </description>
     </item>
     
     <item>
@@ -49,60 +38,9 @@
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/page/about/</guid>
-      <description>
-
-&lt;style&gt;
-    body .main-container {
-        max-width: 700px;
-    }
-&lt;/style&gt;
-
-&lt;p&gt;Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in using data to develop evidence-based insights.&lt;/p&gt;
-
-&lt;p&gt;I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I&amp;rsquo;m constantly exploring theories and methods that developed in other fields.&lt;/p&gt;
-
-&lt;p&gt;In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.&lt;/p&gt;
-
-&lt;p&gt;When I finally had a chance to return to academia, I developed a love for data analysis and programming. This was primarily fueled by a fascination with network analysis.&lt;/p&gt;
-
-&lt;p&gt;Since then, I have focused on the fusion of computational methods with domain expertise in topics spanning hybrid conflict, insurgency, WMD, and threat finance.&lt;/p&gt;
-
-&lt;p&gt;Disciplines that I&amp;rsquo;ve used in my work include network analysis, spatial statistics, remote sensing, natural language processing, and machine learning.&lt;/p&gt;
-
-&lt;h1 id=&#34;about-this-blog&#34;&gt;About this Blog&lt;/h1&gt;
-
-&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-
-&lt;p&gt;My goal is to address the interests of two audiences that are oftentimes more distinct than I&amp;rsquo;d like:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;those with an interest in modern data analysis (R enthusiasts in particular)&lt;/li&gt;
-&lt;li&gt;those interested in open-source intelligence.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;motivation&#34;&gt;Motivation&lt;/h2&gt;
-
-&lt;p&gt;After being asked if I had a blog with expanded explanations of projects I have discussed, I decided it was time to bite the bullet and start sharing.&lt;/p&gt;
-
-&lt;p&gt;I can&amp;rsquo;t overstate how beneficial data science blogs, public code repositories, and #Rstats community members have been for my own growth. With that in mind, I hope to provide a similar resource for anyone who might be struggling. Hopefully, I can offer a bit of the same inspiration I felt when I first started exploring the work of others.&lt;/p&gt;
-
-&lt;h1 id=&#34;syknapptic&#34;&gt;syknapptic?&lt;/h1&gt;
-
-&lt;p&gt;If you haven&amp;rsquo;t guessed, &lt;em&gt;syknapptic&lt;/em&gt; is derived from &lt;em&gt;synaptic&lt;/em&gt;.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;h1 id=&#34;contact-me&#34;&gt;Contact me:&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;mailto:syknapptic@gmail.com&#34;&gt;Email&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.linkedin.com/in/knappbrendan/&#34;&gt;Linkedin&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://twitter.com/syknapptic&#34;&gt;Twitter&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/syknapptic&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-</description>
+      <description>body .main-container { max-width: 700px; }  Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in using data to develop evidence-based insights.
+I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I&amp;rsquo;m constantly exploring theories and methods that developed in other fields.
+In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.</description>
     </item>
     
   </channel>

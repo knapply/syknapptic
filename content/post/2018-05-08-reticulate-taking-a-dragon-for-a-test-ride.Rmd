@@ -349,3 +349,8 @@ So. Awesome.
 ```{r echo=FALSE}
 knitr::include_graphics("https://i.imgur.com/RJ6S6eY.gif")
 ```
+
+```{r}
+sessionInfo()
+```
+

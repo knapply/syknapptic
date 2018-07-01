@@ -288,6 +288,9 @@ list.files(dir, full.names = TRUE) %>%
        )
 ```
 
+```{r}
+sessionInfo()
+```
 
 
 

@@ -21,7 +21,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hugo 0.32.4 with theme Tranquilpeak 0.4.3-BETA">
+    <meta name="generator" content="Hugo 0.42.2 with theme Tranquilpeak 0.4.3-BETA">
     <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
     <meta name="author" content="Brendan Knapp">
     <meta name="keywords" content="">
@@ -81,13 +81,16 @@ ContextI recently had the opportunity to teach some R coding to colleagues and 
     
       
 <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-115043043-2', 'auto');
-ga('send', 'pageview');
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-115043043-2', 'auto');
+	
+	ga('send', 'pageview');
+}
 </script>
 
     
@@ -173,6 +176,16 @@ ga('send', 'pageview');
     </ul>
     <ul class="sidebar-buttons">
       
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/datasciencefromscratch/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-code"></i>
+      
+      <span class="sidebar-button-desc">Data Science from Scratch</span>
+    </a>
+  </li>
+
   <li class="sidebar-button">
     
       <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/shiny/">
@@ -6480,6 +6493,50 @@ Oceania
        caption = &quot;Source: Free material from www.gapminder.org&quot;)</code></pre>
 <p><img src="https://syknapptic.netlify.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <p><strong>النهاية</strong></p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2.2       kableExtra_0.9.0     knitr_1.20.7        
+##  [4] gapminder_0.3.0      forcats_0.3.0        stringr_1.3.1       
+##  [7] dplyr_0.7.5          purrr_0.2.5          readr_1.1.1         
+## [10] tidyr_0.8.1          tibble_1.4.2         ggplot2_2.2.1.9000  
+## [13] tidyverse_1.2.1.9000
+## 
+## loaded via a namespace (and not attached):
+##  [1] tidyselect_0.2.4  xfun_0.2.7        reshape2_1.4.3   
+##  [4] haven_1.1.1       lattice_0.20-35   colorspace_1.3-2 
+##  [7] viridisLite_0.3.0 htmltools_0.3.6   yaml_2.1.19      
+## [10] utf8_1.1.4        rlang_0.2.0.9001  pillar_1.2.2     
+## [13] withr_2.1.2       foreign_0.8-70    glue_1.2.0       
+## [16] modelr_0.1.2      readxl_1.1.0      bindr_0.1.1      
+## [19] plyr_1.8.4        munsell_0.5.0     blogdown_0.6.14  
+## [22] gtable_0.2.0      cellranger_1.1.0  rvest_0.3.2      
+## [25] psych_1.8.4       evaluate_0.10.1   labeling_0.3     
+## [28] parallel_3.5.0    highr_0.7         broom_0.4.4      
+## [31] Rcpp_0.12.17      backports_1.1.2   scales_0.5.0.9000
+## [34] jsonlite_1.5      mnormt_1.5-5      hms_0.4.2        
+## [37] digest_0.6.15     stringi_1.2.2     bookdown_0.7     
+## [40] grid_3.5.0        rprojroot_1.3-2   cli_1.0.0        
+## [43] tools_3.5.0       magrittr_1.5      lazyeval_0.2.1   
+## [46] crayon_1.3.4      pkgconfig_2.0.1   xml2_1.2.0       
+## [49] lubridate_1.7.4   assertthat_0.2.0  rmarkdown_1.10   
+## [52] httr_1.3.1        rstudioapi_0.7    R6_2.2.2         
+## [55] nlme_3.1-137      compiler_3.5.0</code></pre>
 </div>
 </div>
 
@@ -6513,7 +6570,7 @@ Oceania
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/" data-tooltip="reticulate: Taking the Dragon for a Test Ride">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -6599,7 +6656,7 @@ Oceania
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/" data-tooltip="reticulate: Taking the Dragon for a Test Ride">
+                <a class="post-action-btn btn btn--disabled">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -6740,24 +6797,6 @@ Oceania
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
-                <h3 class="media-heading">reticulate: Taking the Dragon for a Test Ride</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
-I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
               <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/">
                 <h3 class="media-heading">Thoughts on Teaching R and Yet Another Tidyverse Intro</h3>
               </a>
@@ -6802,7 +6841,7 @@ See also:
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         3 posts found
+         2 posts found
       </p>
     </div>
   </div>
