@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reticulate on syknapptic</title>
+    <link>https://syknapptic.netlify.com/tags/reticulate/</link>
+    <description>Recent content in Reticulate on syknapptic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 May 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://syknapptic.netlify.com/tags/reticulate/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>reticulate: Taking the Dragon for a Test Ride</title>
+      <link>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</link>
+      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</guid>
+      <description>Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
+I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.</description>
+    </item>
+    
+  </channel>
+</rss>

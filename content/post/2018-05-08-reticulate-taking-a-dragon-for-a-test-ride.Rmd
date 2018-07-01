@@ -1,11 +1,12 @@
 ---
 title: 'reticulate: Taking the Dragon for a Test Ride'
+draft: false
 author: Brendan Knapp
 date: '2018-05-08'
 categories:
-  - R-bloggers
-  - R
   - Python
+  - R
+  - R-bloggers
 tags:
   - reticulate
 slug: reticulate-taking-the-dragon-for-a-test-ride
@@ -14,8 +15,10 @@ thumbnailImage: https://raw.githubusercontent.com/syknapptic/RversusPython/maste
 metaAlignment: center
 coverMeta: out
 summary: Taking a quick spin with the awesomeness that is {reticulate}.
-editor_options:
-  chunk_output_type: console
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 1
 ---
 
 ```{r setup, include=FALSE}
