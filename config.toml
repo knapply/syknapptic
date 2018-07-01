@@ -34,9 +34,9 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 [author]
   name = "Brendan Knapp"
   #bio = "Data and OSINT Ninjery <br> Paramilitaries, WMD, and Modern Conflict <br> Rstats <br> "
-  bio = "Data Ninjery <br> (Network|Spatial|Text) Analysis <br> R"
-  job = "Data Analyst <br> Decision Enabler"
-  location = "California"
+  bio = "Network, Spatial, and Text Analytics <br> R, Python <br> Data-Driven Intelligence"
+  job = "Decision Enabler, Analyst, Data Scientist"
+  location = "Monterey, California"
   # Your Gravatar email. Overwrite `author.picture` everywhere in the blog
   gravatarEmail = "syknapptic@gmail.com"
   # Your profile picture
@@ -83,12 +83,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [[menu.links]]
   weight = 1
-  identifier = "DSfromScratch"
-  name = "DS from Scratch"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-chart-area\"></i>"
-  url = "/page/DSfromScratch/"
-[[menu.links]]
-  weight = 1
   identifier = "shiny"
   name = "Shiny Apps"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-code\"></i>"
@@ -120,12 +114,17 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [[menu.misc]]
   weight = 1
+  identifier = "DSfromScratch"
+  name = "Data Science from Scratch"
+  pre = "<i class=\"sidebar-button-icon fa fa-s fa-chart-area\"></i>"
+  url = "/page/DSfromScratch/"
+[[menu.misc]]
+  weight = 1
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
   url = "/index.xml"
-  
-  [[menu.misc]]
+[[menu.misc]]
   weight = 1
   identifier = "rbloggers"
   name = "R-bloggers"

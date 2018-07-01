@@ -9,16 +9,4 @@ thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/lo
 
 # Statistics
 
-## Analysis of Variance
-
-## Chi-Squared
-
-## Correlation
-
-## Regression
-
-# Graphs
-
-# Networks
-
-# Computer Science Algorithms
+### Correlation 
