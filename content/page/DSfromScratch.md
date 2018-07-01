@@ -16,3 +16,9 @@ thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/lo
 ## Correlation
 
 ## Regression
+
+# Graphs
+
+# Networks
+
+# Computer Science Algorithms
