@@ -58,6 +58,11 @@ devtools::install_github("rstudio/reticulate")
 library(reticulate)
 ```
 
+```{r echo=FALSE}
+use_condaenv("r-reticulate")
+```
+
+
 Right up front, I'm going to create an arbitrary numeric vector and get the `mean()` using plain ol' R.
 
 ```{r}
