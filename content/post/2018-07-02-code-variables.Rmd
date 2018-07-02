@@ -1,19 +1,20 @@
 ---
 title: Programming Essentials - Variables
+draft: false
 author: Brendan Knapp
 date: '2018-07-02'
 slug: programming-essentials-variables
 categories:
   - data-science-from-scratch
-tags: []
-# thumbnailImage: 
+tags: [variables]
+thumbnailImage: https://techbeacon.scdn7.secure.raxcdn.com/sites/default/files/styles/article_hero_image/public/field/image/programming-language-appsec.jpg?itok=OZrWIG1C
 metaAlignment: center
 coverMeta: out
-summary: A brief look at some essential programming concepts in R, Python, and C++/Rcpp.
+summary: How to handle variables across R, Python, and C++.
 output:
   blogdown::html_page:
     toc: true
-    toc_depth: 2
+    toc_depth: 3
 ---
 
 ```{r setup, include=FALSE}

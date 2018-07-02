@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://syknapptic.netlify.com/2018/07/programming-essentials-variables/</loc>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://syknapptic.netlify.com/data-science-from-scratch/</loc>
     <lastmod>2018-07-01T00:00:00+00:00</lastmod>
   </url>
@@ -55,7 +60,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/categories/data-science-from-scratch/</loc>
-    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -103,7 +108,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/post/</loc>
-    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -162,8 +167,14 @@
   </url>
   
   <url>
+    <loc>https://syknapptic.netlify.com/tags/variables/</loc>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://syknapptic.netlify.com/</loc>
-    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

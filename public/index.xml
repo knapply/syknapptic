@@ -6,10 +6,77 @@
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://syknapptic.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Programming Essentials - Variables</title>
+      <link>https://syknapptic.netlify.com/2018/07/programming-essentials-variables/</link>
+      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/2018/07/programming-essentials-variables/</guid>
+      <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#variables&#34;&gt;Variables&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#c&#34;&gt;C++&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pure-c&#34;&gt;Pure C++&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rcpp&#34;&gt;Rcpp&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;variables&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Variables&lt;/h1&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;var_R &amp;lt;- 1
+
+var_R&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;var_PY &amp;lt;- 1
+
+print(var_PY)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;c&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;C++&lt;/h2&gt;
+&lt;div id=&#34;pure-c&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Pure C++&lt;/h3&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+
+int main() {
+  int x_CPP = 1;
+
+  std::cout &amp;lt;&amp;lt; x_CPP;
+  
+  return 0;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rcpp&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Rcpp&lt;/h3&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;Rcpp.h&amp;gt;       // R to C++ to R interface
+// [[Rcpp::export]]
+
+int RCPP_function() {
+  int x_RCPP = 1;
+  
+  return x_RCPP;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;RCPP_function() # now accessible from R&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Data Science from Scratch</title>
@@ -22,7 +89,7 @@
 &lt;h1 id=&#34;programming&#34;&gt;Programming&lt;/h1&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;post/2018-07-02-code-variables&#34;&gt;Variables&lt;/a&gt;
+&lt;li&gt;&lt;a href=&#34;2018-07-02-code-variables&#34;&gt;Variables&lt;/a&gt;
 
 &lt;ul&gt;
 &lt;li&gt;R, Python, C++, Rcpp

@@ -9,7 +9,7 @@ thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/lo
 
 # Programming
 
-* [Variables](post/2018-07-02-code-variables)
+* [Variables](2018-07-02-code-variables)
     + R, Python, C++, Rcpp
   
 
