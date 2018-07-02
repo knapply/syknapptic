@@ -17,7 +17,7 @@
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/variable-assignment/</guid>
-      <description>RPythonC++Pure C++RcppRvar_R &amp;lt;- 1var_R## [1] 1Pythonvar_PY &amp;lt;- 1print(var_PY)## [1] 1C++Pure C++#include &amp;lt;iostream&amp;gt;int main() {int var_CPP = 1;std::cout &amp;lt;&amp;lt; var_CPP;return 0;}Rcpp#include &amp;lt;Rcpp.h&amp;gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</description>
+      <description>RPythonC++Pure C++RcppRvar_R &amp;lt;- 1var_R## [1] 1Pythonvar_PY &amp;lt;- 1print(var_PY)## [1] 1C++Pure C++#include &amp;lt;iostream&amp;gt;int main() {int var_CPP = 1;std::cout &amp;lt;&amp;lt; var_CPP;return 0;}## 1Rcpp#include &amp;lt;Rcpp.h&amp;gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</description>
     </item>
     
   </channel>

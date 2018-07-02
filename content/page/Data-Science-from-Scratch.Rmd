@@ -1,6 +1,10 @@
 ---
 title: "Data Science from Scratch"
 draft: false
+author: Brendan Knapp
+date: '2018-07-02'
+categories:
+  - data-science-from-scratch
 output:
   blogdown::html_page
 ---
@@ -76,12 +80,12 @@ stat_groups <- c(rep("Essentials", 3),
                  "Generalized Linear Models")
 
 stat_topics <- c("Mean", "Median", "Standard Deviation", 
-                 "Pearson's Correlation", "Spearman's Correlation",
+                 "Pearson's", "Spearman's",
                  "Simple Linear Regression", "Linear Regression",
                  "Logistic Regression")
 
 stat_syms <- c("$\\mu$, $\\bar{x}$",          # mean
-               "$\\tilde{x}",                 # median
+               "$\\tilde{x}$",                 # median
                "$\\sigma, sd$",               # standard deviation
                "$\\rho, r$",                  # correlation
                "$\\rho, r$",                  # correlation

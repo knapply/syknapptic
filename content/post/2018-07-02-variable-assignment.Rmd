@@ -19,7 +19,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      fig.width = 11, fig.height = 8, fig.align = "center",
+                      fig.width = 11, fig.height = 8,
+                      fig.align = "center",
                       message = FALSE, warning = FALSE)
 ```
 
@@ -65,14 +66,14 @@ int main() {
 ```
 
 
-```{r echo=FALSE}
+```{r, echo=FALSE}
 # cd content/post/cpp
 # g++ -c code-variables1.cpp
 # g++ -o code-variables1.exe code-variables1.o
 # system("cd content/post/cpp")
 # system("g++ -c code-variables1.cpp")
 # system("g++ -o code-variables1.exe code-variables1.o")
-system("cpp/code-variables1.exe")
+cat(system("cpp/code-variables1.exe", intern = TRUE))
 ```
 
 ## Rcpp

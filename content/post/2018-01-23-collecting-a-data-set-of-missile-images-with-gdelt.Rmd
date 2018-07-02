@@ -1,6 +1,6 @@
 ---
 title: GDELT, Missiles, and Image Collection
-draft: false
+draft: true
 author: Brendan Knapp
 date: '2018-01-23'
 slug: collecting-a-data-set-of-missile-images-with-gdelt
