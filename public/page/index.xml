@@ -45,15 +45,5 @@ I primarily focus on conflict and security issues, which is work that I characte
 In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.</description>
     </item>
     
-    <item>
-      <title></title>
-      <link>https://syknapptic.netlify.com/page/data-science-from-scratch/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/page/data-science-from-scratch/</guid>
-      <description> 
-Programming Essentials   Topic  R  Python  C++      Variable Assignment       Data Types       Collections        Statistics ==========   Topic  R  Python  C++  Details      Standard Deviation        Parametric Correlation     *ρ**P**e**a**r**s**o**n*′*s*    Nonparametric Correlation     *ρ**S**p**e**a**r**m**a**n*′*s*    Simple Linear Regression     *u**n**i**v**a**r**i**a**t**e*    Linear Regression     *m**u**l**t**i**v**a**r**i**a**t**e*    Logistic Regression         </description>
-    </item>
-    
   </channel>
 </rss>
