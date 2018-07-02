@@ -34,8 +34,8 @@ var_R
 
 # Python
 
-```{r}
-var_PY <- 1
+```{python}
+var_PY = 1
 
 print(var_PY)
 ```

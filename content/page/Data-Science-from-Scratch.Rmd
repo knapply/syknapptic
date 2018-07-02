@@ -100,7 +100,7 @@ tibble(` ` = stat_groups, Topic = stat_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
+  kable_styling() %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -127,7 +127,7 @@ tibble(` ` = graph_groups, Topic = graph_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
+  kable_styling() %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -149,7 +149,7 @@ tibble(` ` = unsup_groups, Topic = unsup_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
+  kable_styling() %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -175,7 +175,7 @@ tibble(` ` = sup_groups, Topic = sup_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
+  kable_styling() %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```

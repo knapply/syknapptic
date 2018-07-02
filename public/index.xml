@@ -131,7 +131,7 @@ Loops
 &lt;/div&gt;
 &lt;div id=&#34;statistics&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Statistics&lt;/h1&gt;
-&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -339,7 +339,7 @@ Poisson
 &lt;/div&gt;
 &lt;div id=&#34;graphs&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Graphs&lt;/h1&gt;
-&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -471,7 +471,7 @@ Shortest Path
 &lt;/div&gt;
 &lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
-&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -544,7 +544,7 @@ Factor Analysis
 &lt;/div&gt;
 &lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Supervised Learning&lt;/h1&gt;
-&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -685,10 +685,9 @@ var_R&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;python&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Python&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;var_PY &amp;lt;- 1
-
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;var_PY = 1
 print(var_PY)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 1&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;c&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;C++&lt;/h1&gt;
