@@ -1,6 +1,5 @@
 ---
 title: "Data Science from Scratch"
-draft: false
 author: Brendan Knapp
 date: '2018-07-02'
 output:
@@ -20,7 +19,6 @@ check_box <- '<input type="checkbox" checked onclick="return false;">'
 uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
 ```
 
-<br>
 
 # Programming
 
@@ -67,7 +65,6 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
   collapse_rows(columns = 1, valign = "top")
 ```
 
-<br>
 
 # Statistics
 

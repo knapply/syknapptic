@@ -24,7 +24,7 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       fig.width = 11, fig.height = 8, fig.align = "center",
-                      message = FALSE, warning = FALSE)
+                      message = FALSE, warning = FALSE, cache = TRUE)
 ```
 
 
