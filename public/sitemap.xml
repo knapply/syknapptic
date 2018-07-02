@@ -8,6 +8,11 @@
   </url>
   
   <url>
+    <loc>https://syknapptic.netlify.com/2018/07/math/</loc>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</loc>
     <lastmod>2018-05-08T00:00:00+00:00</lastmod>
   </url>
@@ -49,6 +54,12 @@
   </url>
   
   <url>
+    <loc>https://syknapptic.netlify.com/categories/data-science-from-scratch/</loc>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://syknapptic.netlify.com/tags/dplyr/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -79,6 +90,12 @@
   </url>
   
   <url>
+    <loc>https://syknapptic.netlify.com/tags/math/</loc>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://syknapptic.netlify.com/page/</loc>
     <lastmod>2018-03-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -86,7 +103,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/post/</loc>
-    <lastmod>2018-05-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
