@@ -26,8 +26,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, 
-                      fig.align = "center", fig.height = 9, fig.width = 11)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, cache = TRUE,
+                      fig.align = "center", fig.height = 9,
+                      fig.width = 11)
 ```
 
 ```{r echo=FALSE}
