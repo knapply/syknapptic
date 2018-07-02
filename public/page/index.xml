@@ -17,9 +17,9 @@
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/page/data-science-from-scratch/</guid>
-      <description>
-ProgrammingTopicRPythonC++EssentialsVariable AssignmentData TypesCollectionsLoopsLogic
-StatisticsTopicSymbologyRPythonC++EssentialsMean\(\mu\), \(\bar{x}\)Median\(\tilde{x}\)Standard Deviation\(\sigma, sd\)CorrelationPearson’s Correlation\(\rho, r\)Spearman’s Correlation\(\rho, r\)Linear ModelsSimple Linear RegressionLinear RegressionGeneralized Linear ModelsLogistic Regression</description>
+      <description>ProgrammingStatisticsGraphsUnsupervised LearningSupervised Learning
+ProgrammingTopicRPythonC++EssentialsVariable AssignmentData TypesLogicCollectionsLoops
+StatisticsTopicRPythonC++EssentialsMeanMedianStandard DeviationVarianceCorrelationPearson’sSpearman’sLinear ModelsSimple Linear RegressionLinear RegressionGeneralized Linear ModelsLogistic RegressionGraphsTopicRPythonC++RepresentationsAdjacency MatrixAdjacency ListEdge ListIncidence MatrixHigher DimensionsMultipartite GraphsMultiplex GraphsAlgorithmsShortest PathUnsupervised LearningTopicRPythonC++Clusteringk-meansPrincipal Component AnalysisDimensionality ReductionFactor AnalysisSupervised LearningTopicRPythonC++ClassificationNaive Bayesk-Nearest NeighborsSupport Vector MachineRandom ForestsRegressionSupport Vector MachineRandom Forests</description>
     </item>
     
     <item>

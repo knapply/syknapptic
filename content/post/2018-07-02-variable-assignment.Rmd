@@ -24,11 +24,6 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE, warning = FALSE)
 ```
 
-```{r echo=FALSE}
-# library(reticulate)
-# library(Rcpp)
-```
-
 # R
 
 ```{r}
@@ -51,7 +46,7 @@ print(var_PY)
 ```{Rcpp, ref.label=knitr::all_rcpp_labels(), include=FALSE}
 ```
 
-## Pure C++
+
 
 ```{Rcpp, eval=FALSE}
 #include <iostream>

@@ -30,15 +30,15 @@
     
 
     
-    <meta name="description" content="RPythonC&#43;&#43;Pure C&#43;&#43;RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C&#43;&#43;Pure C&#43;&#43;#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C&#43;&#43; interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C&#43;&#43; function from R like any other function## [1] 1">
-    <meta property="og:description" content="RPythonC&#43;&#43;Pure C&#43;&#43;RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C&#43;&#43;Pure C&#43;&#43;#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C&#43;&#43; interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C&#43;&#43; function from R like any other function## [1] 1">
+    <meta name="description" content="RPythonC&#43;&#43;RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C&#43;&#43;#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C&#43;&#43; interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C&#43;&#43; function from R like any other function## [1] 1">
+    <meta property="og:description" content="RPythonC&#43;&#43;RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C&#43;&#43;#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C&#43;&#43; interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C&#43;&#43; function from R like any other function## [1] 1">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Variable Assignment">
     <meta property="og:url" content="/2018/07/variable-assignment/">
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="RPythonC&#43;&#43;Pure C&#43;&#43;RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C&#43;&#43;Pure C&#43;&#43;#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C&#43;&#43; interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C&#43;&#43; function from R like any other function## [1] 1">
+    <meta name="twitter:description" content="RPythonC&#43;&#43;RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C&#43;&#43;#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C&#43;&#43; interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C&#43;&#43; function from R like any other function## [1] 1">
     
       <meta name="twitter:creator" content="@syknapptic">
     
@@ -300,7 +300,6 @@ if (!doNotTrack) {
 <li><a href="#r">R</a></li>
 <li><a href="#python">Python</a></li>
 <li><a href="#c">C++</a><ul>
-<li><a href="#pure-c">Pure C++</a></li>
 <li><a href="#rcpp">Rcpp</a></li>
 </ul></li>
 </ul>
@@ -322,8 +321,6 @@ print(var_PY)</code></pre>
 </div>
 <div id="c" class="section level1">
 <h1>C++</h1>
-<div id="pure-c" class="section level2">
-<h2>Pure C++</h2>
 <pre class="cpp"><code>#include &lt;iostream&gt;
 
 int main() {
@@ -334,7 +331,6 @@ int main() {
   return 0;
 }</code></pre>
 <pre><code>## 1</code></pre>
-</div>
 <div id="rcpp" class="section level2">
 <h2>Rcpp</h2>
 <pre class="cpp"><code>#include &lt;Rcpp.h&gt;       // R to/from C++ interface
@@ -382,7 +378,7 @@ int RCPP_function() {
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/07/math/" data-tooltip="Essential Math">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/" data-tooltip="reticulate: Taking the Dragon for a Test Ride">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -468,7 +464,7 @@ int RCPP_function() {
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/07/math/" data-tooltip="Essential Math">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/" data-tooltip="reticulate: Taking the Dragon for a Test Ride">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -609,26 +605,7 @@ int RCPP_function() {
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">RPythonC++Pure C++RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C++Pure C++#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/07/math/">
-                <h3 class="media-heading">Essential Math</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jul 7, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Our Test ValuesRPythonC++SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
-x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
-x_PY = [1.</div>
+              <div class="media-content hide-xs font-merryweather">RPythonC++RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY &lt;- 1print(var_PY)## [1] 1C++#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -698,7 +675,7 @@ See also:
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         5 posts found
+         4 posts found
       </p>
     </div>
   </div>

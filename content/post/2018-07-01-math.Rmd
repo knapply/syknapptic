@@ -1,6 +1,6 @@
 ---
 title: "Essential Math"
-draft: false
+draft: true
 author: Brendan Knapp
 date: '2018-07-01'
 slug: math

@@ -19,6 +19,15 @@
       <guid>https://syknapptic.netlify.com/page/data-science-from-scratch/</guid>
       <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#programming&#34;&gt;Programming&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#statistics&#34;&gt;Statistics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#graphs&#34;&gt;Graphs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#unsupervised-learning&#34;&gt;Unsupervised Learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#supervised-learning&#34;&gt;Supervised Learning&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;programming&#34; class=&#34;section level1&#34;&gt;
@@ -76,6 +85,20 @@ Data Types
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
+Logic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
 Collections
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -102,20 +125,6 @@ Loops
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Logic
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -131,9 +140,6 @@ Logic
 Topic
 &lt;/th&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
-Symbology
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
 R
 &lt;/th&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -146,14 +152,11 @@ C++
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
 Essentials
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Mean
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;span class=&#34;math inline&#34;&gt;\(\mu\)&lt;/span&gt;, &lt;span class=&#34;math inline&#34;&gt;\(\bar{x}\)&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -170,9 +173,6 @@ Mean
 Median
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;span class=&#34;math inline&#34;&gt;\(\tilde{x}\)&lt;/span&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -187,7 +187,18 @@ Median
 Standard Deviation
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;span class=&#34;math inline&#34;&gt;\(\sigma, sd\)&lt;/span&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Variance
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -204,10 +215,7 @@ Standard Deviation
 Correlation
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-Pearson’s Correlation
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;span class=&#34;math inline&#34;&gt;\(\rho, r\)&lt;/span&gt;
+Pearson’s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -221,10 +229,7 @@ Pearson’s Correlation
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-Spearman’s Correlation
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;span class=&#34;math inline&#34;&gt;\(\rho, r\)&lt;/span&gt;
+Spearman’s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -244,8 +249,6 @@ Linear Models
 Simple Linear Regression
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -258,8 +261,6 @@ Simple Linear Regression
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Linear Regression
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -279,6 +280,324 @@ Generalized Linear Models
 Logistic Regression
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;graphs&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Graphs&lt;/h1&gt;
+&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+C++
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+Representations
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Adjacency Matrix
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Adjacency List
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Edge List
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Incidence Matrix
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Higher Dimensions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Multipartite Graphs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Multiplex Graphs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
+Algorithms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Shortest Path
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
+&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+C++
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Clustering
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+k-means
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Principal Component Analysis
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
+Dimensionality Reduction
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Factor Analysis
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Supervised Learning&lt;/h1&gt;
+&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+C++
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+Classification
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Naive Bayes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+k-Nearest Neighbors
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Support Vector Machine
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Random Forests
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Regression
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Support Vector Machine
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Random Forests
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -307,7 +626,6 @@ Logistic Regression
 &lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#c&#34;&gt;C++&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#pure-c&#34;&gt;Pure C++&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#rcpp&#34;&gt;Rcpp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -329,8 +647,6 @@ print(var_PY)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;c&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;C++&lt;/h1&gt;
-&lt;div id=&#34;pure-c&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Pure C++&lt;/h2&gt;
 &lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
 
 int main() {
@@ -341,7 +657,6 @@ int main() {
   return 0;
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 1&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
 &lt;div id=&#34;rcpp&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Rcpp&lt;/h2&gt;
 &lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;Rcpp.h&amp;gt;       // R to/from C++ interface
@@ -354,195 +669,6 @@ int RCPP_function() {
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;RCPP_function() # access the C++ function from R like any other function&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Essential Math</title>
-      <link>https://syknapptic.netlify.com/2018/07/math/</link>
-      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/07/math/</guid>
-      <description>&lt;div id=&#34;TOC&#34;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#our-test-values&#34;&gt;Our Test Values&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#c&#34;&gt;C++&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#sum&#34;&gt;Sum&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#r-1&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#python-1&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#length&#34;&gt;Length&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#r-2&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#python-2&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#mean&#34;&gt;Mean&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#r-3&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#python-3&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;div id=&#34;our-test-values&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Our Test Values&lt;/h1&gt;
-&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R&lt;/h2&gt;
-&lt;p&gt;Here’s a &lt;code&gt;numeric&lt;/code&gt; &lt;code&gt;vector&lt;/code&gt; for our R code.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x_R &amp;lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
-
-x_R&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;python&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Python&lt;/h2&gt;
-&lt;p&gt;Here’s a &lt;code&gt;list&lt;/code&gt; of &lt;code&gt;float&lt;/code&gt;s for our Python code.&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;x_PY = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
-print(x_PY)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;c&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;C++&lt;/h2&gt;
-&lt;div id=&#34;rcpp&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Rcpp&lt;/h3&gt;
-&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;Rcpp.h&amp;gt;       // R to C++ to R interface
-// [[Rcpp::export]]
-
-void x_RCPP()
-{
-  float x_RCPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
-
-  for (int i = 0; i &amp;lt; 9; i++)
-    Rcpp::Rcout &amp;lt;&amp;lt; x_RCPP[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 1.5 2 3.25 4.9 5 6.1 7.39 8 9.9&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;pure-c&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Pure C++&lt;/h3&gt;
-&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
-
-void x_CPP()
-{
-  float x_CPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
-
-  for (int i = 0; i &amp;lt; 9; i++)
-    std::cout &amp;lt;&amp;lt; x_CPP[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;sum&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Sum&lt;/h1&gt;
-&lt;div id=&#34;r-1&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R&lt;/h2&gt;
-&lt;p&gt;Manually implementing R’s &lt;code&gt;sum()&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_sum &amp;lt;- function(values) {
-  the_sum &amp;lt;- 0
-  
-  for(i in values) {
-    the_sum &amp;lt;- the_sum + i
-  }
-  
-  return(the_sum)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The result of our custom &lt;code&gt;get_sum()&lt;/code&gt; function in R:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_sum(x_R)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 48.04&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which we can compare to R’s built-in &lt;code&gt;sum()&lt;/code&gt; function:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sum(x_R)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 48.04&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;python-1&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Python&lt;/h2&gt;
-&lt;p&gt;Manually implementing Python’s &lt;code&gt;sum()&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def get_sum(values):
-  the_sum = 0
-  
-  for i in values:
-    the_sum += i
-    
-  return(the_sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The result of our custom &lt;code&gt;get_sum()&lt;/code&gt; function in Python:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(get_sum(x_PY))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 48.04&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which we can compare to Python’s built-in &lt;code&gt;sum()&lt;/code&gt; function:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(sum(x_PY))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 48.04&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;length&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Length&lt;/h1&gt;
-&lt;div id=&#34;r-2&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R&lt;/h2&gt;
-&lt;p&gt;Manually implementing R’s &lt;code&gt;length()&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_length &amp;lt;- function(values) {
-  the_length &amp;lt;- 0
-  
-  for(i in values) {
-    the_length &amp;lt;- the_length + 1
-  }
-  
-  return(the_length)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The result of our custom &lt;code&gt;get_length()&lt;/code&gt; function in R:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_length(x_R)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 9&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which we can compare to R’s built-in &lt;code&gt;length()&lt;/code&gt; function:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;length(x_R)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 9&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;python-2&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Python&lt;/h2&gt;
-&lt;p&gt;Manually implementing Python’s &lt;code&gt;len()&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def get_length(values):
-  the_length = 0
-  
-  for i in values:
-    the_length = the_length + 1
-    
-  return(the_length)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The result of our custom &lt;code&gt;get_length()&lt;/code&gt; function in Python:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(get_length(x_PY))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 9&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which we can compare to Python’s built-in &lt;code&gt;len()&lt;/code&gt; function:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(len(x_PY))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 9&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;mean&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Mean&lt;/h1&gt;
-&lt;div id=&#34;r-3&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R&lt;/h2&gt;
-&lt;p&gt;Manually implementing R’s &lt;code&gt;mean()&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_mean &amp;lt;- function(values) {
-  the_mean &amp;lt;- get_sum(values) / get_length(values)
-  
-  return(the_mean)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The result of our custom &lt;code&gt;get_mean()&lt;/code&gt; function in R:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_mean(x_R)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 5.337778&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which we can compare to R’s built-in &lt;code&gt;mean()&lt;/code&gt; function:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(x_R)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 5.337778&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;python-3&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Python&lt;/h2&gt;
-&lt;p&gt;Manually implementing Python’s &lt;code&gt;statistics.mean()&lt;/code&gt;&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def get_mean(values):
-  the_mean = get_sum(values) / get_length(values)
-  
-  return(the_mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The result of our custom &lt;code&gt;get_mean()&lt;/code&gt; function in Python:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(get_mean(x_PY))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 5.337777777777777&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Which we can compare to Python’s &lt;code&gt;statistics.mean()&lt;/code&gt; function:&lt;/p&gt;
-&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from statistics import mean
-print(mean(x_PY))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 5.337777777777778&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
