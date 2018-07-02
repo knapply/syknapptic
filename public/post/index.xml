@@ -52,5 +52,17 @@ Considering this is a blog post, I’m going to get all bloggy here before jumpi
 ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</description>
     </item>
     
+    <item>
+      <title>GDELT, Missiles, and Image Collection</title>
+      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
+      <description>----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
+See also:
+My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</description>
+    </item>
+    
   </channel>
 </rss>

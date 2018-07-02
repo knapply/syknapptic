@@ -1,6 +1,6 @@
 ---
 title: GDELT, Missiles, and Image Collection
-draft: true
+draft: false
 author: Brendan Knapp
 date: '2018-01-23'
 slug: collecting-a-data-set-of-missile-images-with-gdelt
@@ -37,7 +37,8 @@ See also:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                      cache = TRUE)
 ```
 
 Let's see how well we can scoop up a set of ballistic missile images using a combination of packages:

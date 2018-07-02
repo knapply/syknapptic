@@ -12,17 +12,6 @@
     
     
     <item>
-      <title>Data Science from Scratch</title>
-      <link>https://syknapptic.netlify.com/page/data-science-from-scratch/</link>
-      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/page/data-science-from-scratch/</guid>
-      <description>
-ProgrammingTopicRPythonC++EssentialsVariable AssignmentData TypesCollectionsLoopsLogic
-StatisticsTopicSymbologyRPythonC++EssentialsMean\(\mu\), \(\bar{x}\)Median\(\tilde{x}\)Standard Deviation\(\sigma, sd\)CorrelationPearson’s\(\rho, r\)Spearman’s\(\rho, r\)Linear ModelsSimple Linear RegressionLinear RegressionGeneralized Linear ModelsLogistic Regression</description>
-    </item>
-    
-    <item>
       <title>Variable Assignment</title>
       <link>https://syknapptic.netlify.com/2018/07/variable-assignment/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>

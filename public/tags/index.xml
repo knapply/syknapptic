@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>Gdelt</title>
+      <link>https://syknapptic.netlify.com/tags/gdelt/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/tags/gdelt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Ggplot</title>
       <link>https://syknapptic.netlify.com/tags/ggplot/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
@@ -30,11 +39,29 @@
     </item>
     
     <item>
+      <title>Imager</title>
+      <link>https://syknapptic.netlify.com/tags/imager/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/tags/imager/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Math</title>
       <link>https://syknapptic.netlify.com/tags/math/</link>
       <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/tags/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Purrr</title>
+      <link>https://syknapptic.netlify.com/tags/purrr/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/tags/purrr/</guid>
       <description></description>
     </item>
     
