@@ -1,5 +1,6 @@
 ---
 title: "Data Science from Scratch"
+draft: false
 output:
   blogdown::html_page
 ---
@@ -17,6 +18,7 @@ check_box <- '<input type="checkbox" checked onclick="return false;">'
 uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
 ```
 
+<br>
 
 # Programming
 
@@ -63,6 +65,7 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
   collapse_rows(columns = 1, valign = "top")
 ```
 
+<br>
 
 # Statistics
 
@@ -73,12 +76,12 @@ stat_groups <- c(rep("Essentials", 3),
                  "Generalized Linear Models")
 
 stat_topics <- c("Mean", "Median", "Standard Deviation", 
-                 "Pearson's", "Spearman's",
+                 "Pearson's Correlation", "Spearman's Correlation",
                  "Simple Linear Regression", "Linear Regression",
                  "Logistic Regression")
 
 stat_syms <- c("$\\mu$, $\\bar{x}$",          # mean
-               "$\\tilde{x}$",                 # median
+               "$\\tilde{x}$",                # median
                "$\\sigma, sd$",               # standard deviation
                "$\\rho, r$",                  # correlation
                "$\\rho, r$",                  # correlation

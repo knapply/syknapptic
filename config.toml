@@ -113,15 +113,15 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   identifier = "datasciencefromscratch"
   name = "Data Science"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-line-chart\"></i>"
-  url = "/page/Data-Science-from-Scratch/"
+  url = "/Data-Science-from-Scratch/"
 [[menu.misc]]
-  weight = 2
+  weight = 1
   identifier = "rss"
   name = "RSS"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
   url = "/index.xml"
 [[menu.misc]]
-  weight = 3
+  weight = 1
   identifier = "rbloggers"
   name = "R-bloggers"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-rss\"></i>"
