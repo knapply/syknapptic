@@ -1,0 +1,53 @@
+---
+title: "Data Science from Scratch"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(dplyr)
+library(kableExtra)
+
+check_box <- '<input type="checkbox" checked onclick="return false;">'
+
+uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
+```
+
+
+# Programming Essentials
+
+```{r}
+prog_topics <- c("Variable Assignment", "Data Types", "Collections")
+
+tibble(Topic = prog_topics) %>% 
+  mutate(R = case_when(
+    Topic == "Variable Assignment" ~ check_box,
+    Topic == "Data Types" ~ uncheck_box,
+    Topic == "Collections" ~ uncheck_box
+    )) %>% 
+  mutate(Python = case_when(
+    Topic == "Variable Assignment" ~ check_box,
+    Topic == "Data Types" ~ uncheck_box,
+    Topic == "Collections" ~ uncheck_box
+  )) %>% 
+  mutate(`C++` = case_when(
+    Topic == "Variable Assignment" ~ check_box,
+    Topic == "Data Types" ~ uncheck_box,
+    Topic == "Collections" ~ uncheck_box
+  )) %>% 
+  mutate(Rcpp = case_when(
+    Topic == "Variable Assignment" ~ check_box,
+    Topic == "Data Types" ~ uncheck_box,
+    Topic == "Collections" ~ uncheck_box
+  )) %>% 
+  mutate(Topic = case_when(
+    Topic == "Variable Assignment" ~ 
+      "<a href=/2018/07/variable-assignment/>Variable Assignment</a>"
+    )) %>% 
+  kable(format = "html", escape = FALSE) %>% 
+  kable_styling()
+```
+

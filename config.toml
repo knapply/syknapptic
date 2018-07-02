@@ -113,7 +113,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   identifier = "datasciencefromscratch"
   name = "Data Science"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-line-chart\"></i>"
-  url = "/data-science-from-scratch/"
+  url = "/Data-Science-from-Scratch/"
 [[menu.misc]]
   weight = 1
   identifier = "rss"

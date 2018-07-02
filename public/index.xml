@@ -79,27 +79,64 @@ int RCPP_function() {
     </item>
     
     <item>
-      <title>Data Science from Scratch</title>
-      <link>https://syknapptic.netlify.com/data-science-from-scratch/</link>
-      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
+      <title>Variable Assignment</title>
+      <link>https://syknapptic.netlify.com/2018/07/variable-assignment/</link>
+      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/data-science-from-scratch/</guid>
-      <description>
-
-&lt;h1 id=&#34;programming&#34;&gt;Programming&lt;/h1&gt;
-
+      <guid>https://syknapptic.netlify.com/2018/07/variable-assignment/</guid>
+      <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://syknapptic.netlify.com/2018/07/programming-essentials-variables/&#34;&gt;Variables&lt;/a&gt;
-
-&lt;ul&gt;
-&lt;li&gt;R, Python, C++, Rcpp
-&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#c&#34;&gt;C++&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pure-c&#34;&gt;Pure C++&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rcpp&#34;&gt;Rcpp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/div&gt;
 
-&lt;h1 id=&#34;statistics&#34;&gt;Statistics&lt;/h1&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;var_R &amp;lt;- 1
 
-&lt;h3 id=&#34;correlation&#34;&gt;Correlation&lt;/h3&gt;
+var_R&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Python&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;var_PY &amp;lt;- 1
+
+print(var_PY)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;c&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;C++&lt;/h1&gt;
+&lt;div id=&#34;pure-c&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Pure C++&lt;/h2&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+
+int main() {
+  int var_CPP = 1;
+
+  std::cout &amp;lt;&amp;lt; var_CPP;
+  
+  return 0;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rcpp&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rcpp&lt;/h2&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;Rcpp.h&amp;gt;       // R to/from C++ interface
+// [[Rcpp::export]]
+
+int RCPP_function() {
+  int var_RCPP = 1;
+  
+  return var_RCPP;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;RCPP_function() # access the C++ function from R like any other function&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 </description>
     </item>
     

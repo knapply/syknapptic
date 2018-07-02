@@ -2,9 +2,9 @@
 using namespace std;
 
 int main() {
-  int x_CPP = 1;
+  int var_CPP = 1;
 
-  cout << x_CPP << endl;
+  cout << var_CPP << endl;
   
   return 0;
 }

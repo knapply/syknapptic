@@ -1,0 +1,95 @@
+---
+title: Variable Assignment
+draft: false
+author: Brendan Knapp
+date: '2018-07-02'
+slug: variable-assignment
+categories:
+  - data-science-from-scratch
+tags: [variables]
+thumbnailImage: https://techbeacon.scdn7.secure.raxcdn.com/sites/default/files/styles/article_hero_image/public/field/image/programming-language-appsec.jpg?itok=OZrWIG1C
+metaAlignment: center
+coverMeta: out
+summary: How to assign variables in R, Python, and C++ (including Rcpp).
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 11, fig.height = 8, fig.align = "center",
+                      message = FALSE, warning = FALSE)
+```
+
+```{r echo=FALSE}
+# library(reticulate)
+# library(Rcpp)
+```
+
+# R
+
+```{r}
+var_R <- 1
+
+var_R
+```
+
+# Python
+
+```{r}
+var_PY <- 1
+
+print(var_PY)
+```
+
+
+# C++
+
+```{Rcpp, ref.label=knitr::all_rcpp_labels(), include=FALSE}
+```
+
+## Pure C++
+
+```{Rcpp, eval=FALSE}
+#include <iostream>
+
+int main() {
+  int var_CPP = 1;
+
+  std::cout << var_CPP;
+  
+  return 0;
+}
+```
+
+
+```{r echo=FALSE}
+# cd content/post/cpp
+# g++ -c code-variables1.cpp
+# g++ -o code-variables1.exe code-variables1.o
+# system("cd content/post/cpp")
+# system("g++ -c code-variables1.cpp")
+# system("g++ -o code-variables1.exe code-variables1.o")
+system("cpp/code-variables1.exe")
+```
+
+## Rcpp
+
+```{Rcpp, eval=TRUE}
+#include <Rcpp.h>       // R to/from C++ interface
+// [[Rcpp::export]]
+
+int RCPP_function() {
+  int var_RCPP = 1;
+  
+  return var_RCPP;
+}
+```
+
+```{r}
+RCPP_function() # access the C++ function from R like any other function
+```
+
+
