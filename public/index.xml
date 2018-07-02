@@ -32,7 +32,7 @@
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;programming&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Programming&lt;/h1&gt;
-&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -131,7 +131,7 @@ Loops
 &lt;/div&gt;
 &lt;div id=&#34;statistics&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Statistics&lt;/h1&gt;
-&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -197,7 +197,7 @@ Mode
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
 Dispersion
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -228,6 +228,9 @@ Variance
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Correlation
+&lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Pearson’s
 &lt;/td&gt;
@@ -242,25 +245,8 @@ Pearson’s
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Correlation
-&lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Spearman’s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Simple Linear Regression
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -277,6 +263,20 @@ Simple Linear Regression
 Linear Models
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
+Simple Linear Regression
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
 Linear Regression
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -290,6 +290,9 @@ Linear Regression
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Generalized Linear Models
+&lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Binomial
 &lt;/td&gt;
@@ -304,9 +307,6 @@ Binomial
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Generalized Linear Models
-&lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Gaussian
 &lt;/td&gt;
@@ -339,7 +339,7 @@ Poisson
 &lt;/div&gt;
 &lt;div id=&#34;graphs&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Graphs&lt;/h1&gt;
-&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -471,7 +471,7 @@ Shortest Path
 &lt;/div&gt;
 &lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
-&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;
@@ -544,7 +544,7 @@ Factor Analysis
 &lt;/div&gt;
 &lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Supervised Learning&lt;/h1&gt;
-&lt;table class=&#34;table table-striped table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:center;&#34;&gt;

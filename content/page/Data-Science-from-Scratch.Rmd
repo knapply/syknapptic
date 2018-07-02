@@ -66,7 +66,7 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
     TRUE ~ Topic
     )) %>% 
   kable(escape = FALSE, align = "c") %>% 
-  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -77,10 +77,10 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
 
 ```{r}
 stat_groups <- c(rep("Central Tendency", 3),
-                 rep("Dispersion", 3),
+                 rep("Dispersion", 2),
                  rep("Correlation", 2),
                  rep("Linear Models", 2),
-                 rep("Generalized Linear Models", 2))
+                 rep("Generalized Linear Models", 3))
 
 stat_topics <- c("Mean", "Median", "Mode",
                  "Standard Deviation", 
@@ -100,7 +100,7 @@ tibble(` ` = stat_groups, Topic = stat_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -127,7 +127,7 @@ tibble(` ` = graph_groups, Topic = graph_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -149,7 +149,7 @@ tibble(` ` = unsup_groups, Topic = unsup_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
@@ -175,7 +175,7 @@ tibble(` ` = sup_groups, Topic = sup_topics) %>%
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
-  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  kable_styling(bootstrap_options = c("hover", "responsive")) %>% 
   column_spec(1, bold = TRUE) %>% 
   collapse_rows(columns = 1, valign = "top")
 ```
