@@ -1,6 +1,8 @@
 ---
 title: "Data Science from Scratch"
-output: html_document
+draft: false
+output:
+  blogdown::html_page
 ---
 
 ```{r setup, include=FALSE}
@@ -18,26 +20,34 @@ uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
 
 <br>
 
-# Programming Essentials
+# Programming
 
 ```{r}
-prog_topics <- c("Variable Assignment", "Data Types", "Collections")
+prog_groups <- c("Essentials")
+prog_topics <- c("Variable Assignment", "Data Types", "Collections",
+                 "Loops", "Logic")
 
-tibble(Topic = prog_topics) %>% 
+tibble(` ` = prog_groups, Topic = prog_topics) %>% 
   mutate(R = case_when(
     Topic == "Variable Assignment" ~ check_box,
     Topic == "Data Types" ~ uncheck_box,
-    Topic == "Collections" ~ uncheck_box
+    Topic == "Collections" ~ uncheck_box,
+    Topic == "Loops" ~ uncheck_box,
+    Topic == "Logic" ~ uncheck_box
     )) %>% 
   mutate(Python = case_when(
     Topic == "Variable Assignment" ~ check_box,
     Topic == "Data Types" ~ uncheck_box,
-    Topic == "Collections" ~ uncheck_box
+    Topic == "Collections" ~ uncheck_box,
+    Topic == "Loops" ~ uncheck_box,
+    Topic == "Logic" ~ uncheck_box
   )) %>% 
   mutate(`C++` = case_when(
     Topic == "Variable Assignment" ~ check_box,
     Topic == "Data Types" ~ uncheck_box,
-    Topic == "Collections" ~ uncheck_box
+    Topic == "Collections" ~ uncheck_box,
+    Topic == "Loops" ~ uncheck_box,
+    Topic == "Logic" ~ uncheck_box
   )) %>% 
   # mutate(Rcpp = case_when(
   #   Topic == "Variable Assignment" ~ check_box,
@@ -49,8 +59,10 @@ tibble(Topic = prog_topics) %>%
       "<a href=/2018/07/variable-assignment/>Variable Assignment</a>",
     TRUE ~ Topic
     )) %>% 
-  kable(format = "html", escape = FALSE) %>% 
-  kable_styling()
+  kable(escape = FALSE, align = "c") %>% 
+  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  column_spec(1, bold = TRUE) %>% 
+  collapse_rows(columns = 1, valign = "top")
 ```
 
 <br>
@@ -58,22 +70,35 @@ tibble(Topic = prog_topics) %>%
 # Statistics
 
 ```{r}
-stat_topics <- c("Standard Deviation", "Parametric Correlation",
-                 "Nonparametric Correlation",
+stat_groups <- c(rep("Essentials", 3),
+                 rep("Correlation", 2),
+                 rep("Linear Models", 2),
+                 "Generalized Linear Models")
+
+stat_topics <- c("Mean", "Median", "Standard Deviation", 
+                 "Pearson's Correlation", "Spearman's Correlation",
                  "Simple Linear Regression", "Linear Regression",
                  "Logistic Regression")
 
-stat_details <- c(" ", "$\\rho_{Pearson's}$", "$\\rho_{Spearman's}$",
-                  "$univariate$", "$multivariate$", " ")
+stat_syms <- c("$\\mu$, $\\bar{x}$",          # mean
+               "$\\tilde{x}",                 # median
+               "$\\sigma, sd$",               # standard deviation
+               "$\\rho, r$",                  # correlation
+               "$\\rho, r$",                  # correlation
+               " ",
+               " ",
+               " ")
 
-tibble(Topic = stat_topics) %>% 
+tibble(` ` = stat_groups, Topic = stat_topics, Symbology = stat_syms) %>% 
   mutate(R = uncheck_box) %>% 
   mutate(Python = uncheck_box) %>% 
   mutate(`C++` = uncheck_box) %>% 
   # mutate(Rcpp = uncheck_box) %>% 
-  mutate(Details = stat_details) %>% 
-  kable(format = "html", escape = FALSE) %>% 
-  kable_styling()
+  # mutate(Details = stat_details) %>% 
+  kable(escape = FALSE, align = "c") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "responsive")) %>% 
+  column_spec(1, bold = TRUE) %>% 
+  collapse_rows(columns = 1, valign = "top")
 ```
 
 
