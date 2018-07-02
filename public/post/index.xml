@@ -12,15 +12,6 @@
     
     
     <item>
-      <title>Programming Essentials - Variables</title>
-      <link>https://syknapptic.netlify.com/2018/07/programming-essentials-variables/</link>
-      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/07/programming-essentials-variables/</guid>
-      <description>VariablesRPythonC++Pure C++RcppVariablesRvar_R &amp;lt;- 1var_R## [1] 1Pythonvar_PY &amp;lt;- 1print(var_PY)## [1] 1C++Pure C++#include &amp;lt;iostream&amp;gt;int main() {int x_CPP = 1;std::cout &amp;lt;&amp;lt; x_CPP;return 0;}Rcpp#include &amp;lt;Rcpp.h&amp;gt; // R to C++ to R interface// [[Rcpp::export]]int RCPP_function() {int x_RCPP = 1;return x_RCPP;}RCPP_function() # now accessible from R## [1] 1</description>
-    </item>
-    
-    <item>
       <title>Variable Assignment</title>
       <link>https://syknapptic.netlify.com/2018/07/variable-assignment/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>

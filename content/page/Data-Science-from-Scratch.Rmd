@@ -16,6 +16,7 @@ check_box <- '<input type="checkbox" checked onclick="return false;">'
 uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
 ```
 
+<br>
 
 # Programming Essentials
 
@@ -38,16 +39,41 @@ tibble(Topic = prog_topics) %>%
     Topic == "Data Types" ~ uncheck_box,
     Topic == "Collections" ~ uncheck_box
   )) %>% 
-  mutate(Rcpp = case_when(
-    Topic == "Variable Assignment" ~ check_box,
-    Topic == "Data Types" ~ uncheck_box,
-    Topic == "Collections" ~ uncheck_box
-  )) %>% 
+  # mutate(Rcpp = case_when(
+  #   Topic == "Variable Assignment" ~ check_box,
+  #   Topic == "Data Types" ~ uncheck_box,
+  #   Topic == "Collections" ~ uncheck_box
+  # )) %>% 
   mutate(Topic = case_when(
     Topic == "Variable Assignment" ~ 
-      "<a href=/2018/07/variable-assignment/>Variable Assignment</a>"
+      "<a href=/2018/07/variable-assignment/>Variable Assignment</a>",
+    TRUE ~ Topic
     )) %>% 
   kable(format = "html", escape = FALSE) %>% 
   kable_styling()
 ```
+
+<br>
+
+# Statistics
+
+```{r}
+stat_topics <- c("Standard Deviation", "Parametric Correlation",
+                 "Nonparametric Correlation",
+                 "Simple Linear Regression", "Linear Regression",
+                 "Logistic Regression")
+
+stat_details <- c(" ", "$\\rho_{Pearson's}$", "$\\rho_{Spearman's}$",
+                  "$univariate$", "$multivariate$", " ")
+
+tibble(Topic = stat_topics) %>% 
+  mutate(R = uncheck_box) %>% 
+  mutate(Python = uncheck_box) %>% 
+  mutate(`C++` = uncheck_box) %>% 
+  # mutate(Rcpp = uncheck_box) %>% 
+  mutate(Details = stat_details) %>% 
+  kable(format = "html", escape = FALSE) %>% 
+  kable_styling()
+```
+
 
