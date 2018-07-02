@@ -152,8 +152,8 @@ C++
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
-Essentials
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Central Tendency
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Mean
@@ -184,6 +184,23 @@ Median
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
+Mode
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Dispersion
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
 Standard Deviation
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -211,9 +228,6 @@ Variance
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Correlation
-&lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Pearson’s
 &lt;/td&gt;
@@ -228,8 +242,25 @@ Pearson’s
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Correlation
+&lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 Spearman’s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Simple Linear Regression
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
@@ -246,20 +277,6 @@ Spearman’s
 Linear Models
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-Simple Linear Regression
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
 Linear Regression
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
@@ -273,11 +290,39 @@ Linear Regression
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Binomial
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
 Generalized Linear Models
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-Logistic Regression
+Gaussian
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Poisson
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;

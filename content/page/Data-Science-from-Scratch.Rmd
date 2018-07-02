@@ -76,25 +76,22 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
 # Statistics
 
 ```{r}
-stat_groups <- c(rep("Essentials", 4),
+stat_groups <- c(rep("Central Tendency", 3),
+                 rep("Dispersion", 3),
                  rep("Correlation", 2),
                  rep("Linear Models", 2),
-                 "Generalized Linear Models")
+                 rep("Generalized Linear Models", 2))
 
-stat_topics <- c("Mean", "Median", "Standard Deviation", 
+stat_topics <- c("Mean", "Median", "Mode",
+                 "Standard Deviation", 
                  "Variance",
-                 "Pearson's", "Spearman's",
-                 "Simple Linear Regression", "Linear Regression",
-                 "Logistic Regression")
-
-# stat_syms <- c("$\\mu$, $\\bar{x}$",          # mean
-#                "$\\tilde{x}$",                # median
-#                "$\\sigma, sd$",               # standard deviation
-#                "$\\rho, r$",                  # correlation
-#                "$\\rho, r$",                  # correlation
-#                " ",
-#                " ",
-#                " ")
+                 "Pearson's",
+                 "Spearman's",
+                 "Simple Linear Regression", 
+                 "Linear Regression",
+                 "Binomial",
+                 "Gaussian",
+                 "Poisson")
 
 tibble(` ` = stat_groups, Topic = stat_topics) %>% 
   mutate(R = uncheck_box) %>% 
