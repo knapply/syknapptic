@@ -1,6 +1,8 @@
 ---
 title: "Data Science from Scratch"
 draft: false
+author: Brendan Knapp
+date: '2018-07-02'
 output:
   blogdown::html_page
 ---
