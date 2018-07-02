@@ -1,0 +1,222 @@
+---
+title: Math
+author: Brendan Knapp
+date: '2018-07-01'
+slug: math
+categories:
+  - data-science-from-scratch
+tags:
+  - math
+# thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+summary: Calculating mathematical functions, from scratch!
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 1
+---
+
+```{r echo=FALSE}
+library(reticulate)
+```
+
+# Our Test Values
+
+## R
+
+Here's a `numeric` `vector` for our R code.
+
+```{r}
+x <- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+```
+
+## Python
+
+Here's a `list` of `float`s for our Python code.
+
+```{python}
+x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+```
+
+
+# Sum
+
+## R
+
+Manually implementing R's `sum()`
+
+```{r}
+get_sum <- function(values) {
+  the_sum <- 0
+  
+  for(i in values) {
+    the_sum <- the_sum + i
+  }
+  
+  return(the_sum)
+}
+```
+
+The result of our custom `get_sum()` function in R:
+
+```{r}
+get_sum(x)
+```
+
+Which we can compare to R's built-in `sum()` function:
+
+```{r}
+sum(x)
+```
+
+
+## Python
+
+Manually implementing Python's `sum()`
+
+```{python}
+def get_sum(values):
+  the_sum = 0
+  
+  for i in values:
+    the_sum += i
+    
+  return(the_sum)
+```
+
+The result of our custom `get_sum()` function in Python:
+
+```{python}
+print(get_sum(x))
+```
+
+Which we can compare to Python's built-in `sum()` function:
+
+```{python}
+print(sum(x))
+```
+
+# Length
+
+## R
+
+Manually implementing R's `length()`
+
+```{r}
+x <- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+
+get_length <- function(values) {
+  the_length <- 0
+  
+  for(i in values) {
+    the_length <- the_length + 1
+  }
+  
+  return(the_length)
+}
+```
+
+The result of our custom `get_length()` function in R:
+
+```{r}
+get_length(x)
+```
+
+Which we can compare to R's built-in `length()` function:
+
+```{r}
+length(x)
+```
+
+## Python
+
+Manually implementing Python's `len()`
+
+```{python}
+def get_length(values):
+  the_length = 0
+  
+  for i in values:
+    the_length = the_length + 1
+    
+  return(the_length)
+  
+x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+```
+
+The result of our custom `get_length()` function in Python:
+
+```{python}
+print(get_length(x))
+```
+
+Which we can compare to Python's built-in `len()` function:
+
+```{python}
+print(len(x))
+```
+
+
+# Mean
+
+## R
+
+Manually implementing R's `mean()`
+
+```{r}
+get_mean <- function(values) {
+  the_mean <- get_sum(x) / get_length(x)
+  
+  return(the_mean)
+}
+```
+
+The result of our custom `get_mean()` function in R:
+
+```{r}
+get_mean(x)
+```
+
+Which we can compare to R's built-in `mean()` function:
+
+```{r}
+mean(x)
+```
+
+## Python
+
+Manually implementing Python's `statistics.mean()`
+
+```{python}
+def get_mean(values):
+  the_mean = get_sum(x) / get_length(x)
+  
+  return(the_mean)
+  
+x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9] 
+```
+
+The result of our custom `get_mean()` function in Python:
+
+```{python}
+print(get_mean(x))
+```
+
+Which we can compare to Python's `statistics.mean()` function:
+
+```{python}
+from statistics import mean
+print(mean(x))
+```
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,160 @@
+---
+draft: yes
+title: Math
+author: Brendan Knapp
+date: '2018-07-01'
+slug: math
+categories:
+  - data-science-from-scratch
+tags:
+  - math
+# thumbnailImage: 
+metaAlignment: center
+coverMeta: out
+summary: Calculating mathematical functions, from scratch!
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 1
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#our-test-values">Our Test Values</a></li>
+<li><a href="#sum">Sum</a></li>
+<li><a href="#length">Length</a></li>
+<li><a href="#mean">Mean</a></li>
+</ul>
+</div>
+
+<div id="our-test-values" class="section level1">
+<h1>Our Test Values</h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>Here’s a <code>numeric</code> <code>vector</code> for our R code.</p>
+<pre class="r"><code>x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)</code></pre>
+</div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<p>Here’s a <code>list</code> of <code>float</code>s for our Python code.</p>
+<pre class="python"><code>x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
+</div>
+</div>
+<div id="sum" class="section level1">
+<h1>Sum</h1>
+<div id="r-1" class="section level2">
+<h2>R</h2>
+<p>Manually implementing R’s <code>sum()</code></p>
+<pre class="r"><code>get_sum &lt;- function(values) {
+  the_sum &lt;- 0
+  
+  for(i in values) {
+    the_sum &lt;- the_sum + i
+  }
+  
+  return(the_sum)
+}</code></pre>
+<p>The result of our custom <code>get_sum()</code> function in R:</p>
+<pre class="r"><code>get_sum(x)</code></pre>
+<pre><code>## [1] 48.04</code></pre>
+<p>Which we can compare to R’s built-in <code>sum()</code> function:</p>
+<pre class="r"><code>sum(x)</code></pre>
+<pre><code>## [1] 48.04</code></pre>
+</div>
+<div id="python-1" class="section level2">
+<h2>Python</h2>
+<p>Manually implementing Python’s <code>sum()</code></p>
+<pre class="python"><code>def get_sum(values):
+  the_sum = 0
+  
+  for i in values:
+    the_sum += i
+    
+  return(the_sum)</code></pre>
+<p>The result of our custom <code>get_sum()</code> function in Python:</p>
+<pre class="python"><code>print(get_sum(x))</code></pre>
+<pre><code>## 48.04</code></pre>
+<p>Which we can compare to Python’s built-in <code>sum()</code> function:</p>
+<pre class="python"><code>print(sum(x))</code></pre>
+<pre><code>## 48.04</code></pre>
+</div>
+</div>
+<div id="length" class="section level1">
+<h1>Length</h1>
+<div id="r-2" class="section level2">
+<h2>R</h2>
+<p>Manually implementing R’s <code>length()</code></p>
+<pre class="r"><code>x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+
+get_length &lt;- function(values) {
+  the_length &lt;- 0
+  
+  for(i in values) {
+    the_length &lt;- the_length + 1
+  }
+  
+  return(the_length)
+}</code></pre>
+<p>The result of our custom <code>get_length()</code> function in R:</p>
+<pre class="r"><code>get_length(x)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<p>Which we can compare to R’s built-in <code>length()</code> function:</p>
+<pre class="r"><code>length(x)</code></pre>
+<pre><code>## [1] 9</code></pre>
+</div>
+<div id="python-2" class="section level2">
+<h2>Python</h2>
+<p>Manually implementing Python’s <code>len()</code></p>
+<pre class="python"><code>def get_length(values):
+  the_length = 0
+  
+  for i in values:
+    the_length = the_length + 1
+    
+  return(the_length)
+  
+x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
+<p>The result of our custom <code>get_length()</code> function in Python:</p>
+<pre class="python"><code>print(get_length(x))</code></pre>
+<pre><code>## 9</code></pre>
+<p>Which we can compare to Python’s built-in <code>len()</code> function:</p>
+<pre class="python"><code>print(len(x))</code></pre>
+<pre><code>## 9</code></pre>
+</div>
+</div>
+<div id="mean" class="section level1">
+<h1>Mean</h1>
+<div id="r-3" class="section level2">
+<h2>R</h2>
+<p>Manually implementing R’s <code>mean()</code></p>
+<pre class="r"><code>get_mean &lt;- function(values) {
+  the_mean &lt;- get_sum(x) / get_length(x)
+  
+  return(the_mean)
+}</code></pre>
+<p>The result of our custom <code>get_mean()</code> function in R:</p>
+<pre class="r"><code>get_mean(x)</code></pre>
+<pre><code>## [1] 5.337778</code></pre>
+<p>Which we can compare to R’s built-in <code>mean()</code> function:</p>
+<pre class="r"><code>mean(x)</code></pre>
+<pre><code>## [1] 5.337778</code></pre>
+</div>
+<div id="python-3" class="section level2">
+<h2>Python</h2>
+<p>Manually implementing Python’s <code>statistics.mean()</code></p>
+<pre class="python"><code>def get_mean(values):
+  the_mean = get_sum(x) / get_length(x)
+  
+  return(the_mean)
+  
+x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9] </code></pre>
+<p>The result of our custom <code>get_mean()</code> function in Python:</p>
+<pre class="python"><code>print(get_mean(x))</code></pre>
+<pre><code>## 5.337777777777777</code></pre>
+<p>Which we can compare to Python’s <code>statistics.mean()</code> function:</p>
+<pre class="python"><code>from statistics import mean
+print(mean(x))</code></pre>
+<pre><code>## 5.337777777777778</code></pre>
+</div>
+</div>
