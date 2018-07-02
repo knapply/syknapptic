@@ -17,10 +17,9 @@
       <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/math/</guid>
-      <description>Our Test ValuesSumLengthMeanOur Test ValuesRHere’s a numeric vector for our R code.
-x &amp;lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)PythonHere’s a list of floats for our Python code.
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]SumRManually implementing R’s sum()
-get_sum &amp;lt;- function(values) {the_sum &amp;lt;- 0for(i in values) {the_sum &amp;lt;- the_sum + i}return(the_sum)}The result of our custom get_sum() function in R:</description>
+      <description>Our Test ValuesRPythonC++SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &amp;lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.</description>
     </item>
     
   </channel>

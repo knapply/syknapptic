@@ -30,18 +30,15 @@
     
 
     
-    <meta name="description" content="Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
-I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.">
-    <meta property="og:description" content="Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
-I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.">
+    <meta name="description" content="Declaring VariablesDeclaring Variables">
+    <meta property="og:description" content="Declaring VariablesDeclaring Variables">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="reticulate: Taking the Dragon for a Test Ride">
     <meta property="og:url" content="/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
-I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.">
+    <meta name="twitter:description" content="Declaring VariablesDeclaring Variables">
     
       <meta name="twitter:creator" content="@syknapptic">
     
@@ -302,163 +299,15 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <p>Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {<code>reticulate</code>}, so who cares! We can use both!</p>
-<p>I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.</p>
-<p>A few weeks later, I found myself needing network analysis capabilities that simply don’t exist in Python. Since my coding went from “productive hobby” to “you need to get this done”, I decided I should try and master (using the loosest of definitions) one language instead of risk being a forever-noob in both.</p>
-<p>Along the way, I learned why R is awesome and am now pretty biased toward it for data analysis. The language’s lazy evaluation allows for ridiculously elegant code. Combine that with the expressive syntax of the core tidyverse packages and you have straightforward solutions to 90% of the tasks required in every project. {<code>dplyr</code>} turns the labor of data carpentry into a series of rewarding puzzles. {<code>ggplot2</code>} turns rookies into artists. {<code>purrr</code>} (<em>swoon</em>) turns code into something that I can only describe as a mix of a playground at recess and poetry.</p>
-<p>With the expanded ecosystem of {<code>sf</code>} for spatial data and {<code>tidygraph</code>} for networks, I’m more than skeptical that Python offers anything better for most data analysis. That’s not even getting into the monster ecosystem of statistical packages.</p>
-<p>That said, there are things that Python offers that require me to stumble down the rabbit hole of unfamiliar paradigms and syntax. This is something I’ll be doing more and more in the near future as I’ll (finally? … hopefully?) have time to learn how to take advantage of the many Python goodies over which I’ve been salivating. R may not be <em>only</em> data analysis like it apparently once was, but something as general as Python it is not.</p>
-<p>That’s why I am excited for {<code>reticulate</code>}. A way of easily integrating the best of both worlds? sign me up!</p>
-<p>So, while taking a break from the race of finishing a final semester, I decided to see just how easy they’ve made it.</p>
-<p>It is better than I hoped.</p>
-<p><img src="https://media1.tenor.com/images/21774c49405bbaf6b2255da1a74bdfa7/tenor.gif" style="display: block; margin: auto;" /></p>
-<p>I have no idea which version is on CRAN, but I grabbed the development version from GitHub. You can do the same by running:</p>
-<pre class="r"><code>install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;rstudio/reticulate&quot;)</code></pre>
-<pre class="r"><code>library(reticulate)</code></pre>
-<p>Right up front, I’m going to create an arbitrary numeric vector and get the <code>mean()</code> using plain ol’ R.</p>
-<pre class="r"><code>sample_numbers &lt;- c(1.01, 100.10, 20.23, 1000.56, 95.94)
-mean(sample_numbers)</code></pre>
-<pre><code>## [1] 243.568</code></pre>
-<p>Python’s <code>mean()</code> function is part of the <code>statistics</code> module and needs to be explicitly loaded. The Pythonic workflow typically seen loads functions individually. Here’s how we import just the <code>mean()</code> function, assign the same values as above to a <code>list()</code>, and calculate the <code>mean()</code> from that variable. Depending on the environment you’re using, you likely have to explicitly <code>print()</code> the result to see the output.</p>
-<pre class="python"><code>from statistics import mean                                # Python code
-sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]     # Python code
-print(mean(sample_numbers))                                # Python code</code></pre>
-<pre><code>## 243.56799999999998</code></pre>
-<p>That said, I’m going to load the entire package when calling Python from R. In Python it would just look like this:</p>
-<pre class="python"><code>import statistics                                          # Python code
-sample_numbers = [1.01, 100.10, 20.23, 1000.56, 95.94]     # Python code
-print(statistics.mean(sample_numbers))                     # Python code</code></pre>
-<pre><code>## 243.56799999999998</code></pre>
-<p>A difference to notice here is that for us to use <code>mean()</code>, we need to prefix it with <code>statistics</code>. This is similar to calling a function from an R package without loading the entire package with <code>library()</code>, such as using <code>purrr::map()</code>. I can’t be the only one shaking their fist when getting <code>select()</code> errors because {<code>raster</code>} snatched the namespace from {<code>dplyr</code>}!</p>
-<p>We can save some typing by giving the loaded package a nickname on import. Here, we’ll name <code>statistics</code> as <code>stats</code>, so we can call <code>stats.mean()</code>.</p>
-<pre class="python"><code>import statistics as stats                                  # Python code
-print(stats.mean(sample_numbers))                           # Python code</code></pre>
-<pre><code>## 243.56799999999998</code></pre>
-<p>What if we don’t want to manually define the variable in Python?</p>
-<p>We can use <code>r_to_py()</code> to make variables accessible.</p>
-<pre class="r"><code>py_sample_numbers &lt;- r_to_py(sample_numbers)</code></pre>
-<p>And just like that, Python can access the variable as <code>r.py_sample_numbers</code>.</p>
-<pre class="python"><code>print(r.py_sample_numbers)                   # this is a Python code chunk</code></pre>
-<pre><code>## [1.01, 100.1, 20.23, 1000.56, 95.94]</code></pre>
-<pre class="python"><code>from statistics import mean                  # still Python
-print(mean(r.py_sample_numbers))             # still Python</code></pre>
-<pre><code>## 243.56799999999998</code></pre>
-<p>If you didn’t notice, the Python outputs aren’t <em>exactly</em> the same as R’s. This had me concerned about how values calculated in one language and passed to the other may be handled as this would cause issues with certain workflows, like anything using very precise boolean masking… Hold that thought…</p>
-<p>Rather than jumping back and forth between the languages, let’s use {<code>reticulate</code>} to take care of that for us.</p>
-<p>First, we’ll import <code>statistics</code> in a similar way, except we’ll assign it to a variable called <code>py_stats</code>.</p>
-<pre class="r"><code>py_stats &lt;- import(&quot;statistics&quot;)     # import Python module</code></pre>
-<p>Now we have a Python module as an R object.</p>
-<pre class="r"><code>class(py_stats)</code></pre>
-<pre><code>## [1] &quot;python.builtin.module&quot; &quot;python.builtin.object&quot;</code></pre>
-<p>From there, we can check out the functions that <code>py_stats</code> makes available in the same way we can check the <code>names()</code> of a native R object.</p>
-<pre class="r"><code>names(py_stats)</code></pre>
-<pre><code>##  [1] &quot;bisect_left&quot;     &quot;bisect_right&quot;    &quot;chain&quot;          
-##  [4] &quot;collections&quot;     &quot;decimal&quot;         &quot;Decimal&quot;        
-##  [7] &quot;Fraction&quot;        &quot;groupby&quot;         &quot;harmonic_mean&quot;  
-## [10] &quot;math&quot;            &quot;mean&quot;            &quot;median&quot;         
-## [13] &quot;median_grouped&quot;  &quot;median_high&quot;     &quot;median_low&quot;     
-## [16] &quot;mode&quot;            &quot;numbers&quot;         &quot;pstdev&quot;         
-## [19] &quot;pvariance&quot;       &quot;StatisticsError&quot; &quot;stdev&quot;          
-## [22] &quot;variance&quot;</code></pre>
-<p>Similarly, we can use R’s <code>$</code> to access the <code>names()</code> of the functions.</p>
-<p>Let’s see how we can use Python’s <code>statistics.mean()</code> on an R variable.</p>
-<pre class="r"><code>py_stats$mean(sample_numbers)</code></pre>
-<pre><code>## [1] 243.568</code></pre>
-<p>Pretty straightforward. <code>$</code> acts like Python’s object-oriented dot (<code>.</code>) notation. We can also take this a step further by converting the whole thing into an ordinary-looking R function with <code>py_to_r()</code>.</p>
-<pre class="r"><code>py_mean &lt;- py_to_r(py_stats$mean)    # convert Python function 
-py_mean(sample_numbers)              # use as if it&#39;s native to R</code></pre>
-<pre><code>## [1] 243.568</code></pre>
-<p>I’m sure that this will make it so much easier for developers to port individual functions and entire packages from Python to R.</p>
-<p>So. Freaking. Awesome.</p>
-<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1525814209/tenor_fewq6s.gif" style="display: block; margin: auto;" /></p>
-<p>Notice the number of digits included in the output. I was concerned about slight differences in values generated in the different languages, but it appears that this was taken into account. Is it really that convenient??!!</p>
-<p>Just to make sure the outputs aren’t being formatted underneath the hood, we can take a peak.</p>
-<pre class="r"><code>all(py_stats$mean(sample_numbers) == py_mean(sample_numbers),
-    py_stats$mean(sample_numbers) == mean(sample_numbers),
-    py_mean(sample_numbers) == mean(sample_numbers))</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>all.equal(py_stats$mean(sample_numbers),
-          py_mean(sample_numbers),
-          mean(sample_numbers))</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>identical(mean(sample_numbers),                               # O.
-          py_stats$mean(sample_numbers),                      # M.
-          py_mean(sample_numbers))                            # G.</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<p><img src="https://media.giphy.com/media/xHX546S4pQBPy/giphy.gif" style="display: block; margin: auto;" /></p>
-<p>So, it’s pretty clear that {<code>reticulate</code>} allows for easy use of Python functions in R, way easier than I anticipated, but what else can it do?</p>
-<p>Can we write our own Python object classes on the fly and use them in R?</p>
-<p>Yes!</p>
-<p>We can source a Python script if available with <code>py_run_file()</code>, but we can also crunch one out in an R and run it with <code>py_run_string()</code>.</p>
-<p>Here’s a simple <code>date()</code> <code>class</code> that has two methods, <code>set_date()</code> and <code>show_date()</code>, which are pretty self-explanatory.</p>
-<pre class="r"><code>py_run_string(&#39;
-class date:                                              # a basic Python class
-  def __init__(self, date = &quot;1999-12-31&quot;):
-    date = date.split(&quot;-&quot;)
-    self.year = date[0]
-    self.month = date[1]
-    self.day = date[2]
-    
-  def set_date(self, new_date):                          # set_date() method
-    new_date = new_date.split(&quot;-&quot;)
-    self.year = new_date[0]
-    self.month = new_date[1]
-    self.day = new_date[2]
-    
-  def show_date(self):                                   # show_date() method
-    return(&quot;-&quot;.join([self.year, self.month, self.day]))
-&#39;)</code></pre>
-<p>With the class ready to go, we can instantiate a <code>date()</code> object by just assigning it to a variable, like so:</p>
-<pre class="r"><code>py_run_string(&#39;example_date = date()&#39;)</code></pre>
-<p>So, how do we access <code>example_date</code> from R? Similar to how we used <code>py_stats$mean()</code> earlier, we can use <code>py</code> and <code>$</code> to access Python variables.</p>
-<p>Here’s <code>py$example_date</code>’s object information.</p>
-<pre class="r"><code>py$example_date</code></pre>
-<pre><code>## &lt;__main__.date&gt;</code></pre>
-<p>If we want to output its value, we can use the <code>show_date()</code> method that we defined.</p>
-<pre class="r"><code>py$example_date$show_date()</code></pre>
-<pre><code>## [1] &quot;1999-12-31&quot;</code></pre>
-<p>What about the <code>set_date()</code> method? Let’s use a function call to obtain a value, specifically today’s date, and pass it to <code>set_date()</code>.</p>
-<p>Note that R’s <code>Sys.Date()</code> looks like a <code>character</code> when printed, but it’s stored as a <code>numeric</code> <code>double</code> underneath.</p>
-<pre class="r"><code>mode(Sys.Date())</code></pre>
-<pre><code>## [1] &quot;numeric&quot;</code></pre>
-<pre class="r"><code>storage.mode(Sys.Date())</code></pre>
-<pre><code>## [1] &quot;double&quot;</code></pre>
-<p>We can address that by just converting it with <code>as.character()</code>, like so:</p>
-<pre class="r"><code>py$example_date$set_date(new_date = as.character(Sys.Date()))</code></pre>
-<p>Python (and most languages to my knowledge) handles objects <em>very</em> differently than R, so we don’t need to reassign the result.</p>
-<p>Here’s today’s date:</p>
-<pre class="r"><code>py$example_date$show_date()</code></pre>
-<pre><code>## [1] &quot;2018-07-01&quot;</code></pre>
-<p>So. Awesome.</p>
-<p><img src="https://i.imgur.com/RJ6S6eY.gif" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.0 (2018-04-23)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 17134)
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=English_United States.1252 
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-## [1] reticulate_1.7.1
-## 
-## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.17    bookdown_0.7    lattice_0.20-35 digest_0.6.15  
-##  [5] rprojroot_1.3-2 grid_3.5.0      jsonlite_1.5    backports_1.1.2
-##  [9] magrittr_1.5    evaluate_0.10.1 blogdown_0.6.14 stringi_1.2.2  
-## [13] Matrix_1.2-14   rmarkdown_1.10  tools_3.5.0     stringr_1.3.1  
-## [17] xfun_0.2.7      yaml_2.1.19     compiler_3.5.0  htmltools_0.3.6
-## [21] knitr_1.20.7</code></pre>
+              <div id="TOC">
+<ul>
+<li><a href="#declaring-variables">Declaring Variables</a></li>
+</ul>
+</div>
+
+<div id="declaring-variables" class="section level1">
+<h1>Declaring Variables</h1>
+</div>
 
               
             </div>
@@ -719,10 +568,9 @@ class date:                                              # a basic Python class
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Our Test ValuesSumLengthMeanOur Test ValuesRHere’s a numeric vector for our R code.
-x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)PythonHere’s a list of floats for our Python code.
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]SumRManually implementing R’s sum()
-get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;- the_sum + i}return(the_sum)}The result of our custom get_sum() function in R:</div>
+              <div class="media-content hide-xs font-merryweather">Our Test ValuesRPythonC++SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -739,8 +587,7 @@ get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;
                   May 5, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
-I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.</div>
+              <div class="media-content hide-xs font-merryweather">Declaring VariablesDeclaring Variables</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

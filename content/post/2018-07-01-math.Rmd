@@ -15,11 +15,18 @@ summary: Some basic mathematical functions and programmatic essentials, from scr
 output:
   blogdown::html_page:
     toc: true
-    toc_depth: 1
+    toc_depth: 2
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 11, fig.height = 8, fig.align = "center",
+                      message = FALSE, warning = FALSE)
+```
 
 ```{r echo=FALSE}
 library(reticulate)
+library(Rcpp)
 ```
 
 # Our Test Values
@@ -29,16 +36,63 @@ library(reticulate)
 Here's a `numeric` `vector` for our R code.
 
 ```{r}
-x <- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+x_R <- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+
+x_R
 ```
+
+
 
 ## Python
 
 Here's a `list` of `float`s for our Python code.
 
 ```{python}
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+x_PY = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+
+print(x_PY)
 ```
+
+## C++
+
+```{Rcpp, ref.label=knitr::all_rcpp_labels(), include=FALSE}
+```
+
+### Rcpp
+
+```{Rcpp, eval=TRUE}
+#include <Rcpp.h>       // R to C++ to R interface
+// [[Rcpp::export]]
+
+void x_RCPP()
+{
+  float x_RCPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i < 9; i++)
+    Rcpp::Rcout << x_RCPP[i] << " ";
+}
+```
+
+```{r, echo=FALSE}
+x_RCPP()
+```
+
+### Pure C++
+
+```{Rcpp, eval=FALSE}
+#include <iostream>
+
+void x_CPP()
+{
+  float x_CPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i < 9; i++)
+    std::cout << x_CPP[i] << " ";
+}
+```
+
+
+
 
 
 # Sum
@@ -62,13 +116,13 @@ get_sum <- function(values) {
 The result of our custom `get_sum()` function in R:
 
 ```{r}
-get_sum(x)
+get_sum(x_R)
 ```
 
 Which we can compare to R's built-in `sum()` function:
 
 ```{r}
-sum(x)
+sum(x_R)
 ```
 
 
@@ -89,13 +143,13 @@ def get_sum(values):
 The result of our custom `get_sum()` function in Python:
 
 ```{python}
-print(get_sum(x))
+print(get_sum(x_PY))
 ```
 
 Which we can compare to Python's built-in `sum()` function:
 
 ```{python}
-print(sum(x))
+print(sum(x_PY))
 ```
 
 # Length
@@ -105,8 +159,6 @@ print(sum(x))
 Manually implementing R's `length()`
 
 ```{r}
-x <- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
-
 get_length <- function(values) {
   the_length <- 0
   
@@ -121,13 +173,13 @@ get_length <- function(values) {
 The result of our custom `get_length()` function in R:
 
 ```{r}
-get_length(x)
+get_length(x_R)
 ```
 
 Which we can compare to R's built-in `length()` function:
 
 ```{r}
-length(x)
+length(x_R)
 ```
 
 ## Python
@@ -142,20 +194,18 @@ def get_length(values):
     the_length = the_length + 1
     
   return(the_length)
-  
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
 ```
 
 The result of our custom `get_length()` function in Python:
 
 ```{python}
-print(get_length(x))
+print(get_length(x_PY))
 ```
 
 Which we can compare to Python's built-in `len()` function:
 
 ```{python}
-print(len(x))
+print(len(x_PY))
 ```
 
 
@@ -167,7 +217,7 @@ Manually implementing R's `mean()`
 
 ```{r}
 get_mean <- function(values) {
-  the_mean <- get_sum(x) / get_length(x)
+  the_mean <- get_sum(values) / get_length(values)
   
   return(the_mean)
 }
@@ -176,13 +226,13 @@ get_mean <- function(values) {
 The result of our custom `get_mean()` function in R:
 
 ```{r}
-get_mean(x)
+get_mean(x_R)
 ```
 
 Which we can compare to R's built-in `mean()` function:
 
 ```{r}
-mean(x)
+mean(x_R)
 ```
 
 ## Python
@@ -191,24 +241,22 @@ Manually implementing Python's `statistics.mean()`
 
 ```{python}
 def get_mean(values):
-  the_mean = get_sum(x) / get_length(x)
+  the_mean = get_sum(values) / get_length(values)
   
   return(the_mean)
-  
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9] 
 ```
 
 The result of our custom `get_mean()` function in Python:
 
 ```{python}
-print(get_mean(x))
+print(get_mean(x_PY))
 ```
 
 Which we can compare to Python's `statistics.mean()` function:
 
 ```{python}
 from statistics import mean
-print(mean(x))
+print(mean(x_PY))
 ```
 
 

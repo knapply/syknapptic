@@ -30,24 +30,21 @@
     
 
     
-    <meta name="description" content="Our Test ValuesSumLengthMeanOur Test ValuesRHere’s a numeric vector for our R code.
-x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)PythonHere’s a list of floats for our Python code.
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]SumRManually implementing R’s sum()
-get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;- the_sum &#43; i}return(the_sum)}The result of our custom get_sum() function in R:">
-    <meta property="og:description" content="Our Test ValuesSumLengthMeanOur Test ValuesRHere’s a numeric vector for our R code.
-x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)PythonHere’s a list of floats for our Python code.
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]SumRManually implementing R’s sum()
-get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;- the_sum &#43; i}return(the_sum)}The result of our custom get_sum() function in R:">
+    <meta name="description" content="Our Test ValuesRPythonC&#43;&#43;SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.">
+    <meta property="og:description" content="Our Test ValuesRPythonC&#43;&#43;SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Essential Math">
     <meta property="og:url" content="/2018/07/math/">
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="Our Test ValuesSumLengthMeanOur Test ValuesRHere’s a numeric vector for our R code.
-x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)PythonHere’s a list of floats for our Python code.
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]SumRManually implementing R’s sum()
-get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;- the_sum &#43; i}return(the_sum)}The result of our custom get_sum() function in R:">
+    <meta name="twitter:description" content="Our Test ValuesRPythonC&#43;&#43;SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.">
     
       <meta name="twitter:creator" content="@syknapptic">
     
@@ -306,10 +303,23 @@ if (!doNotTrack) {
             <div class="main-content-wrap">
               <div id="TOC">
 <ul>
-<li><a href="#our-test-values">Our Test Values</a></li>
-<li><a href="#sum">Sum</a></li>
-<li><a href="#length">Length</a></li>
-<li><a href="#mean">Mean</a></li>
+<li><a href="#our-test-values">Our Test Values</a><ul>
+<li><a href="#r">R</a></li>
+<li><a href="#python">Python</a></li>
+<li><a href="#c">C++</a></li>
+</ul></li>
+<li><a href="#sum">Sum</a><ul>
+<li><a href="#r-1">R</a></li>
+<li><a href="#python-1">Python</a></li>
+</ul></li>
+<li><a href="#length">Length</a><ul>
+<li><a href="#r-2">R</a></li>
+<li><a href="#python-2">Python</a></li>
+</ul></li>
+<li><a href="#mean">Mean</a><ul>
+<li><a href="#r-3">R</a></li>
+<li><a href="#python-3">Python</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -318,12 +328,46 @@ if (!doNotTrack) {
 <div id="r" class="section level2">
 <h2>R</h2>
 <p>Here’s a <code>numeric</code> <code>vector</code> for our R code.</p>
-<pre class="r"><code>x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)</code></pre>
+<pre class="r"><code>x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+
+x_R</code></pre>
+<pre><code>## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90</code></pre>
 </div>
 <div id="python" class="section level2">
 <h2>Python</h2>
 <p>Here’s a <code>list</code> of <code>float</code>s for our Python code.</p>
-<pre class="python"><code>x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
+<pre class="python"><code>x_PY = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+print(x_PY)</code></pre>
+<pre><code>## [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
+</div>
+<div id="c" class="section level2">
+<h2>C++</h2>
+<div id="rcpp" class="section level3">
+<h3>Rcpp</h3>
+<pre class="cpp"><code>#include &lt;Rcpp.h&gt;       // R to C++ to R interface
+// [[Rcpp::export]]
+
+void x_RCPP()
+{
+  float x_RCPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i &lt; 9; i++)
+    Rcpp::Rcout &lt;&lt; x_RCPP[i] &lt;&lt; &quot; &quot;;
+}</code></pre>
+<pre><code>## 1.5 2 3.25 4.9 5 6.1 7.39 8 9.9</code></pre>
+</div>
+<div id="pure-c" class="section level3">
+<h3>Pure C++</h3>
+<pre class="cpp"><code>#include &lt;iostream&gt;
+
+void x_CPP()
+{
+  float x_CPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i &lt; 9; i++)
+    std::cout &lt;&lt; x_CPP[i] &lt;&lt; &quot; &quot;;
+}</code></pre>
+</div>
 </div>
 </div>
 <div id="sum" class="section level1">
@@ -341,10 +385,10 @@ if (!doNotTrack) {
   return(the_sum)
 }</code></pre>
 <p>The result of our custom <code>get_sum()</code> function in R:</p>
-<pre class="r"><code>get_sum(x)</code></pre>
+<pre class="r"><code>get_sum(x_R)</code></pre>
 <pre><code>## [1] 48.04</code></pre>
 <p>Which we can compare to R’s built-in <code>sum()</code> function:</p>
-<pre class="r"><code>sum(x)</code></pre>
+<pre class="r"><code>sum(x_R)</code></pre>
 <pre><code>## [1] 48.04</code></pre>
 </div>
 <div id="python-1" class="section level2">
@@ -358,10 +402,10 @@ if (!doNotTrack) {
     
   return(the_sum)</code></pre>
 <p>The result of our custom <code>get_sum()</code> function in Python:</p>
-<pre class="python"><code>print(get_sum(x))</code></pre>
+<pre class="python"><code>print(get_sum(x_PY))</code></pre>
 <pre><code>## 48.04</code></pre>
 <p>Which we can compare to Python’s built-in <code>sum()</code> function:</p>
-<pre class="python"><code>print(sum(x))</code></pre>
+<pre class="python"><code>print(sum(x_PY))</code></pre>
 <pre><code>## 48.04</code></pre>
 </div>
 </div>
@@ -370,9 +414,7 @@ if (!doNotTrack) {
 <div id="r-2" class="section level2">
 <h2>R</h2>
 <p>Manually implementing R’s <code>length()</code></p>
-<pre class="r"><code>x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
-
-get_length &lt;- function(values) {
+<pre class="r"><code>get_length &lt;- function(values) {
   the_length &lt;- 0
   
   for(i in values) {
@@ -382,10 +424,10 @@ get_length &lt;- function(values) {
   return(the_length)
 }</code></pre>
 <p>The result of our custom <code>get_length()</code> function in R:</p>
-<pre class="r"><code>get_length(x)</code></pre>
+<pre class="r"><code>get_length(x_R)</code></pre>
 <pre><code>## [1] 9</code></pre>
 <p>Which we can compare to R’s built-in <code>length()</code> function:</p>
-<pre class="r"><code>length(x)</code></pre>
+<pre class="r"><code>length(x_R)</code></pre>
 <pre><code>## [1] 9</code></pre>
 </div>
 <div id="python-2" class="section level2">
@@ -397,14 +439,12 @@ get_length &lt;- function(values) {
   for i in values:
     the_length = the_length + 1
     
-  return(the_length)
-  
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
+  return(the_length)</code></pre>
 <p>The result of our custom <code>get_length()</code> function in Python:</p>
-<pre class="python"><code>print(get_length(x))</code></pre>
+<pre class="python"><code>print(get_length(x_PY))</code></pre>
 <pre><code>## 9</code></pre>
 <p>Which we can compare to Python’s built-in <code>len()</code> function:</p>
-<pre class="python"><code>print(len(x))</code></pre>
+<pre class="python"><code>print(len(x_PY))</code></pre>
 <pre><code>## 9</code></pre>
 </div>
 </div>
@@ -414,32 +454,30 @@ x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
 <h2>R</h2>
 <p>Manually implementing R’s <code>mean()</code></p>
 <pre class="r"><code>get_mean &lt;- function(values) {
-  the_mean &lt;- get_sum(x) / get_length(x)
+  the_mean &lt;- get_sum(values) / get_length(values)
   
   return(the_mean)
 }</code></pre>
 <p>The result of our custom <code>get_mean()</code> function in R:</p>
-<pre class="r"><code>get_mean(x)</code></pre>
+<pre class="r"><code>get_mean(x_R)</code></pre>
 <pre><code>## [1] 5.337778</code></pre>
 <p>Which we can compare to R’s built-in <code>mean()</code> function:</p>
-<pre class="r"><code>mean(x)</code></pre>
+<pre class="r"><code>mean(x_R)</code></pre>
 <pre><code>## [1] 5.337778</code></pre>
 </div>
 <div id="python-3" class="section level2">
 <h2>Python</h2>
 <p>Manually implementing Python’s <code>statistics.mean()</code></p>
 <pre class="python"><code>def get_mean(values):
-  the_mean = get_sum(x) / get_length(x)
+  the_mean = get_sum(values) / get_length(values)
   
-  return(the_mean)
-  
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9] </code></pre>
+  return(the_mean)</code></pre>
 <p>The result of our custom <code>get_mean()</code> function in Python:</p>
-<pre class="python"><code>print(get_mean(x))</code></pre>
+<pre class="python"><code>print(get_mean(x_PY))</code></pre>
 <pre><code>## 5.337777777777777</code></pre>
 <p>Which we can compare to Python’s <code>statistics.mean()</code> function:</p>
 <pre class="python"><code>from statistics import mean
-print(mean(x))</code></pre>
+print(mean(x_PY))</code></pre>
 <pre><code>## 5.337777777777778</code></pre>
 </div>
 </div>
@@ -703,10 +741,9 @@ print(mean(x))</code></pre>
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Our Test ValuesSumLengthMeanOur Test ValuesRHere’s a numeric vector for our R code.
-x &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)PythonHere’s a list of floats for our Python code.
-x = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]SumRManually implementing R’s sum()
-get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;- the_sum + i}return(the_sum)}The result of our custom get_sum() function in R:</div>
+              <div class="media-content hide-xs font-merryweather">Our Test ValuesRPythonC++SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -723,8 +760,7 @@ get_sum &lt;- function(values) {the_sum &lt;- 0for(i in values) {the_sum &lt;
                   May 5, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Should I learn R or Python? Despite the ninjillion articles and arguments dedicated to this debate, there isn’t a good, one-size-fits-all answer. But we have {reticulate}, so who cares! We can use both!
-I started coding with Python. The choice seemed obvious at first. It’s a general programming language, so I wouldn’t be limited to only playing with data. Before grad school, I had never even heard of R so spending the time it would take to become truly functional seemed crazy, so I went for Python instead.</div>
+              <div class="media-content hide-xs font-merryweather">Declaring VariablesDeclaring Variables</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

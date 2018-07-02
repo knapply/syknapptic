@@ -7,6 +7,12 @@ showActions:    false
 thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1516468904/logo_rd5ifq.png
 ---
 
+# Programming
+
+* [Variables](post/2018-07-02-code-variables)
+    + R, Python, C++, Rcpp
+  
+
 # Statistics
 
 ### Correlation 
