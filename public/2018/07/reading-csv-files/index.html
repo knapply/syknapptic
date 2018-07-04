@@ -584,9 +584,9 @@ def pandas_test_big():
          memory_allocated = mem_alloc) %&gt;%
   rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
   kable() %&gt;%
-  kable_styling(bootstrap_options = &quot;condensed&quot;, font_size = 8) %&gt;% 
+  kable_styling(bootstrap_options = &quot;condensed&quot;, font_size = 12) %&gt;% 
   collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
-<table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -911,7 +911,7 @@ pandas.read_csv()
     theme(legend.title = element_blank(), legend.position = &quot;top&quot;,
           plot.caption = element_text(size = 10))
   
-  if(!is.null(rows)) {
+  if(length(rows)) {
     plot_fin &lt;- plot_init +
     labs(x = NULL, y = &quot;Time&quot;,
          title = str_glue(&quot;CSV to Data Frame - {comma(rows)} Rows&quot;),

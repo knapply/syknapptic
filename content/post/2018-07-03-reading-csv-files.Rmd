@@ -292,7 +292,7 @@ results_df %>%
          memory_allocated = mem_alloc) %>%
   rename_all(funs(str_to_title(str_replace(., "_", " ")))) %>%
   kable() %>%
-  kable_styling(bootstrap_options = "condensed", font_size = 8) %>% 
+  kable_styling(bootstrap_options = "condensed", font_size = 12) %>% 
   collapse_rows(columns = 1:2, valign = "top")
 ```
 
@@ -326,7 +326,7 @@ plot_times <- function(df, rows = NULL) {
     theme(legend.title = element_blank(), legend.position = "top",
           plot.caption = element_text(size = 10))
   
-  if(!is.null(rows)) {
+  if(length(rows)) {
     plot_fin <- plot_init +
     labs(x = NULL, y = "Time",
          title = str_glue("CSV to Data Frame - {comma(rows)} Rows"),
