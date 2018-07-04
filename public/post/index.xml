@@ -6,10 +6,20 @@
     <description>Recent content in Posts on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://syknapptic.netlify.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Reading .csv Files</title>
+      <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
+      <description>The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;test_df &amp;lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</description>
+    </item>
     
     <item>
       <title>Variable Assignment</title>
@@ -39,18 +49,6 @@
 
 Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
 ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</description>
-    </item>
-    
-    <item>
-      <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
-      <description>----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
-The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
-See also:
-My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</description>
     </item>
     
   </channel>

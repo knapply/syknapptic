@@ -6,10 +6,19 @@
     <description>Recent content in Tags on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://syknapptic.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Benchmarking</title>
+      <link>https://syknapptic.netlify.com/tags/benchmarking/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/tags/benchmarking/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Dplyr</title>
@@ -21,11 +30,11 @@
     </item>
     
     <item>
-      <title>Gdelt</title>
-      <link>https://syknapptic.netlify.com/tags/gdelt/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      <title>Fileio</title>
+      <link>https://syknapptic.netlify.com/tags/fileio/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/gdelt/</guid>
+      <guid>https://syknapptic.netlify.com/tags/fileio/</guid>
       <description></description>
     </item>
     
@@ -35,24 +44,6 @@
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/tags/ggplot/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Imager</title>
-      <link>https://syknapptic.netlify.com/tags/imager/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/tags/imager/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Purrr</title>
-      <link>https://syknapptic.netlify.com/tags/purrr/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/tags/purrr/</guid>
       <description></description>
     </item>
     

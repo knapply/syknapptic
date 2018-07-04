@@ -2,6 +2,13 @@
 .Rhistory
 .RData
 .Ruserdata
-not_for_git
-testing
-reports
+not_for_git/
+testing/
+reports/
+content/post/data/
+content/post/test-data/
+public/post/test-data/
+public/post/data/*
+/content/post/*.dll
+ignore/
+tidy-tuesday/

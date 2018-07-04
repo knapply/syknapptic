@@ -6,10 +6,1449 @@
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Jul 2018 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://syknapptic.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Reading .csv Files</title>
+      <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
+      <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#the-test-data&#34;&gt;The Test Data&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#small&#34;&gt;Small&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#medium&#34;&gt;Medium&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#big&#34;&gt;Big&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-code&#34;&gt;The Code&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#base---utilsread.csv&#34;&gt;“Base” - &lt;code&gt;utils::read.csv()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#readrread_csv&#34;&gt;&lt;code&gt;readr::read_csv()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#data.tablefread&#34;&gt;&lt;code&gt;data.table::fread()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pandas.read_csv&#34;&gt;&lt;code&gt;pandas.read_csv()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-test&#34;&gt;The Test&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-results&#34;&gt;The Results&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;tl;dr&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#session-info&#34;&gt;Session Info&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r-1&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python-1&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(bench)
+library(kableExtra)
+library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)
+library(scales)
+library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;the-test-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The Test Data&lt;/h1&gt;
+&lt;p&gt;The initial .csv was obtained from &lt;a href=&#34;https://blog.majestic.com/development/majestic-million-csv-daily/&#34;&gt;Majestic Million CSV&lt;/a&gt; &lt;a href=&#34;https://creativecommons.org/licenses/by/3.0/deed.en_US&#34;&gt;&lt;img src=&#34;https://licensebuttons.net/l/by/3.0/88x31.png&#34;&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;
+
+test_df &amp;lt;- read_csv(path)
+
+glimpse(test_df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Observations: 1,000,000
+## Variables: 12
+## $ GlobalRank     &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...
+## $ TldRank        &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
+## $ Domain         &amp;lt;chr&amp;gt; &amp;quot;google.com&amp;quot;, &amp;quot;facebook.com&amp;quot;, &amp;quot;youtube.com&amp;quot;, &amp;quot;t...
+## $ TLD            &amp;lt;chr&amp;gt; &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;org&amp;quot;...
+## $ RefSubNets     &amp;lt;int&amp;gt; 463232, 451237, 410764, 409068, 303679, 292966,...
+## $ RefIPs         &amp;lt;int&amp;gt; 2963708, 3046847, 2444016, 2546940, 1139322, 13...
+## $ IDN_Domain     &amp;lt;chr&amp;gt; &amp;quot;google.com&amp;quot;, &amp;quot;facebook.com&amp;quot;, &amp;quot;youtube.com&amp;quot;, &amp;quot;t...
+## $ IDN_TLD        &amp;lt;chr&amp;gt; &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;com&amp;quot;, &amp;quot;org&amp;quot;...
+## $ PrevGlobalRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...
+## $ PrevTldRank    &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
+## $ PrevRefSubNets &amp;lt;int&amp;gt; 462861, 451086, 410676, 408692, 303296, 292918,...
+## $ PrevRefIPs     &amp;lt;int&amp;gt; 2966284, 3049605, 2447455, 2549623, 1138675, 13...&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test_df %&amp;gt;% 
+  head(15) %&amp;gt;% 
+  kable() %&amp;gt;% 
+  kable_styling()&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+GlobalRank
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+TldRank
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Domain
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+TLD
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+RefSubNets
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+RefIPs
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+IDN_Domain
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+IDN_TLD
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+PrevGlobalRank
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+PrevTldRank
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+PrevRefSubNets
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+PrevRefIPs
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+google.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+463232
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2963708
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+google.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+462861
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2966284
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+facebook.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+451237
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3046847
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+facebook.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+451086
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3049605
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+youtube.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+410764
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2444016
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+youtube.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+410676
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2447455
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+twitter.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+409068
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2546940
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+twitter.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+408692
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2549623
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+microsoft.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+303679
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1139322
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+microsoft.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+303296
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1138675
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+linkedin.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+292966
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1345499
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+linkedin.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+292918
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1347315
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wikipedia.org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+287420
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1239700
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wikipedia.org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+287368
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1242296
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+plus.google.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+284103
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1458159
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+plus.google.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+283866
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1459968
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+instagram.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+277145
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1367140
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+instagram.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+277101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1368204
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+apple.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+276152
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1047213
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+apple.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+275693
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1047826
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wordpress.org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+257351
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1263053
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wordpress.org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+257369
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1263770
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+adobe.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+250908
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+867453
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+adobe.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+250735
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+868300
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+en.wikipedia.org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+241132
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+914282
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+en.wikipedia.org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+org
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+241042
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+915553
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+blogspot.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+232193
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+920557
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+blogspot.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+234782
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+934762
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wordpress.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+228778
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+894014
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+wordpress.com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+com
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+229362
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+898900
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id=&#34;small&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Small&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;small_df &amp;lt;- test_df %&amp;gt;% 
+  slice(1:200)
+
+small_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 200 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 190 more rows, and 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;,
+## #   PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;small_rows &amp;lt;- nrow(small_df)
+
+path_small_csv &amp;lt;- &amp;quot;test-data/small_csv.csv&amp;quot;
+write_csv(small_df, path_small_csv)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;medium&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Medium&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;medium_df &amp;lt;- test_df %&amp;gt;% 
+  slice(1:2000)
+
+medium_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 2,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 1,990 more rows, and 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;,
+## #   PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;med_rows &amp;lt;- nrow(medium_df)
+
+path_medium_csv &amp;lt;- &amp;quot;test-data/medium_csv.csv&amp;quot;
+write_csv(medium_df, path_medium_csv)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;big&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Big&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;big_df &amp;lt;- bind_rows(test_df, test_df, test_df, test_df)
+
+big_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 4,000,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 3,999,990 more rows, and 4 more variables:
+## #   PrevGlobalRank &amp;lt;int&amp;gt;, PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;,
+## #   PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;big_rows &amp;lt;- nrow(big_df)
+
+path_big_csv &amp;lt;- &amp;quot;test-data/big_csv.csv&amp;quot;
+write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-code&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The Code&lt;/h1&gt;
+&lt;p&gt;The code will never be 100% fair, but the following steps were taken to “standardize” functions.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;The column data types are identified ahead of time via a &lt;code&gt;*_col_specs&lt;/code&gt; variable.&lt;/li&gt;
+&lt;li&gt;All “numeric” data types are read as &lt;code&gt;double&lt;/code&gt;s.&lt;/li&gt;
+&lt;li&gt;The function assigns the result to an internal &lt;code&gt;df&lt;/code&gt; variable.&lt;/li&gt;
+&lt;li&gt;The function explicitly &lt;code&gt;return()&lt;/code&gt;s the data frame.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;div id=&#34;base---utilsread.csv&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;“Base” - &lt;code&gt;utils::read.csv()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;base_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;character&amp;quot;,
+                    &amp;quot;character&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;,
+                    &amp;quot;character&amp;quot;, &amp;quot;character&amp;quot;, &amp;quot;double&amp;quot;,
+                    &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;)
+
+base_test &amp;lt;- function(path) {
+  df &amp;lt;- read.csv(file = path, colClasses = base_col_specs)
+  
+  return(df)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;readrread_csv&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;readr::read_csv()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+
+readr_col_specs &amp;lt;- list(col_integer(), col_integer(), col_character(),
+                        col_character(), col_integer(), col_integer(),
+                        col_character(), col_character(), col_integer(),
+                        col_integer(), col_integer(), col_integer())
+
+readr_test &amp;lt;- function(path) {
+  df &amp;lt;- read_csv(file = path, col_types = readr_col_specs)
+  
+  return(df)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data.tablefread&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;data.table::fread()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(data.table)
+
+datatable_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;character&amp;quot;,    # same as `utils::read.csv()`
+                         &amp;quot;character&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;,
+                         &amp;quot;character&amp;quot;, &amp;quot;character&amp;quot;, &amp;quot;double&amp;quot;,
+                         &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;)
+
+datatable_test &amp;lt;- function(path) {
+  df &amp;lt;- fread(file = path, colClasses = datatable_col_specs)
+  
+  return(df)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;div id=&#34;pandas.read_csv&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;&lt;code&gt;pandas.read_csv()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from numpy import double
+from pandas import read_csv
+path_small_csv = &amp;#39;test-data/small_csv.csv&amp;#39;
+path_medium_csv = &amp;#39;test-data/medium_csv.csv&amp;#39;
+path_big_csv = &amp;#39;test-data/big_csv.csv&amp;#39;
+pandas_col_specs = {&amp;#39;GlobalRank&amp;#39;:double, &amp;#39;TldRank&amp;#39;:double, &amp;#39;Domain&amp;#39;:str,
+                    &amp;#39;TLD&amp;#39;:str, &amp;#39;RefSubNets&amp;#39;:double, &amp;#39;RefIPs&amp;#39;:double,
+                    &amp;#39;IDN_Domain&amp;#39;:str, &amp;#39;IDN_TLD&amp;#39;:str, &amp;#39;PrevGlobalRank&amp;#39;:double,
+                    &amp;#39;PrevTldRank&amp;#39;:double, &amp;#39;PrevRefSubNets&amp;#39;:double, &amp;#39;PrevRefIPs&amp;#39;:double}
+def pandas_test_small():
+  df = read_csv(filepath_or_buffer = path_small_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+  
+def pandas_test_medium():
+  df = read_csv(filepath_or_buffer = path_medium_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+  
+def pandas_test_big():
+  df = read_csv(filepath_or_buffer = path_big_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-test&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The Test&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results &amp;lt;- mark(
+
+  base_test(path_small_csv),
+  readr_test(path_small_csv),
+  datatable_test(path_small_csv),
+
+  base_test(path_medium_csv),
+  readr_test(path_medium_csv),
+  datatable_test(path_medium_csv),
+
+  base_test(path_big_csv),
+  readr_test(path_big_csv),
+  datatable_test(path_big_csv),
+
+  py$pandas_test_small(),
+  py$pandas_test_medium(),
+  py$pandas_test_big(),
+
+  check = FALSE, filter_gc = FALSE, iterations = 50
+
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-results&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The Results&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results_df &amp;lt;- results %&amp;gt;%
+  unnest() %&amp;gt;%
+  mutate(call = case_when(
+    str_detect(expression, &amp;quot;base&amp;quot;) ~ &amp;quot;utils::read.csv()&amp;quot;,
+    str_detect(expression, &amp;quot;readr&amp;quot;) ~ &amp;quot;readr::read_csv()&amp;quot;,
+    str_detect(expression, &amp;quot;datatable&amp;quot;) ~ &amp;quot;data.table::fread()&amp;quot;,
+    str_detect(expression, &amp;quot;py&amp;quot;) ~ &amp;quot;pandas.read_csv()&amp;quot;
+  )) %&amp;gt;%
+  mutate(lang = if_else(str_detect(expression, &amp;quot;pandas&amp;quot;), &amp;quot;Python&amp;quot;, &amp;quot;R&amp;quot;)) %&amp;gt;%
+  mutate(file_size = str_extract(expression, &amp;quot;small|medium|big&amp;quot;)) %&amp;gt;%
+  mutate(rows = case_when(
+    file_size == &amp;quot;small&amp;quot; ~ small_rows,
+    file_size == &amp;quot;medium&amp;quot; ~ med_rows,
+    file_size == &amp;quot;big&amp;quot; ~ big_rows
+    ))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results_df %&amp;gt;%
+  select(rows, lang, call, everything(), -expression, -n_itr,
+         -time, -gc, -file_size, -starts_with(&amp;quot;level&amp;quot;)) %&amp;gt;%
+  distinct() %&amp;gt;% 
+  arrange(rows, desc(lang)) %&amp;gt;%
+  mutate(rows = comma(rows)) %&amp;gt;%
+  rename(garbage_collections = n_gc, language = lang,
+         memory_allocated = mem_alloc) %&amp;gt;%
+  rename_all(funs(str_to_title(str_replace(., &amp;quot;_&amp;quot;, &amp;quot; &amp;quot;)))) %&amp;gt;%
+  kable() %&amp;gt;%
+  kable_styling() %&amp;gt;%
+  collapse_rows(columns = 1:2, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Rows
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Language
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Call
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Min
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Mean
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Median
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Max
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Itr/Sec
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Memory Allocated
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Garbage Collections
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Total Time
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+200
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+R
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+utils::read.csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+843.85us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+952.12us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+940.05us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.16ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1050.2929412
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+364.71KB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.61ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+readr::read_csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.21ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.61ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.53ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.79ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+383.0163784
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115.03KB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+130.54ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+data.table::fread()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.04ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.27ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.22ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.19ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+785.1606459
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+284.48KB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+63.68ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Python
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+pandas.read_csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29.29ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41.94ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33.09ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+285.91ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23.8434695
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.27MB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.1s
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+2,000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+R
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+utils::read.csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.43ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.89ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.37ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+122.09ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+112.4355480
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+899.68KB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+444.7ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+readr::read_csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.95ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.66ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.52ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.39ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+214.6646268
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+469.39KB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+232.92ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+data.table::fread()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.07ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.45ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.28ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.99ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+408.2118171
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+281.12KB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+122.48ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Python
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+pandas.read_csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36.22ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+45.79ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39.49ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+116.6ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.8395993
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.82MB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.29s
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+4,000,000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+R
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+utils::read.csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.95s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13.89s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13.85s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16.27s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.0719980
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.09GB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+78
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11.57m
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+readr::read_csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.01s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.62s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.5s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6.9s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.1780294
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+797.23MB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.68m
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+data.table::fread()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.09s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.47s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.33s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.41s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.4052410
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+510.72MB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+20
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.06m
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Python
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+pandas.read_csv()
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.41s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.56s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15.51s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.88s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.0642673
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.43GB
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.97m
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df &amp;lt;- results_df %&amp;gt;%
+  arrange(rows) %&amp;gt;%
+  mutate(rows = rows %&amp;gt;%
+           comma() %&amp;gt;%
+           paste(&amp;quot;Rows&amp;quot;) %&amp;gt;%
+           as_factor()
+        ) %&amp;gt;%
+  group_by(expression) %&amp;gt;% 
+  mutate(med_time = as.numeric(median(time))) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  arrange(desc(med_time)) %&amp;gt;%
+  mutate(call = as_factor(call)) %&amp;gt;%
+  arrange(desc(lang)) %&amp;gt;%
+  mutate(lang = as_factor(lang))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_times &amp;lt;- function(df, rows = NULL) {
+  plot_init &amp;lt;- df %&amp;gt;% 
+    ggplot(aes(call, time, fill = lang, color = lang)) +
+    stat_ydensity(size = 1.25) +
+    scale_fill_manual(values = c(&amp;quot;#165CAA&amp;quot;, &amp;quot;#ffde57&amp;quot;)) +
+    scale_color_manual(values = c(&amp;quot;#BFC2C5&amp;quot;, &amp;quot;#4584b6&amp;quot;)) +
+    guides(color = guide_legend(override.aes = list(size = 1))) +
+    coord_flip() +
+    theme_minimal(17, &amp;quot;serif&amp;quot;) +
+    theme(legend.title = element_blank(), legend.position = &amp;quot;top&amp;quot;,
+          plot.caption = element_text(size = 10))
+  
+  if(!is.null(rows)) {
+    plot_fin &amp;lt;- plot_init +
+    labs(x = NULL, y = &amp;quot;Time&amp;quot;,
+         title = str_glue(&amp;quot;CSV to Data Frame - {comma(rows)} Rows&amp;quot;),
+         caption = &amp;quot;50 runs per call.\nAll .csv files contain 12 columns.&amp;quot;)
+    
+  } else {
+    plot_fin &amp;lt;- plot_init + 
+      facet_wrap(~ rows, nrow = 3, scales = &amp;quot;free_x&amp;quot;) +
+      labs(x = NULL, y = &amp;quot;Time&amp;quot;,
+         title = str_glue(&amp;quot;CSV to Data Frame - All Tests&amp;quot;),
+         caption = &amp;quot;50 runs per call.\nAll .csv files contain 12 columns.&amp;quot;)
+  }
+  
+  plot_fin
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  filter(file_size == &amp;quot;small&amp;quot;) %&amp;gt;%
+  plot_times(small_rows)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  filter(file_size == &amp;quot;medium&amp;quot;) %&amp;gt;%
+  plot_times(med_rows)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;%
+  plot_times(big_rows)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-20-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;tl;dr&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  plot_times()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;session-info&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Session Info&lt;/h1&gt;
+&lt;div id=&#34;r-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] data.table_1.11.5     bindrcpp_0.2.2        forcats_0.3.0        
+##  [4] stringr_1.3.1         dplyr_0.7.5           purrr_0.2.5          
+##  [7] readr_1.1.1           tidyr_0.8.1           tibble_1.4.2         
+## [10] ggplot2_2.2.1.9000    tidyverse_1.2.1.9000  scales_0.5.0.9000    
+## [13] reticulate_1.8.0.9002 kableExtra_0.9.0      bench_1.0.1          
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17      lubridate_1.7.4   lattice_0.20-35  
+##  [4] utf8_1.1.4        assertthat_0.2.0  rprojroot_1.3-2  
+##  [7] digest_0.6.15     psych_1.8.4       R6_2.2.2         
+## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.2  
+## [13] evaluate_0.10.1   highr_0.7         httr_1.3.1       
+## [16] blogdown_0.6.14   pillar_1.2.3      rlang_0.2.0.9001 
+## [19] lazyeval_0.2.1    readxl_1.1.0      rstudioapi_0.7   
+## [22] Matrix_1.2-14     rmarkdown_1.10.3  selectr_0.4-1    
+## [25] foreign_0.8-70    munsell_0.5.0     broom_0.4.4      
+## [28] compiler_3.5.0    modelr_0.1.2      xfun_0.2.7       
+## [31] pkgconfig_2.0.1   mnormt_1.5-5      htmltools_0.3.6  
+## [34] tidyselect_0.2.4  bookdown_0.7      viridisLite_0.3.0
+## [37] crayon_1.3.4      withr_2.1.2       grid_3.5.0       
+## [40] nlme_3.1-137      jsonlite_1.5      gtable_0.2.0     
+## [43] magrittr_1.5      cli_1.0.0         stringi_1.2.2    
+## [46] reshape2_1.4.3    xml2_1.2.0        htmldeps_0.1.0   
+## [49] tools_3.5.0       glue_1.2.0        hms_0.4.2        
+## [52] parallel_3.5.0    yaml_2.1.19       colorspace_1.3-2 
+## [55] rvest_0.3.2       knitr_1.20.7      bindr_0.1.1      
+## [58] haven_1.1.1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;list(py$sys$version, 
+     import(&amp;quot;numpy&amp;quot;)$`__version__`, 
+     import(&amp;quot;pandas&amp;quot;)$`__version__`) %&amp;gt;% 
+  map2(c(&amp;quot;Python:&amp;quot;, &amp;quot;NumPy:&amp;quot;, &amp;quot;Pandas:&amp;quot;), ~ paste(.y, .x)) %&amp;gt;% 
+  walk(cat, &amp;quot;\n&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Python: 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)] 
+## NumPy: 1.12.1 
+## Pandas: 0.22.0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Data Science from Scratch</title>
@@ -6953,7 +8392,7 @@ Oceania
 ##  [1] tidyselect_0.2.4  xfun_0.2.7        reshape2_1.4.3   
 ##  [4] haven_1.1.1       lattice_0.20-35   colorspace_1.3-2 
 ##  [7] viridisLite_0.3.0 htmltools_0.3.6   yaml_2.1.19      
-## [10] utf8_1.1.4        rlang_0.2.0.9001  pillar_1.2.2     
+## [10] utf8_1.1.4        rlang_0.2.0.9001  pillar_1.2.3     
 ## [13] withr_2.1.2       foreign_0.8-70    glue_1.2.0       
 ## [16] modelr_0.1.2      readxl_1.1.0      bindr_0.1.1      
 ## [19] plyr_1.8.4        munsell_0.5.0     blogdown_0.6.14  
@@ -6966,9 +8405,10 @@ Oceania
 ## [40] bookdown_0.7      grid_3.5.0        rprojroot_1.3-2  
 ## [43] cli_1.0.0         tools_3.5.0       magrittr_1.5     
 ## [46] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
-## [49] xml2_1.2.0        lubridate_1.7.4   assertthat_0.2.0 
-## [52] rmarkdown_1.10    httr_1.3.1        rstudioapi_0.7   
-## [55] R6_2.2.2          nlme_3.1-137      compiler_3.5.0&lt;/code&gt;&lt;/pre&gt;
+## [49] xml2_1.2.0        lubridate_1.7.4   rstudioapi_0.7   
+## [52] assertthat_0.2.0  rmarkdown_1.10.3  httr_1.3.1       
+## [55] htmldeps_0.1.0    R6_2.2.2          nlme_3.1-137     
+## [58] compiler_3.5.0&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
@@ -7003,473 +8443,6 @@ Oceania
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1521316059/nktfe_nwdc95.gif&#34; alt=&#34;&#34; /&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>GDELT, Missiles, and Image Collection</title>
-      <link>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</link>
-      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</guid>
-      <description>&lt;!-- &lt;style&gt; --&gt;
-&lt;!--     body .main-container { --&gt;
-&lt;!--         max-width: 1920px; --&gt;
-&lt;!--     } --&gt;
-&lt;!-- &lt;/style&gt; --&gt;
-&lt;p&gt;The Global Database of Events, Language, and Tone, or &lt;a href=&#34;https://www.gdeltproject.org/2&#34;&gt;GDELT&lt;/a&gt;, is “a realtime network diagram and database of global human society for open research”. &lt;!--more--&gt;&lt;/p&gt;
-&lt;p&gt;The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…&lt;/p&gt;
-&lt;p&gt;See also:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;My &lt;strong&gt;hasty&lt;/strong&gt; walkthrough from November 2017, &lt;a href=&#34;http://rpubs.com/BrendanKnapp/GDELT_Syrian_Conflict&#34;&gt;&lt;em&gt;Evaluating GDELT: Syrian Conflict&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Let’s see how well we can scoop up a set of ballistic missile images using a combination of packages:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;gdeltr2&lt;/code&gt;: a package that is decidedly buggy, but works for these purposes&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;tidyverse&lt;/code&gt; suite:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;dplyr&lt;/code&gt; for data carpentry&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;stringr&lt;/code&gt; for string processing&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;purrr&lt;/code&gt; for functional enhancements and simplified error-handling&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;knitr&lt;/code&gt; for nicely rendered tabular data&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;imager&lt;/code&gt; for slick image processing tools&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gdeltr2)       # devtools::install_github(&amp;quot;abresler/gdeltr2&amp;quot;)
-library(tidyverse)     # install.packages(&amp;quot;tidyverse&amp;quot;)
-library(knitr)
-library(imager)        # install.packages(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Before we start extracting any data, let’s refine our search as much as possible by assigning a handful of variables that we can use in the API call.&lt;/p&gt;
-&lt;p&gt;GDELT uses a set of codebooks that can be referenced with &lt;code&gt;get_gdelt_codebook_ft_api()&lt;/code&gt;.&lt;/p&gt;
-&lt;div id=&#34;query-variables&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Query Variables&lt;/h1&gt;
-&lt;div id=&#34;languages&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Languages&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;gdeltr2&lt;/code&gt; will only query English articles by default, but we don’t really care about the language of the article or even the article text&lt;/p&gt;
-&lt;p&gt;We’ll &lt;code&gt;pull()&lt;/code&gt; all the languages from &lt;code&gt;code_book = &amp;quot;languages&amp;quot;&lt;/code&gt; into a &lt;code&gt;vector&lt;/code&gt; variable that we can use as a search argument like so:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;langs &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;languages&amp;quot;) %&amp;gt;%
-  pull(value)
-
-langs&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;Afrikaans&amp;quot;        &amp;quot;Albanian&amp;quot;         &amp;quot;Arabic&amp;quot;          
-##  [4] &amp;quot;Armenian&amp;quot;         &amp;quot;Azerbaijani&amp;quot;      &amp;quot;Bengali&amp;quot;         
-##  [7] &amp;quot;Bosnian&amp;quot;          &amp;quot;Bulgarian&amp;quot;        &amp;quot;Catalan&amp;quot;         
-## [10] &amp;quot;Chinese&amp;quot;          &amp;quot;Croatian&amp;quot;         &amp;quot;Czech&amp;quot;           
-## [13] &amp;quot;Danish&amp;quot;           &amp;quot;Dutch&amp;quot;            &amp;quot;Estonian&amp;quot;        
-## [16] &amp;quot;Finnish&amp;quot;          &amp;quot;French&amp;quot;           &amp;quot;Galician&amp;quot;        
-## [19] &amp;quot;Georgian&amp;quot;         &amp;quot;German&amp;quot;           &amp;quot;Greek&amp;quot;           
-## [22] &amp;quot;Gujarati&amp;quot;         &amp;quot;Hebrew&amp;quot;           &amp;quot;Hindi&amp;quot;           
-## [25] &amp;quot;Hungarian&amp;quot;        &amp;quot;Icelandic&amp;quot;        &amp;quot;Indonesian&amp;quot;      
-## [28] &amp;quot;Italian&amp;quot;          &amp;quot;Japanese&amp;quot;         &amp;quot;Kannada&amp;quot;         
-## [31] &amp;quot;Kazakh&amp;quot;           &amp;quot;Korean&amp;quot;           &amp;quot;Latvian&amp;quot;         
-## [34] &amp;quot;Lithuanian&amp;quot;       &amp;quot;Macedonian&amp;quot;       &amp;quot;Malay&amp;quot;           
-## [37] &amp;quot;Malayalam&amp;quot;        &amp;quot;Marathi&amp;quot;          &amp;quot;Mongolian&amp;quot;       
-## [40] &amp;quot;Nepali&amp;quot;           &amp;quot;Norwegian&amp;quot;        &amp;quot;NorwegianNynorsk&amp;quot;
-## [43] &amp;quot;Persian&amp;quot;          &amp;quot;Polish&amp;quot;           &amp;quot;Portuguese&amp;quot;      
-## [46] &amp;quot;Punjabi&amp;quot;          &amp;quot;Romanian&amp;quot;         &amp;quot;Russian&amp;quot;         
-## [49] &amp;quot;Serbian&amp;quot;          &amp;quot;Sinhalese&amp;quot;        &amp;quot;Slovak&amp;quot;          
-## [52] &amp;quot;Slovenian&amp;quot;        &amp;quot;Somali&amp;quot;           &amp;quot;Spanish&amp;quot;         
-## [55] &amp;quot;Swahili&amp;quot;          &amp;quot;Swedish&amp;quot;          &amp;quot;Tamil&amp;quot;           
-## [58] &amp;quot;Telugu&amp;quot;           &amp;quot;Thai&amp;quot;             &amp;quot;Tibetan&amp;quot;         
-## [61] &amp;quot;Turkish&amp;quot;          &amp;quot;Ukrainian&amp;quot;        &amp;quot;Urdu&amp;quot;            
-## [64] &amp;quot;Vietnamese&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;image-tags&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Image Tags&lt;/h2&gt;
-&lt;p&gt;Since we’re looking specifically for imagery, we can query the relevant codebooks with &lt;code&gt;code_book = &amp;quot;imagetags&amp;quot;&lt;/code&gt; and &lt;code&gt;code_book = &amp;quot;imageweb&amp;quot;&lt;/code&gt; like so:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_gdelt_codebook_ft_api(code_book = &amp;quot;imagetags&amp;quot;) %&amp;gt;%
-  head() %&amp;gt;%
-  kable()&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;nameCodebook&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;idImageTag&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;person&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;65791693&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;profession&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;33553949&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;vehicle&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;25342998&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;sports&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;17180851&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;speech&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;16976988&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;people&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;13358317&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_gdelt_codebook_ft_api(code_book = &amp;quot;imageweb&amp;quot;) %&amp;gt;%
-  head() %&amp;gt;%
-  kable()&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;nameCodebook&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;idImageWeb&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Image&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2198300&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;News&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2136894&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Photograph&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1027341&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;United States of America&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;659847&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Speech&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;649292&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Car&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;621304&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;We’ll &lt;code&gt;filter()&lt;/code&gt; the tags to retain only those that explicitly reference “missile” with a regex.&lt;/p&gt;
-&lt;p&gt;We also want to handle a bug in &lt;code&gt;gdeltr2&lt;/code&gt;’s query functions where sometimes a a large amount of incorrect information makes it into tag lists. Fortunately, we can omit that by excluding results containing blocks of multiple digits.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tag_regex &amp;lt;- &amp;quot;\\b[Mm]issile\\b&amp;quot;
-
-bind_rows(
-  get_gdelt_codebook_ft_api(code_book = &amp;quot;imagetags&amp;quot;) %&amp;gt;%
-    filter(str_detect(idImageTag, tag_regex),
-           !str_detect(idImageTag, &amp;quot;\\d{2,}&amp;quot;)),
-  
-  get_gdelt_codebook_ft_api(code_book = &amp;quot;imageweb&amp;quot;) %&amp;gt;%
-    filter(str_detect(idImageWeb, tag_regex),
-           !str_detect(idImageWeb, &amp;quot;\\d{2,}&amp;quot;))
-  ) %&amp;gt;%
-  head() %&amp;gt;%
-  kable()&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;nameCodebook&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;idImageTag&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;idImageWeb&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;missile&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;247486&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;guided missile destroyer&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;194660&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;missile boat&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;147549&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;ballistic missile submarine&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;55996&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGETAGS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;cruise missile submarine&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;11508&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;IMAGEWEB&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;77637&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Missile&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;We’ll refine our results by excluding some of the tags that have a tendency to return less relevant images.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;vehicle terms tend to emphasize the vehicle itself, rather than weapon systems
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;boat&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;submarine&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;tank&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;&amp;quot;destroyer&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Missile &lt;code&gt;&amp;quot;defense&amp;quot;&lt;/code&gt;&lt;/em&gt; emphasizes politics over hardware&lt;/li&gt;
-&lt;li&gt;specific &lt;code&gt;&amp;quot;system&amp;quot;&lt;/code&gt; tags are all in reference to surface-to-air platforms
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;S-300 missile system&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;S-400 missile system&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Buk missile system&lt;/em&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;generalized &lt;em&gt;Surface-to-&lt;code&gt;&amp;quot;air&amp;quot;&lt;/code&gt;&lt;/em&gt; doesn’t seem fuzzy enough to ever reference ballistic missiles&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;We’ll use another regex to omit those tags, including the multiple digit regex used to exclude the buggy data that may leak into our results.&lt;/p&gt;
-&lt;div id=&#34;junk-tag-filtering&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Junk Tag Filtering&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;junk_tag_regex &amp;lt;- c(&amp;quot;boat&amp;quot;, &amp;quot;[Ss]ubmarine&amp;quot;, &amp;quot;tank&amp;quot;, &amp;quot;destroyer&amp;quot;,
-                    &amp;quot;defense&amp;quot;,
-                    &amp;quot;system&amp;quot;,
-                    &amp;quot;air&amp;quot;) %&amp;gt;%
-  paste0(&amp;quot;\\b&amp;quot;, ., &amp;quot;\\b&amp;quot;) %&amp;gt;%
-  str_c(collapse = &amp;quot;|&amp;quot;) %&amp;gt;%
-  paste0(&amp;quot;|\\d{2,}&amp;quot;)
-
-junk_tag_regex&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;\\bboat\\b|\\b[Ss]ubmarine\\b|\\btank\\b|\\bdestroyer\\b|\\bdefense\\b|\\bsystem\\b|\\bair\\b|\\d{2,}&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;With some parameters in mind and filtering variables assigned, let’s &lt;code&gt;pull()&lt;/code&gt; the desired tags from each codebook into a pair of variables which we will use to query GDELT’s API.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;image_tags &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;imagetags&amp;quot;) %&amp;gt;%
-  filter(str_detect(idImageTag, tag_regex),
-         !str_detect(idImageTag, junk_tag_regex)) %&amp;gt;%
-  pull(idImageTag)
-
-imageweb_tags &amp;lt;- get_gdelt_codebook_ft_api(code_book = &amp;quot;imageweb&amp;quot;) %&amp;gt;%
-  filter(str_detect(idImageWeb, tag_regex),
-         !str_detect(idImageWeb, junk_tag_regex)) %&amp;gt;%
-  pull(idImageWeb)
-
-combine(image_tags, imageweb_tags)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;missile&amp;quot;                           
-##  [2] &amp;quot;Missile&amp;quot;                           
-##  [3] &amp;quot;Ballistic missile&amp;quot;                 
-##  [4] &amp;quot;Cruise missile&amp;quot;                    
-##  [5] &amp;quot;Intercontinental ballistic missile&amp;quot;
-##  [6] &amp;quot;Anti-ballistic missile&amp;quot;            
-##  [7] &amp;quot;Missile launch facility&amp;quot;           
-##  [8] &amp;quot;Medium-range ballistic missile&amp;quot;    
-##  [9] &amp;quot;Land-attack missile&amp;quot;               
-## [10] &amp;quot;Short-range ballistic missile&amp;quot;     
-## [11] &amp;quot;Surface-to-surface missile&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;dates&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Dates&lt;/h2&gt;
-&lt;p&gt;We’ll specify a time period using &lt;code&gt;gdeltr2::generate_dates()&lt;/code&gt;. For this example, we’ll select September 22-23 of 2017 to see if we can capture coverage of an Iranian military parade.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;target_dates &amp;lt;- generate_dates(start_date = &amp;quot;2017-09-22&amp;quot;,
-                               end_date = &amp;quot;2017-09-23&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;api-call&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;API Call&lt;/h1&gt;
-&lt;p&gt;With all of our query variables prepared, we’ll call GDELT’s API using &lt;code&gt;get_data_ft_v2_api()&lt;/code&gt;. As duplicate articles are commonly published in many venues, we’ll omit results to only include &lt;code&gt;distinct()&lt;/code&gt; &lt;code&gt;titleArticle&lt;/code&gt;s.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;articles_df &amp;lt;- get_data_ft_v2_api(images_tag = image_tags,
-                                  images_web_tag = imageweb_tags,
-                                  search_language = langs,
-                                  dates = target_dates, 
-                                  visualize_results = FALSE) %&amp;gt;%
-  distinct(titleArticle, .keep_all = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;query-results&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Query Results&lt;/h2&gt;
-&lt;p&gt;Here’s a summary of what we get back.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;articles_df %&amp;gt;% 
-  glimpse()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Observations: 393
-## Variables: 16
-## $ modeSearch          &amp;lt;chr&amp;gt; &amp;quot;ArtList&amp;quot;, &amp;quot;ArtList&amp;quot;, &amp;quot;ArtList&amp;quot;, &amp;quot;ArtList&amp;quot;...
-## $ imagewebtagSearch   &amp;lt;chr&amp;gt; &amp;quot;Missile&amp;quot;, &amp;quot;Missile&amp;quot;, &amp;quot;Missile&amp;quot;, &amp;quot;Missile&amp;quot;...
-## $ datetimeStartSearch &amp;lt;chr&amp;gt; &amp;quot;2017-09-22 12:00:00&amp;quot;, &amp;quot;2017-09-22 12:00:0...
-## $ datetimeEndSearch   &amp;lt;chr&amp;gt; &amp;quot;2017-09-23 11:59:59&amp;quot;, &amp;quot;2017-09-23 11:59:5...
-## $ imagetagSearch      &amp;lt;chr&amp;gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-## $ isOR                &amp;lt;lgl&amp;gt; FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, ...
-## $ countMaximumRecords &amp;lt;dbl&amp;gt; 250, 250, 250, 250, 250, 250, 250, 250, 25...
-## $ urlGDELTV2FTAPI     &amp;lt;chr&amp;gt; &amp;quot;https://api.gdeltproject.org/api/v2/doc/d...
-## $ urlArticle          &amp;lt;chr&amp;gt; &amp;quot;http://www.iranherald.com/news/254804227/...
-## $ urlArticleMobile    &amp;lt;chr&amp;gt; NA, &amp;quot;http://m.alarab.com/Article/825920&amp;quot;, ...
-## $ titleArticle        &amp;lt;chr&amp;gt; &amp;quot;Iran Herald&amp;quot;, &amp;quot;&amp;lt;U+0647&amp;gt;&amp;lt;U+0632&amp;gt;&amp;lt;U+0629&amp;gt; &amp;lt;U+0623&amp;gt;&amp;lt;U+0631&amp;gt;&amp;lt;U+0636&amp;gt;&amp;lt;U+064A&amp;gt;&amp;lt;U+0629&amp;gt; &amp;lt;U+062B&amp;gt;&amp;lt;U+0627&amp;gt;&amp;lt;U+0646&amp;gt;&amp;lt;U+064A&amp;gt;&amp;lt;U+0629&amp;gt; &amp;lt;U+0641&amp;gt;&amp;lt;U+064A&amp;gt; &amp;lt;U+0643&amp;gt;&amp;lt;U+0648&amp;gt;&amp;lt;U+064A&amp;gt;&amp;lt;U+0627&amp;gt; &amp;lt;U+0627&amp;gt;&amp;lt;U+0644&amp;gt;...
-## $ datetimeArticle     &amp;lt;dttm&amp;gt; 2017-09-23 05:00:00, 2017-09-23 05:00:00,...
-## $ urlImage            &amp;lt;chr&amp;gt; &amp;quot;http://cdn.bignewsnetwork.com/voa15061647...
-## $ domainArticle       &amp;lt;chr&amp;gt; &amp;quot;iranherald.com&amp;quot;, &amp;quot;alarab.com&amp;quot;, &amp;quot;baomoi.co...
-## $ languageArticle     &amp;lt;chr&amp;gt; &amp;quot;English&amp;quot;, &amp;quot;Arabic&amp;quot;, &amp;quot;Vietnamese&amp;quot;, &amp;quot;Nepali...
-## $ countryArticle      &amp;lt;chr&amp;gt; &amp;quot;Iran&amp;quot;, &amp;quot;Israel&amp;quot;, &amp;quot;Vietnam&amp;quot;, &amp;quot;Tuvalu&amp;quot;, &amp;quot;Un...&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;extracting-images&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Extracting Images&lt;/h1&gt;
-&lt;p&gt;Now that we have a data frame of articles that includes a column of image URLs, we can download the data.&lt;/p&gt;
-&lt;div id=&#34;directory&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Directory&lt;/h2&gt;
-&lt;p&gt;Let’s assign a variable for our &lt;code&gt;dir&lt;/code&gt;ectory.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dir &amp;lt;- &amp;quot;data/missile_images/&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Then we’ll actually create the &lt;code&gt;dir&lt;/code&gt;ectory.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dir.create(dir)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;workflow&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Workflow&lt;/h2&gt;
-&lt;p&gt;We’re going to take advantage of the magic of the &lt;code&gt;purrr&lt;/code&gt; package in several ways to stabilize our workflow.&lt;/p&gt;
-&lt;div id=&#34;error-handling&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Error Handling&lt;/h3&gt;
-&lt;p&gt;The Internet is littered with broken links and webpages, which becomes more likely the further back in time we go. We’ll use one of &lt;code&gt;purrr&lt;/code&gt;’s adverbs, &lt;code&gt;safely()&lt;/code&gt;, to handle the inevitable download errors that will occur by creating a new function called &lt;code&gt;safe_download()&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;safe_download &amp;lt;- safely(download.file)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;We’re also going to create safe versions of functions we’ll use for loading and plotting images. Although most of the valid URLs will link to clean images, it’s not uncommon for otherwise successful downloads to actually come from already corrupted sources.&lt;/p&gt;
-&lt;p&gt;To handle this, we’ll create &lt;code&gt;safe_image()&lt;/code&gt; and &lt;code&gt;safe_plot()&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;safe_image &amp;lt;- safely(load.image)
-safe_plot &amp;lt;- safely(plot)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;download-images&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Download Images&lt;/h2&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;code&gt;filter()&lt;/code&gt; images using a regex that confirms either a .jpg or .png extension and simultaneously validates a URL sequence that we can use for each image’s eventual file path.&lt;/li&gt;
-&lt;li&gt;select a sample of 100 random rows &lt;code&gt;sample_n(100)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;pull()&lt;/code&gt; the &lt;code&gt;urlImage&lt;/code&gt; column into a vector&lt;/li&gt;
-&lt;li&gt;iterate through each item of the vector with &lt;code&gt;walk()&lt;/code&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;safe_download()&lt;/code&gt; each image’s binary format (&lt;code&gt;mode = &amp;quot;wb&amp;quot;&lt;/code&gt;)
-&lt;ul&gt;
-&lt;li&gt;and write it to &lt;code&gt;dir&lt;/code&gt; using its match to &lt;code&gt;valid_path_regex&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;valid_path_regex &amp;lt;- &amp;quot;/[A-z0-9-_]+\\.(jpg|png)$&amp;quot;
-
-articles_df %&amp;gt;%
-  filter(str_detect(urlImage, valid_path_regex)) %&amp;gt;%
-  sample_n(100) %&amp;gt;%
-  pull(urlImage) %&amp;gt;%
-  walk(~
-         safe_download(.x,
-                       paste0(dir, 
-                              str_extract(.x, valid_path_regex)),
-                       mode = &amp;quot;wb&amp;quot;)
-         )&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;inspect-images&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Inspect Images&lt;/h2&gt;
-&lt;p&gt;Let’s insepct a sample of the downloaded images.&lt;/p&gt;
-&lt;p&gt;Clearly the results are not perfect. There are images without anything resembling a missile as well as several duplicate or near-duplicate images. That said, manual renaming of files will allow filtering of useless images.&lt;/p&gt;
-&lt;p&gt;This is a quick proof of concept that sets us up well for enhancing data sets established through other methods.&lt;/p&gt;
-&lt;p&gt;More importantly,it demonstrates a basic workflow for bulk image processing that can be easily expanded to iteratively prepare a large dataset for many kinds of analyis.&lt;/p&gt;
-&lt;p&gt;We can take a look at our results with the following:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;code&gt;list.files()&lt;/code&gt; the full paths of all the files in &lt;code&gt;dir&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;iterate through the resulting &lt;code&gt;vector&lt;/code&gt;, reading each file with &lt;code&gt;safe_image()&lt;/code&gt; and &lt;code&gt;map()&lt;/code&gt;ping the results to a &lt;code&gt;list&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;remove a layer of the &lt;code&gt;list&lt;/code&gt; hierarchy by &lt;code&gt;flatten()&lt;/code&gt;ing it&lt;/li&gt;
-&lt;li&gt;omit any resulting &lt;code&gt;NULL&lt;/code&gt; values by &lt;code&gt;compact()&lt;/code&gt;ing the list&lt;/li&gt;
-&lt;li&gt;subset a &lt;code&gt;sample()&lt;/code&gt; of half the images, just for demonstration&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;walk()&lt;/code&gt; through the list, plotting each image&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mfrow = c(5, 2))
-
-list.files(dir, full.names = TRUE) %&amp;gt;%
-  map(safe_image) %&amp;gt;%
-  flatten() %&amp;gt;%
-  compact() %&amp;gt;%
-  sample(50) %&amp;gt;%
-  walk(~ 
-         safe_plot(.x, 
-                   axes = FALSE, ann = FALSE)
-       )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-1.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-2.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-3.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-4.png&#34; width=&#34;1152&#34; /&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-01-23-collecting-a-data-set-of-missile-images-with-gdelt_files/figure-html/unnamed-chunk-16-5.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## R version 3.5.0 (2018-04-23)
-## Platform: x86_64-w64-mingw32/x64 (64-bit)
-## Running under: Windows 10 x64 (build 17134)
-## 
-## Matrix products: default
-## 
-## locale:
-## [1] LC_COLLATE=English_United States.1252 
-## [2] LC_CTYPE=English_United States.1252   
-## [3] LC_MONETARY=English_United States.1252
-## [4] LC_NUMERIC=C                          
-## [5] LC_TIME=English_United States.1252    
-## 
-## attached base packages:
-## [1] stats     graphics  grDevices utils     datasets  methods   base     
-## 
-## other attached packages:
-##  [1] bindrcpp_0.2.2       imager_0.41.0        magrittr_1.5        
-##  [4] knitr_1.20.7         forcats_0.3.0        stringr_1.3.1       
-##  [7] dplyr_0.7.5          purrr_0.2.5          readr_1.1.1         
-## [10] tidyr_0.8.1          tibble_1.4.2         ggplot2_2.2.1.9000  
-## [13] tidyverse_1.2.1.9000 gdeltr2_0.3.114     
-## 
-## loaded via a namespace (and not attached):
-##  [1] httr_1.3.1              purrrlyr_0.0.2         
-##  [3] jsonlite_1.5            modelr_0.1.2           
-##  [5] assertthat_0.2.0        TTR_0.23-3             
-##  [7] highr_0.7               triebeard_0.3.0        
-##  [9] urltools_1.7.0          cellranger_1.1.0       
-## [11] yaml_2.1.19             progress_1.1.2         
-## [13] pillar_1.2.2            backports_1.1.2        
-## [15] lattice_0.20-35         glue_1.2.0             
-## [17] rlist_0.4.6.1           wordcloud2_0.2.1       
-## [19] DistributionUtils_0.5-1 digest_0.6.15          
-## [21] rvest_0.3.2             readbitmap_0.1-4       
-## [23] colorspace_1.3-2        htmltools_0.3.6        
-## [25] plyr_1.8.4              psych_1.8.4            
-## [27] pkgconfig_2.0.1         broom_0.4.4            
-## [29] haven_1.1.1             bookdown_0.7           
-## [31] scales_0.5.0.9000       webshot_0.5.0          
-## [33] trelliscopejs_0.1.11    jpeg_0.1-8             
-## [35] withr_2.1.2             lazyeval_0.2.1         
-## [37] cli_1.0.0               quantmod_0.4-13        
-## [39] mnormt_1.5-5            crayon_1.3.4           
-## [41] readxl_1.1.0            evaluate_0.10.1        
-## [43] nlme_3.1-137            anytime_0.3.0          
-## [45] xts_0.10-2              xml2_1.2.0             
-## [47] foreign_0.8-70          ggthemes_3.5.0         
-## [49] blogdown_0.6.14         tools_3.5.0            
-## [51] data.table_1.11.2       prettyunits_1.0.2      
-## [53] bmp_0.3                 hms_0.4.2              
-## [55] highcharter_0.5.0       RApiDatetime_0.0.3     
-## [57] munsell_0.5.0           compiler_3.5.0         
-## [59] rlang_0.2.0.9001        grid_3.5.0             
-## [61] rstudioapi_0.7          htmlwidgets_1.2        
-## [63] igraph_1.2.1            base64enc_0.1-3        
-## [65] rmarkdown_1.10          codetools_0.2-15       
-## [67] gtable_0.2.0            curl_3.2               
-## [69] reshape2_1.4.3          R6_2.2.2               
-## [71] zoo_1.8-1               lubridate_1.7.4        
-## [73] utf8_1.1.4              bindr_0.1.1            
-## [75] rprojroot_1.3-2         stringi_1.2.2          
-## [77] parallel_3.5.0          Rcpp_0.12.17           
-## [79] png_0.1-7               tidyselect_0.2.4       
-## [81] xfun_0.2.7&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
 </description>
     </item>
     

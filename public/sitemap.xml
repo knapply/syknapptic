@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://syknapptic.netlify.com/2018/07/reading-csv-files/</loc>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://syknapptic.netlify.com/page/data-science-from-scratch/</loc>
     <lastmod>2018-07-02T00:00:00+00:00</lastmod>
   </url>
@@ -28,17 +33,18 @@
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</loc>
-    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://syknapptic.netlify.com/page/about/</loc>
     <lastmod>2018-01-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://syknapptic.netlify.com/archives/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://syknapptic.netlify.com/tags/benchmarking/</loc>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -55,7 +61,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/categories/data-science-from-scratch/</loc>
-    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -66,26 +72,14 @@
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/tags/gdelt/</loc>
-    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
+    <loc>https://syknapptic.netlify.com/tags/fileio/</loc>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://syknapptic.netlify.com/tags/ggplot/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/categories/image-analysis/</loc>
-    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/tags/imager/</loc>
-    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -97,13 +91,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/post/</loc>
-    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/tags/purrr/</loc>
-    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -133,7 +121,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/tags/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -163,7 +151,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/</loc>
-    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

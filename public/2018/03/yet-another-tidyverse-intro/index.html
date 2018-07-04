@@ -6521,7 +6521,7 @@ Oceania
 ##  [1] tidyselect_0.2.4  xfun_0.2.7        reshape2_1.4.3   
 ##  [4] haven_1.1.1       lattice_0.20-35   colorspace_1.3-2 
 ##  [7] viridisLite_0.3.0 htmltools_0.3.6   yaml_2.1.19      
-## [10] utf8_1.1.4        rlang_0.2.0.9001  pillar_1.2.2     
+## [10] utf8_1.1.4        rlang_0.2.0.9001  pillar_1.2.3     
 ## [13] withr_2.1.2       foreign_0.8-70    glue_1.2.0       
 ## [16] modelr_0.1.2      readxl_1.1.0      bindr_0.1.1      
 ## [19] plyr_1.8.4        munsell_0.5.0     blogdown_0.6.14  
@@ -6534,9 +6534,10 @@ Oceania
 ## [40] bookdown_0.7      grid_3.5.0        rprojroot_1.3-2  
 ## [43] cli_1.0.0         tools_3.5.0       magrittr_1.5     
 ## [46] lazyeval_0.2.1    crayon_1.3.4      pkgconfig_2.0.1  
-## [49] xml2_1.2.0        lubridate_1.7.4   assertthat_0.2.0 
-## [52] rmarkdown_1.10    httr_1.3.1        rstudioapi_0.7   
-## [55] R6_2.2.2          nlme_3.1-137      compiler_3.5.0</code></pre>
+## [49] xml2_1.2.0        lubridate_1.7.4   rstudioapi_0.7   
+## [52] assertthat_0.2.0  rmarkdown_1.10.3  httr_1.3.1       
+## [55] htmldeps_0.1.0    R6_2.2.2          nlme_3.1-137     
+## [58] compiler_3.5.0</code></pre>
 </div>
 </div>
 
@@ -6578,7 +6579,7 @@ Oceania
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/" data-tooltip="GDELT, Missiles, and Image Collection">
+                <a class="post-action-btn btn btn--disabled">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -6664,7 +6665,7 @@ Oceania
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/" data-tooltip="GDELT, Missiles, and Image Collection">
+                <a class="post-action-btn btn btn--disabled">
               
                   <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
                   <i class="fa fa-angle-right"></i>
@@ -6797,6 +6798,24 @@ Oceania
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+                <h3 class="media-heading">Reading .csv Files</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/07/variable-assignment/">
                 <h3 class="media-heading">Variable Assignment</h3>
               </a>
@@ -6843,26 +6862,6 @@ Oceania
 
 Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
 ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
-              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/">
-                <h3 class="media-heading">GDELT, Missiles, and Image Collection</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  Jan 1, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">----The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”. 
-The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
-See also:
-My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

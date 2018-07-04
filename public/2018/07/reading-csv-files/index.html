@@ -1,0 +1,2133 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.42.2 with theme Tranquilpeak 0.4.3-BETA">
+    <title>Reading .csv Files</title>
+    <meta name="author" content="Brendan Knapp">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="https://syknapptic.netlify.com/favicon.png">
+    
+
+    
+    <meta name="description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .">
+    <meta property="og:description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Reading .csv Files">
+    <meta property="og:url" content="/2018/07/reading-csv-files/">
+    <meta property="og:site_name" content="syknapptic">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="syknapptic">
+    <meta name="twitter:description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .">
+    
+      <meta name="twitter:creator" content="@syknapptic">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=640">
+    
+
+    
+      <meta property="og:image" content="http://i0.kym-cdn.com/photos/images/facebook/001/124/028/5c2.jpg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://syknapptic.netlify.com/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-115043043-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://syknapptic.netlify.com/">syknapptic</a>
+  </div>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://syknapptic.netlify.com/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Brendan Knapp</h4>
+        
+          <h5 class="sidebar-profile-bio">Network, Spatial, and Text Analytics <br> R, Python <br> Data-Driven Intelligence</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/shiny/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-code"></i>
+      
+      <span class="sidebar-button-desc">Shiny Apps</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/syknapptic" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/syknapptic" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/7678928/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/knappbrendan/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/page/Data-Science-from-Scratch/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-line-chart"></i>
+      
+      <span class="sidebar-button-desc">Data Science</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://syknapptic.netlify.com/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Reading .csv Files
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-03T00:00:00Z">
+        
+  July 3, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://syknapptic.netlify.com/categories/data-science-from-scratch">data-science-from-scratch</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <script src="https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#the-test-data">The Test Data</a><ul>
+<li><a href="#small">Small</a></li>
+<li><a href="#medium">Medium</a></li>
+<li><a href="#big">Big</a></li>
+</ul></li>
+<li><a href="#the-code">The Code</a><ul>
+<li><a href="#r">R</a><ul>
+<li><a href="#base---utilsread.csv">“Base” - <code>utils::read.csv()</code></a></li>
+<li><a href="#readrread_csv"><code>readr::read_csv()</code></a></li>
+<li><a href="#data.tablefread"><code>data.table::fread()</code></a></li>
+</ul></li>
+<li><a href="#python">Python</a><ul>
+<li><a href="#pandas.read_csv"><code>pandas.read_csv()</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#the-test">The Test</a></li>
+<li><a href="#the-results">The Results</a></li>
+<li><a href="#tldr">tl;dr</a></li>
+<li><a href="#session-info">Session Info</a><ul>
+<li><a href="#r-1">R</a></li>
+<li><a href="#python-1">Python</a></li>
+</ul></li>
+</ul>
+</div>
+
+<pre class="r"><code>library(bench)
+library(kableExtra)
+library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)
+library(scales)
+library(tidyverse)</code></pre>
+<div id="the-test-data" class="section level1">
+<h1>The Test Data</h1>
+<p>The initial .csv was obtained from <a href="https://blog.majestic.com/development/majestic-million-csv-daily/">Majestic Million CSV</a> <a href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img src="https://licensebuttons.net/l/by/3.0/88x31.png"></a>.</p>
+<pre class="r"><code>path &lt;- &quot;test-data/majestic_million.csv&quot;
+
+test_df &lt;- read_csv(path)
+
+glimpse(test_df)</code></pre>
+<pre><code>## Observations: 1,000,000
+## Variables: 12
+## $ GlobalRank     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...
+## $ TldRank        &lt;int&gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
+## $ Domain         &lt;chr&gt; &quot;google.com&quot;, &quot;facebook.com&quot;, &quot;youtube.com&quot;, &quot;t...
+## $ TLD            &lt;chr&gt; &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;org&quot;...
+## $ RefSubNets     &lt;int&gt; 463232, 451237, 410764, 409068, 303679, 292966,...
+## $ RefIPs         &lt;int&gt; 2963708, 3046847, 2444016, 2546940, 1139322, 13...
+## $ IDN_Domain     &lt;chr&gt; &quot;google.com&quot;, &quot;facebook.com&quot;, &quot;youtube.com&quot;, &quot;t...
+## $ IDN_TLD        &lt;chr&gt; &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;com&quot;, &quot;org&quot;...
+## $ PrevGlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...
+## $ PrevTldRank    &lt;int&gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
+## $ PrevRefSubNets &lt;int&gt; 462861, 451086, 410676, 408692, 303296, 292918,...
+## $ PrevRefIPs     &lt;int&gt; 2966284, 3049605, 2447455, 2549623, 1138675, 13...</code></pre>
+<pre class="r"><code>test_df %&gt;% 
+  head(15) %&gt;% 
+  kable() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+GlobalRank
+</th>
+<th style="text-align:right;">
+TldRank
+</th>
+<th style="text-align:left;">
+Domain
+</th>
+<th style="text-align:left;">
+TLD
+</th>
+<th style="text-align:right;">
+RefSubNets
+</th>
+<th style="text-align:right;">
+RefIPs
+</th>
+<th style="text-align:left;">
+IDN_Domain
+</th>
+<th style="text-align:left;">
+IDN_TLD
+</th>
+<th style="text-align:right;">
+PrevGlobalRank
+</th>
+<th style="text-align:right;">
+PrevTldRank
+</th>
+<th style="text-align:right;">
+PrevRefSubNets
+</th>
+<th style="text-align:right;">
+PrevRefIPs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+google.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+463232
+</td>
+<td style="text-align:right;">
+2963708
+</td>
+<td style="text-align:left;">
+google.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+462861
+</td>
+<td style="text-align:right;">
+2966284
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+facebook.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+451237
+</td>
+<td style="text-align:right;">
+3046847
+</td>
+<td style="text-align:left;">
+facebook.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+451086
+</td>
+<td style="text-align:right;">
+3049605
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+youtube.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+410764
+</td>
+<td style="text-align:right;">
+2444016
+</td>
+<td style="text-align:left;">
+youtube.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+410676
+</td>
+<td style="text-align:right;">
+2447455
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+twitter.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+409068
+</td>
+<td style="text-align:right;">
+2546940
+</td>
+<td style="text-align:left;">
+twitter.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+408692
+</td>
+<td style="text-align:right;">
+2549623
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+microsoft.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+303679
+</td>
+<td style="text-align:right;">
+1139322
+</td>
+<td style="text-align:left;">
+microsoft.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+303296
+</td>
+<td style="text-align:right;">
+1138675
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+linkedin.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+292966
+</td>
+<td style="text-align:right;">
+1345499
+</td>
+<td style="text-align:left;">
+linkedin.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+292918
+</td>
+<td style="text-align:right;">
+1347315
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+wikipedia.org
+</td>
+<td style="text-align:left;">
+org
+</td>
+<td style="text-align:right;">
+287420
+</td>
+<td style="text-align:right;">
+1239700
+</td>
+<td style="text-align:left;">
+wikipedia.org
+</td>
+<td style="text-align:left;">
+org
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+287368
+</td>
+<td style="text-align:right;">
+1242296
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+plus.google.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+284103
+</td>
+<td style="text-align:right;">
+1458159
+</td>
+<td style="text-align:left;">
+plus.google.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+283866
+</td>
+<td style="text-align:right;">
+1459968
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+instagram.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+277145
+</td>
+<td style="text-align:right;">
+1367140
+</td>
+<td style="text-align:left;">
+instagram.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+277101
+</td>
+<td style="text-align:right;">
+1368204
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+apple.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+276152
+</td>
+<td style="text-align:right;">
+1047213
+</td>
+<td style="text-align:left;">
+apple.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+275693
+</td>
+<td style="text-align:right;">
+1047826
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+wordpress.org
+</td>
+<td style="text-align:left;">
+org
+</td>
+<td style="text-align:right;">
+257351
+</td>
+<td style="text-align:right;">
+1263053
+</td>
+<td style="text-align:left;">
+wordpress.org
+</td>
+<td style="text-align:left;">
+org
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+257369
+</td>
+<td style="text-align:right;">
+1263770
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+adobe.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+250908
+</td>
+<td style="text-align:right;">
+867453
+</td>
+<td style="text-align:left;">
+adobe.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+250735
+</td>
+<td style="text-align:right;">
+868300
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+en.wikipedia.org
+</td>
+<td style="text-align:left;">
+org
+</td>
+<td style="text-align:right;">
+241132
+</td>
+<td style="text-align:right;">
+914282
+</td>
+<td style="text-align:left;">
+en.wikipedia.org
+</td>
+<td style="text-align:left;">
+org
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+241042
+</td>
+<td style="text-align:right;">
+915553
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+blogspot.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+232193
+</td>
+<td style="text-align:right;">
+920557
+</td>
+<td style="text-align:left;">
+blogspot.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+234782
+</td>
+<td style="text-align:right;">
+934762
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+wordpress.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+228778
+</td>
+<td style="text-align:right;">
+894014
+</td>
+<td style="text-align:left;">
+wordpress.com
+</td>
+<td style="text-align:left;">
+com
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+229362
+</td>
+<td style="text-align:right;">
+898900
+</td>
+</tr>
+</tbody>
+</table>
+<div id="small" class="section level2">
+<h2>Small</h2>
+<pre class="r"><code>small_df &lt;- test_df %&gt;% 
+  slice(1:200)
+
+small_df</code></pre>
+<pre><code>## # A tibble: 200 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 190 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
+## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
+<pre class="r"><code>small_rows &lt;- nrow(small_df)
+
+path_small_csv &lt;- &quot;test-data/small_csv.csv&quot;
+write_csv(small_df, path_small_csv)</code></pre>
+</div>
+<div id="medium" class="section level2">
+<h2>Medium</h2>
+<pre class="r"><code>medium_df &lt;- test_df %&gt;% 
+  slice(1:2000)
+
+medium_df</code></pre>
+<pre><code>## # A tibble: 2,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 1,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
+## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
+<pre class="r"><code>med_rows &lt;- nrow(medium_df)
+
+path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot;
+write_csv(medium_df, path_medium_csv)</code></pre>
+</div>
+<div id="big" class="section level2">
+<h2>Big</h2>
+<pre class="r"><code>big_df &lt;- bind_rows(test_df, test_df, test_df, test_df)
+
+big_df</code></pre>
+<pre><code>## # A tibble: 4,000,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 3,999,990 more rows, and 4 more variables:
+## #   PrevGlobalRank &lt;int&gt;, PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;,
+## #   PrevRefIPs &lt;int&gt;</code></pre>
+<pre class="r"><code>big_rows &lt;- nrow(big_df)
+
+path_big_csv &lt;- &quot;test-data/big_csv.csv&quot;
+write_csv(big_df, path_big_csv)</code></pre>
+</div>
+</div>
+<div id="the-code" class="section level1">
+<h1>The Code</h1>
+<p>The code will never be 100% fair, but the following steps were taken to “standardize” functions.</p>
+<ol style="list-style-type: decimal">
+<li>The column data types are identified ahead of time via a <code>*_col_specs</code> variable.</li>
+<li>All “numeric” data types are read as <code>double</code>s.</li>
+<li>The function assigns the result to an internal <code>df</code> variable.</li>
+<li>The function explicitly <code>return()</code>s the data frame.</li>
+</ol>
+<div id="r" class="section level2">
+<h2>R</h2>
+<div id="base---utilsread.csv" class="section level3">
+<h3>“Base” - <code>utils::read.csv()</code></h3>
+<pre class="r"><code>base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,
+                    &quot;character&quot;, &quot;double&quot;, &quot;double&quot;,
+                    &quot;character&quot;, &quot;character&quot;, &quot;double&quot;,
+                    &quot;double&quot;, &quot;double&quot;, &quot;double&quot;)
+
+base_test &lt;- function(path) {
+  df &lt;- read.csv(file = path, colClasses = base_col_specs)
+  
+  return(df)
+}</code></pre>
+</div>
+<div id="readrread_csv" class="section level3">
+<h3><code>readr::read_csv()</code></h3>
+<pre class="r"><code>library(readr)
+
+readr_col_specs &lt;- list(col_integer(), col_integer(), col_character(),
+                        col_character(), col_integer(), col_integer(),
+                        col_character(), col_character(), col_integer(),
+                        col_integer(), col_integer(), col_integer())
+
+readr_test &lt;- function(path) {
+  df &lt;- read_csv(file = path, col_types = readr_col_specs)
+  
+  return(df)
+}</code></pre>
+</div>
+<div id="data.tablefread" class="section level3">
+<h3><code>data.table::fread()</code></h3>
+<pre class="r"><code>library(data.table)
+
+datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,    # same as `utils::read.csv()`
+                         &quot;character&quot;, &quot;double&quot;, &quot;double&quot;,
+                         &quot;character&quot;, &quot;character&quot;, &quot;double&quot;,
+                         &quot;double&quot;, &quot;double&quot;, &quot;double&quot;)
+
+datatable_test &lt;- function(path) {
+  df &lt;- fread(file = path, colClasses = datatable_col_specs)
+  
+  return(df)
+}</code></pre>
+</div>
+</div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<div id="pandas.read_csv" class="section level3">
+<h3><code>pandas.read_csv()</code></h3>
+<pre class="python"><code>from numpy import double
+from pandas import read_csv
+path_small_csv = &#39;test-data/small_csv.csv&#39;
+path_medium_csv = &#39;test-data/medium_csv.csv&#39;
+path_big_csv = &#39;test-data/big_csv.csv&#39;
+pandas_col_specs = {&#39;GlobalRank&#39;:double, &#39;TldRank&#39;:double, &#39;Domain&#39;:str,
+                    &#39;TLD&#39;:str, &#39;RefSubNets&#39;:double, &#39;RefIPs&#39;:double,
+                    &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:double,
+                    &#39;PrevTldRank&#39;:double, &#39;PrevRefSubNets&#39;:double, &#39;PrevRefIPs&#39;:double}
+def pandas_test_small():
+  df = read_csv(filepath_or_buffer = path_small_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+  
+def pandas_test_medium():
+  df = read_csv(filepath_or_buffer = path_medium_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+  
+def pandas_test_big():
+  df = read_csv(filepath_or_buffer = path_big_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)</code></pre>
+</div>
+</div>
+</div>
+<div id="the-test" class="section level1">
+<h1>The Test</h1>
+<pre class="r"><code>results &lt;- mark(
+
+  base_test(path_small_csv),
+  readr_test(path_small_csv),
+  datatable_test(path_small_csv),
+
+  base_test(path_medium_csv),
+  readr_test(path_medium_csv),
+  datatable_test(path_medium_csv),
+
+  base_test(path_big_csv),
+  readr_test(path_big_csv),
+  datatable_test(path_big_csv),
+
+  py$pandas_test_small(),
+  py$pandas_test_medium(),
+  py$pandas_test_big(),
+
+  check = FALSE, filter_gc = FALSE, iterations = 50
+
+  )</code></pre>
+</div>
+<div id="the-results" class="section level1">
+<h1>The Results</h1>
+<pre class="r"><code>results_df &lt;- results %&gt;%
+  unnest() %&gt;%
+  mutate(call = case_when(
+    str_detect(expression, &quot;base&quot;) ~ &quot;utils::read.csv()&quot;,
+    str_detect(expression, &quot;readr&quot;) ~ &quot;readr::read_csv()&quot;,
+    str_detect(expression, &quot;datatable&quot;) ~ &quot;data.table::fread()&quot;,
+    str_detect(expression, &quot;py&quot;) ~ &quot;pandas.read_csv()&quot;
+  )) %&gt;%
+  mutate(lang = if_else(str_detect(expression, &quot;pandas&quot;), &quot;Python&quot;, &quot;R&quot;)) %&gt;%
+  mutate(file_size = str_extract(expression, &quot;small|medium|big&quot;)) %&gt;%
+  mutate(rows = case_when(
+    file_size == &quot;small&quot; ~ small_rows,
+    file_size == &quot;medium&quot; ~ med_rows,
+    file_size == &quot;big&quot; ~ big_rows
+    ))</code></pre>
+<pre class="r"><code>results_df %&gt;%
+  select(rows, lang, call, everything(), -expression, -n_itr,
+         -time, -gc, -file_size, -starts_with(&quot;level&quot;)) %&gt;%
+  distinct() %&gt;% 
+  arrange(rows, desc(lang)) %&gt;%
+  mutate(rows = comma(rows)) %&gt;%
+  rename(garbage_collections = n_gc, language = lang,
+         memory_allocated = mem_alloc) %&gt;%
+  rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Rows
+</th>
+<th style="text-align:left;">
+Language
+</th>
+<th style="text-align:left;">
+Call
+</th>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+Mean
+</th>
+<th style="text-align:right;">
+Median
+</th>
+<th style="text-align:right;">
+Max
+</th>
+<th style="text-align:right;">
+Itr/Sec
+</th>
+<th style="text-align:right;">
+Memory Allocated
+</th>
+<th style="text-align:right;">
+Garbage Collections
+</th>
+<th style="text-align:right;">
+Total Time
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+200
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+R
+</td>
+<td style="text-align:left;">
+utils::read.csv()
+</td>
+<td style="text-align:right;">
+843.85us
+</td>
+<td style="text-align:right;">
+952.12us
+</td>
+<td style="text-align:right;">
+940.05us
+</td>
+<td style="text-align:right;">
+1.16ms
+</td>
+<td style="text-align:right;">
+1050.2929412
+</td>
+<td style="text-align:right;">
+364.71KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+47.61ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr::read_csv()
+</td>
+<td style="text-align:right;">
+2.21ms
+</td>
+<td style="text-align:right;">
+2.61ms
+</td>
+<td style="text-align:right;">
+2.53ms
+</td>
+<td style="text-align:right;">
+3.79ms
+</td>
+<td style="text-align:right;">
+383.0163784
+</td>
+<td style="text-align:right;">
+115.03KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+130.54ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data.table::fread()
+</td>
+<td style="text-align:right;">
+1.04ms
+</td>
+<td style="text-align:right;">
+1.27ms
+</td>
+<td style="text-align:right;">
+1.22ms
+</td>
+<td style="text-align:right;">
+2.19ms
+</td>
+<td style="text-align:right;">
+785.1606459
+</td>
+<td style="text-align:right;">
+284.48KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+63.68ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Python
+</td>
+<td style="text-align:left;">
+pandas.read_csv()
+</td>
+<td style="text-align:right;">
+29.29ms
+</td>
+<td style="text-align:right;">
+41.94ms
+</td>
+<td style="text-align:right;">
+33.09ms
+</td>
+<td style="text-align:right;">
+285.91ms
+</td>
+<td style="text-align:right;">
+23.8434695
+</td>
+<td style="text-align:right;">
+1.27MB
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+2.1s
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+2,000
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+R
+</td>
+<td style="text-align:left;">
+utils::read.csv()
+</td>
+<td style="text-align:right;">
+5.43ms
+</td>
+<td style="text-align:right;">
+8.89ms
+</td>
+<td style="text-align:right;">
+6.37ms
+</td>
+<td style="text-align:right;">
+122.09ms
+</td>
+<td style="text-align:right;">
+112.4355480
+</td>
+<td style="text-align:right;">
+899.68KB
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+444.7ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr::read_csv()
+</td>
+<td style="text-align:right;">
+3.95ms
+</td>
+<td style="text-align:right;">
+4.66ms
+</td>
+<td style="text-align:right;">
+4.52ms
+</td>
+<td style="text-align:right;">
+6.39ms
+</td>
+<td style="text-align:right;">
+214.6646268
+</td>
+<td style="text-align:right;">
+469.39KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+232.92ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data.table::fread()
+</td>
+<td style="text-align:right;">
+2.07ms
+</td>
+<td style="text-align:right;">
+2.45ms
+</td>
+<td style="text-align:right;">
+2.28ms
+</td>
+<td style="text-align:right;">
+3.99ms
+</td>
+<td style="text-align:right;">
+408.2118171
+</td>
+<td style="text-align:right;">
+281.12KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+122.48ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Python
+</td>
+<td style="text-align:left;">
+pandas.read_csv()
+</td>
+<td style="text-align:right;">
+36.22ms
+</td>
+<td style="text-align:right;">
+45.79ms
+</td>
+<td style="text-align:right;">
+39.49ms
+</td>
+<td style="text-align:right;">
+116.6ms
+</td>
+<td style="text-align:right;">
+21.8395993
+</td>
+<td style="text-align:right;">
+1.82MB
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.29s
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+4,000,000
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+R
+</td>
+<td style="text-align:left;">
+utils::read.csv()
+</td>
+<td style="text-align:right;">
+12.95s
+</td>
+<td style="text-align:right;">
+13.89s
+</td>
+<td style="text-align:right;">
+13.85s
+</td>
+<td style="text-align:right;">
+16.27s
+</td>
+<td style="text-align:right;">
+0.0719980
+</td>
+<td style="text-align:right;">
+1.09GB
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+11.57m
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr::read_csv()
+</td>
+<td style="text-align:right;">
+5.01s
+</td>
+<td style="text-align:right;">
+5.62s
+</td>
+<td style="text-align:right;">
+5.5s
+</td>
+<td style="text-align:right;">
+6.9s
+</td>
+<td style="text-align:right;">
+0.1780294
+</td>
+<td style="text-align:right;">
+797.23MB
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+4.68m
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data.table::fread()
+</td>
+<td style="text-align:right;">
+2.09s
+</td>
+<td style="text-align:right;">
+2.47s
+</td>
+<td style="text-align:right;">
+2.33s
+</td>
+<td style="text-align:right;">
+3.41s
+</td>
+<td style="text-align:right;">
+0.4052410
+</td>
+<td style="text-align:right;">
+510.72MB
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+2.06m
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Python
+</td>
+<td style="text-align:left;">
+pandas.read_csv()
+</td>
+<td style="text-align:right;">
+14.41s
+</td>
+<td style="text-align:right;">
+15.56s
+</td>
+<td style="text-align:right;">
+15.51s
+</td>
+<td style="text-align:right;">
+17.88s
+</td>
+<td style="text-align:right;">
+0.0642673
+</td>
+<td style="text-align:right;">
+1.43GB
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+12.97m
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>gg_df &lt;- results_df %&gt;%
+  arrange(rows) %&gt;%
+  mutate(rows = rows %&gt;%
+           comma() %&gt;%
+           paste(&quot;Rows&quot;) %&gt;%
+           as_factor()
+        ) %&gt;%
+  group_by(expression) %&gt;% 
+  mutate(med_time = as.numeric(median(time))) %&gt;% 
+  ungroup() %&gt;% 
+  arrange(desc(med_time)) %&gt;%
+  mutate(call = as_factor(call)) %&gt;%
+  arrange(desc(lang)) %&gt;%
+  mutate(lang = as_factor(lang))</code></pre>
+<pre class="r"><code>plot_times &lt;- function(df, rows = NULL) {
+  plot_init &lt;- df %&gt;% 
+    ggplot(aes(call, time, fill = lang, color = lang)) +
+    stat_ydensity(size = 1.25) +
+    scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;)) +
+    scale_color_manual(values = c(&quot;#BFC2C5&quot;, &quot;#4584b6&quot;)) +
+    guides(color = guide_legend(override.aes = list(size = 1))) +
+    coord_flip() +
+    theme_minimal(17, &quot;serif&quot;) +
+    theme(legend.title = element_blank(), legend.position = &quot;top&quot;,
+          plot.caption = element_text(size = 10))
+  
+  if(!is.null(rows)) {
+    plot_fin &lt;- plot_init +
+    labs(x = NULL, y = &quot;Time&quot;,
+         title = str_glue(&quot;CSV to Data Frame - {comma(rows)} Rows&quot;),
+         caption = &quot;50 runs per call.\nAll .csv files contain 12 columns.&quot;)
+    
+  } else {
+    plot_fin &lt;- plot_init + 
+      facet_wrap(~ rows, nrow = 3, scales = &quot;free_x&quot;) +
+      labs(x = NULL, y = &quot;Time&quot;,
+         title = str_glue(&quot;CSV to Data Frame - All Tests&quot;),
+         caption = &quot;50 runs per call.\nAll .csv files contain 12 columns.&quot;)
+  }
+  
+  plot_fin
+}</code></pre>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;small&quot;) %&gt;%
+  plot_times(small_rows)</code></pre>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-18-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;medium&quot;) %&gt;%
+  plot_times(med_rows)</code></pre>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-19-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;big&quot;) %&gt;%
+  plot_times(big_rows)</code></pre>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="tldr" class="section level1">
+<h1>tl;dr</h1>
+<pre class="r"><code>gg_df %&gt;%
+  plot_times()</code></pre>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level1">
+<h1>Session Info</h1>
+<div id="r-1" class="section level2">
+<h2>R</h2>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] data.table_1.11.5     bindrcpp_0.2.2        forcats_0.3.0        
+##  [4] stringr_1.3.1         dplyr_0.7.5           purrr_0.2.5          
+##  [7] readr_1.1.1           tidyr_0.8.1           tibble_1.4.2         
+## [10] ggplot2_2.2.1.9000    tidyverse_1.2.1.9000  scales_0.5.0.9000    
+## [13] reticulate_1.8.0.9002 kableExtra_0.9.0      bench_1.0.1          
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17      lubridate_1.7.4   lattice_0.20-35  
+##  [4] utf8_1.1.4        assertthat_0.2.0  rprojroot_1.3-2  
+##  [7] digest_0.6.15     psych_1.8.4       R6_2.2.2         
+## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.2  
+## [13] evaluate_0.10.1   highr_0.7         httr_1.3.1       
+## [16] blogdown_0.6.14   pillar_1.2.3      rlang_0.2.0.9001 
+## [19] lazyeval_0.2.1    readxl_1.1.0      rstudioapi_0.7   
+## [22] Matrix_1.2-14     rmarkdown_1.10.3  selectr_0.4-1    
+## [25] foreign_0.8-70    munsell_0.5.0     broom_0.4.4      
+## [28] compiler_3.5.0    modelr_0.1.2      xfun_0.2.7       
+## [31] pkgconfig_2.0.1   mnormt_1.5-5      htmltools_0.3.6  
+## [34] tidyselect_0.2.4  bookdown_0.7      viridisLite_0.3.0
+## [37] crayon_1.3.4      withr_2.1.2       grid_3.5.0       
+## [40] nlme_3.1-137      jsonlite_1.5      gtable_0.2.0     
+## [43] magrittr_1.5      cli_1.0.0         stringi_1.2.2    
+## [46] reshape2_1.4.3    xml2_1.2.0        htmldeps_0.1.0   
+## [49] tools_3.5.0       glue_1.2.0        hms_0.4.2        
+## [52] parallel_3.5.0    yaml_2.1.19       colorspace_1.3-2 
+## [55] rvest_0.3.2       knitr_1.20.7      bindr_0.1.1      
+## [58] haven_1.1.1</code></pre>
+</div>
+<div id="python-1" class="section level2">
+<h2>Python</h2>
+<pre class="r"><code>list(py$sys$version, 
+     import(&quot;numpy&quot;)$`__version__`, 
+     import(&quot;pandas&quot;)$`__version__`) %&gt;% 
+  map2(c(&quot;Python:&quot;, &quot;NumPy:&quot;, &quot;Pandas:&quot;), ~ paste(.y, .x)) %&gt;% 
+  walk(cat, &quot;\n&quot;)</code></pre>
+<pre><code>## Python: 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)] 
+## NumPy: 1.12.1 
+## Pandas: 0.22.0</code></pre>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://syknapptic.netlify.com/tags/benchmarking/">benchmarking</a>
+
+  <a class="tag tag--primary tag--small" href="https://syknapptic.netlify.com/tags/fileio/">fileIO</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/07/variable-assignment/" data-tooltip="Variable Assignment">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Brendan Knapp. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://syknapptic.netlify.com/2018/07/variable-assignment/" data-tooltip="Variable Assignment">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsyknapptic.netlify.com%2F2018%2F07%2Freading-csv-files%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fsyknapptic.netlify.com%2F2018%2F07%2Freading-csv-files%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fsyknapptic.netlify.com%2F2018%2F07%2Freading-csv-files%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Brendan Knapp</h4>
+    
+      <div id="about-card-bio">Network, Spatial, and Text Analytics <br> R, Python <br> Data-Driven Intelligence</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Decision Enabler, Analyst, Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Monterey, California
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/07/reading-csv-files/">
+                <h3 class="media-heading">Reading .csv Files</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/07/variable-assignment/">
+                <h3 class="media-heading">Variable Assignment</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">RPythonC++RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY = 1print(var_PY)## 1C++#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
+                <h3 class="media-heading">reticulate: Taking the Dragon for a Test Ride</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  May 5, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Declaring VariablesDeclaring Variables</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/">
+                <h3 class="media-heading">Thoughts on Teaching R and Yet Another Tidyverse Intro</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+
+Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
+ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         4 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('http://res.cloudinary.com/syknapptic/image/upload/v1516051268/sidebar_nmse27.png');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://syknapptic.netlify.com/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/syknapptic.netlify.com\/2018\/07\/reading-csv-files\/';
+          
+            this.page.identifier = '\/2018\/07\/reading-csv-files\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'syknapptic';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    
+  </body>
+</html>
+

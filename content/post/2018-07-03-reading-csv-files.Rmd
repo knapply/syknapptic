@@ -1,0 +1,384 @@
+---
+title: 'Reading .csv Files'
+draft: false
+author: Brendan Knapp
+date: '2018-07-03'
+slug: reading-csv-files
+categories:
+  - data-science-from-scratch
+tags: 
+  - benchmarking
+  - fileIO
+thumbnailImage: http://i0.kym-cdn.com/photos/images/facebook/001/124/028/5c2.jpg
+metaAlignment: center
+coverMeta: out
+summary: Comparing performance of R and Python in reading .csv files to data frames.
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.width = 11, fig.height = 10,
+                      fig.align = "center",
+                      message = FALSE, warning = FALSE)
+
+knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+```{r}
+library(bench)
+library(kableExtra)
+library(reticulate); use_condaenv("r-reticulate", required = TRUE)
+library(scales)
+library(tidyverse)
+```
+
+# The Test Data
+
+The initial .csv was obtained from [Majestic Million CSV](https://blog.majestic.com/development/majestic-million-csv-daily/) [<img src="https://licensebuttons.net/l/by/3.0/88x31.png">](https://creativecommons.org/licenses/by/3.0/deed.en_US).
+
+```{r}
+path <- "test-data/majestic_million.csv"
+
+test_df <- read_csv(path)
+
+glimpse(test_df)
+
+test_df %>% 
+  head(15) %>% 
+  kable() %>% 
+  kable_styling()
+```
+
+## Small 
+
+```{r}
+small_df <- test_df %>% 
+  slice(1:200)
+
+small_df
+small_rows <- nrow(small_df)
+
+path_small_csv <- "test-data/small_csv.csv"
+write_csv(small_df, path_small_csv)
+```
+
+## Medium
+
+```{r}
+medium_df <- test_df %>% 
+  slice(1:2000)
+
+medium_df
+med_rows <- nrow(medium_df)
+
+path_medium_csv <- "test-data/medium_csv.csv"
+write_csv(medium_df, path_medium_csv)
+```
+
+## Big
+
+```{r}
+big_df <- bind_rows(test_df, test_df, test_df, test_df)
+
+big_df
+big_rows <- nrow(big_df)
+
+path_big_csv <- "test-data/big_csv.csv"
+write_csv(big_df, path_big_csv)
+```
+
+# The Code
+
+The code will never be 100% fair, but the following steps were taken to "standardize" functions.
+
+1. The column data types are identified ahead of time via a `*_col_specs` variable.
+2. All "numeric" data types are read as `double`s.
+3. The function assigns the result to an internal `df` variable.
+4. The function explicitly `return()`s the data frame.
+
+## R
+
+### "Base" - `utils::read.csv()`
+
+```{r}
+base_col_specs <- c("double", "double", "character",
+                    "character", "double", "double",
+                    "character", "character", "double",
+                    "double", "double", "double")
+
+base_test <- function(path) {
+  df <- read.csv(file = path, colClasses = base_col_specs)
+  
+  return(df)
+}
+```
+
+### `readr::read_csv()`
+
+```{r}
+library(readr)
+
+readr_col_specs <- list(col_integer(), col_integer(), col_character(),
+                        col_character(), col_integer(), col_integer(),
+                        col_character(), col_character(), col_integer(),
+                        col_integer(), col_integer(), col_integer())
+
+readr_test <- function(path) {
+  df <- read_csv(file = path, col_types = readr_col_specs)
+  
+  return(df)
+}
+```
+
+
+### `data.table::fread()`
+
+```{r}
+library(data.table)
+
+datatable_col_specs <- c("double", "double", "character",    # same as `utils::read.csv()`
+                         "character", "double", "double",
+                         "character", "character", "double",
+                         "double", "double", "double")
+
+datatable_test <- function(path) {
+  df <- fread(file = path, colClasses = datatable_col_specs)
+  
+  return(df)
+}
+```
+
+## Python
+
+### `pandas.read_csv()`
+
+```{python, cache = FALSE}
+from numpy import double
+from pandas import read_csv
+
+path_small_csv = 'test-data/small_csv.csv'
+path_medium_csv = 'test-data/medium_csv.csv'
+path_big_csv = 'test-data/big_csv.csv'
+
+pandas_col_specs = {'GlobalRank':double, 'TldRank':double, 'Domain':str,
+                    'TLD':str, 'RefSubNets':double, 'RefIPs':double,
+                    'IDN_Domain':str, 'IDN_TLD':str, 'PrevGlobalRank':double,
+                    'PrevTldRank':double, 'PrevRefSubNets':double, 'PrevRefIPs':double}
+
+def pandas_test_small():
+  df = read_csv(filepath_or_buffer = path_small_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+  
+def pandas_test_medium():
+  df = read_csv(filepath_or_buffer = path_medium_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+  
+def pandas_test_big():
+  df = read_csv(filepath_or_buffer = path_big_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+```
+
+```{r, eval=FALSE, echo=FALSE}
+py_run_string(
+"
+from numpy import double
+from pandas import read_csv
+
+path_small_csv = 'test-data/small_csv.csv'
+path_medium_csv = 'test-data/medium_csv.csv'
+path_big_csv = 'test-data/big_csv.csv'
+
+pandas_col_specs = {'GlobalRank':double, 'TldRank':double, 'Domain':str,
+                    'TLD':str, 'RefSubNets':double, 'RefIPs':double,
+                    'IDN_Domain':str, 'IDN_TLD':str, 'PrevGlobalRank':double,
+                    'PrevTldRank':double, 'PrevRefSubNets':double, 'PrevRefIPs':double}
+
+def pandas_test_small():
+  df = read_csv(filepath_or_buffer = path_small_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+
+def pandas_test_medium():
+  df = read_csv(filepath_or_buffer = path_medium_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+
+def pandas_test_big():
+  df = read_csv(filepath_or_buffer = path_big_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+", convert = FALSE
+)
+```
+
+# The Test
+
+```{r, eval=FALSE}
+results <- mark(
+
+  base_test(path_small_csv),
+  readr_test(path_small_csv),
+  datatable_test(path_small_csv),
+
+  base_test(path_medium_csv),
+  readr_test(path_medium_csv),
+  datatable_test(path_medium_csv),
+
+  base_test(path_big_csv),
+  readr_test(path_big_csv),
+  datatable_test(path_big_csv),
+
+  py$pandas_test_small(),
+  py$pandas_test_medium(),
+  py$pandas_test_big(),
+
+  check = FALSE, filter_gc = FALSE, iterations = 50
+
+  )
+```
+
+```{r, echo=FALSE}
+# write_rds(results, "test-data/read-csv-test-results.rds")
+```
+
+```{r, echo=FALSE}
+results <- read_rds("test-data/read-csv-test-results.rds")
+```
+
+# The Results
+
+```{r}
+results_df <- results %>%
+  unnest() %>%
+  mutate(call = case_when(
+    str_detect(expression, "base") ~ "utils::read.csv()",
+    str_detect(expression, "readr") ~ "readr::read_csv()",
+    str_detect(expression, "datatable") ~ "data.table::fread()",
+    str_detect(expression, "py") ~ "pandas.read_csv()"
+  )) %>%
+  mutate(lang = if_else(str_detect(expression, "pandas"), "Python", "R")) %>%
+  mutate(file_size = str_extract(expression, "small|medium|big")) %>%
+  mutate(rows = case_when(
+    file_size == "small" ~ small_rows,
+    file_size == "medium" ~ med_rows,
+    file_size == "big" ~ big_rows
+    ))
+```
+
+```{r}
+results_df %>%
+  select(rows, lang, call, everything(), -expression, -n_itr,
+         -time, -gc, -file_size, -starts_with("level")) %>%
+  distinct() %>% 
+  arrange(rows, desc(lang)) %>%
+  mutate(rows = comma(rows)) %>%
+  rename(garbage_collections = n_gc, language = lang,
+         memory_allocated = mem_alloc) %>%
+  rename_all(funs(str_to_title(str_replace(., "_", " ")))) %>%
+  kable() %>%
+  kable_styling() %>%
+  collapse_rows(columns = 1:2, valign = "top")
+```
+
+```{r}
+gg_df <- results_df %>%
+  arrange(rows) %>%
+  mutate(rows = rows %>%
+           comma() %>%
+           paste("Rows") %>%
+           as_factor()
+        ) %>%
+  group_by(expression) %>% 
+  mutate(med_time = as.numeric(median(time))) %>% 
+  ungroup() %>% 
+  arrange(desc(med_time)) %>%
+  mutate(call = as_factor(call)) %>%
+  arrange(desc(lang)) %>%
+  mutate(lang = as_factor(lang))
+```
+
+```{r}
+plot_times <- function(df, rows = NULL) {
+  plot_init <- df %>% 
+    ggplot(aes(call, time, fill = lang, color = lang)) +
+    stat_ydensity(size = 1.25) +
+    scale_fill_manual(values = c("#165CAA", "#ffde57")) +
+    scale_color_manual(values = c("#BFC2C5", "#4584b6")) +
+    guides(color = guide_legend(override.aes = list(size = 1))) +
+    coord_flip() +
+    theme_minimal(17, "serif") +
+    theme(legend.title = element_blank(), legend.position = "top",
+          plot.caption = element_text(size = 10))
+  
+  if(!is.null(rows)) {
+    plot_fin <- plot_init +
+    labs(x = NULL, y = "Time",
+         title = str_glue("CSV to Data Frame - {comma(rows)} Rows"),
+         caption = "50 runs per call.\nAll .csv files contain 12 columns.")
+    
+  } else {
+    plot_fin <- plot_init + 
+      facet_wrap(~ rows, nrow = 3, scales = "free_x") +
+      labs(x = NULL, y = "Time",
+         title = str_glue("CSV to Data Frame - All Tests"),
+         caption = "50 runs per call.\nAll .csv files contain 12 columns.")
+  }
+  
+  plot_fin
+}
+```
+
+
+```{r}
+gg_df %>%
+  filter(file_size == "small") %>%
+  plot_times(small_rows)
+```
+
+```{r}
+gg_df %>%
+  filter(file_size == "medium") %>%
+  plot_times(med_rows)
+```
+
+```{r}
+gg_df %>%
+  filter(file_size == "big") %>%
+  plot_times(big_rows)
+```
+
+# tl;dr
+
+```{r}
+gg_df %>%
+  plot_times()
+```
+
+# Session Info
+
+## R
+
+```{r}
+sessionInfo()
+```
+
+## Python
+
+```{r}
+list(py$sys$version, 
+     import("numpy")$`__version__`, 
+     import("pandas")$`__version__`) %>% 
+  map2(c("Python:", "NumPy:", "Pandas:"), ~ paste(.y, .x)) %>% 
+  walk(cat, "\n")
+```
+
+
