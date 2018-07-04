@@ -21,14 +21,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-<style type="text/css">
-.main-container {
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       fig.width = 11, fig.height = 10,
@@ -63,10 +55,7 @@ test_df <- read_csv(path)
 ```{r}
 glimpse(test_df)
 
-test_df %>% 
-  head(15) %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "condensed")
+test_df
 ```
 
 ```{r, eval=FALSE}
@@ -295,7 +284,7 @@ results_df <- results %>%
 ```{r}
 results_df %>%
   select(rows, lang, call, everything(), -expression, -n_itr,
-         -time, -gc, -file_size, -starts_with("level")) %>%
+         -time, -gc, -file_size, -min, -max, -total_time, -starts_with("level")) %>%
   distinct() %>% 
   arrange(rows, desc(lang)) %>%
   mutate(rows = comma(rows)) %>%
@@ -303,7 +292,7 @@ results_df %>%
          memory_allocated = mem_alloc) %>%
   rename_all(funs(str_to_title(str_replace(., "_", " ")))) %>%
   kable() %>%
-  kable_styling(bootstrap_options = "condensed") %>% 
+  kable_styling(bootstrap_options = "condensed", font_size = 8) %>% 
   collapse_rows(columns = 1:2, valign = "top")
 ```
 
@@ -342,7 +331,6 @@ plot_times <- function(df, rows = NULL) {
     labs(x = NULL, y = "Time",
          title = str_glue("CSV to Data Frame - {comma(rows)} Rows"),
          caption = "50 runs per call.\nAll .csv files contain 12 columns.")
-    
   } else {
     plot_fin <- plot_init + 
       facet_wrap(~ rows, nrow = 3, scales = "free_x") +

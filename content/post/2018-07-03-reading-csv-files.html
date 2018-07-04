@@ -50,13 +50,6 @@ editor_options:
 </ul>
 </div>
 
-<style type="text/css">
-.main-container {
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
 <pre class="r"><code>library(bench)
 library(kableExtra)
 library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)
@@ -82,624 +75,22 @@ test_df &lt;- read_csv(&quot;http://downloads.majestic.com/majestic_million.csv&
 ## $ PrevTldRank    &lt;int&gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
 ## $ PrevRefSubNets &lt;int&gt; 462861, 451086, 410676, 408692, 303296, 292918,...
 ## $ PrevRefIPs     &lt;int&gt; 2966284, 3049605, 2447455, 2549623, 1138675, 13...</code></pre>
-<pre class="r"><code>test_df %&gt;% 
-  head(15) %&gt;% 
-  kable() %&gt;% 
-  kable_styling(bootstrap_options = &quot;condensed&quot;)</code></pre>
-<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-GlobalRank
-</th>
-<th style="text-align:right;">
-TldRank
-</th>
-<th style="text-align:left;">
-Domain
-</th>
-<th style="text-align:left;">
-TLD
-</th>
-<th style="text-align:right;">
-RefSubNets
-</th>
-<th style="text-align:right;">
-RefIPs
-</th>
-<th style="text-align:left;">
-IDN_Domain
-</th>
-<th style="text-align:left;">
-IDN_TLD
-</th>
-<th style="text-align:right;">
-PrevGlobalRank
-</th>
-<th style="text-align:right;">
-PrevTldRank
-</th>
-<th style="text-align:right;">
-PrevRefSubNets
-</th>
-<th style="text-align:right;">
-PrevRefIPs
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-google.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-463232
-</td>
-<td style="text-align:right;">
-2963708
-</td>
-<td style="text-align:left;">
-google.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-462861
-</td>
-<td style="text-align:right;">
-2966284
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-facebook.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-451237
-</td>
-<td style="text-align:right;">
-3046847
-</td>
-<td style="text-align:left;">
-facebook.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-451086
-</td>
-<td style="text-align:right;">
-3049605
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-youtube.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-410764
-</td>
-<td style="text-align:right;">
-2444016
-</td>
-<td style="text-align:left;">
-youtube.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-410676
-</td>
-<td style="text-align:right;">
-2447455
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-twitter.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-409068
-</td>
-<td style="text-align:right;">
-2546940
-</td>
-<td style="text-align:left;">
-twitter.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-408692
-</td>
-<td style="text-align:right;">
-2549623
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-microsoft.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-303679
-</td>
-<td style="text-align:right;">
-1139322
-</td>
-<td style="text-align:left;">
-microsoft.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-303296
-</td>
-<td style="text-align:right;">
-1138675
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-linkedin.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-292966
-</td>
-<td style="text-align:right;">
-1345499
-</td>
-<td style="text-align:left;">
-linkedin.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:right;">
-292918
-</td>
-<td style="text-align:right;">
-1347315
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-wikipedia.org
-</td>
-<td style="text-align:left;">
-org
-</td>
-<td style="text-align:right;">
-287420
-</td>
-<td style="text-align:right;">
-1239700
-</td>
-<td style="text-align:left;">
-wikipedia.org
-</td>
-<td style="text-align:left;">
-org
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:right;">
-287368
-</td>
-<td style="text-align:right;">
-1242296
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-plus.google.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-284103
-</td>
-<td style="text-align:right;">
-1458159
-</td>
-<td style="text-align:left;">
-plus.google.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:right;">
-283866
-</td>
-<td style="text-align:right;">
-1459968
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-instagram.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-277145
-</td>
-<td style="text-align:right;">
-1367140
-</td>
-<td style="text-align:left;">
-instagram.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:right;">
-277101
-</td>
-<td style="text-align:right;">
-1368204
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-apple.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-276152
-</td>
-<td style="text-align:right;">
-1047213
-</td>
-<td style="text-align:left;">
-apple.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:right;">
-275693
-</td>
-<td style="text-align:right;">
-1047826
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-wordpress.org
-</td>
-<td style="text-align:left;">
-org
-</td>
-<td style="text-align:right;">
-257351
-</td>
-<td style="text-align:right;">
-1263053
-</td>
-<td style="text-align:left;">
-wordpress.org
-</td>
-<td style="text-align:left;">
-org
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:right;">
-257369
-</td>
-<td style="text-align:right;">
-1263770
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-adobe.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-250908
-</td>
-<td style="text-align:right;">
-867453
-</td>
-<td style="text-align:left;">
-adobe.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:right;">
-250735
-</td>
-<td style="text-align:right;">
-868300
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-en.wikipedia.org
-</td>
-<td style="text-align:left;">
-org
-</td>
-<td style="text-align:right;">
-241132
-</td>
-<td style="text-align:right;">
-914282
-</td>
-<td style="text-align:left;">
-en.wikipedia.org
-</td>
-<td style="text-align:left;">
-org
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-241042
-</td>
-<td style="text-align:right;">
-915553
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-blogspot.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-232193
-</td>
-<td style="text-align:right;">
-920557
-</td>
-<td style="text-align:left;">
-blogspot.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:right;">
-234782
-</td>
-<td style="text-align:right;">
-934762
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-wordpress.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-228778
-</td>
-<td style="text-align:right;">
-894014
-</td>
-<td style="text-align:left;">
-wordpress.com
-</td>
-<td style="text-align:left;">
-com
-</td>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:right;">
-229362
-</td>
-<td style="text-align:right;">
-898900
-</td>
-</tr>
-</tbody>
-</table>
+<pre class="r"><code>test_df</code></pre>
+<pre><code>## # A tibble: 1,000,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 999,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
+## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
 <pre class="r"><code>write_csv(test_df, path)</code></pre>
 <div id="small" class="section level2">
 <h2>Small</h2>
@@ -908,7 +299,7 @@ def pandas_test_big():
     ))</code></pre>
 <pre class="r"><code>results_df %&gt;%
   select(rows, lang, call, everything(), -expression, -n_itr,
-         -time, -gc, -file_size, -starts_with(&quot;level&quot;)) %&gt;%
+         -time, -gc, -file_size, -min, -max, -total_time, -starts_with(&quot;level&quot;)) %&gt;%
   distinct() %&gt;% 
   arrange(rows, desc(lang)) %&gt;%
   mutate(rows = comma(rows)) %&gt;%
@@ -916,9 +307,9 @@ def pandas_test_big():
          memory_allocated = mem_alloc) %&gt;%
   rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
   kable() %&gt;%
-  kable_styling(bootstrap_options = &quot;condensed&quot;) %&gt;% 
+  kable_styling(bootstrap_options = &quot;condensed&quot;, font_size = 8) %&gt;% 
   collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
-<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -931,16 +322,10 @@ Language
 Call
 </th>
 <th style="text-align:right;">
-Min
-</th>
-<th style="text-align:right;">
 Mean
 </th>
 <th style="text-align:right;">
 Median
-</th>
-<th style="text-align:right;">
-Max
 </th>
 <th style="text-align:right;">
 Itr/Sec
@@ -950,9 +335,6 @@ Memory Allocated
 </th>
 <th style="text-align:right;">
 Garbage Collections
-</th>
-<th style="text-align:right;">
-Total Time
 </th>
 </tr>
 </thead>
@@ -968,16 +350,10 @@ R
 utils::read.csv()
 </td>
 <td style="text-align:right;">
-843.85us
-</td>
-<td style="text-align:right;">
 952.12us
 </td>
 <td style="text-align:right;">
 940.05us
-</td>
-<td style="text-align:right;">
-1.16ms
 </td>
 <td style="text-align:right;">
 1050.2929412
@@ -988,25 +364,16 @@ utils::read.csv()
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
-47.61ms
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 readr::read_csv()
 </td>
 <td style="text-align:right;">
-2.21ms
-</td>
-<td style="text-align:right;">
 2.61ms
 </td>
 <td style="text-align:right;">
 2.53ms
-</td>
-<td style="text-align:right;">
-3.79ms
 </td>
 <td style="text-align:right;">
 383.0163784
@@ -1017,25 +384,16 @@ readr::read_csv()
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
-130.54ms
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 data.table::fread()
 </td>
 <td style="text-align:right;">
-1.04ms
-</td>
-<td style="text-align:right;">
 1.27ms
 </td>
 <td style="text-align:right;">
 1.22ms
-</td>
-<td style="text-align:right;">
-2.19ms
 </td>
 <td style="text-align:right;">
 785.1606459
@@ -1046,9 +404,6 @@ data.table::fread()
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
-63.68ms
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1058,16 +413,10 @@ Python
 pandas.read_csv()
 </td>
 <td style="text-align:right;">
-29.29ms
-</td>
-<td style="text-align:right;">
 41.94ms
 </td>
 <td style="text-align:right;">
 33.09ms
-</td>
-<td style="text-align:right;">
-285.91ms
 </td>
 <td style="text-align:right;">
 23.8434695
@@ -1077,9 +426,6 @@ pandas.read_csv()
 </td>
 <td style="text-align:right;">
 4
-</td>
-<td style="text-align:right;">
-2.1s
 </td>
 </tr>
 <tr>
@@ -1093,16 +439,10 @@ R
 utils::read.csv()
 </td>
 <td style="text-align:right;">
-5.43ms
-</td>
-<td style="text-align:right;">
 8.89ms
 </td>
 <td style="text-align:right;">
 6.37ms
-</td>
-<td style="text-align:right;">
-122.09ms
 </td>
 <td style="text-align:right;">
 112.4355480
@@ -1113,25 +453,16 @@ utils::read.csv()
 <td style="text-align:right;">
 1
 </td>
-<td style="text-align:right;">
-444.7ms
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 readr::read_csv()
 </td>
 <td style="text-align:right;">
-3.95ms
-</td>
-<td style="text-align:right;">
 4.66ms
 </td>
 <td style="text-align:right;">
 4.52ms
-</td>
-<td style="text-align:right;">
-6.39ms
 </td>
 <td style="text-align:right;">
 214.6646268
@@ -1142,25 +473,16 @@ readr::read_csv()
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
-232.92ms
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 data.table::fread()
 </td>
 <td style="text-align:right;">
-2.07ms
-</td>
-<td style="text-align:right;">
 2.45ms
 </td>
 <td style="text-align:right;">
 2.28ms
-</td>
-<td style="text-align:right;">
-3.99ms
 </td>
 <td style="text-align:right;">
 408.2118171
@@ -1171,9 +493,6 @@ data.table::fread()
 <td style="text-align:right;">
 0
 </td>
-<td style="text-align:right;">
-122.48ms
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1183,16 +502,10 @@ Python
 pandas.read_csv()
 </td>
 <td style="text-align:right;">
-36.22ms
-</td>
-<td style="text-align:right;">
 45.79ms
 </td>
 <td style="text-align:right;">
 39.49ms
-</td>
-<td style="text-align:right;">
-116.6ms
 </td>
 <td style="text-align:right;">
 21.8395993
@@ -1202,9 +515,6 @@ pandas.read_csv()
 </td>
 <td style="text-align:right;">
 5
-</td>
-<td style="text-align:right;">
-2.29s
 </td>
 </tr>
 <tr>
@@ -1218,16 +528,10 @@ R
 utils::read.csv()
 </td>
 <td style="text-align:right;">
-12.95s
-</td>
-<td style="text-align:right;">
 13.89s
 </td>
 <td style="text-align:right;">
 13.85s
-</td>
-<td style="text-align:right;">
-16.27s
 </td>
 <td style="text-align:right;">
 0.0719980
@@ -1238,25 +542,16 @@ utils::read.csv()
 <td style="text-align:right;">
 78
 </td>
-<td style="text-align:right;">
-11.57m
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 readr::read_csv()
 </td>
 <td style="text-align:right;">
-5.01s
-</td>
-<td style="text-align:right;">
 5.62s
 </td>
 <td style="text-align:right;">
 5.5s
-</td>
-<td style="text-align:right;">
-6.9s
 </td>
 <td style="text-align:right;">
 0.1780294
@@ -1267,25 +562,16 @@ readr::read_csv()
 <td style="text-align:right;">
 49
 </td>
-<td style="text-align:right;">
-4.68m
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 data.table::fread()
 </td>
 <td style="text-align:right;">
-2.09s
-</td>
-<td style="text-align:right;">
 2.47s
 </td>
 <td style="text-align:right;">
 2.33s
-</td>
-<td style="text-align:right;">
-3.41s
 </td>
 <td style="text-align:right;">
 0.4052410
@@ -1296,9 +582,6 @@ data.table::fread()
 <td style="text-align:right;">
 20
 </td>
-<td style="text-align:right;">
-2.06m
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -1308,16 +591,10 @@ Python
 pandas.read_csv()
 </td>
 <td style="text-align:right;">
-14.41s
-</td>
-<td style="text-align:right;">
 15.56s
 </td>
 <td style="text-align:right;">
 15.51s
-</td>
-<td style="text-align:right;">
-17.88s
 </td>
 <td style="text-align:right;">
 0.0642673
@@ -1327,9 +604,6 @@ pandas.read_csv()
 </td>
 <td style="text-align:right;">
 21
-</td>
-<td style="text-align:right;">
-12.97m
 </td>
 </tr>
 </tbody>
@@ -1365,7 +639,6 @@ pandas.read_csv()
     labs(x = NULL, y = &quot;Time&quot;,
          title = str_glue(&quot;CSV to Data Frame - {comma(rows)} Rows&quot;),
          caption = &quot;50 runs per call.\nAll .csv files contain 12 columns.&quot;)
-    
   } else {
     plot_fin &lt;- plot_init + 
       facet_wrap(~ rows, nrow = 3, scales = &quot;free_x&quot;) +

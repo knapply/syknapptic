@@ -46,13 +46,6 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;style type=&#34;text/css&#34;&gt;
-.main-container {
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-&lt;/style&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(bench)
 library(kableExtra)
 library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)
@@ -78,624 +71,22 @@ test_df &amp;lt;- read_csv(&amp;quot;http://downloads.majestic.com/majestic_mill
 ## $ PrevTldRank    &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
 ## $ PrevRefSubNets &amp;lt;int&amp;gt; 462861, 451086, 410676, 408692, 303296, 292918,...
 ## $ PrevRefIPs     &amp;lt;int&amp;gt; 2966284, 3049605, 2447455, 2549623, 1138675, 13...&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test_df %&amp;gt;% 
-  head(15) %&amp;gt;% 
-  kable() %&amp;gt;% 
-  kable_styling(bootstrap_options = &amp;quot;condensed&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;table class=&#34;table table-condensed&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-GlobalRank
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-TldRank
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-Domain
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-TLD
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-RefSubNets
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-RefIPs
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-IDN_Domain
-&lt;/th&gt;
-&lt;th style=&#34;text-align:left;&#34;&gt;
-IDN_TLD
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-PrevGlobalRank
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-PrevTldRank
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-PrevRefSubNets
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-PrevRefIPs
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-google.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-463232
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2963708
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-google.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-462861
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2966284
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-facebook.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-451237
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3046847
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-facebook.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-451086
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3049605
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-youtube.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-410764
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2444016
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-youtube.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-410676
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2447455
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-twitter.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-409068
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2546940
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-twitter.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-408692
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2549623
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-microsoft.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-303679
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1139322
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-microsoft.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-303296
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1138675
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-linkedin.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-292966
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1345499
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-linkedin.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-292918
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1347315
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-wikipedia.org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-287420
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1239700
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-wikipedia.org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-287368
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1242296
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-plus.google.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-284103
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1458159
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-plus.google.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-7
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-283866
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1459968
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-instagram.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-277145
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1367140
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-instagram.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-277101
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1368204
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-apple.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-276152
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1047213
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-apple.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-275693
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1047826
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-wordpress.org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-257351
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1263053
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-wordpress.org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-257369
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1263770
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-adobe.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-250908
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-867453
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-adobe.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-250735
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-868300
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-13
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-en.wikipedia.org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-241132
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-914282
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-en.wikipedia.org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-org
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-13
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-241042
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-915553
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-blogspot.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-232193
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-920557
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-blogspot.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-14
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-234782
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-934762
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-15
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-wordpress.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-228778
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-894014
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-wordpress.com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-com
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-15
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-229362
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-898900
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1,000,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 999,990 more rows, and 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;,
+## #   PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;write_csv(test_df, path)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;small&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Small&lt;/h2&gt;
@@ -904,7 +295,7 @@ def pandas_test_big():
     ))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results_df %&amp;gt;%
   select(rows, lang, call, everything(), -expression, -n_itr,
-         -time, -gc, -file_size, -starts_with(&amp;quot;level&amp;quot;)) %&amp;gt;%
+         -time, -gc, -file_size, -min, -max, -total_time, -starts_with(&amp;quot;level&amp;quot;)) %&amp;gt;%
   distinct() %&amp;gt;% 
   arrange(rows, desc(lang)) %&amp;gt;%
   mutate(rows = comma(rows)) %&amp;gt;%
@@ -912,9 +303,9 @@ def pandas_test_big():
          memory_allocated = mem_alloc) %&amp;gt;%
   rename_all(funs(str_to_title(str_replace(., &amp;quot;_&amp;quot;, &amp;quot; &amp;quot;)))) %&amp;gt;%
   kable() %&amp;gt;%
-  kable_styling(bootstrap_options = &amp;quot;condensed&amp;quot;) %&amp;gt;% 
+  kable_styling(bootstrap_options = &amp;quot;condensed&amp;quot;, font_size = 8) %&amp;gt;% 
   collapse_rows(columns = 1:2, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;table class=&#34;table table-condensed&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;table class=&#34;table table-condensed&#34; style=&#34;font-size: 8px; margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
@@ -927,16 +318,10 @@ Language
 Call
 &lt;/th&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
-Min
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
 Mean
 &lt;/th&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
 Median
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Max
 &lt;/th&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
 Itr/Sec
@@ -946,9 +331,6 @@ Memory Allocated
 &lt;/th&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
 Garbage Collections
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Total Time
 &lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
@@ -964,16 +346,10 @@ R
 utils::read.csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-843.85us
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 952.12us
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 940.05us
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.16ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 1050.2929412
@@ -984,25 +360,16 @@ utils::read.csv()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-47.61ms
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 readr::read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-2.21ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 2.61ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 2.53ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3.79ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 383.0163784
@@ -1013,25 +380,16 @@ readr::read_csv()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-130.54ms
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 data.table::fread()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-1.04ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 1.27ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 1.22ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.19ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 785.1606459
@@ -1042,9 +400,6 @@ data.table::fread()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-63.68ms
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
@@ -1054,16 +409,10 @@ Python
 pandas.read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-29.29ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 41.94ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 33.09ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-285.91ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 23.8434695
@@ -1073,9 +422,6 @@ pandas.read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 4
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.1s
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1089,16 +435,10 @@ R
 utils::read.csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-5.43ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 8.89ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 6.37ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-122.09ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 112.4355480
@@ -1109,25 +449,16 @@ utils::read.csv()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 1
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-444.7ms
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 readr::read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-3.95ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 4.66ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 4.52ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6.39ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 214.6646268
@@ -1138,25 +469,16 @@ readr::read_csv()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-232.92ms
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 data.table::fread()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-2.07ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 2.45ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 2.28ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3.99ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 408.2118171
@@ -1167,9 +489,6 @@ data.table::fread()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-122.48ms
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
@@ -1179,16 +498,10 @@ Python
 pandas.read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-36.22ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 45.79ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 39.49ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-116.6ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 21.8395993
@@ -1198,9 +511,6 @@ pandas.read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 5
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.29s
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -1214,16 +524,10 @@ R
 utils::read.csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-12.95s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 13.89s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 13.85s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-16.27s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0.0719980
@@ -1234,25 +538,16 @@ utils::read.csv()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 78
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-11.57m
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 readr::read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-5.01s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 5.62s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 5.5s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6.9s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0.1780294
@@ -1263,25 +558,16 @@ readr::read_csv()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 49
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4.68m
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 data.table::fread()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-2.09s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 2.47s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 2.33s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3.41s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0.4052410
@@ -1292,9 +578,6 @@ data.table::fread()
 &lt;td style=&#34;text-align:right;&#34;&gt;
 20
 &lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.06m
-&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
@@ -1304,16 +587,10 @@ Python
 pandas.read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-14.41s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
 15.56s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 15.51s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-17.88s
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 0.0642673
@@ -1323,9 +600,6 @@ pandas.read_csv()
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 21
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-12.97m
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -1361,7 +635,6 @@ pandas.read_csv()
     labs(x = NULL, y = &amp;quot;Time&amp;quot;,
          title = str_glue(&amp;quot;CSV to Data Frame - {comma(rows)} Rows&amp;quot;),
          caption = &amp;quot;50 runs per call.\nAll .csv files contain 12 columns.&amp;quot;)
-    
   } else {
     plot_fin &amp;lt;- plot_init + 
       facet_wrap(~ rows, nrow = 3, scales = &amp;quot;free_x&amp;quot;) +
