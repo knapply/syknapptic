@@ -31,15 +31,6 @@ path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;test_df &amp;l
     </item>
     
     <item>
-      <title>reticulate: Taking the Dragon for a Test Ride</title>
-      <link>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</link>
-      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</guid>
-      <description>Declaring VariablesDeclaring Variables</description>
-    </item>
-    
-    <item>
       <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
       <link>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>

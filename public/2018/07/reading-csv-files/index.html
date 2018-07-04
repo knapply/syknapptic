@@ -357,8 +357,8 @@ glimpse(test_df)</code></pre>
 <pre class="r"><code>test_df %&gt;% 
   head(15) %&gt;% 
   kable() %&gt;% 
-  kable_styling()</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+  kable_styling(bootstrap_options = &quot;condensed&quot;)</code></pre>
+<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -1187,9 +1187,9 @@ def pandas_test_big():
          memory_allocated = mem_alloc) %&gt;%
   rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
   kable() %&gt;%
-  kable_styling() %&gt;%
+  kable_styling(bootstrap_options = &quot;condensed&quot;) %&gt;% 
   collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -2017,23 +2017,6 @@ path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(pat
           <div class="media">
             
             <div class="media-body">
-              <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/">
-                <h3 class="media-heading">reticulate: Taking the Dragon for a Test Ride</h3>
-              </a>
-              <span class="media-meta">
-                <span class="media-date text-small">
-                  May 5, 2018
-                </span>
-              </span>
-              <div class="media-content hide-xs font-merryweather">Declaring VariablesDeclaring Variables</div>
-            </div>
-            <div style="clear:both;"></div>
-            <hr>
-          </div>
-        
-          <div class="media">
-            
-            <div class="media-body">
               <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/">
                 <h3 class="media-heading">Thoughts on Teaching R and Yet Another Tidyverse Intro</h3>
               </a>
@@ -2058,7 +2041,7 @@ ContextI recently had the opportunity to teach some R coding to colleagues and 
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         4 posts found
+         3 posts found
       </p>
     </div>
   </div>

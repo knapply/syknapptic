@@ -1,24 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Python on syknapptic</title>
-    <link>https://syknapptic.netlify.com/categories/python/</link>
-    <description>Recent content in Python on syknapptic</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 08 May 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://syknapptic.netlify.com/categories/python/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>reticulate: Taking the Dragon for a Test Ride</title>
-      <link>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</link>
-      <pubDate>Tue, 08 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/05/reticulate-taking-the-dragon-for-a-test-ride/</guid>
-      <description>Declaring VariablesDeclaring Variables</description>
-    </item>
-    
-  </channel>
-</rss>

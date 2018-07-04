@@ -80,8 +80,8 @@ glimpse(test_df)</code></pre>
 <pre class="r"><code>test_df %&gt;% 
   head(15) %&gt;% 
   kable() %&gt;% 
-  kable_styling()</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+  kable_styling(bootstrap_options = &quot;condensed&quot;)</code></pre>
+<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:right;">
@@ -910,9 +910,9 @@ def pandas_test_big():
          memory_allocated = mem_alloc) %&gt;%
   rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
   kable() %&gt;%
-  kable_styling() %&gt;%
+  kable_styling(bootstrap_options = &quot;condensed&quot;) %&gt;% 
   collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<table class="table table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
