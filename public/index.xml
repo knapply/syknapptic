@@ -46,6 +46,13 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 
+&lt;style type=&#34;text/css&#34;&gt;
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+&lt;/style&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(bench)
 library(kableExtra)
 library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)
@@ -55,10 +62,8 @@ library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
 &lt;h1&gt;The Test Data&lt;/h1&gt;
 &lt;p&gt;The initial .csv was obtained from &lt;a href=&#34;https://blog.majestic.com/development/majestic-million-csv-daily/&#34;&gt;Majestic Million CSV&lt;/a&gt; &lt;a href=&#34;https://creativecommons.org/licenses/by/3.0/deed.en_US&#34;&gt;&lt;img src=&#34;https://licensebuttons.net/l/by/3.0/88x31.png&#34;&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;
-
-test_df &amp;lt;- read_csv(path)
-
-glimpse(test_df)&lt;/code&gt;&lt;/pre&gt;
+test_df &amp;lt;- read_csv(&amp;quot;http://downloads.majestic.com/majestic_million.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(test_df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Observations: 1,000,000
 ## Variables: 12
 ## $ GlobalRank     &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...
@@ -691,6 +696,7 @@ com
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;write_csv(test_df, path)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;small&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Small&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;small_df &amp;lt;- test_df %&amp;gt;% 
@@ -1369,21 +1375,21 @@ pandas.read_csv()
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;small&amp;quot;) %&amp;gt;%
   plot_times(small_rows)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;medium&amp;quot;) %&amp;gt;%
   plot_times(med_rows)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-19-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-22-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;%
   plot_times(big_rows)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-20-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-23-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;tl;dr&lt;/h1&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   plot_times()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-24-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;session-info&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Session Info&lt;/h1&gt;
@@ -1468,13 +1474,6 @@ pandas.read_csv()
 &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;style type=&#34;text/css&#34;&gt;
-.main-container {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-}
-&lt;/style&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;div id=&#34;programming&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Programming&lt;/h1&gt;

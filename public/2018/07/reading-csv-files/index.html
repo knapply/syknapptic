@@ -30,18 +30,18 @@
     
 
     
-    <meta name="description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .">
-    <meta property="og:description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .">
+    <meta name="description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPython.main-container {max-width: 1600px;margin-left: auto;margin-right: auto;}library(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(&quot;http://downloads.">
+    <meta property="og:description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPython.main-container {max-width: 1600px;margin-left: auto;margin-right: auto;}library(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(&quot;http://downloads.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="Reading .csv Files">
     <meta property="og:url" content="/2018/07/reading-csv-files/">
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .">
+    <meta name="twitter:description" content="The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPython.main-container {max-width: 1600px;margin-left: auto;margin-right: auto;}library(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(&quot;http://downloads.">
     
       <meta name="twitter:creator" content="@syknapptic">
     
@@ -327,6 +327,13 @@ if (!doNotTrack) {
 </ul>
 </div>
 
+<style type="text/css">
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 <pre class="r"><code>library(bench)
 library(kableExtra)
 library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)
@@ -336,10 +343,8 @@ library(tidyverse)</code></pre>
 <h1>The Test Data</h1>
 <p>The initial .csv was obtained from <a href="https://blog.majestic.com/development/majestic-million-csv-daily/">Majestic Million CSV</a> <a href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img src="https://licensebuttons.net/l/by/3.0/88x31.png"></a>.</p>
 <pre class="r"><code>path &lt;- &quot;test-data/majestic_million.csv&quot;
-
-test_df &lt;- read_csv(path)
-
-glimpse(test_df)</code></pre>
+test_df &lt;- read_csv(&quot;http://downloads.majestic.com/majestic_million.csv&quot;)</code></pre>
+<pre class="r"><code>glimpse(test_df)</code></pre>
 <pre><code>## Observations: 1,000,000
 ## Variables: 12
 ## $ GlobalRank     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...
@@ -972,6 +977,7 @@ com
 </tr>
 </tbody>
 </table>
+<pre class="r"><code>write_csv(test_df, path)</code></pre>
 <div id="small" class="section level2">
 <h2>Small</h2>
 <pre class="r"><code>small_df &lt;- test_df %&gt;% 
@@ -1650,21 +1656,21 @@ pandas.read_csv()
 <pre class="r"><code>gg_df %&gt;%
   filter(file_size == &quot;small&quot;) %&gt;%
   plot_times(small_rows)</code></pre>
-<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-18-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>gg_df %&gt;%
   filter(file_size == &quot;medium&quot;) %&gt;%
   plot_times(med_rows)</code></pre>
-<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-19-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-22-1.png" width="1056" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>gg_df %&gt;%
   filter(file_size == &quot;big&quot;) %&gt;%
   plot_times(big_rows)</code></pre>
-<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-20-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-23-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="tldr" class="section level1">
 <h1>tl;dr</h1>
 <pre class="r"><code>gg_df %&gt;%
   plot_times()</code></pre>
-<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-24-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>
@@ -1990,8 +1996,8 @@ pandas.read_csv()
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</div>
+              <div class="media-content hide-xs font-merryweather">The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPython.main-container {max-width: 1600px;margin-left: auto;margin-right: auto;}library(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(&quot;http://downloads.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

@@ -17,8 +17,8 @@
       <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
-      <description>The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;test_df &amp;lt;- read_csv(path)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</description>
+      <description>The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPython.main-container {max-width: 1600px;margin-left: auto;margin-right: auto;}library(bench)library(kableExtra)library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
+path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;test_df &amp;lt;- read_csv(&amp;quot;http://downloads.</description>
     </item>
     
     <item>

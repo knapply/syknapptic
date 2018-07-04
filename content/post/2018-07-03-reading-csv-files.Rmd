@@ -21,6 +21,14 @@ editor_options:
   chunk_output_type: console
 ---
 
+<style type="text/css">
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       fig.width = 11, fig.height = 10,
@@ -42,17 +50,27 @@ library(tidyverse)
 
 The initial .csv was obtained from [Majestic Million CSV](https://blog.majestic.com/development/majestic-million-csv-daily/) [<img src="https://licensebuttons.net/l/by/3.0/88x31.png">](https://creativecommons.org/licenses/by/3.0/deed.en_US).
 
-```{r}
+```{r, eval=FALSE}
 path <- "test-data/majestic_million.csv"
+test_df <- read_csv("http://downloads.majestic.com/majestic_million.csv")
+```
 
+```{r, echo=FALSE}
+path <- "test-data/majestic_million.csv"
 test_df <- read_csv(path)
+```
 
+```{r}
 glimpse(test_df)
 
 test_df %>% 
   head(15) %>% 
   kable() %>% 
   kable_styling(bootstrap_options = "condensed")
+```
+
+```{r, eval=FALSE}
+write_csv(test_df, path)
 ```
 
 ## Small 
