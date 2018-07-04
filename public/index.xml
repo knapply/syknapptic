@@ -621,7 +621,7 @@ pandas.read_csv()
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_times &amp;lt;- function(df, rows = NULL) {
   plot_init &amp;lt;- df %&amp;gt;% 
     ggplot(aes(call, time, fill = lang, color = lang)) +
-    stat_ydensity(size = 1.25) +
+    stat_ydensity(size = 1.15) +
     scale_fill_manual(values = c(&amp;quot;#165CAA&amp;quot;, &amp;quot;#ffde57&amp;quot;)) +
     scale_color_manual(values = c(&amp;quot;#BFC2C5&amp;quot;, &amp;quot;#4584b6&amp;quot;)) +
     guides(color = guide_legend(override.aes = list(size = 1))) +
