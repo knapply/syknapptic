@@ -2,7 +2,7 @@
 title: 'Reading .csv Files'
 draft: false
 author: Brendan Knapp
-date: '2018-07-03'
+date: '2018-07-04'
 slug: reading-csv-files
 categories:
   - data-science-from-scratch
@@ -14,7 +14,8 @@ metaAlignment: center
 coverMeta: out
 summary: Comparing performance of R and Python in reading .csv files to data frames.
 output:
-  blogdown::html_page:
+  html_document:
+  # blogdown::html_page:
     toc: true
     toc_depth: 3
 editor_options: 
@@ -23,43 +24,23 @@ editor_options:
 
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
-<div id="TOC">
-<ul>
-<li><a href="#the-test-data">The Test Data</a><ul>
-<li><a href="#small">Small</a></li>
-<li><a href="#medium">Medium</a></li>
-<li><a href="#big">Big</a></li>
-</ul></li>
-<li><a href="#the-code">The Code</a><ul>
-<li><a href="#r">R</a><ul>
-<li><a href="#base---utilsread.csv">“Base” - <code>utils::read.csv()</code></a></li>
-<li><a href="#readrread_csv"><code>readr::read_csv()</code></a></li>
-<li><a href="#data.tablefread"><code>data.table::fread()</code></a></li>
-</ul></li>
-<li><a href="#python">Python</a><ul>
-<li><a href="#pandas.read_csv"><code>pandas.read_csv()</code></a></li>
-</ul></li>
-</ul></li>
-<li><a href="#the-test">The Test</a></li>
-<li><a href="#the-results">The Results</a></li>
-<li><a href="#tldr">tl;dr</a></li>
-<li><a href="#session-info">Session Info</a><ul>
-<li><a href="#r-1">R</a></li>
-<li><a href="#python-1">Python</a></li>
-</ul></li>
-</ul>
-</div>
 
 <pre class="r"><code>library(bench)
-library(kableExtra)
+library(kableExtra); options(knitr.kable.NA = &quot;&quot;)
 library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)
 library(scales)
 library(tidyverse)</code></pre>
-<div id="the-test-data" class="section level1">
-<h1>The Test Data</h1>
+<div id="the-data" class="section level1">
+<h1>The Data</h1>
 <p>The initial .csv was obtained from <a href="https://blog.majestic.com/development/majestic-million-csv-daily/">Majestic Million CSV</a> <a href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img src="https://licensebuttons.net/l/by/3.0/88x31.png"></a>.</p>
-<pre class="r"><code>path &lt;- &quot;test-data/majestic_million.csv&quot;
-test_df &lt;- read_csv(&quot;http://downloads.majestic.com/majestic_million.csv&quot;)</code></pre>
+<pre class="r"><code>file_url &lt;- &quot;http://downloads.majestic.com/majestic_million.csv&quot;
+temp_file &lt;- tempfile(fileext = &quot;.csv&quot;)
+
+download.file(file_url, destfile = temp_file)
+
+test_df &lt;- read_csv(temp_file)</code></pre>
+<div id="quick-inspection" class="section level4">
+<h4>Quick Inspection</h4>
 <pre class="r"><code>glimpse(test_df)</code></pre>
 <pre><code>## Observations: 1,000,000
 ## Variables: 12
@@ -91,14 +72,23 @@ test_df &lt;- read_csv(&quot;http://downloads.majestic.com/majestic_million.csv&
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
 ## # ... with 999,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
+<pre class="r"><code>test_df %&gt;%                          # 0 NAs anywhere
+  summarise_all(funs(sum(is.na(.))))</code></pre>
+<pre><code>## # A tibble: 1 x 12
+##   GlobalRank TldRank Domain   TLD RefSubNets RefIPs IDN_Domain IDN_TLD
+##        &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;      &lt;int&gt;  &lt;int&gt;      &lt;int&gt;   &lt;int&gt;
+## 1          0       0      0     0          0      0          0       0
+## # ... with 4 more variables: PrevGlobalRank &lt;int&gt;, PrevTldRank &lt;int&gt;,
+## #   PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
 <pre class="r"><code>write_csv(test_df, path)</code></pre>
+</div>
 <div id="small" class="section level2">
 <h2>Small</h2>
 <pre class="r"><code>small_df &lt;- test_df %&gt;% 
-  slice(1:200)
+  slice(1:100)
 
 small_df</code></pre>
-<pre><code>## # A tibble: 200 x 12
+<pre><code>## # A tibble: 100 x 12
 ##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
 ##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
 ##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
@@ -111,20 +101,20 @@ small_df</code></pre>
 ##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
 ##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
-## # ... with 190 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
+## # ... with 90 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
-<pre class="r"><code>small_rows &lt;- nrow(small_df)
-
-path_small_csv &lt;- &quot;test-data/small_csv.csv&quot;
+<pre class="r"><code>(small_rows &lt;- nrow(small_df)) %&gt;% comma() %&gt;% paste(&quot;rows&quot;)</code></pre>
+<pre><code>## [1] &quot;100 rows&quot;</code></pre>
+<pre class="r"><code>path_small_csv &lt;- &quot;test-data/small_csv.csv&quot;
 write_csv(small_df, path_small_csv)</code></pre>
 </div>
 <div id="medium" class="section level2">
 <h2>Medium</h2>
 <pre class="r"><code>medium_df &lt;- test_df %&gt;% 
-  slice(1:2000)
+  slice(1:5000)
 
 medium_df</code></pre>
-<pre><code>## # A tibble: 2,000 x 12
+<pre><code>## # A tibble: 5,000 x 12
 ##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
 ##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
 ##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
@@ -137,53 +127,69 @@ medium_df</code></pre>
 ##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
 ##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
-## # ... with 1,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
+## # ... with 4,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
-<pre class="r"><code>med_rows &lt;- nrow(medium_df)
-
-path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot;
+<pre class="r"><code>(med_rows &lt;- nrow(medium_df ))%&gt;% comma() %&gt;% paste(&quot;rows&quot;)</code></pre>
+<pre><code>## [1] &quot;5,000 rows&quot;</code></pre>
+<pre class="r"><code>path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot;
 write_csv(medium_df, path_medium_csv)</code></pre>
 </div>
 <div id="big" class="section level2">
 <h2>Big</h2>
-<pre class="r"><code>big_df &lt;- bind_rows(test_df, test_df, test_df, test_df)
+<pre class="r"><code>big_df &lt;- test_df %&gt;% 
+  rerun(.n = 5) %&gt;% 
+  bind_rows()
 
-big_df</code></pre>
-<pre><code>## # A tibble: 4,000,000 x 12
-##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
-##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
-##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
-##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
-##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
-##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
-##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
-##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
-##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
-##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
-##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
-## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
-## # ... with 3,999,990 more rows, and 4 more variables:
-## #   PrevGlobalRank &lt;int&gt;, PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;,
-## #   PrevRefIPs &lt;int&gt;</code></pre>
-<pre class="r"><code>big_rows &lt;- nrow(big_df)
-
-path_big_csv &lt;- &quot;test-data/big_csv.csv&quot;
+(big_rows &lt;- nrow(big_df)) %&gt;% comma() %&gt;% paste(&quot;rows&quot;)</code></pre>
+<pre><code>## [1] &quot;5,000,000 rows&quot;</code></pre>
+<pre class="r"><code>path_big_csv &lt;- &quot;test-data/big_csv.csv&quot;
 write_csv(big_df, path_big_csv)</code></pre>
 </div>
 </div>
 <div id="the-code" class="section level1">
 <h1>The Code</h1>
-<p>The code will never be 100% fair, but the following steps were taken to “standardize” functions.</p>
+<p>The following steps were taken to “standardize” code.</p>
+<ul>
+<li>R and Python functions:
 <ol style="list-style-type: decimal">
-<li>The column data types are identified ahead of time via a <code>*_col_specs</code> variable.</li>
-<li>All “numeric” data types are read as <code>double</code>s.</li>
+<li>File paths are assigned to a <code>&quot;*_csv.csv&quot;</code> variable.</li>
+<li>The column data types are identified ahead of time via a <code>*_col_specs</code> variable.
+<ul>
+<li>All “numeric” data are read as <code>double</code> via:
+<ul>
+<li><code>&quot;double&quot;</code> for <code>utils::read.csv()</code> and <code>data.table::fread()</code></li>
+<li><code>readr::col_double()</code> for <code>readr::read_csv()</code></li>
+<li><code>float</code> for <code>pandas.read_csv()</code></li>
+</ul></li>
+<li>This is to standardize numeric usage as my understanding is that both R’s <code>double</code>s and Python’s <code>float</code>s are <code>double</code>s in the underlying C code.</li>
+</ul></li>
 <li>The function assigns the result to an internal <code>df</code> variable.</li>
 <li>The function explicitly <code>return()</code>s the data frame.</li>
-</ol>
+</ol></li>
+<li>.R and .py scripts:
+<ol style="list-style-type: decimal">
+<li>Relevant package are loaded via R’s <code>library()</code> or Python’s <code>import</code>.</li>
+<li>File paths are assigned to a <code>&quot;*_csv.csv&quot;</code> variable.</li>
+<li>The column data types are identified ahead of time via a <code>*_col_specs</code> variable.
+<ul>
+<li>All “numeric” data are read as <code>double</code>s.</li>
+</ul></li>
+<li>Data frames are assigned to a variable upon reading the file.</li>
+</ol></li>
+</ul>
+<pre class="r"><code>inspect_script &lt;- function(path) {
+  contents &lt;- read_lines(path)
+  cat(&quot;```\n&quot;)
+  cat(&quot;# &quot;, path, &quot; &quot;, rep(&quot;=&quot;, (80 - nchar(path) - 2)), &quot;\n&quot;, sep = &quot;&quot;)
+  contents %&gt;% walk(cat, &quot;\n&quot;)
+  cat(&quot;```\n\n&quot;)
+}</code></pre>
 <div id="r" class="section level2">
 <h2>R</h2>
 <div id="base---utilsread.csv" class="section level3">
 <h3>“Base” - <code>utils::read.csv()</code></h3>
+<div id="local-knitr-function" class="section level4">
+<h4>Local <code>knitr</code> Function</h4>
 <pre class="r"><code>base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,
                     &quot;character&quot;, &quot;double&quot;, &quot;double&quot;,
                     &quot;character&quot;, &quot;character&quot;, &quot;double&quot;,
@@ -195,8 +201,45 @@ base_test &lt;- function(path) {
   return(df)
 }</code></pre>
 </div>
+<div id="scripts-to-source-via-system-calls" class="section level4">
+<h4>Scripts to Source via System Calls</h4>
+<pre class="r"><code>base_files &lt;- c(&quot;r/base_test_small.R&quot;, &quot;r/base_test_med.R&quot;, &quot;r/base_test_big.R&quot;)
+
+base_files %&gt;% 
+  walk(inspect_script)</code></pre>
+<pre><code># r/base_test_small.R ===========================================================
+path_small_csv &lt;- &quot;test-data/small_csv.csv&quot; 
+ 
+base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;, 
+                    &quot;character&quot;, &quot;double&quot;, &quot;double&quot;, 
+                    &quot;character&quot;, &quot;character&quot;, &quot;double&quot;, 
+                    &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
+ 
+df &lt;- read.csv(file = path_small_csv, colClasses = base_col_specs) </code></pre>
+<pre><code># r/base_test_med.R =============================================================
+path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot; 
+ 
+base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;, 
+                    &quot;character&quot;, &quot;double&quot;, &quot;double&quot;, 
+                    &quot;character&quot;, &quot;character&quot;, &quot;double&quot;, 
+                    &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
+ 
+df &lt;- read.csv(file = path_medium_csv, colClasses = base_col_specs) </code></pre>
+<pre><code># r/base_test_big.R =============================================================
+path_big_csv &lt;- &quot;test-data/big_csv.csv&quot; 
+ 
+base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;, 
+                    &quot;character&quot;, &quot;double&quot;, &quot;double&quot;, 
+                    &quot;character&quot;, &quot;character&quot;, &quot;double&quot;, 
+                    &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
+ 
+df &lt;- read.csv(file = path_big_csv, colClasses = base_col_specs) </code></pre>
+</div>
+</div>
 <div id="readrread_csv" class="section level3">
 <h3><code>readr::read_csv()</code></h3>
+<div id="local-knitr-function-1" class="section level4">
+<h4>Local <code>knitr</code> Function</h4>
 <pre class="r"><code>library(readr)
 
 readr_col_specs &lt;- list(col_integer(), col_integer(), col_character(),
@@ -210,11 +253,54 @@ readr_test &lt;- function(path) {
   return(df)
 }</code></pre>
 </div>
+<div id="scripts-to-source-via-system-calls-1" class="section level4">
+<h4>Scripts to Source via System Calls</h4>
+<pre class="r"><code>readr_files &lt;- c(&quot;r/readr_test_small.R&quot;, &quot;r/readr_test_med.R&quot;, &quot;r/readr_test_big.R&quot;) 
+
+readr_files %&gt;% 
+  walk(inspect_script)</code></pre>
+<pre><code># r/readr_test_small.R ==========================================================
+library(readr) 
+ 
+path_small_csv &lt;- &quot;test-data/small_csv.csv&quot; 
+ 
+readr_col_specs &lt;- list(col_double(), col_double(), col_character(), 
+                        col_character(), col_double(), col_double(), 
+                        col_character(), col_character(), col_double(), 
+                        col_double(), col_double(), col_double()) 
+ 
+df &lt;- read_csv(file = path_small_csv, col_types = readr_col_specs) </code></pre>
+<pre><code># r/readr_test_med.R ============================================================
+library(readr) 
+ 
+path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot; 
+ 
+readr_col_specs &lt;- list(col_double(), col_double(), col_character(), 
+                        col_character(), col_double(), col_double(), 
+                        col_character(), col_character(), col_double(), 
+                        col_double(), col_double(), col_double()) 
+ 
+df &lt;- read_csv(file = path_medium_csv, col_types = readr_col_specs) </code></pre>
+<pre><code># r/readr_test_big.R ============================================================
+library(readr) 
+ 
+path_big_csv &lt;- &quot;test-data/big_csv.csv&quot; 
+ 
+readr_col_specs &lt;- list(col_double(), col_double(), col_character(), 
+                        col_character(), col_double(), col_double(), 
+                        col_character(), col_character(), col_double(), 
+                        col_double(), col_double(), col_double()) 
+ 
+df &lt;- read_csv(file = path_big_csv, col_types = readr_col_specs) </code></pre>
+</div>
+</div>
 <div id="data.tablefread" class="section level3">
 <h3><code>data.table::fread()</code></h3>
+<div id="local-knitr-function-2" class="section level4">
+<h4>Local <code>knitr</code> Function</h4>
 <pre class="r"><code>library(data.table)
 
-datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,    # same as `utils::read.csv()`
+datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,
                          &quot;character&quot;, &quot;double&quot;, &quot;double&quot;,
                          &quot;character&quot;, &quot;character&quot;, &quot;double&quot;,
                          &quot;double&quot;, &quot;double&quot;, &quot;double&quot;)
@@ -225,94 +311,268 @@ datatable_test &lt;- function(path) {
   return(df)
 }</code></pre>
 </div>
+<div id="scripts-to-source-via-system-calls-2" class="section level4">
+<h4>Scripts to Source via System Calls</h4>
+<pre class="r"><code>datatable_files &lt;- c(&quot;r/datatable_test_small.R&quot;, &quot;r/datatable_test_med.R&quot;,
+                     &quot;r/datatable_test_big.R&quot;) 
+
+datatable_files %&gt;% 
+  walk(inspect_script)</code></pre>
+<pre><code># r/datatable_test_small.R ======================================================
+library(data.table) 
+ 
+path_small_csv &lt;- &quot;test-data/small_csv.csv&quot; 
+ 
+datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;, 
+                         &quot;character&quot;, &quot;double&quot;, &quot;double&quot;, 
+                         &quot;character&quot;, &quot;character&quot;, &quot;double&quot;, 
+                         &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
+ 
+df &lt;- fread(file = path_small_csv, colClasses = datatable_col_specs) </code></pre>
+<pre><code># r/datatable_test_med.R ========================================================
+library(data.table) 
+ 
+path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot; 
+ 
+datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;, 
+                         &quot;character&quot;, &quot;double&quot;, &quot;double&quot;, 
+                         &quot;character&quot;, &quot;character&quot;, &quot;double&quot;, 
+                         &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
+ 
+df &lt;- fread(file = path_medium_csv, colClasses = datatable_col_specs) </code></pre>
+<pre><code># r/datatable_test_big.R ========================================================
+library(data.table) 
+ 
+path_big_csv &lt;- &quot;test-data/big_csv.csv&quot; 
+ 
+datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;, 
+                         &quot;character&quot;, &quot;double&quot;, &quot;double&quot;, 
+                         &quot;character&quot;, &quot;character&quot;, &quot;double&quot;, 
+                         &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
+ 
+df &lt;- fread(file = path_big_csv, colClasses = datatable_col_specs) </code></pre>
+</div>
+</div>
 </div>
 <div id="python" class="section level2">
 <h2>Python</h2>
 <div id="pandas.read_csv" class="section level3">
 <h3><code>pandas.read_csv()</code></h3>
-<pre class="python"><code>from numpy import double
-from pandas import read_csv
+<div id="local-knitr-function-3" class="section level4">
+<h4>Local <code>knitr</code> Function</h4>
+<pre class="python"><code>import pandas
 path_small_csv = &#39;test-data/small_csv.csv&#39;
 path_medium_csv = &#39;test-data/medium_csv.csv&#39;
 path_big_csv = &#39;test-data/big_csv.csv&#39;
-pandas_col_specs = {&#39;GlobalRank&#39;:double, &#39;TldRank&#39;:double, &#39;Domain&#39;:str,
-                    &#39;TLD&#39;:str, &#39;RefSubNets&#39;:double, &#39;RefIPs&#39;:double,
-                    &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:double,
-                    &#39;PrevTldRank&#39;:double, &#39;PrevRefSubNets&#39;:double, &#39;PrevRefIPs&#39;:double}
+pandas_col_specs = {
+  &#39;GlobalRank&#39;:float, &#39;TldRank&#39;:float, &#39;Domain&#39;:str,
+  &#39;TLD&#39;:str, &#39;RefSubNets&#39;:float, &#39;RefIPs&#39;:float,
+  &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:float,
+  &#39;PrevTldRank&#39;:float, &#39;PrevRefSubNets&#39;:float, &#39;PrevRefIPs&#39;:float
+  }
 def pandas_test_small():
-  df = read_csv(filepath_or_buffer = path_small_csv,
+  df = pandas.read_csv(filepath_or_buffer = path_small_csv,
                 dtype = pandas_col_specs, low_memory = False)
   return(df)
   
 def pandas_test_medium():
-  df = read_csv(filepath_or_buffer = path_medium_csv,
+  df = pandas.read_csv(filepath_or_buffer = path_medium_csv,
                 dtype = pandas_col_specs, low_memory = False)
   return(df)
   
 def pandas_test_big():
-  df = read_csv(filepath_or_buffer = path_big_csv,
+  df = pandas.read_csv(filepath_or_buffer = path_big_csv,
                 dtype = pandas_col_specs, low_memory = False)
   return(df)</code></pre>
+</div>
+<div id="scripts-to-source-via-system-calls-3" class="section level4">
+<h4>Scripts to Source via System Calls</h4>
+<pre class="r"><code>pandas_files &lt;- c(&quot;py/pandas_test_small.py&quot;, &quot;py/pandas_test_med.py&quot;,
+                  &quot;py/pandas_test_big.py&quot;)
+
+pandas_files %&gt;% 
+  walk(inspect_script)</code></pre>
+<pre><code># py/pandas_test_small.py =======================================================
+import pandas 
+ 
+path_small_csv = &#39;test-data/small_csv.csv&#39; 
+   
+pandas_col_specs = { 
+  &#39;GlobalRank&#39;:float, &#39;TldRank&#39;:float, &#39;Domain&#39;:str, 
+  &#39;TLD&#39;:str, &#39;RefSubNets&#39;:float, &#39;RefIPs&#39;:float, 
+  &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:float, 
+  &#39;PrevTldRank&#39;:float, &#39;PrevRefSubNets&#39;:float, &#39;PrevRefIPs&#39;:float 
+  } 
+ 
+df = pandas.read_csv(filepath_or_buffer = path_small_csv, 
+                     dtype = pandas_col_specs, low_memory = False) </code></pre>
+<pre><code># py/pandas_test_med.py =========================================================
+import pandas 
+ 
+path_medium_csv = &#39;test-data/medium_csv.csv&#39; 
+ 
+pandas_col_specs = { 
+  &#39;GlobalRank&#39;:float, &#39;TldRank&#39;:float, &#39;Domain&#39;:str, 
+  &#39;TLD&#39;:str, &#39;RefSubNets&#39;:float, &#39;RefIPs&#39;:float, 
+  &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:float, 
+  &#39;PrevTldRank&#39;:float, &#39;PrevRefSubNets&#39;:float, &#39;PrevRefIPs&#39;:float 
+  } 
+ 
+df = pandas.read_csv(filepath_or_buffer = path_medium_csv, 
+                     dtype = pandas_col_specs, low_memory = False) </code></pre>
+<pre><code># py/pandas_test_big.py =========================================================
+import pandas 
+ 
+path_big_csv = &#39;test-data/big_csv.csv&#39; 
+ 
+pandas_col_specs = { 
+  &#39;GlobalRank&#39;:float, &#39;TldRank&#39;:float, &#39;Domain&#39;:str, 
+  &#39;TLD&#39;:str, &#39;RefSubNets&#39;:float, &#39;RefIPs&#39;:float, 
+  &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:float, 
+  &#39;PrevTldRank&#39;:float, &#39;PrevRefSubNets&#39;:float, &#39;PrevRefIPs&#39;:float 
+  } 
+ 
+df = pandas.read_csv(filepath_or_buffer = path_big_csv, 
+                     dtype = pandas_col_specs, low_memory = False) </code></pre>
+</div>
+<div id="reticulatepy_run_stringpandas.read_csv...-convert-false" class="section level4">
+<h4><code>reticulate::py_run_string(&quot;pandas.read_csv(...)&quot;&quot;, convert = FALSE)</code></h4>
+<pre class="r"><code>py_run_string(
+&quot;
+import pandas
+
+path_small_csv = &#39;test-data/small_csv.csv&#39;
+path_medium_csv = &#39;test-data/medium_csv.csv&#39;
+path_big_csv = &#39;test-data/big_csv.csv&#39;
+
+pandas_col_specs = {
+  &#39;GlobalRank&#39;:float, &#39;TldRank&#39;:float, &#39;Domain&#39;:str,
+  &#39;TLD&#39;:str, &#39;RefSubNets&#39;:float, &#39;RefIPs&#39;:float,
+  &#39;IDN_Domain&#39;:str, &#39;IDN_TLD&#39;:str, &#39;PrevGlobalRank&#39;:float,
+  &#39;PrevTldRank&#39;:float, &#39;PrevRefSubNets&#39;:float, &#39;PrevRefIPs&#39;:float
+  }
+
+def retic_pandas_test_small():
+  df = pandas.read_csv(filepath_or_buffer = path_small_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+
+def retic_pandas_test_medium():
+  df = pandas.read_csv(filepath_or_buffer = path_medium_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+
+def retic_pandas_test_big():
+  df = pandas.read_csv(filepath_or_buffer = path_big_csv,
+                dtype = pandas_col_specs, low_memory = False)
+  return(df)
+&quot;, convert = FALSE
+)</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div id="the-test" class="section level1">
 <h1>The Test</h1>
+<pre class="r"><code>n_iterations &lt;- 100</code></pre>
 <pre class="r"><code>results &lt;- mark(
-
   base_test(path_small_csv),
   readr_test(path_small_csv),
   datatable_test(path_small_csv),
+  system(&quot;Rscript r/base_test_small.R&quot;),
+  system(&quot;Rscript r/readr_test_small.R&quot;),
+  system(&quot;Rscript r/datatable_test_small.R&quot;),
+  
+  py$pandas_test_small(),
+  py_run_string(&quot;retic_pandas_test_small()&quot;),
+  system(&quot;python py/pandas_test_small.py&quot;),
 
   base_test(path_medium_csv),
   readr_test(path_medium_csv),
   datatable_test(path_medium_csv),
+  system(&quot;Rscript r/base_test_med.R&quot;),
+  system(&quot;Rscript r/readr_test_med.R&quot;),
+  system(&quot;Rscript r/datatable_test_med.R&quot;),
+  
+  py$pandas_test_medium(),
+  py_run_string(&quot;retic_pandas_test_medium()&quot;),
+  system(&quot;python py/pandas_test_med.py&quot;),
 
   base_test(path_big_csv),
   readr_test(path_big_csv),
   datatable_test(path_big_csv),
+  system(&quot;Rscript r/base_test_big.R&quot;),
+  system(&quot;Rscript r/readr_test_big.R&quot;),
+  system(&quot;Rscript r/datatable_test_big.R&quot;),
 
-  py$pandas_test_small(),
-  py$pandas_test_medium(),
   py$pandas_test_big(),
+  py_run_string(&quot;retic_pandas_test_big()&quot;),
+  system(&quot;python py/pandas_test_big.py&quot;),
 
-  check = FALSE, filter_gc = FALSE, iterations = 50
-
+  check = FALSE, filter_gc = FALSE, iterations = n_iterations
   )</code></pre>
 </div>
 <div id="the-results" class="section level1">
 <h1>The Results</h1>
-<pre class="r"><code>results_df &lt;- results %&gt;%
+<pre class="r"><code>all_exprs &lt;- results$expression
+system_calls &lt;- all_exprs %&gt;% str_subset(&quot;^system\\(&quot;)
+local_r_fun_calls &lt;- all_exprs %&gt;% str_subset(&quot;^(base|readr|datatable)_test\\(&quot;)
+python_eng_calls &lt;- all_exprs %&gt;% str_subset(&quot;^py\\$&quot;)
+reticulate_calls &lt;- all_exprs %&gt;% str_subset(&quot;retic_&quot;)
+knitr_calls &lt;- c(local_r_fun_calls, python_eng_calls, reticulate_calls)
+
+results_df &lt;- results %&gt;%
   unnest() %&gt;%
   mutate(call = case_when(
     str_detect(expression, &quot;base&quot;) ~ &quot;utils::read.csv()&quot;,
     str_detect(expression, &quot;readr&quot;) ~ &quot;readr::read_csv()&quot;,
     str_detect(expression, &quot;datatable&quot;) ~ &quot;data.table::fread()&quot;,
-    str_detect(expression, &quot;py&quot;) ~ &quot;pandas.read_csv()&quot;
-  )) %&gt;%
+    str_detect(expression, &quot;py_run&quot;) ~ &quot;reticulate::py_run_string()&quot;,
+    str_detect(expression, &quot;pandas&quot;) ~ &quot;pandas.read_csv()&quot;
+      ) %&gt;%
+      str_pad(max(nchar(.)), side = &quot;right&quot;) # enforce alignment in plots
+    ) %&gt;%
+  mutate(execution_type = case_when(
+    expression %in% system_calls ~ &quot;Sourced Script&quot;,
+    expression %in% knitr_calls ~ &quot;knitr Engine&quot;
+    )) %&gt;%
   mutate(lang = if_else(str_detect(expression, &quot;pandas&quot;), &quot;Python&quot;, &quot;R&quot;)) %&gt;%
-  mutate(file_size = str_extract(expression, &quot;small|medium|big&quot;)) %&gt;%
+  mutate(file_size = str_extract(expression, &quot;small|med|big&quot;)) %&gt;%
   mutate(rows = case_when(
     file_size == &quot;small&quot; ~ small_rows,
-    file_size == &quot;medium&quot; ~ med_rows,
+    file_size == &quot;med&quot; ~ med_rows,
     file_size == &quot;big&quot; ~ big_rows
-    ))</code></pre>
+    ))
+
+gg_df &lt;- results_df %&gt;%
+  arrange(rows) %&gt;%
+  mutate(rows = rows %&gt;%
+           comma() %&gt;%
+           paste(&quot;Rows&quot;) %&gt;%
+           as_factor()
+        ) %&gt;%
+  group_by(expression) %&gt;% 
+  mutate(med_time = as.numeric(median(time))) %&gt;% 
+  ungroup() %&gt;% 
+  arrange(desc(med_time)) %&gt;%
+  mutate(call = as_factor(call)) %&gt;%
+  arrange(desc(lang)) %&gt;%
+  mutate(lang = as_factor(lang))</code></pre>
 <pre class="r"><code>results_df %&gt;%
   select(rows, lang, call, everything(), -expression, -n_itr,
          -time, -gc, -file_size, -min, -max, -total_time, -starts_with(&quot;level&quot;)) %&gt;%
   distinct() %&gt;% 
   arrange(rows, desc(lang)) %&gt;%
-  mutate(rows = comma(rows)) %&gt;%
   rename(garbage_collections = n_gc, language = lang,
          memory_allocated = mem_alloc) %&gt;%
   rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
-  kable() %&gt;%
+  kable(digits = 2) %&gt;%
   kable_styling(bootstrap_options = &quot;condensed&quot;, font_size = 12) %&gt;% 
   collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
 <table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:right;">
 Rows
 </th>
 <th style="text-align:left;">
@@ -336,33 +596,39 @@ Memory Allocated
 <th style="text-align:right;">
 Garbage Collections
 </th>
+<th style="text-align:left;">
+Execution Type
+</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;vertical-align: top !important;" rowspan="4">
-200
+<td style="text-align:right;vertical-align: top !important;" rowspan="9">
+1e+02
 </td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<td style="text-align:left;vertical-align: top !important;" rowspan="6">
 R
 </td>
 <td style="text-align:left;">
 utils::read.csv()
 </td>
 <td style="text-align:right;">
-952.12us
+847.76us
 </td>
 <td style="text-align:right;">
-940.05us
+837.93us
 </td>
 <td style="text-align:right;">
-1050.2929412
+1179.57
 </td>
 <td style="text-align:right;">
-364.71KB
+355.61KB
 </td>
 <td style="text-align:right;">
 0
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
@@ -370,19 +636,22 @@ utils::read.csv()
 readr::read_csv()
 </td>
 <td style="text-align:right;">
-2.61ms
+3.05ms
 </td>
 <td style="text-align:right;">
-2.53ms
+2.94ms
 </td>
 <td style="text-align:right;">
-383.0163784
+328.21
 </td>
 <td style="text-align:right;">
-115.03KB
+102.79KB
 </td>
 <td style="text-align:right;">
 0
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
@@ -390,88 +659,215 @@ readr::read_csv()
 data.table::fread()
 </td>
 <td style="text-align:right;">
-1.27ms
+1.39ms
 </td>
 <td style="text-align:right;">
-1.22ms
+1.35ms
 </td>
 <td style="text-align:right;">
-785.1606459
+719.44
 </td>
 <td style="text-align:right;">
-284.48KB
+270.38KB
 </td>
 <td style="text-align:right;">
 0
 </td>
+<td style="text-align:left;">
+knitr Engine
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
+utils::read.csv()
+</td>
+<td style="text-align:right;">
+200.5ms
+</td>
+<td style="text-align:right;">
+199.76ms
+</td>
+<td style="text-align:right;">
+4.99
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr::read_csv()
+</td>
+<td style="text-align:right;">
+509.99ms
+</td>
+<td style="text-align:right;">
+508.31ms
+</td>
+<td style="text-align:right;">
+1.96
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data.table::fread()
+</td>
+<td style="text-align:right;">
+292.13ms
+</td>
+<td style="text-align:right;">
+289.25ms
+</td>
+<td style="text-align:right;">
+3.42
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 Python
 </td>
 <td style="text-align:left;">
 pandas.read_csv()
 </td>
 <td style="text-align:right;">
-41.94ms
+41.75ms
 </td>
 <td style="text-align:right;">
-33.09ms
+36.24ms
 </td>
 <td style="text-align:right;">
-23.8434695
+23.95
 </td>
 <td style="text-align:right;">
-1.27MB
+1.24MB
 </td>
 <td style="text-align:right;">
-4
+9
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
-<td style="text-align:left;vertical-align: top !important;" rowspan="4">
-2,000
+<td style="text-align:left;">
+reticulate::py_run_string()
 </td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<td style="text-align:right;">
+2.64ms
+</td>
+<td style="text-align:right;">
+2.5ms
+</td>
+<td style="text-align:right;">
+378.58
+</td>
+<td style="text-align:right;">
+2.75KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+knitr Engine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pandas.read_csv()
+</td>
+<td style="text-align:right;">
+501.38ms
+</td>
+<td style="text-align:right;">
+499.77ms
+</td>
+<td style="text-align:right;">
+1.99
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:right;vertical-align: top !important;" rowspan="9">
+5e+03
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="6">
 R
 </td>
 <td style="text-align:left;">
 utils::read.csv()
 </td>
 <td style="text-align:right;">
-8.89ms
+19.46ms
 </td>
 <td style="text-align:right;">
-6.37ms
+18.46ms
 </td>
 <td style="text-align:right;">
-112.4355480
+51.38
 </td>
 <td style="text-align:right;">
-899.68KB
+1.88MB
 </td>
 <td style="text-align:right;">
 1
 </td>
+<td style="text-align:left;">
+knitr Engine
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
 readr::read_csv()
 </td>
 <td style="text-align:right;">
-4.66ms
+9.15ms
 </td>
 <td style="text-align:right;">
-4.52ms
+8.85ms
 </td>
 <td style="text-align:right;">
-214.6646268
+109.34
 </td>
 <td style="text-align:right;">
-469.39KB
+1.04MB
 </td>
 <td style="text-align:right;">
 0
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
@@ -479,68 +875,192 @@ readr::read_csv()
 data.table::fread()
 </td>
 <td style="text-align:right;">
-2.45ms
+5.15ms
 </td>
 <td style="text-align:right;">
-2.28ms
+4.96ms
 </td>
 <td style="text-align:right;">
-408.2118171
+194.34
 </td>
 <td style="text-align:right;">
-281.12KB
+659.27KB
 </td>
 <td style="text-align:right;">
 0
 </td>
+<td style="text-align:left;">
+knitr Engine
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
+utils::read.csv()
+</td>
+<td style="text-align:right;">
+219.34ms
+</td>
+<td style="text-align:right;">
+218.01ms
+</td>
+<td style="text-align:right;">
+4.56
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr::read_csv()
+</td>
+<td style="text-align:right;">
+517.84ms
+</td>
+<td style="text-align:right;">
+516.13ms
+</td>
+<td style="text-align:right;">
+1.93
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data.table::fread()
+</td>
+<td style="text-align:right;">
+293.34ms
+</td>
+<td style="text-align:right;">
+292.14ms
+</td>
+<td style="text-align:right;">
+3.41
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 Python
 </td>
 <td style="text-align:left;">
 pandas.read_csv()
 </td>
 <td style="text-align:right;">
-45.79ms
+62.13ms
 </td>
 <td style="text-align:right;">
-39.49ms
+56.31ms
 </td>
 <td style="text-align:right;">
-21.8395993
+16.10
 </td>
 <td style="text-align:right;">
-1.82MB
+2.92MB
 </td>
 <td style="text-align:right;">
-5
+9
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
-<td style="text-align:left;vertical-align: top !important;" rowspan="4">
-4,000,000
+<td style="text-align:left;">
+reticulate::py_run_string()
 </td>
-<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<td style="text-align:right;">
+16.06ms
+</td>
+<td style="text-align:right;">
+15.88ms
+</td>
+<td style="text-align:right;">
+62.27
+</td>
+<td style="text-align:right;">
+2.75KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+knitr Engine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pandas.read_csv()
+</td>
+<td style="text-align:right;">
+513.18ms
+</td>
+<td style="text-align:right;">
+511.93ms
+</td>
+<td style="text-align:right;">
+1.95
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:right;vertical-align: top !important;" rowspan="9">
+5e+06
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="6">
 R
 </td>
 <td style="text-align:left;">
 utils::read.csv()
 </td>
 <td style="text-align:right;">
-13.89s
+19.18s
 </td>
 <td style="text-align:right;">
-13.85s
+19.08s
 </td>
 <td style="text-align:right;">
-0.0719980
+0.05
 </td>
 <td style="text-align:right;">
-1.09GB
+1.91GB
 </td>
 <td style="text-align:right;">
-78
+151
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
@@ -548,19 +1068,22 @@ utils::read.csv()
 readr::read_csv()
 </td>
 <td style="text-align:right;">
-5.62s
+6.78s
 </td>
 <td style="text-align:right;">
-5.5s
+6.77s
 </td>
 <td style="text-align:right;">
-0.1780294
+0.15
 </td>
 <td style="text-align:right;">
-797.23MB
+996.51MB
 </td>
 <td style="text-align:right;">
-49
+75
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
@@ -568,105 +1091,228 @@ readr::read_csv()
 data.table::fread()
 </td>
 <td style="text-align:right;">
-2.47s
+2.74s
 </td>
 <td style="text-align:right;">
-2.33s
+2.61s
 </td>
 <td style="text-align:right;">
-0.4052410
+0.36
 </td>
 <td style="text-align:right;">
-510.72MB
+634.8MB
 </td>
 <td style="text-align:right;">
-20
+29
+</td>
+<td style="text-align:left;">
+knitr Engine
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
+utils::read.csv()
+</td>
+<td style="text-align:right;">
+23.47s
+</td>
+<td style="text-align:right;">
+23.26s
+</td>
+<td style="text-align:right;">
+0.04
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+readr::read_csv()
+</td>
+<td style="text-align:right;">
+10.66s
+</td>
+<td style="text-align:right;">
+10.69s
+</td>
+<td style="text-align:right;">
+0.09
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+data.table::fread()
+</td>
+<td style="text-align:right;">
+4.13s
+</td>
+<td style="text-align:right;">
+4.02s
+</td>
+<td style="text-align:right;">
+0.24
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
 Python
 </td>
 <td style="text-align:left;">
 pandas.read_csv()
 </td>
 <td style="text-align:right;">
-15.56s
+20.13s
 </td>
 <td style="text-align:right;">
-15.51s
+19.61s
 </td>
 <td style="text-align:right;">
-0.0642673
+0.05
 </td>
 <td style="text-align:right;">
-1.43GB
+1.79GB
 </td>
 <td style="text-align:right;">
-21
+22
+</td>
+<td style="text-align:left;">
+knitr Engine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+reticulate::py_run_string()
+</td>
+<td style="text-align:right;">
+13.11s
+</td>
+<td style="text-align:right;">
+13.1s
+</td>
+<td style="text-align:right;">
+0.08
+</td>
+<td style="text-align:right;">
+2.75KB
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+knitr Engine
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pandas.read_csv()
+</td>
+<td style="text-align:right;">
+13.6s
+</td>
+<td style="text-align:right;">
+13.57s
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+<td style="text-align:right;">
+264B
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:left;">
+Sourced Script
 </td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>gg_df &lt;- results_df %&gt;%
-  arrange(rows) %&gt;%
-  mutate(rows = rows %&gt;%
-           comma() %&gt;%
-           paste(&quot;Rows&quot;) %&gt;%
-           as_factor()
-        ) %&gt;%
-  group_by(expression) %&gt;% 
-  mutate(med_time = as.numeric(median(time))) %&gt;% 
-  ungroup() %&gt;% 
-  arrange(desc(med_time)) %&gt;%
-  mutate(call = as_factor(call)) %&gt;%
-  arrange(desc(lang)) %&gt;%
-  mutate(lang = as_factor(lang))</code></pre>
-<pre class="r"><code>plot_times &lt;- function(df, rows = NULL) {
+<pre class="r"><code>plot_times &lt;- function(df, plot_title = NULL) {
   plot_init &lt;- df %&gt;% 
     ggplot(aes(call, time, fill = lang, color = lang)) +
-    stat_ydensity(size = 1.15) +
-    scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;)) +
-    scale_color_manual(values = c(&quot;#BFC2C5&quot;, &quot;#4584b6&quot;)) +
-    guides(color = guide_legend(override.aes = list(size = 1))) +
+    stat_ydensity(scale = &quot;width&quot;) +
+    scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;), 
+                      labels = function(x) paste(&quot; &quot;, x, &quot;  &quot;)) +
+    scale_color_manual(values = c(&quot;#BFC2C5&quot;, &quot;#4584b6&quot;),
+                       labels = function(x) paste(&quot; &quot;, x, &quot;  &quot;)) +
+    guides(fill = guide_legend(nrow = 1)) +
     coord_flip() +
     theme_minimal(17, &quot;serif&quot;) +
-    theme(legend.title = element_blank(), legend.position = &quot;top&quot;,
+    theme(legend.title = element_blank(), 
+          legend.position = &quot;top&quot;,
+          legend.key.size = unit(1.5, &quot;lines&quot;),
+          axis.text.y = element_text(&quot;mono&quot;, face = &quot;bold&quot;, hjust = 0),
           plot.caption = element_text(size = 10))
-  
-  if(length(rows)) {
-    plot_fin &lt;- plot_init +
-    labs(x = NULL, y = &quot;Time&quot;,
-         title = str_glue(&quot;CSV to Data Frame - {comma(rows)} Rows&quot;),
-         caption = &quot;50 runs per call.\nAll .csv files contain 12 columns.&quot;)
-  } else {
+  if(length(plot_title)) {
     plot_fin &lt;- plot_init + 
       facet_wrap(~ rows, nrow = 3, scales = &quot;free_x&quot;) +
       labs(x = NULL, y = &quot;Time&quot;,
-         title = str_glue(&quot;CSV to Data Frame - All Tests&quot;),
-         caption = &quot;50 runs per call.\nAll .csv files contain 12 columns.&quot;)
+         title = plot_title,
+         caption = str_glue(&quot;{n_iterations} runs per call.&quot;))
+  } else {
+    n_rows &lt;- sort(df$rows, decreasing = TRUE)[[1]]
+    plot_fin &lt;- plot_init + 
+      facet_wrap(~ execution_type, ncol = 1, scales = &quot;free&quot;) +
+      labs(x = NULL, y = &quot;Time&quot;, title = str_glue(&quot;CSV to Data Frame: {comma(n_rows)}&quot;),
+           caption = str_glue(&quot;{n_iterations} runs per call.&quot;))
   }
   
   plot_fin
 }</code></pre>
-<pre class="r"><code>gg_df %&gt;%
-  filter(file_size == &quot;small&quot;) %&gt;%
-  plot_times(small_rows)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-21-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>gg_df %&gt;%
-  filter(file_size == &quot;medium&quot;) %&gt;%
-  plot_times(med_rows)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-22-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>gg_df %&gt;%
-  filter(file_size == &quot;big&quot;) %&gt;%
-  plot_times(big_rows)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-23-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<div id="code-executed-by-knitrs-language-engine" class="section level2">
+<h2>Code Executed by <code>knitr</code>’s Language Engine</h2>
+<pre class="r"><code>gg_df %&gt;% 
+  filter(execution_type == &quot;knitr Engine&quot;) %&gt;% 
+  plot_times(&quot;knitr Engine&quot;)</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-26-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
+<div id="files-sourced-via-system-command" class="section level2">
+<h2>Files Sourced via System Command</h2>
+<pre class="r"><code>gg_df %&gt;% 
+  filter(execution_type == &quot;Sourced Script&quot;) %&gt;% 
+  plot_times(&quot;Files Sourced via System Command&quot;)</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-27-1.png" width="1056" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="tldr" class="section level1">
 <h1>tl;dr</h1>
 <pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;small&quot;) %&gt;%
   plot_times()</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-24-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;med&quot;) %&gt;% 
+  plot_times()</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-2.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;big&quot;) %&gt;% 
+  plot_times()</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-3.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level1">
 <h1>Session Info</h1>
@@ -720,13 +1366,14 @@ pandas.read_csv()
 </div>
 <div id="python-1" class="section level2">
 <h2>Python</h2>
-<pre class="r"><code>list(py$sys$version, 
-     import(&quot;numpy&quot;)$`__version__`, 
-     import(&quot;pandas&quot;)$`__version__`) %&gt;% 
-  map2(c(&quot;Python:&quot;, &quot;NumPy:&quot;, &quot;Pandas:&quot;), ~ paste(.y, .x)) %&gt;% 
-  walk(cat, &quot;\n&quot;)</code></pre>
-<pre><code>## Python: 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)] 
-## NumPy: 1.12.1 
-## Pandas: 0.22.0</code></pre>
+<pre class="python"><code>import sys
+import numpy
+import pandas  
+print(sys.version)</code></pre>
+<pre><code>## 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]</code></pre>
+<pre class="python"><code>print(numpy.__version__)</code></pre>
+<pre><code>## 1.12.1</code></pre>
+<pre class="python"><code>print(pandas.__version__)</code></pre>
+<pre><code>## 0.22.0</code></pre>
 </div>
 </div>

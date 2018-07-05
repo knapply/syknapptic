@@ -393,8 +393,8 @@ if (!doNotTrack) {
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &lt;- &quot;test-data/majestic_million.csv&quot;test_df &lt;- read_csv(&quot;http://downloads.majestic.com/majestic_million.csv&quot;)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</div>
+              <div class="media-content hide-xs font-merryweather">library(bench)library(kableExtra); options(knitr.kable.NA = &quot;&quot;)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The DataThe initial .csv was obtained from Majestic Million CSV .
+file_url &lt;- &quot;http://downloads.majestic.com/majestic_million.csv&quot;temp_file &lt;- tempfile(fileext = &quot;.csv&quot;)download.file(file_url, destfile = temp_file)test_df &lt;- read_csv(temp_file)Quick Inspectionglimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...## $ TldRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

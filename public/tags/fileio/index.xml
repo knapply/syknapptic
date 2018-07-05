@@ -6,7 +6,7 @@
     <description>Recent content in Fileio on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 03 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://syknapptic.netlify.com/tags/fileio/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,11 +14,11 @@
     <item>
       <title>Reading .csv Files</title>
       <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
-      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
-      <description>The Test DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()The TestThe Resultstl;drSession InfoRPythonlibrary(bench)library(kableExtra)library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)library(scales)library(tidyverse)The Test DataThe initial .csv was obtained from Majestic Million CSV .
-path &amp;lt;- &amp;quot;test-data/majestic_million.csv&amp;quot;test_df &amp;lt;- read_csv(&amp;quot;http://downloads.majestic.com/majestic_million.csv&amp;quot;)glimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, .</description>
+      <description>library(bench)library(kableExtra); options(knitr.kable.NA = &amp;quot;&amp;quot;)library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)library(scales)library(tidyverse)The DataThe initial .csv was obtained from Majestic Million CSV .
+file_url &amp;lt;- &amp;quot;http://downloads.majestic.com/majestic_million.csv&amp;quot;temp_file &amp;lt;- tempfile(fileext = &amp;quot;.csv&amp;quot;)download.file(file_url, destfile = temp_file)test_df &amp;lt;- read_csv(temp_file)Quick Inspectionglimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...## $ TldRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,.</description>
     </item>
     
   </channel>
