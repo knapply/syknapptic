@@ -1,8 +1,8 @@
 ---
-title: 'CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons'
+title: 'Establishing Meaningful Performance Comparisons between R and Python'
 draft: false
 author: Brendan Knapp
-date: '2018-07-04'
+date: '2018-07-08'
 slug: reading-csv-files
 categories:
   - benchmarking
@@ -43,95 +43,194 @@ library(reticulate); use_condaenv("r-py-benchmarks", required = TRUE)
 knitr::include_graphics("http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif")
 ```
 
-
 Performance comparisons between R and Python suck.
 
-Most seem to be run in Jupyter Notebook and many are using Python's `rpy2` library to run poorly optimized R code. I'm not an anti-`for()` loop Nazi (yes, you _can_ use them effectively in R), but thanks to the `base::*apply()` family and their beautiful `purrr::map*()` children, you'll rarely see explicit loops that actually provide the best solution. Unfortunately, some of these comparisons arbitrarily test loops in R where you would _never, ever_ do so. 
+Most seem to be run in Jupyter Notebook and many are using Python's `rpy2` library to run poorly optimized R code. I'm not an anti-`for()` loop Nazi (yes, you _can_ use them effectively in R), but thanks to the `base::*apply()` family and their beautiful `purrr::map*()` children, there are _usually_  better solutions.
 
-In a world of vectorization, it doesn't make any sense why code like this receives such prominent treatment in seemingly every test.....
+Unfortunately, some of these comparisons arbitrarily test loops in R where you would _never, ever_ do so.
+
+In a language where `vector`s serve as the fundamental data structure, it doesn't make any sense why code like this receives such prominent treatment in seemingly every test.....
 
 ```{r}
-some_stuff <- rnorm(2500)
-other_stuff <- vector(mode = "numeric", length(some_stuff))
+normal_distibution <- rnorm(2500)
 
-for(i in some_stuff) {
-  other_stuff[i] <- some_stuff[i] * some_stuff[i]
+bad_R <- vector(mode = "numeric", length = length(normal_distibution))
+
+for(i in normal_distibution) {
+  bad_R[i] <- normal_distibution[i] * normal_distibution[i]
 }
 ```
 
+
 ```{r, echo=FALSE}
-knitr::include_graphics("https://media.giphy.com/media/l4FGnnlIQslHkOPaU/giphy.gif")
+knitr::include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1531062331/oh-no-baby-what-is-you-doin_qyccxq.gif")
 ```
 
-In R, just do this...
+If we _had_ to do something explicitly "loopy", we'd still probably do something like this...
 
 ```{r}
-better_stuff <- some_stuff^2
+not_so_good_R <- vapply(normal_distibution, function(x) x^2, numeric(1))
 
-identical(other_stuff, better_stuff)
+identical(bad_R, not_so_good_R)
 ```
 
-... and in Python, using `reticulate` here, we can do this...
+... but it's still ignoring the fact that `normal_distibution` is a homogeneous collection of `atomic` values: a `vector`.
+
+```{r}
+all(is.vector(normal_distibution), is.atomic(normal_distibution))
+```
+
+With that in mind, just do this...
+
+```{r}
+good_R <- normal_distibution^2
+
+identical(bad_R, good_R)
+```
+
+In Python, using `reticulate` here, we can do this in a whole bunch of ways...
 
 ```{r}
 py_run_string(
-"some_py_stuff = r.some_stuff
-other_py_stuff = {}", convert = FALSE)
+"
+normal_distibution_py = r.normal_distibution
 
-py_loop <- (
-"for i in range(len(some_py_stuff)):
-  other_py_stuff[i] = some_py_stuff[i] * some_py_stuff[i]"
-)
+py_index_results = [None]*len(normal_distibution_py)
+py_append_results = []
+py_dict_results = {}
+
+", convert = FALSE)
+
+py_loop_index <- (
+"for i in range(len(normal_distibution_py)):
+  py_index_results[i] = normal_distibution_py[i]**2
+")
+
+py_loop_append <- (
+"for i in normal_distibution_py:
+  py_append_results.append(i**2)
+")
+
+py_loop_dict <- (
+"for i in range(len(normal_distibution_py)):
+  py_dict_results[i] =  normal_distibution_py[i]**2
+")
 ```
 
-... but the "Good R" code leaves it in the dust.
+... but what runs fastest?
+
+```{r, echo=FALSE}
+bad_R <- vector(mode = "numeric", length(normal_distibution))
+```
 
 ```{r}
-mark(
-  for(i in some_stuff) other_stuff[i] <- some_stuff[i] * some_stuff[i],
-  some_stuff^2,
-  py_run_string(py_loop, convert = FALSE),
+speeds <- mark(
+  for(i in normal_distibution) bad_R[i] <- normal_distibution[i] * normal_distibution[i],
+  vapply(normal_distibution, function(x) x^2, numeric(1)),
+  normal_distibution^2,
+  
+  py_run_string(py_loop_index, convert = FALSE),
+  py_run_string(py_loop_append, convert = FALSE),
+  py_run_string(py_loop_dict, convert = FALSE),
   
   check = FALSE, iterations = 100
-  ) %>%
+  ) 
+```
+
+```{r, echo=FALSE}
+speeds %>%
+  arrange(median) %>% 
   mutate(type = case_when(
     str_detect(expression, "for \\(") ~ "Bad R",
+    str_detect(expression, "vapply") ~ "Not-Good R",
     str_detect(expression, "\\^") ~ "Good R",
     TRUE ~ "Python"
   )) %>% 
-  mutate_at(vars(type, expression), funs(
-    cell_spec(., color = if_else(median == min(median), "green", "black"))
+  mutate(expression = case_when(
+    str_detect(expression, "py_loop_index") ~ py_loop_index,
+    str_detect(expression, "py_loop_append") ~ py_loop_append,
+    str_detect(expression, "py_loop_dict") ~ py_loop_dict,
+    TRUE ~ expression
+  )) %>% 
+  mutate(type = cell_spec(
+    type, color = case_when(row_number() == 1 ~ "blue",
+                            row_number() == 2 ~ "green",
+                            row_number() == 3 ~ "orange",
+                            row_number() == 4 ~ "red",
+                            row_number() == 5 ~ "purple",
+                            row_number() == 6 ~ "black")
     )) %>% 
-  select(type, expression, min, median, max) %>% 
+  mutate(expression = cell_spec(
+    expression, color = case_when(row_number() == 1 ~ "blue",
+                                  row_number() == 2 ~ "green",
+                                  row_number() == 3 ~ "orange",
+                                  row_number() == 4 ~ "red",
+                                  row_number() == 5 ~ "purple",
+                                  row_number() == 6 ~ "black"),
+    bold = TRUE,
+    monospace = TRUE
+    )) %>% 
+  as.data.frame() %>% 
+  `rownames<-`(.$type) %>% 
+  select(expression, mean, median) %>% 
   kable(caption = '"Looping" Comparison', escape = FALSE) %>% 
   kable_styling(full_width = FALSE)
 ```
 
+In these conditions and for this task, we can say two things:
+
+* _All the Python_ solutions are _faster_ than the _poorly-optimized R_ solutions.
+* The _optimized R_ solution is _faster_ than _all the Python_ solutions.
+
 <br>
 
-There are problems with this test. Are we _really_ testing the same thing? Is running the Python code through an R's `reticulate` _actually_ fair? 
+That said, there are issues with this test.
 
-Well, is it less fair than, say, running `rpy2` in Python? After running all these tests, I'd certainly say it's more fair.
+> Are we _really_ testing the same thing?
 
-While some of these articles notify readers that the tests are lacking, some will sell the results as gospel anyways. Others dismiss the merits of rigor entirely. Le sigh.
+In terms of the exact steps that a computer takes to crunch the numbers? No, but that's not very realistic or useful.
 
-It's concerning that, in a field referred to as "Data Science", there are a mountain of articles discussing such poor metrics, along with plenty of practitioners that use them in explaining which language newcomers should learn. (The answer is both, BTW)
+In terms of reaching a desired result? Ignoring that pure Python `list()`s are not inherently homogeneous, yes.
+
+```{r}
+py_run_string("py_append_results = []")
+py_run_string(py_loop_append)
+all.equal(good_R, py$py_append_results)
+```
+
+> Is running the Python code through R's `reticulate` _actually_ fair? 
+
+Is it less fair than running `rpy2` in Python? After running all these tests, I'd say that `reticulate` is _fairer_.
+
+> Is this even a good task to compare performance?
+
+Based on the number of articles including a similar test, you'd almost think so. I don't entirely agree as that's a bit reductionist. The R solution is only the variable followed by _literally two characters_: `^2`.
+
+But, I _do_ think it serves as a great example of fundamental differences in the languages.
+
+Considering the above results and simplicity of the good R solution, it illustrates how easily you can place arbitrary handicaps on the R code, which you'll find in many of these "language war" articles. I hope that's simply due to ignorant assumptions, but then the author shouldn't be writing an article claiming authority.
+
+<br>
+
+While there are articles that do make a point of notifying the reader that the tests are lacking, some will sell the results as gospel anyways. Others seem to dismiss the merits of rigor entirely.
+
+In a field referred to as "Data Science", the mountain of articles discussing such poor metrics is concerning. Consider how many newcomers seem to use them when choosing a language in which to invest their time, and often money. (BTW the answer is both, but get great at one before tackling the other).
 
 ```{r, echo=FALSE}
 knitr::include_graphics("http://www.reactiongifs.com/r/bth.gif")
 ```
 
+With that in mind, _what would an objective comparison look like_?
 
+Here's a barrage of tests applied to a task that's both __common in practice__ and _common in these "language war" tests_: reading a .csv file to a data frame. This is a task for which many articles assert Python's superiority, despite the evidence here and elsewhere.
 
-With that in mind, what _would_ an objective comparison look like?
+However, the __real__ goal is to experiment with methods that can be used to make future tests involving less trivial tasks more objective _and thus more useful to everyone_.
 
-Here's a barrage of tests applied to a task that's both a) common in practice and b) common in these "language war" tests: reading a .csv file to a data frame. This is a task where many articles assert Python's superiority, despite the evidence here and elsewhere.
+I also think it's a cool demonstration of some RStudio and {`reticulate`} sweetness. I hope it spurs some interest in how awesome a multilingual workflow can be.
 
-However, the __real__ goal is to experiment with methods that can be used to make tests involving less trivial tasks more objective _and more useful to everyone_.
+If you want to skip a pile of monotonous code, go ahead and jump to the [results](#execution-times). 
 
-That said, I thnk it's a cool demonstration of some RStudio and {`reticulate`} sweetness. Hopefully, this spurs some interest in how awesome a multilingual workflow can be.
-
-If you want skip a pile of monotonous code, go ahead and jump to the [results](#execution-times).
+Otherwise, the entire workflow is here to scrutinize...
 
 ```{r}
 library(bench)
@@ -194,10 +293,9 @@ write_csv(test_df, path)
 The "small" .csv consists of the first 100 rows.
 
 ```{r}
-small_df <- test_df %>% 
-  slice(1:100)
+(small_df <- test_df %>% 
+  slice(1:100))
 
-small_df
 (small_rows <- nrow(small_df)) %>% comma() %>% cat("rows")
 
 path_small_csv <- "test-data/small_csv.csv"
@@ -209,10 +307,9 @@ write_csv(small_df, path_small_csv)
 The "medium" .csv consists of the first 5,000 rows.
 
 ```{r}
-medium_df <- test_df %>% 
-  slice(1:5000)
+(medium_df <- test_df %>% 
+  slice(1:5000))
 
-medium_df
 (med_rows <- nrow(medium_df)) %>% comma() %>% cat("rows")
 
 path_medium_csv <- "test-data/medium_csv.csv"
@@ -224,9 +321,9 @@ write_csv(medium_df, path_medium_csv)
 The "big" .csv stacks all 1,000,000 rows five times, creating a 5,000,000 row .csv.
 
 ```{r}
-big_df <- test_df %>% 
+(big_df <- test_df %>% 
   rerun(.n = 5) %>% 
-  bind_rows()
+  bind_rows())
 
 (big_rows <- nrow(big_df)) %>% comma() %>% cat("rows")
 
@@ -661,7 +758,7 @@ gg_df %>%
   plot_times(facet = dependency_status)
 ```
 
-At 5,000,000 million rows, we've reached the area where time differences would _actually_ be noticeable.
+At 5,000,000 million rows, we've reached the size where time differences would _actually_ be noticeable.
 
 The advantage of`utils::read.csv()`'s lack of dependencies has run its course and `pandas.read_csv()` is faster in nearly every case.
 
@@ -699,7 +796,7 @@ gg_df %>%
 
 # Appendices
 
-## Controlling for Dependency Load Times
+## Dependency Load Times
 
 ```{r}
 package_results_df %>%
@@ -797,9 +894,10 @@ write_rds(rstudio_info, "test-data/rstudio_info.rds")
 ```{r}
 read_rds("test-data/rstudio_info.rds") %>% 
   as_tibble() %>% 
-  select(mode, version) %>% 
+  mutate(IDE = "RStudio") %>% 
+  select(IDE, mode, version) %>% 
   mutate(version = as.character(version)) %>% 
-  kable(caption = "RStudio Version") %>% 
+  kable() %>% 
   kable_styling(full_width = FALSE)
 ```
 
@@ -841,7 +939,7 @@ ram_df <- system("wmic MEMORYCHIP get BankLabel, Capacity, Speed", intern = TRUE
 
 ram_df %>% 
   rename_all(str_replace, "L", " L") %>% 
-  kable(caption = "Memory Specs") %>% 
+  kable() %>% 
   kable_styling(full_width = FALSE)
 
 ram_df %>% 
@@ -849,7 +947,7 @@ ram_df %>%
          Speed = as.numeric(Speed)) %>% 
   summarise(`Capacity in GB` = sum(Capacity),
             `Speed in MHz` = unique(Speed)) %>% 
-  kable(caption = "Memory Summary") %>% 
+  kable() %>% 
   kable_styling(full_width = FALSE)
 ```
 

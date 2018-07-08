@@ -6,18 +6,18 @@
     <description>Recent content in Fileio on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://syknapptic.netlify.com/tags/fileio/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons</title>
+      <title>Establishing Meaningful Performance Comparisons between R and Python</title>
       <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
-      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
-      <description>R vs PythonReproducible Python EnvironmentThe DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()Dependencies OnlyThe TestInitial CarpentryThe ResultsExecution Timestl;drAppendicesControlling for Dependency Load TimesSummary TablesEnvironmentIDERPythonSystemR vs PythonPerformance comparisons between R and Python suck.
+      <description>R vs PythonReproducible Python EnvironmentThe DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()Dependencies OnlyThe TestInitial CarpentryThe ResultsExecution Timestl;drAppendicesDependency Load TimesSummary TablesEnvironmentIDERPythonSystemR vs PythonPerformance comparisons between R and Python suck.
 Most seem to be run in Jupyter Notebook and many are using Python’s rpy2 library to run poorly optimized R code.</description>
     </item>
     

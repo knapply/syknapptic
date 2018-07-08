@@ -1,8 +1,8 @@
 ---
-title: 'CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons'
+title: 'Establishing Meaningful Performance Comparisons between R and Python'
 draft: false
 author: Brendan Knapp
-date: '2018-07-04'
+date: '2018-07-08'
 slug: reading-csv-files
 categories:
   - benchmarking
@@ -52,7 +52,7 @@ editor_options:
 </ul></li>
 <li><a href="#tldr"><strong><em>tl;dr</em></strong></a></li>
 <li><a href="#appendices">Appendices</a><ul>
-<li><a href="#controlling-for-dependency-load-times">Controlling for Dependency Load Times</a></li>
+<li><a href="#dependency-load-times">Dependency Load Times</a></li>
 <li><a href="#summary-tables">Summary Tables</a></li>
 </ul></li>
 <li><a href="#environment">Environment</a><ul>
@@ -68,136 +68,209 @@ editor_options:
 <h1>R vs Python</h1>
 <p><img src="http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif" style="display: block; margin: auto;" /></p>
 <p>Performance comparisons between R and Python suck.</p>
-<p>Most seem to be run in Jupyter Notebook and many are using Python’s <code>rpy2</code> library to run poorly optimized R code. I’m not an anti-<code>for()</code> loop Nazi (yes, you <em>can</em> use them effectively in R), but thanks to the <code>base::*apply()</code> family and their beautiful <code>purrr::map*()</code> children, you’ll rarely see explicit loops that actually provide the best solution. Unfortunately, some of these comparisons arbitrarily test loops in R where you would <em>never, ever</em> do so.</p>
-<p>In a world of vectorization, it doesn’t make any sense why code like this receives such prominent treatment in seemingly every test…..</p>
-<pre class="r"><code>some_stuff &lt;- rnorm(2500)
-other_stuff &lt;- vector(mode = &quot;numeric&quot;, length(some_stuff))
+<p>Most seem to be run in Jupyter Notebook and many are using Python’s <code>rpy2</code> library to run poorly optimized R code. I’m not an anti-<code>for()</code> loop Nazi (yes, you <em>can</em> use them effectively in R), but thanks to the <code>base::*apply()</code> family and their beautiful <code>purrr::map*()</code> children, there are <em>usually</em> better solutions.</p>
+<p>Unfortunately, some of these comparisons arbitrarily test loops in R where you would <em>never, ever</em> do so.</p>
+<p>In a language where <code>vector</code>s serve as the fundamental data structure, it doesn’t make any sense why code like this receives such prominent treatment in seemingly every test…..</p>
+<pre class="r"><code>normal_distibution &lt;- rnorm(2500)
 
-for(i in some_stuff) {
-  other_stuff[i] &lt;- some_stuff[i] * some_stuff[i]
+bad_R &lt;- vector(mode = &quot;numeric&quot;, length = length(normal_distibution))
+
+for(i in normal_distibution) {
+  bad_R[i] &lt;- normal_distibution[i] * normal_distibution[i]
 }</code></pre>
-<p><img src="https://media.giphy.com/media/l4FGnnlIQslHkOPaU/giphy.gif" style="display: block; margin: auto;" /></p>
-<p>In R, just do this…</p>
-<pre class="r"><code>better_stuff &lt;- some_stuff^2
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1531062331/oh-no-baby-what-is-you-doin_qyccxq.gif" style="display: block; margin: auto;" /></p>
+<p>If we <em>had</em> to do something explicitly “loopy”, we’d still probably do something like this…</p>
+<pre class="r"><code>not_so_good_R &lt;- vapply(normal_distibution, function(x) x^2, numeric(1))
 
-identical(other_stuff, better_stuff)</code></pre>
+identical(bad_R, not_so_good_R)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>… and in Python, using <code>reticulate</code> here, we can do this…</p>
-<pre class="r"><code>py_run_string(
-&quot;some_py_stuff = r.some_stuff
-other_py_stuff = {}&quot;, convert = FALSE)
+<p>… but it’s still ignoring the fact that <code>normal_distibution</code> is a homogeneous collection of <code>atomic</code> values: a <code>vector</code>.</p>
+<pre class="r"><code>all(is.vector(normal_distibution), is.atomic(normal_distibution))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>With that in mind, just do this…</p>
+<pre class="r"><code>good_R &lt;- normal_distibution^2
 
-py_loop &lt;- (
-&quot;for i in range(len(some_py_stuff)):
-  other_py_stuff[i] = some_py_stuff[i] * some_py_stuff[i]&quot;
-)</code></pre>
-<p>… but the “Good R” code leaves it in the dust.</p>
-<pre class="r"><code>mark(
-  for(i in some_stuff) other_stuff[i] &lt;- some_stuff[i] * some_stuff[i],
-  some_stuff^2,
-  py_run_string(py_loop, convert = FALSE),
+identical(bad_R, good_R)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>In Python, using <code>reticulate</code> here, we can do this in a whole bunch of ways…</p>
+<pre class="r"><code>py_run_string(
+&quot;
+normal_distibution_py = r.normal_distibution
+
+py_index_results = [None]*len(normal_distibution_py)
+py_append_results = []
+py_dict_results = {}
+
+&quot;, convert = FALSE)
+
+py_loop_index &lt;- (
+&quot;for i in range(len(normal_distibution_py)):
+  py_index_results[i] = normal_distibution_py[i]**2
+&quot;)
+
+py_loop_append &lt;- (
+&quot;for i in normal_distibution_py:
+  py_append_results.append(i**2)
+&quot;)
+
+py_loop_dict &lt;- (
+&quot;for i in range(len(normal_distibution_py)):
+  py_dict_results[i] =  normal_distibution_py[i]**2
+&quot;)</code></pre>
+<p>… but what runs fastest?</p>
+<pre class="r"><code>speeds &lt;- mark(
+  for(i in normal_distibution) bad_R[i] &lt;- normal_distibution[i] * normal_distibution[i],
+  vapply(normal_distibution, function(x) x^2, numeric(1)),
+  normal_distibution^2,
+  
+  py_run_string(py_loop_index, convert = FALSE),
+  py_run_string(py_loop_append, convert = FALSE),
+  py_run_string(py_loop_dict, convert = FALSE),
   
   check = FALSE, iterations = 100
-  ) %&gt;%
-  mutate(type = case_when(
-    str_detect(expression, &quot;for \\(&quot;) ~ &quot;Bad R&quot;,
-    str_detect(expression, &quot;\\^&quot;) ~ &quot;Good R&quot;,
-    TRUE ~ &quot;Python&quot;
-  )) %&gt;% 
-  mutate_at(vars(type, expression), funs(
-    cell_spec(., color = if_else(median == min(median), &quot;green&quot;, &quot;black&quot;))
-    )) %&gt;% 
-  select(type, expression, min, median, max) %&gt;% 
-  kable(caption = &#39;&quot;Looping&quot; Comparison&#39;, escape = FALSE) %&gt;% 
-  kable_styling(full_width = FALSE)</code></pre>
+  ) </code></pre>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-6">Table 1: </span>“Looping” Comparison
+<span id="tab:unnamed-chunk-10">Table 1: </span>“Looping” Comparison
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;">
-type
 </th>
 <th style="text-align:left;">
 expression
 </th>
 <th style="text-align:right;">
-min
+mean
 </th>
 <th style="text-align:right;">
 median
-</th>
-<th style="text-align:right;">
-max
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span style="     color: black;">Bad R</span>
+<span style="     color: blue;">Good R</span>
 </td>
 <td style="text-align:left;">
-<span style="     color: black;">for (i in some_stuff) other_stuff[i] &lt;- some_stuff[i] * some_stuff[i]</span>
+<span style=" font-weight: bold;  font-family: monospace;  color: blue;">normal_distibution^2</span>
 </td>
 <td style="text-align:right;">
-47.17ms
-</td>
-<td style="text-align:right;">
-59.49ms
-</td>
-<td style="text-align:right;">
-209.93ms
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span style="     color: green;">Good R</span>
-</td>
-<td style="text-align:left;">
-<span style="     color: green;">some_stuff^2</span>
-</td>
-<td style="text-align:right;">
-1.18us
+1.92us
 </td>
 <td style="text-align:right;">
 1.58us
 </td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: green;">Python</span>
+</td>
+<td style="text-align:left;">
+<span style=" font-weight: bold;  font-family: monospace;  color: green;">for i in normal_distibution_py:<br> py_append_results.append(i**2)<br></span>
+</td>
 <td style="text-align:right;">
-10.27us
+991.8us
+</td>
+<td style="text-align:right;">
+931.56us
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<span style="     color: black;">Python</span>
+<span style="     color: orange;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style="     color: black;">py_run_string(py_loop, convert = FALSE)</span>
+<span style=" font-weight: bold;  font-family: monospace;  color: orange;">for i in range(len(normal_distibution_py)):<br> py_index_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-656.2us
+969.38us
 </td>
 <td style="text-align:right;">
-681.48us
+947.75us
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: red;">Python</span>
+</td>
+<td style="text-align:left;">
+<span style=" font-weight: bold;  font-family: monospace;  color: red;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-1.35ms
+1.14ms
+</td>
+<td style="text-align:right;">
+1.07ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: purple;">Not-Good R</span>
+</td>
+<td style="text-align:left;">
+<span style=" font-weight: bold;  font-family: monospace;  color: purple;">vapply(normal_distibution, function(x) x^2, numeric(1))</span>
+</td>
+<td style="text-align:right;">
+2.06ms
+</td>
+<td style="text-align:right;">
+1.81ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: black;">Bad R</span>
+</td>
+<td style="text-align:left;">
+<span style=" font-weight: bold;  font-family: monospace;  color: black;">for (i in normal_distibution) bad_R[i] &lt;- normal_distibution[i] * normal…</span>
+</td>
+<td style="text-align:right;">
+56.75ms
+</td>
+<td style="text-align:right;">
+52.35ms
 </td>
 </tr>
 </tbody>
 </table>
+<p>In these conditions and for this task, we can say two things:</p>
+<ul>
+<li><em>All the Python</em> solutions are <em>faster</em> than the <em>poorly-optimized R</em> solutions.</li>
+<li>The <em>optimized R</em> solution is <em>faster</em> than <em>all the Python</em> solutions.</li>
+</ul>
 <p><br></p>
-<p>There are problems with this test. Are we <em>really</em> testing the same thing? Is running the Python code through an R’s <code>reticulate</code> <em>actually</em> fair?</p>
-<p>Well, is it less fair than, say, running <code>rpy2</code> in Python? After running all these tests, I’d certainly say it’s more fair.</p>
-<p>While some of these articles notify readers that the tests are lacking, some will sell the results as gospel anyways. Others dismiss the merits of rigor entirely. Le sigh.</p>
-<p>It’s concerning that, in a field referred to as “Data Science”, there are a mountain of articles discussing such poor metrics, along with plenty of practitioners that use them in explaining which language newcomers should learn. (The answer is both, BTW)</p>
+<p>That said, there are issues with this test.</p>
+<blockquote>
+<p>Are we <em>really</em> testing the same thing?</p>
+</blockquote>
+<p>In terms of the exact steps that a computer takes to crunch the numbers? No, but that’s not very realistic or useful.</p>
+<p>In terms of reaching a desired result? Ignoring that pure Python <code>list()</code>s are not inherently homogeneous, yes.</p>
+<pre class="r"><code>py_run_string(&quot;py_append_results = []&quot;)
+py_run_string(py_loop_append)
+all.equal(good_R, py$py_append_results)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<blockquote>
+<p>Is running the Python code through R’s <code>reticulate</code> <em>actually</em> fair?</p>
+</blockquote>
+<p>Is it less fair than running <code>rpy2</code> in Python? After running all these tests, I’d say that <code>reticulate</code> is <em>fairer</em>.</p>
+<blockquote>
+<p>Is this even a good task to compare performance?</p>
+</blockquote>
+<p>Based on the number of articles including a similar test, you’d almost think so. I don’t entirely agree as that’s a bit reductionist. The R solution is only the variable followed by <em>literally two characters</em>: <code>^2</code>.</p>
+<p>But, I <em>do</em> think it serves as a great example of fundamental differences in the languages.</p>
+<p>Considering the above results and simplicity of the good R solution, it illustrates how easily you can place arbitrary handicaps on the R code, which you’ll find in many of these “language war” articles. I hope that’s simply due to ignorant assumptions, but then the author shouldn’t be writing an article claiming authority.</p>
+<p><br></p>
+<p>While there are articles that do make a point of notifying the reader that the tests are lacking, some will sell the results as gospel anyways. Others seem to dismiss the merits of rigor entirely.</p>
+<p>In a field referred to as “Data Science”, the mountain of articles discussing such poor metrics is concerning. Consider how many newcomers seem to use them when choosing a language in which to invest their time, and often money. (BTW the answer is both, but get great at one before tackling the other).</p>
 <p><img src="http://www.reactiongifs.com/r/bth.gif" style="display: block; margin: auto;" /></p>
-<p>With that in mind, what <em>would</em> an objective comparison look like?</p>
-<p>Here’s a barrage of tests applied to a task that’s both a) common in practice and b) common in these “language war” tests: reading a .csv file to a data frame. This is a task where many articles assert Python’s superiority, despite the evidence here and elsewhere.</p>
-<p>However, the <strong>real</strong> goal is to experiment with methods that can be used to make tests involving less trivial tasks more objective <em>and more useful to everyone</em>.</p>
-<p>That said, I thnk it’s a cool demonstration of some RStudio and {<code>reticulate</code>} sweetness. Hopefully, this spurs some interest in how awesome a multilingual workflow can be.</p>
-<p>If you want skip a pile of monotonous code, go ahead and jump to the <a href="#execution-times">results</a>.</p>
+<p>With that in mind, <em>what would an objective comparison look like</em>?</p>
+<p>Here’s a barrage of tests applied to a task that’s both <strong>common in practice</strong> and <em>common in these “language war” tests</em>: reading a .csv file to a data frame. This is a task for which many articles assert Python’s superiority, despite the evidence here and elsewhere.</p>
+<p>However, the <strong>real</strong> goal is to experiment with methods that can be used to make future tests involving less trivial tasks more objective <em>and thus more useful to everyone</em>.</p>
+<p>I also think it’s a cool demonstration of some RStudio and {<code>reticulate</code>} sweetness. I hope it spurs some interest in how awesome a multilingual workflow can be.</p>
+<p>If you want to skip a pile of monotonous code, go ahead and jump to the <a href="#execution-times">results</a>.</p>
+<p>Otherwise, the entire workflow is here to scrutinize…</p>
 <pre class="r"><code>library(bench)
 library(kableExtra); options(knitr.kable.NA = &quot;&quot;)
 library(scales)
@@ -361,10 +434,8 @@ PrevRefIPs
 <div id="small" class="section level2">
 <h2>Small</h2>
 <p>The “small” .csv consists of the first 100 rows.</p>
-<pre class="r"><code>small_df &lt;- test_df %&gt;% 
-  slice(1:100)
-
-small_df</code></pre>
+<pre class="r"><code>(small_df &lt;- test_df %&gt;% 
+  slice(1:100))</code></pre>
 <pre><code>## # A tibble: 100 x 12
 ##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
 ##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
@@ -388,10 +459,8 @@ write_csv(small_df, path_small_csv)</code></pre>
 <div id="medium" class="section level2">
 <h2>Medium</h2>
 <p>The “medium” .csv consists of the first 5,000 rows.</p>
-<pre class="r"><code>medium_df &lt;- test_df %&gt;% 
-  slice(1:5000)
-
-medium_df</code></pre>
+<pre class="r"><code>(medium_df &lt;- test_df %&gt;% 
+  slice(1:5000))</code></pre>
 <pre><code>## # A tibble: 5,000 x 12
 ##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
 ##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
@@ -415,11 +484,26 @@ write_csv(medium_df, path_medium_csv)</code></pre>
 <div id="big" class="section level2">
 <h2>Big</h2>
 <p>The “big” .csv stacks all 1,000,000 rows five times, creating a 5,000,000 row .csv.</p>
-<pre class="r"><code>big_df &lt;- test_df %&gt;% 
+<pre class="r"><code>(big_df &lt;- test_df %&gt;% 
   rerun(.n = 5) %&gt;% 
-  bind_rows()
-
-(big_rows &lt;- nrow(big_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
+  bind_rows())</code></pre>
+<pre><code>## # A tibble: 5,000,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 4,999,990 more rows, and 4 more variables:
+## #   PrevGlobalRank &lt;int&gt;, PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;,
+## #   PrevRefIPs &lt;int&gt;</code></pre>
+<pre class="r"><code>(big_rows &lt;- nrow(big_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
 <pre><code>## 5,000,000 rows</code></pre>
 <pre class="r"><code>path_big_csv &lt;- &quot;test-data/big_csv.csv&quot;
 write_csv(big_df, path_big_csv)</code></pre>
@@ -959,19 +1043,19 @@ plot_times &lt;- function(df, ...) {
 <pre class="r"><code>gg_df %&gt;%
   filter(file_size == &quot;small&quot;) %&gt;% 
   plot_times(facet = dependency_status)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-37-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png" width="3300" style="display: block; margin: auto;" /></p>
 <p>At 5,000 rows, R is still faster. In the sourced scripts, <code>pandas.read_csv()</code> has nearly caught up with <code>utils::read.csv()</code>, but <code>data.table::fread()</code> has pulled away.</p>
 <pre class="r"><code>gg_df %&gt;%
   filter(file_size == &quot;med&quot;) %&gt;% 
   plot_times(facet = dependency_status)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-38-1.png" width="3300" style="display: block; margin: auto;" /></p>
-<p>At 5,000,000 million rows, we’ve reached the area where time differences would <em>actually</em> be noticeable.</p>
+<p><img src="/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-43-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p>At 5,000,000 million rows, we’ve reached the size where time differences would <em>actually</em> be noticeable.</p>
 <p>The advantage of<code>utils::read.csv()</code>’s lack of dependencies has run its course and <code>pandas.read_csv()</code> is faster in nearly every case.</p>
 <p>That said, <code>readr::read_csv()</code> is still faster than <code>pandas.read_csv()</code> and, like most R users would expect, <code>data.table::fread()</code> is by far the fastest.</p>
 <pre class="r"><code>gg_df %&gt;%
   filter(file_size == &quot;big&quot;) %&gt;% 
   plot_times(facet = dependency_status)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-39-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-44-1.png" width="3300" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="tldr" class="section level1">
@@ -994,18 +1078,18 @@ plot_times &lt;- function(df, ...) {
   facet_grid(rows ~ dependency_status, scales = &quot;free&quot;, switch = &quot;y&quot;, space = &quot;free&quot;) +
   labs(x = NULL, y = &quot;Time&quot;, title = &quot;R vs Python - CSV to Data Frame&quot;,
        caption = &quot;12 columns, 100 iterations each&quot;)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-40-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-45-1.png" width="3300" style="display: block; margin: auto;" /></p>
 </div>
 <div id="appendices" class="section level1">
 <h1>Appendices</h1>
-<div id="controlling-for-dependency-load-times" class="section level2">
-<h2>Controlling for Dependency Load Times</h2>
+<div id="dependency-load-times" class="section level2">
+<h2>Dependency Load Times</h2>
 <pre class="r"><code>package_results_df %&gt;%
   mutate(lang = if_else(str_detect(expression, &quot;pandas&quot;), &quot;Python&quot;, &quot;R&quot;)) %&gt;% 
   arrange(desc(lang)) %&gt;%
   mutate(lang = as_factor(lang)) %&gt;% 
   plot_times()</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-41-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-46-1.png" width="3300" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>gg_df %&gt;% 
   filter(dependency_status == &quot;Dependencies Loaded on Execution (Sourced Script)&quot;) %&gt;%  
   filter(file_size == &quot;big&quot;) %&gt;% 
@@ -1032,7 +1116,7 @@ plot_times &lt;- function(df, ...) {
        title = &quot;Comparing Sourced Scripts with Adjusted Python Times&quot;,
        caption = str_glue(&quot;CSV to Data Frame: {comma(big_rows)} Rows&quot;)
       )</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p><img src="/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-47-1.png" width="3300" style="display: block; margin: auto;" /></p>
 </div>
 <div id="summary-tables" class="section level2">
 <h2>Summary Tables</h2>
@@ -1059,7 +1143,7 @@ plot_times &lt;- function(df, ...) {
   collapse_rows(columns = 1:3, valign = &quot;top&quot;)</code></pre>
 <table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-43">Table 2: </span>CSV to Data Frame Times
+<span id="tab:unnamed-chunk-48">Table 2: </span>CSV to Data Frame Times
 </caption>
 <thead>
 <tr>
@@ -1776,7 +1860,7 @@ unknown
   collapse_rows(columns = 1, valign = &quot;top&quot;)</code></pre>
 <table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-44">Table 3: </span>Dependency Load Times
+<span id="tab:unnamed-chunk-49">Table 3: </span>Dependency Load Times
 </caption>
 <thead>
 <tr>
@@ -1882,16 +1966,17 @@ Itr/Sec
 write_rds(rstudio_info, &quot;test-data/rstudio_info.rds&quot;)</code></pre>
 <pre class="r"><code>read_rds(&quot;test-data/rstudio_info.rds&quot;) %&gt;% 
   as_tibble() %&gt;% 
-  select(mode, version) %&gt;% 
+  mutate(IDE = &quot;RStudio&quot;) %&gt;% 
+  select(IDE, mode, version) %&gt;% 
   mutate(version = as.character(version)) %&gt;% 
-  kable(caption = &quot;RStudio Version&quot;) %&gt;% 
+  kable() %&gt;% 
   kable_styling(full_width = FALSE)</code></pre>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>
-<span id="tab:unnamed-chunk-46">Table 4: </span>RStudio Version
-</caption>
 <thead>
 <tr>
+<th style="text-align:left;">
+IDE
+</th>
 <th style="text-align:left;">
 mode
 </th>
@@ -1902,6 +1987,9 @@ version
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+RStudio
+</td>
 <td style="text-align:left;">
 desktop
 </td>
@@ -1990,12 +2078,9 @@ print(sys.version)</code></pre>
 
 ram_df %&gt;% 
   rename_all(str_replace, &quot;L&quot;, &quot; L&quot;) %&gt;% 
-  kable(caption = &quot;Memory Specs&quot;) %&gt;% 
+  kable() %&gt;% 
   kable_styling(full_width = FALSE)</code></pre>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>
-<span id="tab:unnamed-chunk-50">Table 5: </span>Memory Specs
-</caption>
 <thead>
 <tr>
 <th style="text-align:left;">
@@ -2039,12 +2124,9 @@ DIMM B
          Speed = as.numeric(Speed)) %&gt;% 
   summarise(`Capacity in GB` = sum(Capacity),
             `Speed in MHz` = unique(Speed)) %&gt;% 
-  kable(caption = &quot;Memory Summary&quot;) %&gt;% 
+  kable() %&gt;% 
   kable_styling(full_width = FALSE)</code></pre>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<caption>
-<span id="tab:unnamed-chunk-50">Table 5: </span>Memory Summary
-</caption>
 <thead>
 <tr>
 <th style="text-align:right;">

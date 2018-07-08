@@ -6,15 +6,15 @@
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Jul 2018 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://syknapptic.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons</title>
+      <title>Establishing Meaningful Performance Comparisons between R and Python</title>
       <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
-      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
       <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
@@ -47,7 +47,7 @@
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;&lt;strong&gt;&lt;em&gt;tl;dr&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#appendices&#34;&gt;Appendices&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#controlling-for-dependency-load-times&#34;&gt;Controlling for Dependency Load Times&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#dependency-load-times&#34;&gt;Dependency Load Times&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#summary-tables&#34;&gt;Summary Tables&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#environment&#34;&gt;Environment&lt;/a&gt;&lt;ul&gt;
@@ -63,136 +63,209 @@
 &lt;h1&gt;R vs Python&lt;/h1&gt;
 &lt;p&gt;&lt;img src=&#34;http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Performance comparisons between R and Python suck.&lt;/p&gt;
-&lt;p&gt;Most seem to be run in Jupyter Notebook and many are using Python’s &lt;code&gt;rpy2&lt;/code&gt; library to run poorly optimized R code. I’m not an anti-&lt;code&gt;for()&lt;/code&gt; loop Nazi (yes, you &lt;em&gt;can&lt;/em&gt; use them effectively in R), but thanks to the &lt;code&gt;base::*apply()&lt;/code&gt; family and their beautiful &lt;code&gt;purrr::map*()&lt;/code&gt; children, you’ll rarely see explicit loops that actually provide the best solution. Unfortunately, some of these comparisons arbitrarily test loops in R where you would &lt;em&gt;never, ever&lt;/em&gt; do so.&lt;/p&gt;
-&lt;p&gt;In a world of vectorization, it doesn’t make any sense why code like this receives such prominent treatment in seemingly every test…..&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;some_stuff &amp;lt;- rnorm(2500)
-other_stuff &amp;lt;- vector(mode = &amp;quot;numeric&amp;quot;, length(some_stuff))
+&lt;p&gt;Most seem to be run in Jupyter Notebook and many are using Python’s &lt;code&gt;rpy2&lt;/code&gt; library to run poorly optimized R code. I’m not an anti-&lt;code&gt;for()&lt;/code&gt; loop Nazi (yes, you &lt;em&gt;can&lt;/em&gt; use them effectively in R), but thanks to the &lt;code&gt;base::*apply()&lt;/code&gt; family and their beautiful &lt;code&gt;purrr::map*()&lt;/code&gt; children, there are &lt;em&gt;usually&lt;/em&gt; better solutions.&lt;/p&gt;
+&lt;p&gt;Unfortunately, some of these comparisons arbitrarily test loops in R where you would &lt;em&gt;never, ever&lt;/em&gt; do so.&lt;/p&gt;
+&lt;p&gt;In a language where &lt;code&gt;vector&lt;/code&gt;s serve as the fundamental data structure, it doesn’t make any sense why code like this receives such prominent treatment in seemingly every test…..&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;normal_distibution &amp;lt;- rnorm(2500)
 
-for(i in some_stuff) {
-  other_stuff[i] &amp;lt;- some_stuff[i] * some_stuff[i]
+bad_R &amp;lt;- vector(mode = &amp;quot;numeric&amp;quot;, length = length(normal_distibution))
+
+for(i in normal_distibution) {
+  bad_R[i] &amp;lt;- normal_distibution[i] * normal_distibution[i]
 }&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/l4FGnnlIQslHkOPaU/giphy.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;In R, just do this…&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;better_stuff &amp;lt;- some_stuff^2
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1531062331/oh-no-baby-what-is-you-doin_qyccxq.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;If we &lt;em&gt;had&lt;/em&gt; to do something explicitly “loopy”, we’d still probably do something like this…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;not_so_good_R &amp;lt;- vapply(normal_distibution, function(x) x^2, numeric(1))
 
-identical(other_stuff, better_stuff)&lt;/code&gt;&lt;/pre&gt;
+identical(bad_R, not_so_good_R)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;… and in Python, using &lt;code&gt;reticulate&lt;/code&gt; here, we can do this…&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(
-&amp;quot;some_py_stuff = r.some_stuff
-other_py_stuff = {}&amp;quot;, convert = FALSE)
+&lt;p&gt;… but it’s still ignoring the fact that &lt;code&gt;normal_distibution&lt;/code&gt; is a homogeneous collection of &lt;code&gt;atomic&lt;/code&gt; values: a &lt;code&gt;vector&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all(is.vector(normal_distibution), is.atomic(normal_distibution))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;With that in mind, just do this…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;good_R &amp;lt;- normal_distibution^2
 
-py_loop &amp;lt;- (
-&amp;quot;for i in range(len(some_py_stuff)):
-  other_py_stuff[i] = some_py_stuff[i] * some_py_stuff[i]&amp;quot;
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;… but the “Good R” code leaves it in the dust.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mark(
-  for(i in some_stuff) other_stuff[i] &amp;lt;- some_stuff[i] * some_stuff[i],
-  some_stuff^2,
-  py_run_string(py_loop, convert = FALSE),
+identical(bad_R, good_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In Python, using &lt;code&gt;reticulate&lt;/code&gt; here, we can do this in a whole bunch of ways…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(
+&amp;quot;
+normal_distibution_py = r.normal_distibution
+
+py_index_results = [None]*len(normal_distibution_py)
+py_append_results = []
+py_dict_results = {}
+
+&amp;quot;, convert = FALSE)
+
+py_loop_index &amp;lt;- (
+&amp;quot;for i in range(len(normal_distibution_py)):
+  py_index_results[i] = normal_distibution_py[i]**2
+&amp;quot;)
+
+py_loop_append &amp;lt;- (
+&amp;quot;for i in normal_distibution_py:
+  py_append_results.append(i**2)
+&amp;quot;)
+
+py_loop_dict &amp;lt;- (
+&amp;quot;for i in range(len(normal_distibution_py)):
+  py_dict_results[i] =  normal_distibution_py[i]**2
+&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… but what runs fastest?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;speeds &amp;lt;- mark(
+  for(i in normal_distibution) bad_R[i] &amp;lt;- normal_distibution[i] * normal_distibution[i],
+  vapply(normal_distibution, function(x) x^2, numeric(1)),
+  normal_distibution^2,
+  
+  py_run_string(py_loop_index, convert = FALSE),
+  py_run_string(py_loop_append, convert = FALSE),
+  py_run_string(py_loop_dict, convert = FALSE),
   
   check = FALSE, iterations = 100
-  ) %&amp;gt;%
-  mutate(type = case_when(
-    str_detect(expression, &amp;quot;for \\(&amp;quot;) ~ &amp;quot;Bad R&amp;quot;,
-    str_detect(expression, &amp;quot;\\^&amp;quot;) ~ &amp;quot;Good R&amp;quot;,
-    TRUE ~ &amp;quot;Python&amp;quot;
-  )) %&amp;gt;% 
-  mutate_at(vars(type, expression), funs(
-    cell_spec(., color = if_else(median == min(median), &amp;quot;green&amp;quot;, &amp;quot;black&amp;quot;))
-    )) %&amp;gt;% 
-  select(type, expression, min, median, max) %&amp;gt;% 
-  kable(caption = &amp;#39;&amp;quot;Looping&amp;quot; Comparison&amp;#39;, escape = FALSE) %&amp;gt;% 
-  kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+  ) &lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;caption&gt;
-&lt;span id=&#34;tab:unnamed-chunk-6&#34;&gt;Table 1: &lt;/span&gt;“Looping” Comparison
+&lt;span id=&#34;tab:unnamed-chunk-10&#34;&gt;Table 1: &lt;/span&gt;“Looping” Comparison
 &lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
-type
 &lt;/th&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
 expression
 &lt;/th&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
-min
+mean
 &lt;/th&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
 median
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-max
 &lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34;     color: black;&#34;&gt;Bad R&lt;/span&gt;
+&lt;span style=&#34;     color: blue;&#34;&gt;Good R&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34;     color: black;&#34;&gt;for (i in some_stuff) other_stuff[i] &amp;lt;- some_stuff[i] * some_stuff[i]&lt;/span&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: blue;&#34;&gt;normal_distibution^2&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-47.17ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-59.49ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-209.93ms
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34;     color: green;&#34;&gt;Good R&lt;/span&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34;     color: green;&#34;&gt;some_stuff^2&lt;/span&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.18us
+1.92us
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 1.58us
 &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: green;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: green;&#34;&gt;for i in normal_distibution_py:&lt;br&gt; py_append_results.append(i**2)&lt;br&gt;&lt;/span&gt;
+&lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-10.27us
+991.8us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+931.56us
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34;     color: black;&#34;&gt;Python&lt;/span&gt;
+&lt;span style=&#34;     color: orange;&#34;&gt;Python&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34;     color: black;&#34;&gt;py_run_string(py_loop, convert = FALSE)&lt;/span&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: orange;&#34;&gt;for i in range(len(normal_distibution_py)):&lt;br&gt; py_index_results[i] = normal_distibution_py[i]**2&lt;br&gt;&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-656.2us
+969.38us
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-681.48us
+947.75us
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: red;&#34;&gt;for i in range(len(normal_distibution_py)):&lt;br&gt; py_dict_results[i] = normal_distibution_py[i]**2&lt;br&gt;&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-1.35ms
+1.14ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.07ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: purple;&#34;&gt;Not-Good R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: purple;&#34;&gt;vapply(normal_distibution, function(x) x^2, numeric(1))&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.06ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.81ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: black;&#34;&gt;Bad R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: black;&#34;&gt;for (i in normal_distibution) bad_R[i] &amp;lt;- normal_distibution[i] * normal…&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+56.75ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52.35ms
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;p&gt;In these conditions and for this task, we can say two things:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;All the Python&lt;/em&gt; solutions are &lt;em&gt;faster&lt;/em&gt; than the &lt;em&gt;poorly-optimized R&lt;/em&gt; solutions.&lt;/li&gt;
+&lt;li&gt;The &lt;em&gt;optimized R&lt;/em&gt; solution is &lt;em&gt;faster&lt;/em&gt; than &lt;em&gt;all the Python&lt;/em&gt; solutions.&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;There are problems with this test. Are we &lt;em&gt;really&lt;/em&gt; testing the same thing? Is running the Python code through an R’s &lt;code&gt;reticulate&lt;/code&gt; &lt;em&gt;actually&lt;/em&gt; fair?&lt;/p&gt;
-&lt;p&gt;Well, is it less fair than, say, running &lt;code&gt;rpy2&lt;/code&gt; in Python? After running all these tests, I’d certainly say it’s more fair.&lt;/p&gt;
-&lt;p&gt;While some of these articles notify readers that the tests are lacking, some will sell the results as gospel anyways. Others dismiss the merits of rigor entirely. Le sigh.&lt;/p&gt;
-&lt;p&gt;It’s concerning that, in a field referred to as “Data Science”, there are a mountain of articles discussing such poor metrics, along with plenty of practitioners that use them in explaining which language newcomers should learn. (The answer is both, BTW)&lt;/p&gt;
+&lt;p&gt;That said, there are issues with this test.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Are we &lt;em&gt;really&lt;/em&gt; testing the same thing?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In terms of the exact steps that a computer takes to crunch the numbers? No, but that’s not very realistic or useful.&lt;/p&gt;
+&lt;p&gt;In terms of reaching a desired result? Ignoring that pure Python &lt;code&gt;list()&lt;/code&gt;s are not inherently homogeneous, yes.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(&amp;quot;py_append_results = []&amp;quot;)
+py_run_string(py_loop_append)
+all.equal(good_R, py$py_append_results)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Is running the Python code through R’s &lt;code&gt;reticulate&lt;/code&gt; &lt;em&gt;actually&lt;/em&gt; fair?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Is it less fair than running &lt;code&gt;rpy2&lt;/code&gt; in Python? After running all these tests, I’d say that &lt;code&gt;reticulate&lt;/code&gt; is &lt;em&gt;fairer&lt;/em&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Is this even a good task to compare performance?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Based on the number of articles including a similar test, you’d almost think so. I don’t entirely agree as that’s a bit reductionist. The R solution is only the variable followed by &lt;em&gt;literally two characters&lt;/em&gt;: &lt;code&gt;^2&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;But, I &lt;em&gt;do&lt;/em&gt; think it serves as a great example of fundamental differences in the languages.&lt;/p&gt;
+&lt;p&gt;Considering the above results and simplicity of the good R solution, it illustrates how easily you can place arbitrary handicaps on the R code, which you’ll find in many of these “language war” articles. I hope that’s simply due to ignorant assumptions, but then the author shouldn’t be writing an article claiming authority.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;While there are articles that do make a point of notifying the reader that the tests are lacking, some will sell the results as gospel anyways. Others seem to dismiss the merits of rigor entirely.&lt;/p&gt;
+&lt;p&gt;In a field referred to as “Data Science”, the mountain of articles discussing such poor metrics is concerning. Consider how many newcomers seem to use them when choosing a language in which to invest their time, and often money. (BTW the answer is both, but get great at one before tackling the other).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;http://www.reactiongifs.com/r/bth.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;With that in mind, what &lt;em&gt;would&lt;/em&gt; an objective comparison look like?&lt;/p&gt;
-&lt;p&gt;Here’s a barrage of tests applied to a task that’s both a) common in practice and b) common in these “language war” tests: reading a .csv file to a data frame. This is a task where many articles assert Python’s superiority, despite the evidence here and elsewhere.&lt;/p&gt;
-&lt;p&gt;However, the &lt;strong&gt;real&lt;/strong&gt; goal is to experiment with methods that can be used to make tests involving less trivial tasks more objective &lt;em&gt;and more useful to everyone&lt;/em&gt;.&lt;/p&gt;
-&lt;p&gt;That said, I thnk it’s a cool demonstration of some RStudio and {&lt;code&gt;reticulate&lt;/code&gt;} sweetness. Hopefully, this spurs some interest in how awesome a multilingual workflow can be.&lt;/p&gt;
-&lt;p&gt;If you want skip a pile of monotonous code, go ahead and jump to the &lt;a href=&#34;#execution-times&#34;&gt;results&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;With that in mind, &lt;em&gt;what would an objective comparison look like&lt;/em&gt;?&lt;/p&gt;
+&lt;p&gt;Here’s a barrage of tests applied to a task that’s both &lt;strong&gt;common in practice&lt;/strong&gt; and &lt;em&gt;common in these “language war” tests&lt;/em&gt;: reading a .csv file to a data frame. This is a task for which many articles assert Python’s superiority, despite the evidence here and elsewhere.&lt;/p&gt;
+&lt;p&gt;However, the &lt;strong&gt;real&lt;/strong&gt; goal is to experiment with methods that can be used to make future tests involving less trivial tasks more objective &lt;em&gt;and thus more useful to everyone&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;I also think it’s a cool demonstration of some RStudio and {&lt;code&gt;reticulate&lt;/code&gt;} sweetness. I hope it spurs some interest in how awesome a multilingual workflow can be.&lt;/p&gt;
+&lt;p&gt;If you want to skip a pile of monotonous code, go ahead and jump to the &lt;a href=&#34;#execution-times&#34;&gt;results&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Otherwise, the entire workflow is here to scrutinize…&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(bench)
 library(kableExtra); options(knitr.kable.NA = &amp;quot;&amp;quot;)
 library(scales)
@@ -356,10 +429,8 @@ PrevRefIPs
 &lt;div id=&#34;small&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Small&lt;/h2&gt;
 &lt;p&gt;The “small” .csv consists of the first 100 rows.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;small_df &amp;lt;- test_df %&amp;gt;% 
-  slice(1:100)
-
-small_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(small_df &amp;lt;- test_df %&amp;gt;% 
+  slice(1:100))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 100 x 12
 ##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
 ##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
@@ -383,10 +454,8 @@ write_csv(small_df, path_small_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;medium&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Medium&lt;/h2&gt;
 &lt;p&gt;The “medium” .csv consists of the first 5,000 rows.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;medium_df &amp;lt;- test_df %&amp;gt;% 
-  slice(1:5000)
-
-medium_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(medium_df &amp;lt;- test_df %&amp;gt;% 
+  slice(1:5000))&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## # A tibble: 5,000 x 12
 ##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
 ##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
@@ -410,11 +479,26 @@ write_csv(medium_df, path_medium_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;big&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Big&lt;/h2&gt;
 &lt;p&gt;The “big” .csv stacks all 1,000,000 rows five times, creating a 5,000,000 row .csv.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;big_df &amp;lt;- test_df %&amp;gt;% 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(big_df &amp;lt;- test_df %&amp;gt;% 
   rerun(.n = 5) %&amp;gt;% 
-  bind_rows()
-
-(big_rows &amp;lt;- nrow(big_df)) %&amp;gt;% comma() %&amp;gt;% cat(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+  bind_rows())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 5,000,000 x 12
+##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
+##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
+##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
+##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
+##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
+##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
+##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
+##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
+##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
+##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
+##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
+## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+## # ... with 4,999,990 more rows, and 4 more variables:
+## #   PrevGlobalRank &amp;lt;int&amp;gt;, PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;,
+## #   PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(big_rows &amp;lt;- nrow(big_df)) %&amp;gt;% comma() %&amp;gt;% cat(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 5,000,000 rows&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;path_big_csv &amp;lt;- &amp;quot;test-data/big_csv.csv&amp;quot;
 write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
@@ -954,19 +1038,19 @@ plot_times &amp;lt;- function(df, ...) {
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;small&amp;quot;) %&amp;gt;% 
   plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-37-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;At 5,000 rows, R is still faster. In the sourced scripts, &lt;code&gt;pandas.read_csv()&lt;/code&gt; has nearly caught up with &lt;code&gt;utils::read.csv()&lt;/code&gt;, but &lt;code&gt;data.table::fread()&lt;/code&gt; has pulled away.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;med&amp;quot;) %&amp;gt;% 
   plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-38-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;At 5,000,000 million rows, we’ve reached the area where time differences would &lt;em&gt;actually&lt;/em&gt; be noticeable.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;At 5,000,000 million rows, we’ve reached the size where time differences would &lt;em&gt;actually&lt;/em&gt; be noticeable.&lt;/p&gt;
 &lt;p&gt;The advantage of&lt;code&gt;utils::read.csv()&lt;/code&gt;’s lack of dependencies has run its course and &lt;code&gt;pandas.read_csv()&lt;/code&gt; is faster in nearly every case.&lt;/p&gt;
 &lt;p&gt;That said, &lt;code&gt;readr::read_csv()&lt;/code&gt; is still faster than &lt;code&gt;pandas.read_csv()&lt;/code&gt; and, like most R users would expect, &lt;code&gt;data.table::fread()&lt;/code&gt; is by far the fastest.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
   plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-39-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-44-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
@@ -989,18 +1073,18 @@ plot_times &amp;lt;- function(df, ...) {
   facet_grid(rows ~ dependency_status, scales = &amp;quot;free&amp;quot;, switch = &amp;quot;y&amp;quot;, space = &amp;quot;free&amp;quot;) +
   labs(x = NULL, y = &amp;quot;Time&amp;quot;, title = &amp;quot;R vs Python - CSV to Data Frame&amp;quot;,
        caption = &amp;quot;12 columns, 100 iterations each&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-40-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;appendices&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Appendices&lt;/h1&gt;
-&lt;div id=&#34;controlling-for-dependency-load-times&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Controlling for Dependency Load Times&lt;/h2&gt;
+&lt;div id=&#34;dependency-load-times&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dependency Load Times&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_results_df %&amp;gt;%
   mutate(lang = if_else(str_detect(expression, &amp;quot;pandas&amp;quot;), &amp;quot;Python&amp;quot;, &amp;quot;R&amp;quot;)) %&amp;gt;% 
   arrange(desc(lang)) %&amp;gt;%
   mutate(lang = as_factor(lang)) %&amp;gt;% 
   plot_times()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-41-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-46-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;% 
   filter(dependency_status == &amp;quot;Dependencies Loaded on Execution (Sourced Script)&amp;quot;) %&amp;gt;%  
   filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
@@ -1027,7 +1111,7 @@ plot_times &amp;lt;- function(df, ...) {
        title = &amp;quot;Comparing Sourced Scripts with Adjusted Python Times&amp;quot;,
        caption = str_glue(&amp;quot;CSV to Data Frame: {comma(big_rows)} Rows&amp;quot;)
       )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-47-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summary-tables&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Summary Tables&lt;/h2&gt;
@@ -1054,7 +1138,7 @@ plot_times &amp;lt;- function(df, ...) {
   collapse_rows(columns = 1:3, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table table-condensed&#34; style=&#34;font-size: 12px; margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;caption style=&#34;font-size: initial !important;&#34;&gt;
-&lt;span id=&#34;tab:unnamed-chunk-43&#34;&gt;Table 2: &lt;/span&gt;CSV to Data Frame Times
+&lt;span id=&#34;tab:unnamed-chunk-48&#34;&gt;Table 2: &lt;/span&gt;CSV to Data Frame Times
 &lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -1771,7 +1855,7 @@ unknown
   collapse_rows(columns = 1, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table table-condensed&#34; style=&#34;font-size: 12px; margin-left: auto; margin-right: auto;&#34;&gt;
 &lt;caption style=&#34;font-size: initial !important;&#34;&gt;
-&lt;span id=&#34;tab:unnamed-chunk-44&#34;&gt;Table 3: &lt;/span&gt;Dependency Load Times
+&lt;span id=&#34;tab:unnamed-chunk-49&#34;&gt;Table 3: &lt;/span&gt;Dependency Load Times
 &lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -1877,16 +1961,17 @@ Itr/Sec
 write_rds(rstudio_info, &amp;quot;test-data/rstudio_info.rds&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;read_rds(&amp;quot;test-data/rstudio_info.rds&amp;quot;) %&amp;gt;% 
   as_tibble() %&amp;gt;% 
-  select(mode, version) %&amp;gt;% 
+  mutate(IDE = &amp;quot;RStudio&amp;quot;) %&amp;gt;% 
+  select(IDE, mode, version) %&amp;gt;% 
   mutate(version = as.character(version)) %&amp;gt;% 
-  kable(caption = &amp;quot;RStudio Version&amp;quot;) %&amp;gt;% 
+  kable() %&amp;gt;% 
   kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;caption&gt;
-&lt;span id=&#34;tab:unnamed-chunk-46&#34;&gt;Table 4: &lt;/span&gt;RStudio Version
-&lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+IDE
+&lt;/th&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
 mode
 &lt;/th&gt;
@@ -1897,6 +1982,9 @@ version
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+RStudio
+&lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
 desktop
 &lt;/td&gt;
@@ -1985,12 +2073,9 @@ print(sys.version)&lt;/code&gt;&lt;/pre&gt;
 
 ram_df %&amp;gt;% 
   rename_all(str_replace, &amp;quot;L&amp;quot;, &amp;quot; L&amp;quot;) %&amp;gt;% 
-  kable(caption = &amp;quot;Memory Specs&amp;quot;) %&amp;gt;% 
+  kable() %&amp;gt;% 
   kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;caption&gt;
-&lt;span id=&#34;tab:unnamed-chunk-50&#34;&gt;Table 5: &lt;/span&gt;Memory Specs
-&lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
@@ -2034,12 +2119,9 @@ DIMM B
          Speed = as.numeric(Speed)) %&amp;gt;% 
   summarise(`Capacity in GB` = sum(Capacity),
             `Speed in MHz` = unique(Speed)) %&amp;gt;% 
-  kable(caption = &amp;quot;Memory Summary&amp;quot;) %&amp;gt;% 
+  kable() %&amp;gt;% 
   kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;caption&gt;
-&lt;span id=&#34;tab:unnamed-chunk-50&#34;&gt;Table 5: &lt;/span&gt;Memory Summary
-&lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;text-align:right;&#34;&gt;
