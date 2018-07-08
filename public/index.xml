@@ -12,28 +12,210 @@
     
     
     <item>
-      <title>Reading .csv Files</title>
+      <title>CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons</title>
       <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
       <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
       <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r-vs-python&#34;&gt;R vs Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#reproducible-python-environment&#34;&gt;Reproducible Python Environment&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-data&#34;&gt;The Data&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#small&#34;&gt;Small&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#medium&#34;&gt;Medium&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#big&#34;&gt;Big&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-code&#34;&gt;The Code&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#base---utilsread.csv&#34;&gt;“Base” - &lt;code&gt;utils::read.csv()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#readrread_csv&#34;&gt;&lt;code&gt;readr::read_csv()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#data.tablefread&#34;&gt;&lt;code&gt;data.table::fread()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pandas.read_csv&#34;&gt;&lt;code&gt;pandas.read_csv()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#dependencies-only&#34;&gt;Dependencies Only&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-test&#34;&gt;The Test&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#initial-carpentry&#34;&gt;Initial Carpentry&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#the-results&#34;&gt;The Results&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#execution-times&#34;&gt;Execution Times&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;&lt;strong&gt;&lt;em&gt;tl;dr&lt;/em&gt;&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#appendices&#34;&gt;Appendices&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#controlling-for-dependency-load-times&#34;&gt;Controlling for Dependency Load Times&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#summary-tables&#34;&gt;Summary Tables&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#environment&#34;&gt;Environment&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#ide&#34;&gt;IDE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-1&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python-1&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#system&#34;&gt;System&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
 
+&lt;div id=&#34;r-vs-python&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R vs Python&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&#34;http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Performance comparisons between R and Python suck.&lt;/p&gt;
+&lt;p&gt;Most seem to be run in Jupyter Notebook and many are using Python’s &lt;code&gt;rpy2&lt;/code&gt; library to run poorly optimized R code. I’m not an anti-&lt;code&gt;for()&lt;/code&gt; loop Nazi (yes, you &lt;em&gt;can&lt;/em&gt; use them effectively in R), but thanks to the &lt;code&gt;base::*apply()&lt;/code&gt; family and their beautiful &lt;code&gt;purrr::map*()&lt;/code&gt; children, you’ll rarely see explicit loops that actually provide the best solution. Unfortunately, some of these comparisons arbitrarily test loops in R where you would &lt;em&gt;never, ever&lt;/em&gt; do so.&lt;/p&gt;
+&lt;p&gt;In a world of vectorization, it doesn’t make any sense why code like this receives such prominent treatment in seemingly every test…..&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;some_stuff &amp;lt;- rnorm(2500)
+other_stuff &amp;lt;- vector(mode = &amp;quot;numeric&amp;quot;, length(some_stuff))
+
+for(i in some_stuff) {
+  other_stuff[i] &amp;lt;- some_stuff[i] * some_stuff[i]
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://media.giphy.com/media/l4FGnnlIQslHkOPaU/giphy.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;In R, just do this…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;better_stuff &amp;lt;- some_stuff^2
+
+identical(other_stuff, better_stuff)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… and in Python, using &lt;code&gt;reticulate&lt;/code&gt; here, we can do this…&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(
+&amp;quot;some_py_stuff = r.some_stuff
+other_py_stuff = {}&amp;quot;, convert = FALSE)
+
+py_loop &amp;lt;- (
+&amp;quot;for i in range(len(some_py_stuff)):
+  other_py_stuff[i] = some_py_stuff[i] * some_py_stuff[i]&amp;quot;
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… but the “Good R” code leaves it in the dust.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mark(
+  for(i in some_stuff) other_stuff[i] &amp;lt;- some_stuff[i] * some_stuff[i],
+  some_stuff^2,
+  py_run_string(py_loop, convert = FALSE),
+  
+  check = FALSE, iterations = 100
+  ) %&amp;gt;%
+  mutate(type = case_when(
+    str_detect(expression, &amp;quot;for \\(&amp;quot;) ~ &amp;quot;Bad R&amp;quot;,
+    str_detect(expression, &amp;quot;\\^&amp;quot;) ~ &amp;quot;Good R&amp;quot;,
+    TRUE ~ &amp;quot;Python&amp;quot;
+  )) %&amp;gt;% 
+  mutate_at(vars(type, expression), funs(
+    cell_spec(., color = if_else(median == min(median), &amp;quot;green&amp;quot;, &amp;quot;black&amp;quot;))
+    )) %&amp;gt;% 
+  select(type, expression, min, median, max) %&amp;gt;% 
+  kable(caption = &amp;#39;&amp;quot;Looping&amp;quot; Comparison&amp;#39;, escape = FALSE) %&amp;gt;% 
+  kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:unnamed-chunk-6&#34;&gt;Table 1: &lt;/span&gt;“Looping” Comparison
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+type
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+expression
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+min
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+median
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+max
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: black;&#34;&gt;Bad R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: black;&#34;&gt;for (i in some_stuff) other_stuff[i] &amp;lt;- some_stuff[i] * some_stuff[i]&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47.17ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+59.49ms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+209.93ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: green;&#34;&gt;Good R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: green;&#34;&gt;some_stuff^2&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.18us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.58us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10.27us
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: black;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: black;&#34;&gt;py_run_string(py_loop, convert = FALSE)&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+656.2us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+681.48us
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.35ms
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;There are problems with this test. Are we &lt;em&gt;really&lt;/em&gt; testing the same thing? Is running the Python code through an R’s &lt;code&gt;reticulate&lt;/code&gt; &lt;em&gt;actually&lt;/em&gt; fair?&lt;/p&gt;
+&lt;p&gt;Well, is it less fair than, say, running &lt;code&gt;rpy2&lt;/code&gt; in Python? After running all these tests, I’d certainly say it’s more fair.&lt;/p&gt;
+&lt;p&gt;While some of these articles notify readers that the tests are lacking, some will sell the results as gospel anyways. Others dismiss the merits of rigor entirely. Le sigh.&lt;/p&gt;
+&lt;p&gt;It’s concerning that, in a field referred to as “Data Science”, there are a mountain of articles discussing such poor metrics, along with plenty of practitioners that use them in explaining which language newcomers should learn. (The answer is both, BTW)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://www.reactiongifs.com/r/bth.gif&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;With that in mind, what &lt;em&gt;would&lt;/em&gt; an objective comparison look like?&lt;/p&gt;
+&lt;p&gt;Here’s a barrage of tests applied to a task that’s both a) common in practice and b) common in these “language war” tests: reading a .csv file to a data frame. This is a task where many articles assert Python’s superiority, despite the evidence here and elsewhere.&lt;/p&gt;
+&lt;p&gt;However, the &lt;strong&gt;real&lt;/strong&gt; goal is to experiment with methods that can be used to make tests involving less trivial tasks more objective &lt;em&gt;and more useful to everyone&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;That said, I thnk it’s a cool demonstration of some RStudio and {&lt;code&gt;reticulate&lt;/code&gt;} sweetness. Hopefully, this spurs some interest in how awesome a multilingual workflow can be.&lt;/p&gt;
+&lt;p&gt;If you want skip a pile of monotonous code, go ahead and jump to the &lt;a href=&#34;#execution-times&#34;&gt;results&lt;/a&gt;.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(bench)
 library(kableExtra); options(knitr.kable.NA = &amp;quot;&amp;quot;)
-library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)
 library(scales)
 library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;reproducible-python-environment&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Reproducible Python Environment&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(reticulate)
+conda_create(&amp;quot;r-py-benchmarks&amp;quot;, c(&amp;quot;python=3.6&amp;quot;, &amp;quot;numpy&amp;quot;, &amp;quot;pandas&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;use_condaenv(&amp;quot;r-py-benchmarks&amp;quot;, required = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;div id=&#34;the-data&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;The Data&lt;/h1&gt;
-&lt;p&gt;The initial .csv was obtained from &lt;a href=&#34;https://blog.majestic.com/development/majestic-million-csv-daily/&#34;&gt;Majestic Million CSV&lt;/a&gt; &lt;a href=&#34;https://creativecommons.org/licenses/by/3.0/deed.en_US&#34;&gt;&lt;img src=&#34;https://licensebuttons.net/l/by/3.0/88x31.png&#34;&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The data come from a neutral third-party in the form of .csv, which can be obtained from &lt;a href=&#34;https://blog.majestic.com/development/majestic-million-csv-daily/&#34;&gt;Majestic Million CSV&lt;/a&gt; &lt;a href=&#34;https://creativecommons.org/licenses/by/3.0/deed.en_US&#34;&gt;&lt;img src=&#34;https://licensebuttons.net/l/by/3.0/88x31.png&#34;&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;download-and-read-data-set&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Download and Read Data Set&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;file_url &amp;lt;- &amp;quot;http://downloads.majestic.com/majestic_million.csv&amp;quot;
 temp_file &amp;lt;- tempfile(fileext = &amp;quot;.csv&amp;quot;)
 
 download.file(file_url, destfile = temp_file)
 
 test_df &amp;lt;- read_csv(temp_file)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;div id=&#34;quick-inspection&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Quick Inspection&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glimpse(test_df)&lt;/code&gt;&lt;/pre&gt;
@@ -51,34 +233,129 @@ test_df &amp;lt;- read_csv(temp_file)&lt;/code&gt;&lt;/pre&gt;
 ## $ PrevTldRank    &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
 ## $ PrevRefSubNets &amp;lt;int&amp;gt; 462861, 451086, 410676, 408692, 303296, 292918,...
 ## $ PrevRefIPs     &amp;lt;int&amp;gt; 2966284, 3049605, 2447455, 2549623, 1138675, 13...&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test_df&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1,000,000 x 12
-##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
-##         &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;  
-##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
-##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
-##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
-##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
-##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
-##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
-##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
-##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
-##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
-## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
-## # ... with 999,990 more rows, and 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;,
-## #   PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test_df %&amp;gt;%                          # 0 NAs anywhere
-  summarise_all(funs(sum(is.na(.))))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 12
-##   GlobalRank TldRank Domain   TLD RefSubNets RefIPs IDN_Domain IDN_TLD
-##        &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt; &amp;lt;int&amp;gt;      &amp;lt;int&amp;gt;  &amp;lt;int&amp;gt;      &amp;lt;int&amp;gt;   &amp;lt;int&amp;gt;
-## 1          0       0      0     0          0      0          0       0
-## # ... with 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;, PrevTldRank &amp;lt;int&amp;gt;,
-## #   PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;test_df %&amp;gt;%
+  summarise_all(funs(sum(is.na(.)))) %&amp;gt;% # where the NAs at?
+  gather(Variable, NAs) %&amp;gt;% 
+  kable() %&amp;gt;% 
+  kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Variable
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+NAs
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GlobalRank
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+TldRank
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Domain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+TLD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+RefSubNets
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+RefIPs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+IDN_Domain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+IDN_TLD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PrevGlobalRank
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PrevTldRank
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PrevRefSubNets
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+PrevRefIPs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;write-the-.csv&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Write the .csv&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;write_csv(test_df, path)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;small&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Small&lt;/h2&gt;
+&lt;p&gt;The “small” .csv consists of the first 100 rows.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;small_df &amp;lt;- test_df %&amp;gt;% 
   slice(1:100)
 
@@ -98,13 +375,14 @@ small_df&lt;/code&gt;&lt;/pre&gt;
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
 ## # ... with 90 more rows, and 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;,
 ## #   PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(small_rows &amp;lt;- nrow(small_df)) %&amp;gt;% comma() %&amp;gt;% paste(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;100 rows&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(small_rows &amp;lt;- nrow(small_df)) %&amp;gt;% comma() %&amp;gt;% cat(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 100 rows&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;path_small_csv &amp;lt;- &amp;quot;test-data/small_csv.csv&amp;quot;
 write_csv(small_df, path_small_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;medium&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Medium&lt;/h2&gt;
+&lt;p&gt;The “medium” .csv consists of the first 5,000 rows.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;medium_df &amp;lt;- test_df %&amp;gt;% 
   slice(1:5000)
 
@@ -124,19 +402,20 @@ medium_df&lt;/code&gt;&lt;/pre&gt;
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
 ## # ... with 4,990 more rows, and 4 more variables: PrevGlobalRank &amp;lt;int&amp;gt;,
 ## #   PrevTldRank &amp;lt;int&amp;gt;, PrevRefSubNets &amp;lt;int&amp;gt;, PrevRefIPs &amp;lt;int&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(med_rows &amp;lt;- nrow(medium_df ))%&amp;gt;% comma() %&amp;gt;% paste(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;5,000 rows&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;(med_rows &amp;lt;- nrow(medium_df)) %&amp;gt;% comma() %&amp;gt;% cat(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 5,000 rows&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;path_medium_csv &amp;lt;- &amp;quot;test-data/medium_csv.csv&amp;quot;
 write_csv(medium_df, path_medium_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;big&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Big&lt;/h2&gt;
+&lt;p&gt;The “big” .csv stacks all 1,000,000 rows five times, creating a 5,000,000 row .csv.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;big_df &amp;lt;- test_df %&amp;gt;% 
   rerun(.n = 5) %&amp;gt;% 
   bind_rows()
 
-(big_rows &amp;lt;- nrow(big_df)) %&amp;gt;% comma() %&amp;gt;% paste(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;5,000,000 rows&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+(big_rows &amp;lt;- nrow(big_df)) %&amp;gt;% comma() %&amp;gt;% cat(&amp;quot;rows&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 5,000,000 rows&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;path_big_csv &amp;lt;- &amp;quot;test-data/big_csv.csv&amp;quot;
 write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -148,7 +427,7 @@ write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;R and Python functions:
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;File paths are assigned to a &lt;code&gt;&amp;quot;*_csv.csv&amp;quot;&lt;/code&gt; variable.&lt;/li&gt;
-&lt;li&gt;The column data types are identified ahead of time via a &lt;code&gt;*_col_specs&lt;/code&gt; variable.
+&lt;li&gt;The column data types are identified ahead of time via a &lt;code&gt;*_col_specs&lt;/code&gt; variable in order to maximize read speed. In future tests, it would be interesting to skip this step.
 &lt;ul&gt;
 &lt;li&gt;All “numeric” data are read as &lt;code&gt;double&lt;/code&gt; via:
 &lt;ul&gt;
@@ -156,12 +435,17 @@ write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;code&gt;readr::col_double()&lt;/code&gt; for &lt;code&gt;readr::read_csv()&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;float&lt;/code&gt; for &lt;code&gt;pandas.read_csv()&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;This is to standardize numeric usage as my understanding is that both R’s &lt;code&gt;double&lt;/code&gt;s and Python’s &lt;code&gt;float&lt;/code&gt;s are &lt;code&gt;double&lt;/code&gt;s in the underlying C code.&lt;/li&gt;
+&lt;li&gt;This is to standardize numeric usage as my understanding is that both R’s &lt;code&gt;double&lt;/code&gt;s and Python’s &lt;code&gt;float&lt;/code&gt;s are &lt;code&gt;double&lt;/code&gt;s in the underlying C code. It also prevents the need to &lt;code&gt;import numpy&lt;/code&gt; in every call to a Python script. If this is incorrect, don’t hesitate to say so.&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;The function assigns the result to an internal &lt;code&gt;df&lt;/code&gt; variable.&lt;/li&gt;
 &lt;li&gt;The function explicitly &lt;code&gt;return()&lt;/code&gt;s the data frame.&lt;/li&gt;
 &lt;/ol&gt;&lt;/li&gt;
-&lt;li&gt;.R and .py scripts:
+&lt;li&gt;.R and .py Script Execution:
+&lt;ul&gt;
+&lt;li&gt;.R scripts are called via &lt;code&gt;system()&lt;/code&gt; instead of &lt;code&gt;source()&lt;/code&gt; as &lt;code&gt;source()&lt;/code&gt; appeared to offer a potentially unfair advantage.&lt;/li&gt;
+&lt;li&gt;Similarly, .py scripts were tested via &lt;code&gt;system()&lt;/code&gt;, &lt;code&gt;reticulate::py_run_file()&lt;/code&gt;, and &lt;code&gt;reticulate::py_run_string()&lt;/code&gt; instead of &lt;code&gt;reticulate::source_python()&lt;/code&gt;, to minimize the amount of steps required for execution and minimize potential handicaps.&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;.R and .py Script Code:
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;Relevant package are loaded via R’s &lt;code&gt;library()&lt;/code&gt; or Python’s &lt;code&gt;import&lt;/code&gt;.&lt;/li&gt;
 &lt;li&gt;File paths are assigned to a &lt;code&gt;&amp;quot;*_csv.csv&amp;quot;&lt;/code&gt; variable.&lt;/li&gt;
@@ -173,7 +457,9 @@ write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;/ol&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;inspect_script &amp;lt;- function(path) {
+  url_base &amp;lt;-  &amp;quot;https://github.com/syknapptic/syknapptic/tree/master/content/post/&amp;quot;
   contents &amp;lt;- read_lines(path)
+  cat(&amp;quot;File available at&amp;quot;, paste0(url_base, path), &amp;quot;\n&amp;quot;)
   cat(&amp;quot;```\n&amp;quot;)
   cat(&amp;quot;# &amp;quot;, path, &amp;quot; &amp;quot;, rep(&amp;quot;=&amp;quot;, (80 - nchar(path) - 2)), &amp;quot;\n&amp;quot;, sep = &amp;quot;&amp;quot;)
   contents %&amp;gt;% walk(cat, &amp;quot;\n&amp;quot;)
@@ -183,8 +469,8 @@ write_csv(big_df, path_big_csv)&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;R&lt;/h2&gt;
 &lt;div id=&#34;base---utilsread.csv&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;“Base” - &lt;code&gt;utils::read.csv()&lt;/code&gt;&lt;/h3&gt;
-&lt;div id=&#34;local-knitr-function&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Local &lt;code&gt;knitr&lt;/code&gt; Function&lt;/h4&gt;
+&lt;div id=&#34;local-r-function&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Local R Function&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;base_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;character&amp;quot;,
                     &amp;quot;character&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;,
                     &amp;quot;character&amp;quot;, &amp;quot;character&amp;quot;, &amp;quot;double&amp;quot;,
@@ -196,12 +482,11 @@ base_test &amp;lt;- function(path) {
   return(df)
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;scripts-to-source-via-system-calls&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Scripts to Source via System Calls&lt;/h4&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;base_files &amp;lt;- c(&amp;quot;r/base_test_small.R&amp;quot;, &amp;quot;r/base_test_med.R&amp;quot;, &amp;quot;r/base_test_big.R&amp;quot;)
-
-base_files %&amp;gt;% 
+&lt;div id=&#34;scripts-to-source-by-operating-system-via-system&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Scripts to Source by Operating System via &lt;code&gt;system()&lt;/code&gt;&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(&amp;quot;r/base_test_small.R&amp;quot;, &amp;quot;r/base_test_med.R&amp;quot;, &amp;quot;r/base_test_big.R&amp;quot;) %&amp;gt;% 
   walk(inspect_script)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_small.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_small.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/base_test_small.R ===========================================================
 path_small_csv &amp;lt;- &amp;quot;test-data/small_csv.csv&amp;quot; 
  
@@ -211,6 +496,7 @@ base_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp;quot
                     &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;) 
  
 df &amp;lt;- read.csv(file = path_small_csv, colClasses = base_col_specs) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_med.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_med.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/base_test_med.R =============================================================
 path_medium_csv &amp;lt;- &amp;quot;test-data/medium_csv.csv&amp;quot; 
  
@@ -220,6 +506,7 @@ base_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp;quot
                     &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;) 
  
 df &amp;lt;- read.csv(file = path_medium_csv, colClasses = base_col_specs) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_big.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_big.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/base_test_big.R =============================================================
 path_big_csv &amp;lt;- &amp;quot;test-data/big_csv.csv&amp;quot; 
  
@@ -233,14 +520,14 @@ df &amp;lt;- read.csv(file = path_big_csv, colClasses = base_col_specs) &lt;/cod
 &lt;/div&gt;
 &lt;div id=&#34;readrread_csv&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;code&gt;readr::read_csv()&lt;/code&gt;&lt;/h3&gt;
-&lt;div id=&#34;local-knitr-function-1&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Local &lt;code&gt;knitr&lt;/code&gt; Function&lt;/h4&gt;
+&lt;div id=&#34;local-r-function-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Local R Function&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
 
-readr_col_specs &amp;lt;- list(col_integer(), col_integer(), col_character(),
-                        col_character(), col_integer(), col_integer(),
-                        col_character(), col_character(), col_integer(),
-                        col_integer(), col_integer(), col_integer())
+readr_col_specs &amp;lt;- list(col_double(), col_double(), col_character(),
+                        col_character(), col_double(), col_double(),
+                        col_character(), col_character(), col_double(),
+                        col_double(), col_double(), col_double())
 
 readr_test &amp;lt;- function(path) {
   df &amp;lt;- read_csv(file = path, col_types = readr_col_specs)
@@ -248,12 +535,11 @@ readr_test &amp;lt;- function(path) {
   return(df)
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;scripts-to-source-via-system-calls-1&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Scripts to Source via System Calls&lt;/h4&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;readr_files &amp;lt;- c(&amp;quot;r/readr_test_small.R&amp;quot;, &amp;quot;r/readr_test_med.R&amp;quot;, &amp;quot;r/readr_test_big.R&amp;quot;) 
-
-readr_files %&amp;gt;% 
+&lt;div id=&#34;scripts-to-source-by-operating-system-via-system-1&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Scripts to Source by Operating System via &lt;code&gt;system()&lt;/code&gt;&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(&amp;quot;r/readr_test_small.R&amp;quot;, &amp;quot;r/readr_test_med.R&amp;quot;, &amp;quot;r/readr_test_big.R&amp;quot;) %&amp;gt;% 
   walk(inspect_script)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_small.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_small.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/readr_test_small.R ==========================================================
 library(readr) 
  
@@ -265,6 +551,7 @@ readr_col_specs &amp;lt;- list(col_double(), col_double(), col_character(),
                         col_double(), col_double(), col_double()) 
  
 df &amp;lt;- read_csv(file = path_small_csv, col_types = readr_col_specs) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_med.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_med.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/readr_test_med.R ============================================================
 library(readr) 
  
@@ -276,6 +563,7 @@ readr_col_specs &amp;lt;- list(col_double(), col_double(), col_character(),
                         col_double(), col_double(), col_double()) 
  
 df &amp;lt;- read_csv(file = path_medium_csv, col_types = readr_col_specs) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_big.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_big.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/readr_test_big.R ============================================================
 library(readr) 
  
@@ -291,8 +579,8 @@ df &amp;lt;- read_csv(file = path_big_csv, col_types = readr_col_specs) &lt;/cod
 &lt;/div&gt;
 &lt;div id=&#34;data.tablefread&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;code&gt;data.table::fread()&lt;/code&gt;&lt;/h3&gt;
-&lt;div id=&#34;local-knitr-function-2&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Local &lt;code&gt;knitr&lt;/code&gt; Function&lt;/h4&gt;
+&lt;div id=&#34;local-r-function-2&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Local R Function&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(data.table)
 
 datatable_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;character&amp;quot;,
@@ -306,13 +594,11 @@ datatable_test &amp;lt;- function(path) {
   return(df)
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;scripts-to-source-via-system-calls-2&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Scripts to Source via System Calls&lt;/h4&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;datatable_files &amp;lt;- c(&amp;quot;r/datatable_test_small.R&amp;quot;, &amp;quot;r/datatable_test_med.R&amp;quot;,
-                     &amp;quot;r/datatable_test_big.R&amp;quot;) 
-
-datatable_files %&amp;gt;% 
+&lt;div id=&#34;scripts-to-source-by-operating-system-via-system-2&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Scripts to Source by Operating System via &lt;code&gt;system()&lt;/code&gt;&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(&amp;quot;r/datatable_test_small.R&amp;quot;, &amp;quot;r/datatable_test_med.R&amp;quot;, &amp;quot;r/datatable_test_big.R&amp;quot;) %&amp;gt;% 
   walk(inspect_script)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_small.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_small.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/datatable_test_small.R ======================================================
 library(data.table) 
  
@@ -324,6 +610,7 @@ datatable_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp
                          &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;) 
  
 df &amp;lt;- fread(file = path_small_csv, colClasses = datatable_col_specs) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_med.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_med.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/datatable_test_med.R ========================================================
 library(data.table) 
  
@@ -335,6 +622,7 @@ datatable_col_specs &amp;lt;- c(&amp;quot;double&amp;quot;, &amp;quot;double&amp
                          &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;, &amp;quot;double&amp;quot;) 
  
 df &amp;lt;- fread(file = path_medium_csv, colClasses = datatable_col_specs) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_big.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_big.R&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# r/datatable_test_big.R ========================================================
 library(data.table) 
  
@@ -353,8 +641,8 @@ df &amp;lt;- fread(file = path_big_csv, colClasses = datatable_col_specs) &lt;/c
 &lt;h2&gt;Python&lt;/h2&gt;
 &lt;div id=&#34;pandas.read_csv&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;&lt;code&gt;pandas.read_csv()&lt;/code&gt;&lt;/h3&gt;
-&lt;div id=&#34;local-knitr-function-3&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Local &lt;code&gt;knitr&lt;/code&gt; Function&lt;/h4&gt;
+&lt;div id=&#34;local-python-function&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Local Python Function&lt;/h4&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import pandas
 path_small_csv = &amp;#39;test-data/small_csv.csv&amp;#39;
 path_medium_csv = &amp;#39;test-data/medium_csv.csv&amp;#39;
@@ -380,13 +668,11 @@ def pandas_test_big():
                 dtype = pandas_col_specs, low_memory = False)
   return(df)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;scripts-to-source-via-system-calls-3&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;Scripts to Source via System Calls&lt;/h4&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pandas_files &amp;lt;- c(&amp;quot;py/pandas_test_small.py&amp;quot;, &amp;quot;py/pandas_test_med.py&amp;quot;,
-                  &amp;quot;py/pandas_test_big.py&amp;quot;)
-
-pandas_files %&amp;gt;% 
+&lt;div id=&#34;scripts-to-source-via-system-and-reticulatepy_run_file...-convert-false&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Scripts to Source via &lt;code&gt;system()&lt;/code&gt; and &lt;code&gt;reticulate::py_run_file(..., convert = FALSE)&lt;/code&gt;&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(&amp;quot;py/pandas_test_small.py&amp;quot;, &amp;quot;py/pandas_test_med.py&amp;quot;, &amp;quot;py/pandas_test_big.py&amp;quot;) %&amp;gt;% 
   walk(inspect_script)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_small.py&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_small.py&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# py/pandas_test_small.py =======================================================
 import pandas 
  
@@ -401,6 +687,7 @@ pandas_col_specs = {
  
 df = pandas.read_csv(filepath_or_buffer = path_small_csv, 
                      dtype = pandas_col_specs, low_memory = False) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_med.py&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_med.py&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# py/pandas_test_med.py =========================================================
 import pandas 
  
@@ -415,6 +702,7 @@ pandas_col_specs = {
  
 df = pandas.read_csv(filepath_or_buffer = path_medium_csv, 
                      dtype = pandas_col_specs, low_memory = False) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_big.py&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_big.py&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# py/pandas_test_big.py =========================================================
 import pandas 
  
@@ -430,8 +718,8 @@ pandas_col_specs = {
 df = pandas.read_csv(filepath_or_buffer = path_big_csv, 
                      dtype = pandas_col_specs, low_memory = False) &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;reticulatepy_run_stringpandas.read_csv...-convert-false&#34; class=&#34;section level4&#34;&gt;
-&lt;h4&gt;&lt;code&gt;reticulate::py_run_string(&amp;quot;pandas.read_csv(...)&amp;quot;&amp;quot;, convert = FALSE)&lt;/code&gt;&lt;/h4&gt;
+&lt;div id=&#34;reticulatepy_run_string...-convert-false&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;&lt;code&gt;reticulate::py_run_string(..., convert = FALSE)&lt;/code&gt;&lt;/h4&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;py_run_string(
 &amp;quot;
 import pandas
@@ -461,15 +749,33 @@ def retic_pandas_test_big():
   df = pandas.read_csv(filepath_or_buffer = path_big_csv,
                 dtype = pandas_col_specs, low_memory = False)
   return(df)
+
 &amp;quot;, convert = FALSE
 )&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div id=&#34;dependencies-only&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Dependencies Only&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;c(&amp;quot;r/test_load_readr.R&amp;quot;, &amp;quot;r/test_load_datatable.R&amp;quot;, &amp;quot;py/test_load_pandas.py&amp;quot;) %&amp;gt;% 
+  walk(inspect_script)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_readr.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_readr.R&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# r/test_load_readr.R ===========================================================
+library(readr) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_datatable.R&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_datatable.R&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# r/test_load_datatable.R =======================================================
+library(data.table) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# py/test_load_pandas.py ========================================================
+import pandas &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-test&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;The Test&lt;/h1&gt;
+&lt;p&gt;100 iterations were run to provide a reasonable balance between rigor and compute time.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n_iterations &amp;lt;- 100&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;All the code was tested via the {&lt;code&gt;bench&lt;/code&gt;} package and its &lt;code&gt;bench::mark()&lt;/code&gt; function. This package was only selected over others as a chance to take it for a test drive.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;convert&lt;/code&gt; argument of &lt;code&gt;reticulate::py_run_string()&lt;/code&gt; and &lt;code&gt;reticulate::py_run_file()&lt;/code&gt; calls is set to &lt;code&gt;FALSE&lt;/code&gt; to minimize any handicap.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results &amp;lt;- mark(
   base_test(path_small_csv),
   readr_test(path_small_csv),
@@ -479,7 +785,8 @@ def retic_pandas_test_big():
   system(&amp;quot;Rscript r/datatable_test_small.R&amp;quot;),
   
   py$pandas_test_small(),
-  py_run_string(&amp;quot;retic_pandas_test_small()&amp;quot;),
+  py_run_string(&amp;quot;retic_pandas_test_small()&amp;quot;, convert = FALSE),
+  py_run_file(&amp;quot;py/pandas_test_small.py&amp;quot;, convert = FALSE),
   system(&amp;quot;python py/pandas_test_small.py&amp;quot;),
 
   base_test(path_medium_csv),
@@ -490,7 +797,8 @@ def retic_pandas_test_big():
   system(&amp;quot;Rscript r/datatable_test_med.R&amp;quot;),
   
   py$pandas_test_medium(),
-  py_run_string(&amp;quot;retic_pandas_test_medium()&amp;quot;),
+  py_run_string(&amp;quot;retic_pandas_test_medium()&amp;quot;, convert = FALSE),
+  py_run_file(&amp;quot;py/pandas_test_med.py&amp;quot;, convert = FALSE),
   system(&amp;quot;python py/pandas_test_med.py&amp;quot;),
 
   base_test(path_big_csv),
@@ -501,43 +809,78 @@ def retic_pandas_test_big():
   system(&amp;quot;Rscript r/datatable_test_big.R&amp;quot;),
 
   py$pandas_test_big(),
-  py_run_string(&amp;quot;retic_pandas_test_big()&amp;quot;),
+  py_run_string(&amp;quot;retic_pandas_test_big()&amp;quot;, convert = FALSE),
+  py_run_file(&amp;quot;py/pandas_test_big.py&amp;quot;, convert = FALSE),
   system(&amp;quot;python py/pandas_test_big.py&amp;quot;),
 
   check = FALSE, filter_gc = FALSE, iterations = n_iterations
   )&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;the-results&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;The Results&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_results &amp;lt;- mark(
+  system(&amp;quot;Rscript r/test_load_readr.R&amp;quot;),
+  system(&amp;quot;Rscript r/test_load_datatable.R&amp;quot;),
+  system(&amp;quot;python py/test_load_pandas.py&amp;quot;),
+  
+  check = FALSE, filter_gc = FALSE, iterations = n_iterations
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;initial-carpentry&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Initial Carpentry&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_results_df &amp;lt;- package_results %&amp;gt;% 
+  unnest() %&amp;gt;% 
+  mutate(package = case_when(
+    str_detect(expression, &amp;quot;datatable&amp;quot;) ~ &amp;quot;data.table&amp;quot;,
+    str_detect(expression, &amp;quot;readr&amp;quot;) ~ &amp;quot;readr&amp;quot;,
+    str_detect(expression, &amp;quot;pandas&amp;quot;) ~ &amp;quot;pandas&amp;quot;
+  )) %&amp;gt;% 
+  mutate(call = case_when(
+    package == &amp;quot;data.table&amp;quot; ~ &amp;quot;library(data.table)&amp;quot;,
+    package == &amp;quot;readr&amp;quot; ~ &amp;quot;library(readr)&amp;quot;,
+    package == &amp;quot;pandas&amp;quot; ~ &amp;quot;import pandas&amp;quot;
+  ))
+
+package_medians_df &amp;lt;- package_results_df %&amp;gt;% 
+  rename(median_package = median, min_package = min, max_package = max) %&amp;gt;%
+  distinct(package, median_package, min_package, max_package) %&amp;gt;% 
+  add_row(median_package = bench_time(0), package = &amp;quot;utils&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_exprs &amp;lt;- results$expression
 system_calls &amp;lt;- all_exprs %&amp;gt;% str_subset(&amp;quot;^system\\(&amp;quot;)
 local_r_fun_calls &amp;lt;- all_exprs %&amp;gt;% str_subset(&amp;quot;^(base|readr|datatable)_test\\(&amp;quot;)
 python_eng_calls &amp;lt;- all_exprs %&amp;gt;% str_subset(&amp;quot;^py\\$&amp;quot;)
-reticulate_calls &amp;lt;- all_exprs %&amp;gt;% str_subset(&amp;quot;retic_&amp;quot;)
+reticulate_calls &amp;lt;- all_exprs %&amp;gt;% str_subset(&amp;quot;py_run&amp;quot;)
 knitr_calls &amp;lt;- c(local_r_fun_calls, python_eng_calls, reticulate_calls)
 
 results_df &amp;lt;- results %&amp;gt;%
   unnest() %&amp;gt;%
+  mutate(package = case_when(
+    str_detect(expression, &amp;quot;datatable&amp;quot;) ~ &amp;quot;data.table&amp;quot;,
+    str_detect(expression, &amp;quot;readr&amp;quot;) ~ &amp;quot;readr&amp;quot;,
+    str_detect(expression, &amp;quot;pandas&amp;quot;) ~ &amp;quot;pandas&amp;quot;,
+    TRUE ~ &amp;quot;utils&amp;quot;
+  )) %&amp;gt;% 
   mutate(call = case_when(
     str_detect(expression, &amp;quot;base&amp;quot;) ~ &amp;quot;utils::read.csv()&amp;quot;,
     str_detect(expression, &amp;quot;readr&amp;quot;) ~ &amp;quot;readr::read_csv()&amp;quot;,
     str_detect(expression, &amp;quot;datatable&amp;quot;) ~ &amp;quot;data.table::fread()&amp;quot;,
-    str_detect(expression, &amp;quot;py_run&amp;quot;) ~ &amp;quot;reticulate::py_run_string()&amp;quot;,
+    str_detect(expression, &amp;quot;py_run_string&amp;quot;) ~ &amp;quot;reticulate::py_run_string()&amp;quot;,
+    str_detect(expression, &amp;quot;py_run_file&amp;quot;) ~ &amp;quot;reticulate::py_run_file()&amp;quot;,
     str_detect(expression, &amp;quot;pandas&amp;quot;) ~ &amp;quot;pandas.read_csv()&amp;quot;
       ) %&amp;gt;%
-      str_pad(max(nchar(.)), side = &amp;quot;right&amp;quot;) # enforce alignment in plots
+      str_pad(max(nchar(.)), side = &amp;quot;right&amp;quot;) # enforce left alignment in plots
     ) %&amp;gt;%
   mutate(execution_type = case_when(
     expression %in% system_calls ~ &amp;quot;Sourced Script&amp;quot;,
     expression %in% knitr_calls ~ &amp;quot;knitr Engine&amp;quot;
     )) %&amp;gt;%
+  mutate(dependency_status = case_when(
+    expression %in% system_calls ~ &amp;quot;Dependencies Loaded on Execution (Sourced Script)&amp;quot;,
+    expression %in% knitr_calls ~ &amp;quot;Dependencies Pre-Loaded&amp;quot;)) %&amp;gt;% 
   mutate(lang = if_else(str_detect(expression, &amp;quot;pandas&amp;quot;), &amp;quot;Python&amp;quot;, &amp;quot;R&amp;quot;)) %&amp;gt;%
   mutate(file_size = str_extract(expression, &amp;quot;small|med|big&amp;quot;)) %&amp;gt;%
   mutate(rows = case_when(
     file_size == &amp;quot;small&amp;quot; ~ small_rows,
     file_size == &amp;quot;med&amp;quot; ~ med_rows,
     file_size == &amp;quot;big&amp;quot; ~ big_rows
-    ))
+    )) %&amp;gt;% 
+  left_join(package_medians_df, by = &amp;quot;package&amp;quot;)
 
 gg_df &amp;lt;- results_df %&amp;gt;%
   arrange(rows) %&amp;gt;%
@@ -553,764 +896,1017 @@ gg_df &amp;lt;- results_df %&amp;gt;%
   mutate(call = as_factor(call)) %&amp;gt;%
   arrange(desc(lang)) %&amp;gt;%
   mutate(lang = as_factor(lang))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-results&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The Results&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;theme_simple &amp;lt;- function(pnl_ln_col = &amp;quot;black&amp;quot;, line_type = &amp;quot;dotted&amp;quot;, cap_size = 10, ...) {
+  theme_minimal(15, &amp;quot;serif&amp;quot;) +
+  theme(legend.title = element_blank(), 
+        legend.text = element_text(size = 12),
+        legend.position = &amp;quot;top&amp;quot;,
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(colour = pnl_ln_col, linetype = line_type),
+        legend.key.size = unit(1.5, &amp;quot;lines&amp;quot;), 
+        axis.text.y = element_text(&amp;quot;mono&amp;quot;, face = &amp;quot;bold&amp;quot;, hjust = 0, size = 12),
+        plot.caption = element_text(size = cap_size),
+        ...)
+}
+
+prep_lab &amp;lt;- function(lab) {
+  lab &amp;lt;- substitute(lab)
+  bquote(italic(paste(&amp;quot;   &amp;quot;, .(lab), &amp;quot;   &amp;quot;)))
+}
+
+t_R &amp;lt;- prep_lab(t[R])
+t_Python &amp;lt;- prep_lab(t[Python])
+t_import_pandas &amp;lt;- prep_lab(t[Python]~-~max~group(&amp;quot;(&amp;quot;,t[import~~pandas],&amp;quot;)&amp;quot;))
+
+plot_times &amp;lt;- function(df, ...) {
+  plot_init &amp;lt;- df %&amp;gt;%
+    ggplot(aes(call, time)) +
+    stat_ydensity(aes(fill = lang, color = lang), scale = &amp;quot;width&amp;quot;, bw = 0.01, trim = FALSE) +
+    scale_fill_manual(values = c(&amp;quot;#165CAA&amp;quot;, &amp;quot;#ffde57&amp;quot;), labels = c(t_R, t_Python)) +
+    scale_color_manual(values = c(&amp;quot;#BFC2C5&amp;quot;, &amp;quot;#4584b6&amp;quot;), labels = c(t_R, t_Python)) +
+    coord_flip() +
+    theme_simple()
+    if(length(vars(...))) {
+      n_rows &amp;lt;- sort(df$rows, decreasing = TRUE)[[1]]
+      plot_fin &amp;lt;- plot_init + 
+        facet_wrap(vars(...), ncol = 1, scales = &amp;quot;free&amp;quot;) +
+        labs(x = NULL, y = &amp;quot;Execution Time&amp;quot;, 
+             title = str_glue(&amp;quot;CSV to Data Frame: {comma(n_rows)}&amp;quot;),
+             caption = str_glue(&amp;quot;{n_iterations} iterations&amp;quot;))
+    } else {
+      plot_fin &amp;lt;- plot_init + 
+        labs(x = NULL, y = &amp;quot;Execution Time&amp;quot;, title = &amp;quot;Dependency Load Times&amp;quot;,
+             caption = str_glue(&amp;quot;{n_iterations} iterations&amp;quot;)) +
+        geom_text(aes(y = median, label = paste(&amp;quot;Median Time:&amp;quot;, median)), 
+                  color = &amp;quot;darkgreen&amp;quot;, nudge_x = 0.515)
+    }
+  
+  plot_fin
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;execution-times&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Execution Times&lt;/h2&gt;
+&lt;p&gt;At 100 rows, R is faster, with base R’s &lt;code&gt;utils::read.csv()&lt;/code&gt; finishing first.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  filter(file_size == &amp;quot;small&amp;quot;) %&amp;gt;% 
+  plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-37-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;At 5,000 rows, R is still faster. In the sourced scripts, &lt;code&gt;pandas.read_csv()&lt;/code&gt; has nearly caught up with &lt;code&gt;utils::read.csv()&lt;/code&gt;, but &lt;code&gt;data.table::fread()&lt;/code&gt; has pulled away.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  filter(file_size == &amp;quot;med&amp;quot;) %&amp;gt;% 
+  plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-38-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;At 5,000,000 million rows, we’ve reached the area where time differences would &lt;em&gt;actually&lt;/em&gt; be noticeable.&lt;/p&gt;
+&lt;p&gt;The advantage of&lt;code&gt;utils::read.csv()&lt;/code&gt;’s lack of dependencies has run its course and &lt;code&gt;pandas.read_csv()&lt;/code&gt; is faster in nearly every case.&lt;/p&gt;
+&lt;p&gt;That said, &lt;code&gt;readr::read_csv()&lt;/code&gt; is still faster than &lt;code&gt;pandas.read_csv()&lt;/code&gt; and, like most R users would expect, &lt;code&gt;data.table::fread()&lt;/code&gt; is by far the fastest.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
+  filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
+  plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-39-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;strong&gt;&lt;em&gt;tl;dr&lt;/em&gt;&lt;/strong&gt;&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;% 
+  mutate(dependency_status = dependency_status %&amp;gt;% 
+           str_remove(&amp;quot;\\s\\(.*$&amp;quot;) %&amp;gt;% 
+           str_replace(&amp;quot;Loaded on&amp;quot;, &amp;quot;Loaded\non&amp;quot;)
+         ) %&amp;gt;% 
+  ggplot(aes(call, time)) +
+    stat_ydensity(aes(fill = lang, color = lang), scale = &amp;quot;width&amp;quot;, bw = 0.01, 
+                  trim = FALSE) +
+    scale_fill_manual(values = c(&amp;quot;#165CAA&amp;quot;, &amp;quot;#ffde57&amp;quot;), labels = c(t_R, t_Python)) +
+    scale_color_manual(values = c(&amp;quot;#BFC2C5&amp;quot;, &amp;quot;#4584b6&amp;quot;), labels = c(t_R, t_Python)) +
+    coord_flip() +
+  theme_simple(pnl_ln_col = &amp;quot;gray&amp;quot;) +
+  theme(axis.text = element_text(size = 8), strip.text  = element_text(size = 12),
+        strip.text.y  = element_text(face = &amp;quot;bold&amp;quot;, size = 15),
+        panel.background = element_rect(fill = &amp;quot;transparent&amp;quot;, size = 0.5)) +
+  facet_grid(rows ~ dependency_status, scales = &amp;quot;free&amp;quot;, switch = &amp;quot;y&amp;quot;, space = &amp;quot;free&amp;quot;) +
+  labs(x = NULL, y = &amp;quot;Time&amp;quot;, title = &amp;quot;R vs Python - CSV to Data Frame&amp;quot;,
+       caption = &amp;quot;12 columns, 100 iterations each&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-40-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;appendices&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Appendices&lt;/h1&gt;
+&lt;div id=&#34;controlling-for-dependency-load-times&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Controlling for Dependency Load Times&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_results_df %&amp;gt;%
+  mutate(lang = if_else(str_detect(expression, &amp;quot;pandas&amp;quot;), &amp;quot;Python&amp;quot;, &amp;quot;R&amp;quot;)) %&amp;gt;% 
+  arrange(desc(lang)) %&amp;gt;%
+  mutate(lang = as_factor(lang)) %&amp;gt;% 
+  plot_times()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-41-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;% 
+  filter(dependency_status == &amp;quot;Dependencies Loaded on Execution (Sourced Script)&amp;quot;) %&amp;gt;%  
+  filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
+  mutate(adjusted_time = if_else(lang == &amp;quot;Python&amp;quot;, time - max_package, NA_real_))  %&amp;gt;% 
+  rename(original_time = time) %&amp;gt;% 
+  gather(time_type, time, original_time, adjusted_time) %&amp;gt;% 
+  drop_na(time) %&amp;gt;% 
+  mutate(descrip = case_when(
+    lang == &amp;quot;R&amp;quot; ~ &amp;quot;Original R Time&amp;quot;,
+    lang == &amp;quot;Python&amp;quot; &amp;amp; time_type == &amp;quot;original_time&amp;quot; ~ &amp;quot;Original Python Time&amp;quot;,
+    lang == &amp;quot;Python&amp;quot; &amp;amp; time_type == &amp;quot;adjusted_time&amp;quot; ~ &amp;quot;Adjusted Python Time&amp;quot;
+    )) %&amp;gt;% 
+  arrange(desc(descrip)) %&amp;gt;% 
+  mutate(descrip = as_factor(descrip)) %&amp;gt;% 
+  ggplot(aes(call, time, fill = descrip)) +
+  stat_ydensity(width = 1, size = 0, color = &amp;quot;transparent&amp;quot;, scale = &amp;quot;width&amp;quot;, bw = 0.01,
+                trim = FALSE) +
+  scale_fill_manual(values = c(&amp;quot;#165CAA&amp;quot;, &amp;quot;#ffde57&amp;quot;, &amp;quot;#ff9051&amp;quot;), 
+                    labels = c(t_R, t_Python, t_import_pandas)) +
+  guides(fill = guide_legend(nrow = 3, label.hjust = 0)) +
+  coord_flip() +
+  theme_simple() +
+  labs(x = NULL, y = &amp;quot;Execution Time&amp;quot;,
+       title = &amp;quot;Comparing Sourced Scripts with Adjusted Python Times&amp;quot;,
+       caption = str_glue(&amp;quot;CSV to Data Frame: {comma(big_rows)} Rows&amp;quot;)
+      )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;summary-tables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Summary Tables&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results_df %&amp;gt;%
-  select(rows, lang, call, everything(), -expression, -n_itr,
-         -time, -gc, -file_size, -min, -max, -total_time, -starts_with(&amp;quot;level&amp;quot;)) %&amp;gt;%
+  select(rows, lang, execution_type, call, mean, median, `itr/sec`, n_gc, mem_alloc) %&amp;gt;% 
   distinct() %&amp;gt;% 
   arrange(rows, desc(lang)) %&amp;gt;%
-  rename(garbage_collections = n_gc, language = lang,
-         memory_allocated = mem_alloc) %&amp;gt;%
+  mutate(rows = comma(rows), 
+         `itr/sec` = round(`itr/sec`, 2),
+         n_gc = ifelse(execution_type == &amp;quot;Sourced Script&amp;quot;, &amp;quot;unknown&amp;quot;, n_gc),
+         mem_alloc = ifelse(execution_type == &amp;quot;Sourced Script&amp;quot;, &amp;quot;unknown&amp;quot;, mem_alloc)) %&amp;gt;% 
+  mutate_at(vars(-c(rows, lang)), 
+            funs(cell_spec(., background = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#f2f2f2&amp;quot;, &amp;quot;#edf9ff&amp;quot;),
+                              color = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#002963&amp;quot;, &amp;quot;#809100&amp;quot;))
+                )) %&amp;gt;% 
+  mutate(lang = lang %&amp;gt;% cell_spec(background = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#f2f2f2&amp;quot;, &amp;quot;#edf9ff&amp;quot;),
+                                   color = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#002647&amp;quot;, &amp;quot;#809100&amp;quot;))) %&amp;gt;% 
+  mutate(n_gc = if_else(str_detect(n_gc, &amp;quot;unknown&amp;quot;), &amp;quot;unknown&amp;quot;, n_gc),
+         mem_alloc = if_else(str_detect(mem_alloc, &amp;quot;unknown&amp;quot;), &amp;quot;unknown&amp;quot;, mem_alloc)) %&amp;gt;%
+  rename(garbage_collections = n_gc, language = lang, memory_allocated = mem_alloc) %&amp;gt;%
   rename_all(funs(str_to_title(str_replace(., &amp;quot;_&amp;quot;, &amp;quot; &amp;quot;)))) %&amp;gt;%
-  kable(digits = 2) %&amp;gt;%
+  kable(caption = &amp;quot;CSV to Data Frame Times&amp;quot;, escape = FALSE, digits = 2) %&amp;gt;%
   kable_styling(bootstrap_options = &amp;quot;condensed&amp;quot;, font_size = 12) %&amp;gt;% 
-  collapse_rows(columns = 1:2, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+  collapse_rows(columns = 1:3, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;table class=&#34;table table-condensed&#34; style=&#34;font-size: 12px; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;caption style=&#34;font-size: initial !important;&#34;&gt;
+&lt;span id=&#34;tab:unnamed-chunk-43&#34;&gt;Table 2: &lt;/span&gt;CSV to Data Frame Times
+&lt;/caption&gt;
 &lt;thead&gt;
 &lt;tr&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
 Rows
 &lt;/th&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
 Language
 &lt;/th&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
+Execution Type
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
 Call
 &lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
 Mean
 &lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
 Median
 &lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
 Itr/Sec
 &lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
-Memory Allocated
-&lt;/th&gt;
-&lt;th style=&#34;text-align:right;&#34;&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
 Garbage Collections
 &lt;/th&gt;
 &lt;th style=&#34;text-align:left;&#34;&gt;
-Execution Type
+Memory Allocated
 &lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:right;vertical-align: top !important;&#34; rowspan=&#34;9&#34;&gt;
-1e+02
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;10&#34;&gt;
+100
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
-R
+&lt;span style=&#34;     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;knitr Engine&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-utils::read.csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-847.76us
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-837.93us
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1179.57
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-355.61KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;utils::read.csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;891.85us&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;834.96us&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1121.26&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;364168&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-readr::read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3.05ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.94ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-328.21
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-102.79KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;readr::read_csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 3.05ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 2.9ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;327.96&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;143680&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-data.table::fread()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.39ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.35ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-719.44
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-270.38KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;data.table::fread() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-utils::read.csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-200.5ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-199.76ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4.99
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 1.4ms&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-readr::read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-509.99ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-508.31ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.96
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 1.36ms&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-data.table::fread()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-292.13ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-289.25ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3.42
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;711.99&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;276896&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
-Python
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;Sourced Script&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-pandas.read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-41.75ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-36.24ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-23.95
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.24MB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;utils::read.csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;205.24ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;200.39ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;4.87&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-reticulate::py_run_string()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.64ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.5ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-378.58
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.75KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;readr::read_csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;548.78ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;512.73ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1.82&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-pandas.read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-501.38ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-499.77ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.99
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;data.table::fread() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;322.13ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;295.43ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;3.1&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:right;vertical-align: top !important;&#34; rowspan=&#34;9&#34;&gt;
-5e+03
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;knitr Engine&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;pandas.read_csv() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 74.99ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 48.48ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;13.34&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;9&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;1298288&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;reticulate::py_run_string()&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 5.02ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 3.75ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;199.04&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;1&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;2840&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;reticulate::py_run_file() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 5.78ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 3.75ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;173.05&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;9504&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Sourced Script&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;pandas.read_csv() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;559.01ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;530.84ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;1.79&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;10&#34;&gt;
+5,000
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
-R
+&lt;span style=&#34;     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;knitr Engine&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-utils::read.csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-19.46ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-18.46ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-51.38
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.88MB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;utils::read.csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 18.53ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 18.37ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;53.98&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1975368&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-readr::read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9.15ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-8.85ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-109.34
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.04MB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;readr::read_csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 10.17ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 9.75ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;98.3&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1621744&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-data.table::fread()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-5.15ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4.96ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-194.34
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-659.27KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;data.table::fread() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-utils::read.csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-219.34ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-218.01ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4.56
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 5ms&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-readr::read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-517.84ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-516.13ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.93
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 4.73ms&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-data.table::fread()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-293.34ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-292.14ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-3.41
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;200.02&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;675120&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
-Python
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;Sourced Script&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-pandas.read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-62.13ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-56.31ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-16.10
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.92MB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-9
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;utils::read.csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;221.48ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;216.81ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;4.52&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-reticulate::py_run_string()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-16.06ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-15.88ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-62.27
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.75KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;readr::read_csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;529.75ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;522.03ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1.89&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-pandas.read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-513.18ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-511.93ms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.95
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;data.table::fread() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;296.08ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;294.28ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;3.38&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td style=&#34;text-align:right;vertical-align: top !important;&#34; rowspan=&#34;9&#34;&gt;
-5e+06
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;knitr Engine&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;pandas.read_csv() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 83.11ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 67.52ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;12.03&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;10&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;3058232&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;reticulate::py_run_string()&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 24.05ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 24.31ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;41.58&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;2840&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;reticulate::py_run_file() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 22.14ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 21.67ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;45.16&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;2840&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Sourced Script&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;pandas.read_csv() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;577.44ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;552.81ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;1.73&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;10&#34;&gt;
+5,000,000
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;6&#34;&gt;
-R
+&lt;span style=&#34;     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;knitr Engine&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-utils::read.csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-19.18s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-19.08s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.05
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.91GB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-151
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;utils::read.csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 19.55s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 19.4s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0.05&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;168&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;2052818952&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-readr::read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6.78s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-6.77s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.15
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-996.51MB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-75
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;readr::read_csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 7.11s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 7.08s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0.14&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;107&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1567378576&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-data.table::fread()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.74s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.61s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.36
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-634.8MB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-29
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;data.table::fread() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-utils::read.csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-23.47s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-23.26s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.04
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 2.73s&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-readr::read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10.66s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-10.69s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.09
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 2.6s&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:left;&#34;&gt;
-data.table::fread()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4.13s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-4.02s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.24
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0.37&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;28&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;665639952&lt;/span&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
-Python
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;Sourced Script&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-pandas.read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-20.13s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-19.61s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.05
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-1.79GB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-22
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;utils::read.csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 23.25s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 23.07s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0.04&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-reticulate::py_run_string()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-13.11s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-13.1s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.08
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-2.75KB
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;readr::read_csv() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-knitr Engine
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 10.06s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 10.05s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0.1&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-pandas.read_csv()
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-13.6s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-13.57s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0.07
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-264B
-&lt;/td&gt;
-&lt;td style=&#34;text-align:right;&#34;&gt;
-0
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;data.table::fread() &lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-Sourced Script
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 3.78s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt; 3.78s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;0.26&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;knitr Engine&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;pandas.read_csv() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 20.23s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 19.67s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0.05&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;23&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;1921138232&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;reticulate::py_run_string()&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 13.26s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 13.25s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0.08&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;2840&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;reticulate::py_run_file() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 13.26s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 13.26s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0.08&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;2840&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Sourced Script&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;pandas.read_csv() &lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 13.8s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt; 13.77s&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;0.07&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+unknown
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_times &amp;lt;- function(df, plot_title = NULL) {
-  plot_init &amp;lt;- df %&amp;gt;% 
-    ggplot(aes(call, time, fill = lang, color = lang)) +
-    stat_ydensity(scale = &amp;quot;width&amp;quot;) +
-    scale_fill_manual(values = c(&amp;quot;#165CAA&amp;quot;, &amp;quot;#ffde57&amp;quot;), 
-                      labels = function(x) paste(&amp;quot; &amp;quot;, x, &amp;quot;  &amp;quot;)) +
-    scale_color_manual(values = c(&amp;quot;#BFC2C5&amp;quot;, &amp;quot;#4584b6&amp;quot;),
-                       labels = function(x) paste(&amp;quot; &amp;quot;, x, &amp;quot;  &amp;quot;)) +
-    guides(fill = guide_legend(nrow = 1)) +
-    coord_flip() +
-    theme_minimal(17, &amp;quot;serif&amp;quot;) +
-    theme(legend.title = element_blank(), 
-          legend.position = &amp;quot;top&amp;quot;,
-          legend.key.size = unit(1.5, &amp;quot;lines&amp;quot;),
-          axis.text.y = element_text(&amp;quot;mono&amp;quot;, face = &amp;quot;bold&amp;quot;, hjust = 0),
-          plot.caption = element_text(size = 10))
-  if(length(plot_title)) {
-    plot_fin &amp;lt;- plot_init + 
-      facet_wrap(~ rows, nrow = 3, scales = &amp;quot;free_x&amp;quot;) +
-      labs(x = NULL, y = &amp;quot;Time&amp;quot;,
-         title = plot_title,
-         caption = str_glue(&amp;quot;{n_iterations} runs per call.&amp;quot;))
-  } else {
-    n_rows &amp;lt;- sort(df$rows, decreasing = TRUE)[[1]]
-    plot_fin &amp;lt;- plot_init + 
-      facet_wrap(~ execution_type, ncol = 1, scales = &amp;quot;free&amp;quot;) +
-      labs(x = NULL, y = &amp;quot;Time&amp;quot;, title = str_glue(&amp;quot;CSV to Data Frame: {comma(n_rows)}&amp;quot;),
-           caption = str_glue(&amp;quot;{n_iterations} runs per call.&amp;quot;))
-  }
-  
-  plot_fin
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;code-executed-by-knitrs-language-engine&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Code Executed by &lt;code&gt;knitr&lt;/code&gt;’s Language Engine&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;% 
-  filter(execution_type == &amp;quot;knitr Engine&amp;quot;) %&amp;gt;% 
-  plot_times(&amp;quot;knitr Engine&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-26-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_results_df %&amp;gt;% 
+  mutate(lang = if_else(str_detect(expression, &amp;quot;\\.py&amp;quot;), &amp;quot;Python&amp;quot;, &amp;quot;R&amp;quot;),
+         `itr/sec` = round(`itr/sec`, 2)) %&amp;gt;% 
+  select(lang, call, min, mean, median, max, `itr/sec`) %&amp;gt;% 
+  distinct() %&amp;gt;% 
+  mutate_at(vars(-lang), 
+            funs(cell_spec(., background = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#f2f2f2&amp;quot;, &amp;quot;#edf9ff&amp;quot;),
+                              color = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#002963&amp;quot;, &amp;quot;#809100&amp;quot;))
+            )) %&amp;gt;% 
+  mutate(lang = lang %&amp;gt;% cell_spec(background = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#f2f2f2&amp;quot;, &amp;quot;#edf9ff&amp;quot;),
+                                   color = ifelse(lang == &amp;quot;R&amp;quot;, &amp;quot;#002647&amp;quot;, &amp;quot;#809100&amp;quot;))) %&amp;gt;% 
+  rename(language = lang) %&amp;gt;% 
+  rename_all(str_to_title) %&amp;gt;% 
+  kable(caption = &amp;quot;Dependency Load Times&amp;quot;, escape = FALSE, digits = 2) %&amp;gt;%
+  kable_styling(bootstrap_options = &amp;quot;condensed&amp;quot;, font_size = 12) %&amp;gt;% 
+  collapse_rows(columns = 1, valign = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-condensed&#34; style=&#34;font-size: 12px; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;caption style=&#34;font-size: initial !important;&#34;&gt;
+&lt;span id=&#34;tab:unnamed-chunk-44&#34;&gt;Table 3: &lt;/span&gt;Dependency Load Times
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Language
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Call
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Min
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Mean
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Median
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Max
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Itr/Sec
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+&lt;span style=&#34;     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;R&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;library(readr)&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;506ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;510ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;507ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;552ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;1.96&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;library(data.table)&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;305ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;308ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;305ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;407ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;&#34;&gt;3.25&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;Python&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;import pandas&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;569ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;611ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;607ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;911ms&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;&#34;&gt;1.64&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;/div&gt;
-&lt;div id=&#34;files-sourced-via-system-command&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Files Sourced via System Command&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;% 
-  filter(execution_type == &amp;quot;Sourced Script&amp;quot;) %&amp;gt;% 
-  plot_times(&amp;quot;Files Sourced via System Command&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-27-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
+&lt;div id=&#34;environment&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Environment&lt;/h1&gt;
+&lt;div id=&#34;ide&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;IDE&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rstudio_info &amp;lt;- rstudioapi::versionInfo() # obtain in interactive session
+write_rds(rstudio_info, &amp;quot;test-data/rstudio_info.rds&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;read_rds(&amp;quot;test-data/rstudio_info.rds&amp;quot;) %&amp;gt;% 
+  as_tibble() %&amp;gt;% 
+  select(mode, version) %&amp;gt;% 
+  mutate(version = as.character(version)) %&amp;gt;% 
+  kable(caption = &amp;quot;RStudio Version&amp;quot;) %&amp;gt;% 
+  kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:unnamed-chunk-46&#34;&gt;Table 4: &lt;/span&gt;RStudio Version
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+mode
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+version
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+desktop
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+1.1.453
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 &lt;/div&gt;
-&lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;tl;dr&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
-  filter(file_size == &amp;quot;small&amp;quot;) %&amp;gt;%
-  plot_times()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
-  filter(file_size == &amp;quot;med&amp;quot;) %&amp;gt;% 
-  plot_times()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-2.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
-  filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
-  plot_times()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-3.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;session-info&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Session Info&lt;/h1&gt;
 &lt;div id=&#34;r-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;R&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
@@ -1334,7 +1930,7 @@ Sourced Script
 ##  [1] data.table_1.11.5     bindrcpp_0.2.2        forcats_0.3.0        
 ##  [4] stringr_1.3.1         dplyr_0.7.5           purrr_0.2.5          
 ##  [7] readr_1.1.1           tidyr_0.8.1           tibble_1.4.2         
-## [10] ggplot2_2.2.1.9000    tidyverse_1.2.1.9000  scales_0.5.0.9000    
+## [10] ggplot2_3.0.0         tidyverse_1.2.1.9000  scales_0.5.0.9000    
 ## [13] reticulate_1.8.0.9002 kableExtra_0.9.0      bench_1.0.1          
 ## 
 ## loaded via a namespace (and not attached):
@@ -1353,23 +1949,126 @@ Sourced Script
 ## [37] crayon_1.3.4      withr_2.1.2       grid_3.5.0       
 ## [40] nlme_3.1-137      jsonlite_1.5      gtable_0.2.0     
 ## [43] magrittr_1.5      cli_1.0.0         stringi_1.2.2    
-## [46] reshape2_1.4.3    xml2_1.2.0        htmldeps_0.1.0   
-## [49] tools_3.5.0       glue_1.2.0        hms_0.4.2        
-## [52] parallel_3.5.0    yaml_2.1.19       colorspace_1.3-2 
-## [55] rvest_0.3.2       knitr_1.20.7      bindr_0.1.1      
-## [58] haven_1.1.1&lt;/code&gt;&lt;/pre&gt;
+## [46] profmem_0.5.0     reshape2_1.4.3    xml2_1.2.0       
+## [49] htmldeps_0.1.0    tools_3.5.0       glue_1.2.0       
+## [52] hms_0.4.2         parallel_3.5.0    yaml_2.1.19      
+## [55] colorspace_1.3-2  rvest_0.3.2       knitr_1.20.7     
+## [58] bindr_0.1.1       haven_1.1.1&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;python-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Python&lt;/h2&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import sys
 import numpy
-import pandas  
+import pandas
 print(sys.version)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 3.6.6 |Anaconda, Inc.| (default, Jun 28 2018, 11:27:44) [MSC v.1900 64 bit (AMD64)]&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(numpy.__version__)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 1.12.1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 1.14.5&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(pandas.__version__)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 0.22.0&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 0.23.1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;system&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;System&lt;/h2&gt;
+&lt;div id=&#34;cpu&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;CPU&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(&amp;quot;CPU:\n&amp;quot;, system(&amp;quot;wmic cpu get name&amp;quot;, intern = TRUE)[[2]])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## CPU:
+##  Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz  &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;memory&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Memory&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ram_df &amp;lt;- system(&amp;quot;wmic MEMORYCHIP get BankLabel, Capacity, Speed&amp;quot;, intern = TRUE) %&amp;gt;% 
+  str_trim() %&amp;gt;% 
+  as_tibble() %&amp;gt;% 
+  slice(2:3) %&amp;gt;% 
+  separate(value, into = c(&amp;quot;BankLabel&amp;quot;, &amp;quot;Capacity&amp;quot;, &amp;quot;Speed&amp;quot;), sep = &amp;quot;\\s{2,}&amp;quot;)
+
+ram_df %&amp;gt;% 
+  rename_all(str_replace, &amp;quot;L&amp;quot;, &amp;quot; L&amp;quot;) %&amp;gt;% 
+  kable(caption = &amp;quot;Memory Specs&amp;quot;) %&amp;gt;% 
+  kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:unnamed-chunk-50&#34;&gt;Table 5: &lt;/span&gt;Memory Specs
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Bank Label
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Capacity
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Speed
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DIMM A
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17179869184
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2400
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DIMM B
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+17179869184
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+2400
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ram_df %&amp;gt;% 
+  mutate(Capacity = as.numeric(Capacity) / 1e9,
+         Speed = as.numeric(Speed)) %&amp;gt;% 
+  summarise(`Capacity in GB` = sum(Capacity),
+            `Speed in MHz` = unique(Speed)) %&amp;gt;% 
+  kable(caption = &amp;quot;Memory Summary&amp;quot;) %&amp;gt;% 
+  kable_styling(full_width = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;caption&gt;
+&lt;span id=&#34;tab:unnamed-chunk-50&#34;&gt;Table 5: &lt;/span&gt;Memory Summary
+&lt;/caption&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Capacity in GB
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Speed in MHz
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34.35974
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2400
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;storage&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Storage&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;cat(&amp;quot;SSD:\n&amp;quot;, system(&amp;quot;wmic diskdrive get Model&amp;quot;, intern = TRUE)[[2]])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## SSD:
+##  PM951 NVMe SAMSUNG 512GB  &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt; &lt;br&gt; &lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>

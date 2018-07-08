@@ -271,7 +271,7 @@ if (!doNotTrack) {
           <h5 class="archive-title" style="text-decoration: none;">July</h5>
           
             <li class="archive-post archive-day" data-date="20180704">
-              <a class="archive-post-title" href="https://syknapptic.netlify.com/2018/07/reading-csv-files/">Reading .csv Files</a>
+              <a class="archive-post-title" href="https://syknapptic.netlify.com/2018/07/reading-csv-files/">CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons</a>
             </li>
           
             <li class="archive-post archive-day" data-date="20180702">
@@ -348,15 +348,15 @@ if (!doNotTrack) {
             
             <div class="media-body">
               <a class="link-unstyled" href="https://syknapptic.netlify.com/2018/07/reading-csv-files/">
-                <h3 class="media-heading">Reading .csv Files</h3>
+                <h3 class="media-heading">CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons</h3>
               </a>
               <span class="media-meta">
                 <span class="media-date text-small">
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">library(bench)library(kableExtra); options(knitr.kable.NA = &quot;&quot;)library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)library(scales)library(tidyverse)The DataThe initial .csv was obtained from Majestic Million CSV .
-file_url &lt;- &quot;http://downloads.majestic.com/majestic_million.csv&quot;temp_file &lt;- tempfile(fileext = &quot;.csv&quot;)download.file(file_url, destfile = temp_file)test_df &lt;- read_csv(temp_file)Quick Inspectionglimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...## $ TldRank &lt;int&gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,.</div>
+              <div class="media-content hide-xs font-merryweather">R vs PythonReproducible Python EnvironmentThe DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()Dependencies OnlyThe TestInitial CarpentryThe ResultsExecution Timestl;drAppendicesControlling for Dependency Load TimesSummary TablesEnvironmentIDERPythonSystemR vs PythonPerformance comparisons between R and Python suck.
+Most seem to be run in Jupyter Notebook and many are using Python’s rpy2 library to run poorly optimized R code.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>

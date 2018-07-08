@@ -1,21 +1,21 @@
 ---
-title: 'Reading .csv Files'
+title: 'CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons'
 draft: false
 author: Brendan Knapp
 date: '2018-07-04'
 slug: reading-csv-files
 categories:
-  - data-science-from-scratch
-tags: 
   - benchmarking
+  - r-bloggers
+tags: 
   - fileIO
 thumbnailImage: http://i0.kym-cdn.com/photos/images/facebook/001/124/028/5c2.jpg
 metaAlignment: center
 coverMeta: out
-summary: Comparing performance of R and Python in reading .csv files to data frames.
+summary: Comparing performance of R and Python in reading .csv files to data frames through multiple, reproducible methods. The intent is to establish a meaningful standard to compare R and Python benchmarks.
 output:
-  html_document:
-  # blogdown::html_page:
+  # html_document:
+  blogdown::html_page:
     toc: true
     toc_depth: 3
 editor_options: 
@@ -24,24 +24,138 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
-                      fig.width = 11, fig.height = 10,
+                      fig.width = 11, fig.height = 10, dpi = 300,
                       fig.align = "center",
                       message = FALSE, warning = FALSE)
 
-knitr::knit_engines$set(python = reticulate::eng_python)
+
+library(bench)
+library(kableExtra); options(knitr.kable.NA = "")
+library(reticulate)
+library(scales)
+library(tidyverse)
+library(reticulate); use_condaenv("r-py-benchmarks", required = TRUE)
 ```
+
+# R vs Python
+
+```{r, height=5, echo=FALSE}
+knitr::include_graphics("http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif")
+```
+
+
+Performance comparisons between R and Python suck.
+
+Most seem to be run in Jupyter Notebook and many are using Python's `rpy2` library to run poorly optimized R code. I'm not an anti-`for()` loop Nazi (yes, you _can_ use them effectively in R), but thanks to the `base::*apply()` family and their beautiful `purrr::map*()` children, you'll rarely see explicit loops that actually provide the best solution. Unfortunately, some of these comparisons arbitrarily test loops in R where you would _never, ever_ do so. 
+
+In a world of vectorization, it doesn't make any sense why code like this receives such prominent treatment in seemingly every test.....
+
+```{r}
+some_stuff <- rnorm(2500)
+other_stuff <- vector(mode = "numeric", length(some_stuff))
+
+for(i in some_stuff) {
+  other_stuff[i] <- some_stuff[i] * some_stuff[i]
+}
+```
+
+```{r, echo=FALSE}
+knitr::include_graphics("https://media.giphy.com/media/l4FGnnlIQslHkOPaU/giphy.gif")
+```
+
+In R, just do this...
+
+```{r}
+better_stuff <- some_stuff^2
+
+identical(other_stuff, better_stuff)
+```
+
+... and in Python, using `reticulate` here, we can do this...
+
+```{r}
+py_run_string(
+"some_py_stuff = r.some_stuff
+other_py_stuff = {}", convert = FALSE)
+
+py_loop <- (
+"for i in range(len(some_py_stuff)):
+  other_py_stuff[i] = some_py_stuff[i] * some_py_stuff[i]"
+)
+```
+
+... but the "Good R" code leaves it in the dust.
+
+```{r}
+mark(
+  for(i in some_stuff) other_stuff[i] <- some_stuff[i] * some_stuff[i],
+  some_stuff^2,
+  py_run_string(py_loop, convert = FALSE),
+  
+  check = FALSE, iterations = 100
+  ) %>%
+  mutate(type = case_when(
+    str_detect(expression, "for \\(") ~ "Bad R",
+    str_detect(expression, "\\^") ~ "Good R",
+    TRUE ~ "Python"
+  )) %>% 
+  mutate_at(vars(type, expression), funs(
+    cell_spec(., color = if_else(median == min(median), "green", "black"))
+    )) %>% 
+  select(type, expression, min, median, max) %>% 
+  kable(caption = '"Looping" Comparison', escape = FALSE) %>% 
+  kable_styling(full_width = FALSE)
+```
+
+<br>
+
+There are problems with this test. Are we _really_ testing the same thing? Is running the Python code through an R's `reticulate` _actually_ fair? 
+
+Well, is it less fair than, say, running `rpy2` in Python? After running all these tests, I'd certainly say it's more fair.
+
+While some of these articles notify readers that the tests are lacking, some will sell the results as gospel anyways. Others dismiss the merits of rigor entirely. Le sigh.
+
+It's concerning that, in a field referred to as "Data Science", there are a mountain of articles discussing such poor metrics, along with plenty of practitioners that use them in explaining which language newcomers should learn. (The answer is both, BTW)
+
+```{r, echo=FALSE}
+knitr::include_graphics("http://www.reactiongifs.com/r/bth.gif")
+```
+
+
+
+With that in mind, what _would_ an objective comparison look like?
+
+Here's a barrage of tests applied to a task that's both a) common in practice and b) common in these "language war" tests: reading a .csv file to a data frame. This is a task where many articles assert Python's superiority, despite the evidence here and elsewhere.
+
+However, the __real__ goal is to experiment with methods that can be used to make tests involving less trivial tasks more objective _and more useful to everyone_.
+
+That said, I thnk it's a cool demonstration of some RStudio and {`reticulate`} sweetness. Hopefully, this spurs some interest in how awesome a multilingual workflow can be.
+
+If you want skip a pile of monotonous code, go ahead and jump to the [results](#execution-times).
 
 ```{r}
 library(bench)
 library(kableExtra); options(knitr.kable.NA = "")
-library(reticulate); use_condaenv("r-reticulate", required = TRUE)
 library(scales)
 library(tidyverse)
 ```
 
+# Reproducible Python Environment
+
+```{r, eval=FALSE}
+library(reticulate)
+conda_create("r-py-benchmarks", c("python=3.6", "numpy", "pandas"))
+```
+
+```{r}
+use_condaenv("r-py-benchmarks", required = TRUE)
+```
+
 # The Data
 
-The initial .csv was obtained from [Majestic Million CSV](https://blog.majestic.com/development/majestic-million-csv-daily/) [<img src="https://licensebuttons.net/l/by/3.0/88x31.png">](https://creativecommons.org/licenses/by/3.0/deed.en_US).
+The data come from a neutral third-party in the form of .csv, which can be obtained from [Majestic Million CSV](https://blog.majestic.com/development/majestic-million-csv-daily/) [<img src="https://licensebuttons.net/l/by/3.0/88x31.png">](https://creativecommons.org/licenses/by/3.0/deed.en_US).
+
+#### Download and Read Data Set
 
 ```{r, eval=FALSE}
 file_url <- "http://downloads.majestic.com/majestic_million.csv"
@@ -62,11 +176,14 @@ test_df <- read_csv(path)
 ```{r}
 glimpse(test_df)
 
-test_df
-
-test_df %>%                          # 0 NAs anywhere
-  summarise_all(funs(sum(is.na(.))))
+test_df %>%
+  summarise_all(funs(sum(is.na(.)))) %>% # where the NAs at?
+  gather(Variable, NAs) %>% 
+  kable() %>% 
+  kable_styling(full_width = FALSE)
 ```
+
+#### Write the .csv
 
 ```{r, eval=FALSE}
 write_csv(test_df, path)
@@ -74,12 +191,14 @@ write_csv(test_df, path)
 
 ## Small 
 
+The "small" .csv consists of the first 100 rows.
+
 ```{r}
 small_df <- test_df %>% 
   slice(1:100)
 
 small_df
-(small_rows <- nrow(small_df)) %>% comma() %>% paste("rows")
+(small_rows <- nrow(small_df)) %>% comma() %>% cat("rows")
 
 path_small_csv <- "test-data/small_csv.csv"
 write_csv(small_df, path_small_csv)
@@ -87,12 +206,14 @@ write_csv(small_df, path_small_csv)
 
 ## Medium
 
+The "medium" .csv consists of the first 5,000 rows.
+
 ```{r}
 medium_df <- test_df %>% 
   slice(1:5000)
 
 medium_df
-(med_rows <- nrow(medium_df ))%>% comma() %>% paste("rows")
+(med_rows <- nrow(medium_df)) %>% comma() %>% cat("rows")
 
 path_medium_csv <- "test-data/medium_csv.csv"
 write_csv(medium_df, path_medium_csv)
@@ -100,12 +221,14 @@ write_csv(medium_df, path_medium_csv)
 
 ## Big
 
+The "big" .csv stacks all 1,000,000 rows five times, creating a 5,000,000 row .csv.
+
 ```{r}
 big_df <- test_df %>% 
   rerun(.n = 5) %>% 
   bind_rows()
 
-(big_rows <- nrow(big_df)) %>% comma() %>% paste("rows")
+(big_rows <- nrow(big_df)) %>% comma() %>% cat("rows")
 
 path_big_csv <- "test-data/big_csv.csv"
 write_csv(big_df, path_big_csv)
@@ -117,15 +240,18 @@ The following steps were taken to "standardize" code.
 
 * R and Python functions:
     1. File paths are assigned to a `"*_csv.csv"` variable.
-    2. The column data types are identified ahead of time via a `*_col_specs` variable.
+    2. The column data types are identified ahead of time via a `*_col_specs` variable in order to maximize read speed. In future tests, it would be interesting to skip this step.
         + All "numeric" data are read as `double` via:
             + `"double"` for `utils::read.csv()` and `data.table::fread()` 
             + `readr::col_double()` for `readr::read_csv()`
             + `float` for `pandas.read_csv()`
-        + This is to standardize numeric usage as my understanding is that both R's `double`s and Python's `float`s are `double`s in the underlying C code.
+        + This is to standardize numeric usage as my understanding is that both R's `double`s and Python's `float`s are `double`s in the underlying C code. It also prevents the need to `import numpy` in every call to a Python script. If this is incorrect, don't hesitate to say so.
     3. The function assigns the result to an internal `df` variable.
     4. The function explicitly `return()`s the data frame.
-* .R and .py scripts:
+* .R and .py Script Execution:
+    + .R scripts are called via `system()` instead of `source()` as `source()` appeared to offer a potentially unfair advantage.
+    + Similarly, .py scripts were tested via `system()`, `reticulate::py_run_file()`, and `reticulate::py_run_string()` instead of `reticulate::source_python()`, to minimize the amount of steps required for execution and minimize potential handicaps.
+* .R and .py Script Code:
     1. Relevant package are loaded via R's `library()` or Python's `import`.
     2. File paths are assigned to a `"*_csv.csv"` variable.
     3. The column data types are identified ahead of time via a `*_col_specs` variable.
@@ -134,7 +260,9 @@ The following steps were taken to "standardize" code.
     
 ```{r}
 inspect_script <- function(path) {
+  url_base <-  "https://github.com/syknapptic/syknapptic/tree/master/content/post/"
   contents <- read_lines(path)
+  cat("File available at", paste0(url_base, path), "\n")
   cat("```\n")
   cat("# ", path, " ", rep("=", (80 - nchar(path) - 2)), "\n", sep = "")
   contents %>% walk(cat, "\n")
@@ -146,7 +274,7 @@ inspect_script <- function(path) {
 
 ### "Base" - `utils::read.csv()`
 
-#### Local `knitr` Function
+#### Local R Function
 
 ```{r}
 base_col_specs <- c("double", "double", "character",
@@ -161,26 +289,24 @@ base_test <- function(path) {
 }
 ```
 
-#### Scripts to Source via System Calls
+#### Scripts to Source by Operating System via `system()`
 
 ```{r, results='asis'}
-base_files <- c("r/base_test_small.R", "r/base_test_med.R", "r/base_test_big.R")
-
-base_files %>% 
+c("r/base_test_small.R", "r/base_test_med.R", "r/base_test_big.R") %>% 
   walk(inspect_script)
 ```
 
 ### `readr::read_csv()`
 
-#### Local `knitr` Function
+#### Local R Function
 
 ```{r}
 library(readr)
 
-readr_col_specs <- list(col_integer(), col_integer(), col_character(),
-                        col_character(), col_integer(), col_integer(),
-                        col_character(), col_character(), col_integer(),
-                        col_integer(), col_integer(), col_integer())
+readr_col_specs <- list(col_double(), col_double(), col_character(),
+                        col_character(), col_double(), col_double(),
+                        col_character(), col_character(), col_double(),
+                        col_double(), col_double(), col_double())
 
 readr_test <- function(path) {
   df <- read_csv(file = path, col_types = readr_col_specs)
@@ -189,18 +315,16 @@ readr_test <- function(path) {
 }
 ```
 
-#### Scripts to Source via System Calls
+#### Scripts to Source by Operating System via `system()`
 
 ```{r, results='asis'}
-readr_files <- c("r/readr_test_small.R", "r/readr_test_med.R", "r/readr_test_big.R") 
-
-readr_files %>% 
+c("r/readr_test_small.R", "r/readr_test_med.R", "r/readr_test_big.R") %>% 
   walk(inspect_script)
 ```
 
 ### `data.table::fread()`
 
-#### Local `knitr` Function
+#### Local R Function
 
 ```{r}
 library(data.table)
@@ -217,13 +341,10 @@ datatable_test <- function(path) {
 }
 ```
 
-#### Scripts to Source via System Calls
+#### Scripts to Source by Operating System via `system()`
 
 ```{r, results='asis'}
-datatable_files <- c("r/datatable_test_small.R", "r/datatable_test_med.R",
-                     "r/datatable_test_big.R") 
-
-datatable_files %>% 
+c("r/datatable_test_small.R", "r/datatable_test_med.R", "r/datatable_test_big.R") %>% 
   walk(inspect_script)
 ```
 
@@ -231,7 +352,7 @@ datatable_files %>%
 
 ### `pandas.read_csv()`
 
-#### Local `knitr` Function
+#### Local Python Function
 
 ```{python, cache = FALSE}
 import pandas
@@ -263,17 +384,14 @@ def pandas_test_big():
   return(df)
 ```
 
-#### Scripts to Source via System Calls
+#### Scripts to Source via `system()` and `reticulate::py_run_file(..., convert = FALSE)`
 
 ```{r, results='asis'}
-pandas_files <- c("py/pandas_test_small.py", "py/pandas_test_med.py",
-                  "py/pandas_test_big.py")
-
-pandas_files %>% 
+c("py/pandas_test_small.py", "py/pandas_test_med.py", "py/pandas_test_big.py") %>% 
   walk(inspect_script)
 ```
 
-#### `reticulate::py_run_string("pandas.read_csv(...)"", convert = FALSE)`
+#### `reticulate::py_run_string(..., convert = FALSE)`
 
 ```{r}
 py_run_string(
@@ -305,15 +423,29 @@ def retic_pandas_test_big():
   df = pandas.read_csv(filepath_or_buffer = path_big_csv,
                 dtype = pandas_col_specs, low_memory = False)
   return(df)
+
 ", convert = FALSE
 )
 ```
 
+## Dependencies Only
+
+```{r, results='asis'}
+c("r/test_load_readr.R", "r/test_load_datatable.R", "py/test_load_pandas.py") %>% 
+  walk(inspect_script)
+```
+
 # The Test
+
+100 iterations were run to provide a reasonable balance between rigor and compute time.
 
 ```{r}
 n_iterations <- 100
 ```
+
+All the code was tested via the {`bench`} package and its `bench::mark()` function. This package was only selected over others as a chance to take it for a test drive.
+
+The `convert` argument of `reticulate::py_run_string()` and `reticulate::py_run_file()` calls is set to `FALSE` to minimize any handicap.
 
 ```{r, eval=FALSE}
 results <- mark(
@@ -325,7 +457,8 @@ results <- mark(
   system("Rscript r/datatable_test_small.R"),
   
   py$pandas_test_small(),
-  py_run_string("retic_pandas_test_small()"),
+  py_run_string("retic_pandas_test_small()", convert = FALSE),
+  py_run_file("py/pandas_test_small.py", convert = FALSE),
   system("python py/pandas_test_small.py"),
 
   base_test(path_medium_csv),
@@ -336,7 +469,8 @@ results <- mark(
   system("Rscript r/datatable_test_med.R"),
   
   py$pandas_test_medium(),
-  py_run_string("retic_pandas_test_medium()"),
+  py_run_string("retic_pandas_test_medium()", convert = FALSE),
+  py_run_file("py/pandas_test_med.py", convert = FALSE),
   system("python py/pandas_test_med.py"),
 
   base_test(path_big_csv),
@@ -347,53 +481,98 @@ results <- mark(
   system("Rscript r/datatable_test_big.R"),
 
   py$pandas_test_big(),
-  py_run_string("retic_pandas_test_big()"),
+  py_run_string("retic_pandas_test_big()", convert = FALSE),
+  py_run_file("py/pandas_test_big.py", convert = FALSE),
   system("python py/pandas_test_big.py"),
 
   check = FALSE, filter_gc = FALSE, iterations = n_iterations
   )
 ```
 
-```{r, eval=FALSE, echo=FALSE}
-write_rds(results, "test-data/read-csv-test-results.rds")
+```{r, echo=FALSE}
+# write_rds(results, "test-data/read-csv-test-results2.rds")
+results <- read_rds("test-data/read-csv-test-results2.rds")
+```
+
+```{r, eval=FALSE}
+package_results <- mark(
+  system("Rscript r/test_load_readr.R"),
+  system("Rscript r/test_load_datatable.R"),
+  system("python py/test_load_pandas.py"),
+  
+  check = FALSE, filter_gc = FALSE, iterations = n_iterations
+)
 ```
 
 ```{r, echo=FALSE}
-results <- read_rds("test-data/read-csv-test-results.rds")
+# write_rds(package_results, "test-data/load-packages-test-results.rds")
+package_results <- read_rds("test-data/load-packages-test-results.rds")
 ```
 
-# The Results
+## Initial Carpentry
+
+```{r}
+package_results_df <- package_results %>% 
+  unnest() %>% 
+  mutate(package = case_when(
+    str_detect(expression, "datatable") ~ "data.table",
+    str_detect(expression, "readr") ~ "readr",
+    str_detect(expression, "pandas") ~ "pandas"
+  )) %>% 
+  mutate(call = case_when(
+    package == "data.table" ~ "library(data.table)",
+    package == "readr" ~ "library(readr)",
+    package == "pandas" ~ "import pandas"
+  ))
+
+package_medians_df <- package_results_df %>% 
+  rename(median_package = median, min_package = min, max_package = max) %>%
+  distinct(package, median_package, min_package, max_package) %>% 
+  add_row(median_package = bench_time(0), package = "utils")
+```
+
 
 ```{r}
 all_exprs <- results$expression
 system_calls <- all_exprs %>% str_subset("^system\\(")
 local_r_fun_calls <- all_exprs %>% str_subset("^(base|readr|datatable)_test\\(")
 python_eng_calls <- all_exprs %>% str_subset("^py\\$")
-reticulate_calls <- all_exprs %>% str_subset("retic_")
+reticulate_calls <- all_exprs %>% str_subset("py_run")
 knitr_calls <- c(local_r_fun_calls, python_eng_calls, reticulate_calls)
 
 results_df <- results %>%
   unnest() %>%
+  mutate(package = case_when(
+    str_detect(expression, "datatable") ~ "data.table",
+    str_detect(expression, "readr") ~ "readr",
+    str_detect(expression, "pandas") ~ "pandas",
+    TRUE ~ "utils"
+  )) %>% 
   mutate(call = case_when(
     str_detect(expression, "base") ~ "utils::read.csv()",
     str_detect(expression, "readr") ~ "readr::read_csv()",
     str_detect(expression, "datatable") ~ "data.table::fread()",
-    str_detect(expression, "py_run") ~ "reticulate::py_run_string()",
+    str_detect(expression, "py_run_string") ~ "reticulate::py_run_string()",
+    str_detect(expression, "py_run_file") ~ "reticulate::py_run_file()",
     str_detect(expression, "pandas") ~ "pandas.read_csv()"
       ) %>%
-      str_pad(max(nchar(.)), side = "right") # enforce alignment in plots
+      str_pad(max(nchar(.)), side = "right") # enforce left alignment in plots
     ) %>%
   mutate(execution_type = case_when(
     expression %in% system_calls ~ "Sourced Script",
     expression %in% knitr_calls ~ "knitr Engine"
     )) %>%
+  mutate(dependency_status = case_when(
+    expression %in% system_calls ~ "Dependencies Loaded on Execution (Sourced Script)",
+    expression %in% knitr_calls ~ "Dependencies Pre-Loaded")) %>% 
   mutate(lang = if_else(str_detect(expression, "pandas"), "Python", "R")) %>%
   mutate(file_size = str_extract(expression, "small|med|big")) %>%
   mutate(rows = case_when(
     file_size == "small" ~ small_rows,
     file_size == "med" ~ med_rows,
     file_size == "big" ~ big_rows
-    ))
+    )) %>% 
+  left_join(package_medians_df, by = "package")
 
 gg_df <- results_df %>%
   arrange(rows) %>%
@@ -411,89 +590,219 @@ gg_df <- results_df %>%
   mutate(lang = as_factor(lang))
 ```
 
-```{r}
-results_df %>%
-  select(rows, lang, call, everything(), -expression, -n_itr,
-         -time, -gc, -file_size, -min, -max, -total_time, -starts_with("level")) %>%
-  distinct() %>% 
-  arrange(rows, desc(lang)) %>%
-  rename(garbage_collections = n_gc, language = lang,
-         memory_allocated = mem_alloc) %>%
-  rename_all(funs(str_to_title(str_replace(., "_", " ")))) %>%
-  kable(digits = 2) %>%
-  kable_styling(bootstrap_options = "condensed", font_size = 12) %>% 
-  collapse_rows(columns = 1:2, valign = "top")
-```
+# The Results
 
 ```{r}
-plot_times <- function(df, plot_title = NULL) {
-  plot_init <- df %>% 
-    ggplot(aes(call, time, fill = lang, color = lang)) +
-    stat_ydensity(scale = "width") +
-    scale_fill_manual(values = c("#165CAA", "#ffde57"), 
-                      labels = function(x) paste(" ", x, "  ")) +
-    scale_color_manual(values = c("#BFC2C5", "#4584b6"),
-                       labels = function(x) paste(" ", x, "  ")) +
-    guides(fill = guide_legend(nrow = 1)) +
+theme_simple <- function(pnl_ln_col = "black", line_type = "dotted", cap_size = 10, ...) {
+  theme_minimal(15, "serif") +
+  theme(legend.title = element_blank(), 
+        legend.text = element_text(size = 12),
+        legend.position = "top",
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(colour = pnl_ln_col, linetype = line_type),
+        legend.key.size = unit(1.5, "lines"), 
+        axis.text.y = element_text("mono", face = "bold", hjust = 0, size = 12),
+        plot.caption = element_text(size = cap_size),
+        ...)
+}
+
+prep_lab <- function(lab) {
+  lab <- substitute(lab)
+  bquote(italic(paste("   ", .(lab), "   ")))
+}
+
+t_R <- prep_lab(t[R])
+t_Python <- prep_lab(t[Python])
+t_import_pandas <- prep_lab(t[Python]~-~max~group("(",t[import~~pandas],")"))
+
+plot_times <- function(df, ...) {
+  plot_init <- df %>%
+    ggplot(aes(call, time)) +
+    stat_ydensity(aes(fill = lang, color = lang), scale = "width", bw = 0.01, trim = FALSE) +
+    scale_fill_manual(values = c("#165CAA", "#ffde57"), labels = c(t_R, t_Python)) +
+    scale_color_manual(values = c("#BFC2C5", "#4584b6"), labels = c(t_R, t_Python)) +
     coord_flip() +
-    theme_minimal(17, "serif") +
-    theme(legend.title = element_blank(), 
-          legend.position = "top",
-          legend.key.size = unit(1.5, "lines"),
-          axis.text.y = element_text("mono", face = "bold", hjust = 0),
-          plot.caption = element_text(size = 10))
-  if(length(plot_title)) {
-    plot_fin <- plot_init + 
-      facet_wrap(~ rows, nrow = 3, scales = "free_x") +
-      labs(x = NULL, y = "Time",
-         title = plot_title,
-         caption = str_glue("{n_iterations} runs per call."))
-  } else {
-    n_rows <- sort(df$rows, decreasing = TRUE)[[1]]
-    plot_fin <- plot_init + 
-      facet_wrap(~ execution_type, ncol = 1, scales = "free") +
-      labs(x = NULL, y = "Time", title = str_glue("CSV to Data Frame: {comma(n_rows)}"),
-           caption = str_glue("{n_iterations} runs per call."))
-  }
+    theme_simple()
+    if(length(vars(...))) {
+      n_rows <- sort(df$rows, decreasing = TRUE)[[1]]
+      plot_fin <- plot_init + 
+        facet_wrap(vars(...), ncol = 1, scales = "free") +
+        labs(x = NULL, y = "Execution Time", 
+             title = str_glue("CSV to Data Frame: {comma(n_rows)}"),
+             caption = str_glue("{n_iterations} iterations"))
+    } else {
+      plot_fin <- plot_init + 
+        labs(x = NULL, y = "Execution Time", title = "Dependency Load Times",
+             caption = str_glue("{n_iterations} iterations")) +
+        geom_text(aes(y = median, label = paste("Median Time:", median)), 
+                  color = "darkgreen", nudge_x = 0.515)
+    }
   
   plot_fin
 }
 ```
 
-## Code Executed by `knitr`'s Language Engine
+## Execution Times
 
-```{r}
-gg_df %>% 
-  filter(execution_type == "knitr Engine") %>% 
-  plot_times("knitr Engine")
-```
-
-
-## Files Sourced via System Command
-
-```{r}
-gg_df %>% 
-  filter(execution_type == "Sourced Script") %>% 
-  plot_times("Files Sourced via System Command")
-```
-
-# tl;dr
+At 100 rows, R is faster, with base R's `utils::read.csv()` finishing first.
 
 ```{r}
 gg_df %>%
-  filter(file_size == "small") %>%
-  plot_times()
+  filter(file_size == "small") %>% 
+  plot_times(facet = dependency_status)
+```
 
+At 5,000 rows, R is still faster. In the sourced scripts, `pandas.read_csv()` has nearly caught up with `utils::read.csv()`, but `data.table::fread()` has pulled away.
+
+```{r}
 gg_df %>%
   filter(file_size == "med") %>% 
-  plot_times()
+  plot_times(facet = dependency_status)
+```
 
+At 5,000,000 million rows, we've reached the area where time differences would _actually_ be noticeable.
+
+The advantage of`utils::read.csv()`'s lack of dependencies has run its course and `pandas.read_csv()` is faster in nearly every case.
+
+That said, `readr::read_csv()` is still faster than `pandas.read_csv()` and, like most R users would expect, `data.table::fread()` is by far the fastest.
+
+```{r}
 gg_df %>%
   filter(file_size == "big") %>% 
+  plot_times(facet = dependency_status)
+```
+
+# ___tl;dr___
+
+```{r, fig.width = 11, fig.height = 12}
+gg_df %>% 
+  mutate(dependency_status = dependency_status %>% 
+           str_remove("\\s\\(.*$") %>% 
+           str_replace("Loaded on", "Loaded\non")
+         ) %>% 
+  ggplot(aes(call, time)) +
+    stat_ydensity(aes(fill = lang, color = lang), scale = "width", bw = 0.01, 
+                  trim = FALSE) +
+    scale_fill_manual(values = c("#165CAA", "#ffde57"), labels = c(t_R, t_Python)) +
+    scale_color_manual(values = c("#BFC2C5", "#4584b6"), labels = c(t_R, t_Python)) +
+    coord_flip() +
+  theme_simple(pnl_ln_col = "gray") +
+  theme(axis.text = element_text(size = 8), strip.text  = element_text(size = 12),
+        strip.text.y  = element_text(face = "bold", size = 15),
+        panel.background = element_rect(fill = "transparent", size = 0.5)) +
+  facet_grid(rows ~ dependency_status, scales = "free", switch = "y", space = "free") +
+  labs(x = NULL, y = "Time", title = "R vs Python - CSV to Data Frame",
+       caption = "12 columns, 100 iterations each")
+```
+
+
+# Appendices
+
+## Controlling for Dependency Load Times
+
+```{r}
+package_results_df %>%
+  mutate(lang = if_else(str_detect(expression, "pandas"), "Python", "R")) %>% 
+  arrange(desc(lang)) %>%
+  mutate(lang = as_factor(lang)) %>% 
   plot_times()
 ```
 
-# Session Info
+
+```{r}
+gg_df %>% 
+  filter(dependency_status == "Dependencies Loaded on Execution (Sourced Script)") %>%  
+  filter(file_size == "big") %>% 
+  mutate(adjusted_time = if_else(lang == "Python", time - max_package, NA_real_))  %>% 
+  rename(original_time = time) %>% 
+  gather(time_type, time, original_time, adjusted_time) %>% 
+  drop_na(time) %>% 
+  mutate(descrip = case_when(
+    lang == "R" ~ "Original R Time",
+    lang == "Python" & time_type == "original_time" ~ "Original Python Time",
+    lang == "Python" & time_type == "adjusted_time" ~ "Adjusted Python Time"
+    )) %>% 
+  arrange(desc(descrip)) %>% 
+  mutate(descrip = as_factor(descrip)) %>% 
+  ggplot(aes(call, time, fill = descrip)) +
+  stat_ydensity(width = 1, size = 0, color = "transparent", scale = "width", bw = 0.01,
+                trim = FALSE) +
+  scale_fill_manual(values = c("#165CAA", "#ffde57", "#ff9051"), 
+                    labels = c(t_R, t_Python, t_import_pandas)) +
+  guides(fill = guide_legend(nrow = 3, label.hjust = 0)) +
+  coord_flip() +
+  theme_simple() +
+  labs(x = NULL, y = "Execution Time",
+       title = "Comparing Sourced Scripts with Adjusted Python Times",
+       caption = str_glue("CSV to Data Frame: {comma(big_rows)} Rows")
+      )
+```
+
+## Summary Tables
+
+```{r}
+results_df %>%
+  select(rows, lang, execution_type, call, mean, median, `itr/sec`, n_gc, mem_alloc) %>% 
+  distinct() %>% 
+  arrange(rows, desc(lang)) %>%
+  mutate(rows = comma(rows), 
+         `itr/sec` = round(`itr/sec`, 2),
+         n_gc = ifelse(execution_type == "Sourced Script", "unknown", n_gc),
+         mem_alloc = ifelse(execution_type == "Sourced Script", "unknown", mem_alloc)) %>% 
+  mutate_at(vars(-c(rows, lang)), 
+            funs(cell_spec(., background = ifelse(lang == "R", "#f2f2f2", "#edf9ff"),
+                              color = ifelse(lang == "R", "#002963", "#809100"))
+                )) %>% 
+  mutate(lang = lang %>% cell_spec(background = ifelse(lang == "R", "#f2f2f2", "#edf9ff"),
+                                   color = ifelse(lang == "R", "#002647", "#809100"))) %>% 
+  mutate(n_gc = if_else(str_detect(n_gc, "unknown"), "unknown", n_gc),
+         mem_alloc = if_else(str_detect(mem_alloc, "unknown"), "unknown", mem_alloc)) %>%
+  rename(garbage_collections = n_gc, language = lang, memory_allocated = mem_alloc) %>%
+  rename_all(funs(str_to_title(str_replace(., "_", " ")))) %>%
+  kable(caption = "CSV to Data Frame Times", escape = FALSE, digits = 2) %>%
+  kable_styling(bootstrap_options = "condensed", font_size = 12) %>% 
+  collapse_rows(columns = 1:3, valign = "top")
+```
+
+```{r}
+package_results_df %>% 
+  mutate(lang = if_else(str_detect(expression, "\\.py"), "Python", "R"),
+         `itr/sec` = round(`itr/sec`, 2)) %>% 
+  select(lang, call, min, mean, median, max, `itr/sec`) %>% 
+  distinct() %>% 
+  mutate_at(vars(-lang), 
+            funs(cell_spec(., background = ifelse(lang == "R", "#f2f2f2", "#edf9ff"),
+                              color = ifelse(lang == "R", "#002963", "#809100"))
+            )) %>% 
+  mutate(lang = lang %>% cell_spec(background = ifelse(lang == "R", "#f2f2f2", "#edf9ff"),
+                                   color = ifelse(lang == "R", "#002647", "#809100"))) %>% 
+  rename(language = lang) %>% 
+  rename_all(str_to_title) %>% 
+  kable(caption = "Dependency Load Times", escape = FALSE, digits = 2) %>%
+  kable_styling(bootstrap_options = "condensed", font_size = 12) %>% 
+  collapse_rows(columns = 1, valign = "top")
+```
+
+
+# Environment
+
+## IDE
+
+```{r, eval=FALSE}
+rstudio_info <- rstudioapi::versionInfo() # obtain in interactive session
+write_rds(rstudio_info, "test-data/rstudio_info.rds")
+```
+
+```{r}
+read_rds("test-data/rstudio_info.rds") %>% 
+  as_tibble() %>% 
+  select(mode, version) %>% 
+  mutate(version = as.character(version)) %>% 
+  kable(caption = "RStudio Version") %>% 
+  kable_styling(full_width = FALSE)
+```
+
 
 ## R
 
@@ -506,12 +815,50 @@ sessionInfo()
 ```{python}
 import sys
 import numpy
-import pandas  
+import pandas
 
 print(sys.version)
 print(numpy.__version__)
 print(pandas.__version__)
 ```
 
+## System
 
+#### CPU
 
+```{r}
+cat("CPU:\n", system("wmic cpu get name", intern = TRUE)[[2]])
+```
+
+#### Memory
+
+```{r}
+ram_df <- system("wmic MEMORYCHIP get BankLabel, Capacity, Speed", intern = TRUE) %>% 
+  str_trim() %>% 
+  as_tibble() %>% 
+  slice(2:3) %>% 
+  separate(value, into = c("BankLabel", "Capacity", "Speed"), sep = "\\s{2,}")
+
+ram_df %>% 
+  rename_all(str_replace, "L", " L") %>% 
+  kable(caption = "Memory Specs") %>% 
+  kable_styling(full_width = FALSE)
+
+ram_df %>% 
+  mutate(Capacity = as.numeric(Capacity) / 1e9,
+         Speed = as.numeric(Speed)) %>% 
+  summarise(`Capacity in GB` = sum(Capacity),
+            `Speed in MHz` = unique(Speed)) %>% 
+  kable(caption = "Memory Summary") %>% 
+  kable_styling(full_width = FALSE)
+```
+
+#### Storage
+
+```{r}
+cat("SSD:\n", system("wmic diskdrive get Model", intern = TRUE)[[2]])
+```
+
+<br>
+<br>
+<br>

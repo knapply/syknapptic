@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R Bloggers on syknapptic</title>
-    <link>https://syknapptic.netlify.com/categories/r-bloggers/</link>
-    <description>Recent content in R Bloggers on syknapptic</description>
+    <title>Benchmarking on syknapptic</title>
+    <link>https://syknapptic.netlify.com/categories/benchmarking/</link>
+    <description>Recent content in Benchmarking on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 04 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/categories/r-bloggers/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://syknapptic.netlify.com/categories/benchmarking/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,18 +19,6 @@
       <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
       <description>R vs PythonReproducible Python EnvironmentThe DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()Dependencies OnlyThe TestInitial CarpentryThe ResultsExecution Timestl;drAppendicesControlling for Dependency Load TimesSummary TablesEnvironmentIDERPythonSystemR vs PythonPerformance comparisons between R and Python suck.
 Most seem to be run in Jupyter Notebook and many are using Python’s rpy2 library to run poorly optimized R code.</description>
-    </item>
-    
-    <item>
-      <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
-      <link>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</link>
-      <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</guid>
-      <description>ContextReflectionResources Up Fronttibble%&amp;gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
-
-Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
-ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</description>
     </item>
     
   </channel>

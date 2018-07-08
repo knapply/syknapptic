@@ -1,21 +1,21 @@
 ---
-title: 'Reading .csv Files'
+title: 'CSV to Data Frame: Establishing a Meaningful Standard for Performance Comparisons'
 draft: false
 author: Brendan Knapp
 date: '2018-07-04'
 slug: reading-csv-files
 categories:
-  - data-science-from-scratch
-tags: 
   - benchmarking
+  - r-bloggers
+tags: 
   - fileIO
 thumbnailImage: http://i0.kym-cdn.com/photos/images/facebook/001/124/028/5c2.jpg
 metaAlignment: center
 coverMeta: out
-summary: Comparing performance of R and Python in reading .csv files to data frames.
+summary: Comparing performance of R and Python in reading .csv files to data frames through multiple, reproducible methods. The intent is to establish a meaningful standard to compare R and Python benchmarks.
 output:
-  html_document:
-  # blogdown::html_page:
+  # html_document:
+  blogdown::html_page:
     toc: true
     toc_depth: 3
 editor_options: 
@@ -24,21 +24,203 @@ editor_options:
 
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#r-vs-python">R vs Python</a></li>
+<li><a href="#reproducible-python-environment">Reproducible Python Environment</a></li>
+<li><a href="#the-data">The Data</a><ul>
+<li><a href="#small">Small</a></li>
+<li><a href="#medium">Medium</a></li>
+<li><a href="#big">Big</a></li>
+</ul></li>
+<li><a href="#the-code">The Code</a><ul>
+<li><a href="#r">R</a><ul>
+<li><a href="#base---utilsread.csv">“Base” - <code>utils::read.csv()</code></a></li>
+<li><a href="#readrread_csv"><code>readr::read_csv()</code></a></li>
+<li><a href="#data.tablefread"><code>data.table::fread()</code></a></li>
+</ul></li>
+<li><a href="#python">Python</a><ul>
+<li><a href="#pandas.read_csv"><code>pandas.read_csv()</code></a></li>
+</ul></li>
+<li><a href="#dependencies-only">Dependencies Only</a></li>
+</ul></li>
+<li><a href="#the-test">The Test</a><ul>
+<li><a href="#initial-carpentry">Initial Carpentry</a></li>
+</ul></li>
+<li><a href="#the-results">The Results</a><ul>
+<li><a href="#execution-times">Execution Times</a></li>
+</ul></li>
+<li><a href="#tldr"><strong><em>tl;dr</em></strong></a></li>
+<li><a href="#appendices">Appendices</a><ul>
+<li><a href="#controlling-for-dependency-load-times">Controlling for Dependency Load Times</a></li>
+<li><a href="#summary-tables">Summary Tables</a></li>
+</ul></li>
+<li><a href="#environment">Environment</a><ul>
+<li><a href="#ide">IDE</a></li>
+<li><a href="#r-1">R</a></li>
+<li><a href="#python-1">Python</a></li>
+<li><a href="#system">System</a></li>
+</ul></li>
+</ul>
+</div>
 
+<div id="r-vs-python" class="section level1">
+<h1>R vs Python</h1>
+<p><img src="http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif" style="display: block; margin: auto;" /></p>
+<p>Performance comparisons between R and Python suck.</p>
+<p>Most seem to be run in Jupyter Notebook and many are using Python’s <code>rpy2</code> library to run poorly optimized R code. I’m not an anti-<code>for()</code> loop Nazi (yes, you <em>can</em> use them effectively in R), but thanks to the <code>base::*apply()</code> family and their beautiful <code>purrr::map*()</code> children, you’ll rarely see explicit loops that actually provide the best solution. Unfortunately, some of these comparisons arbitrarily test loops in R where you would <em>never, ever</em> do so.</p>
+<p>In a world of vectorization, it doesn’t make any sense why code like this receives such prominent treatment in seemingly every test…..</p>
+<pre class="r"><code>some_stuff &lt;- rnorm(2500)
+other_stuff &lt;- vector(mode = &quot;numeric&quot;, length(some_stuff))
+
+for(i in some_stuff) {
+  other_stuff[i] &lt;- some_stuff[i] * some_stuff[i]
+}</code></pre>
+<p><img src="https://media.giphy.com/media/l4FGnnlIQslHkOPaU/giphy.gif" style="display: block; margin: auto;" /></p>
+<p>In R, just do this…</p>
+<pre class="r"><code>better_stuff &lt;- some_stuff^2
+
+identical(other_stuff, better_stuff)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>… and in Python, using <code>reticulate</code> here, we can do this…</p>
+<pre class="r"><code>py_run_string(
+&quot;some_py_stuff = r.some_stuff
+other_py_stuff = {}&quot;, convert = FALSE)
+
+py_loop &lt;- (
+&quot;for i in range(len(some_py_stuff)):
+  other_py_stuff[i] = some_py_stuff[i] * some_py_stuff[i]&quot;
+)</code></pre>
+<p>… but the “Good R” code leaves it in the dust.</p>
+<pre class="r"><code>mark(
+  for(i in some_stuff) other_stuff[i] &lt;- some_stuff[i] * some_stuff[i],
+  some_stuff^2,
+  py_run_string(py_loop, convert = FALSE),
+  
+  check = FALSE, iterations = 100
+  ) %&gt;%
+  mutate(type = case_when(
+    str_detect(expression, &quot;for \\(&quot;) ~ &quot;Bad R&quot;,
+    str_detect(expression, &quot;\\^&quot;) ~ &quot;Good R&quot;,
+    TRUE ~ &quot;Python&quot;
+  )) %&gt;% 
+  mutate_at(vars(type, expression), funs(
+    cell_spec(., color = if_else(median == min(median), &quot;green&quot;, &quot;black&quot;))
+    )) %&gt;% 
+  select(type, expression, min, median, max) %&gt;% 
+  kable(caption = &#39;&quot;Looping&quot; Comparison&#39;, escape = FALSE) %&gt;% 
+  kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-6">Table 1: </span>“Looping” Comparison
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+type
+</th>
+<th style="text-align:left;">
+expression
+</th>
+<th style="text-align:right;">
+min
+</th>
+<th style="text-align:right;">
+median
+</th>
+<th style="text-align:right;">
+max
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="     color: black;">Bad R</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black;">for (i in some_stuff) other_stuff[i] &lt;- some_stuff[i] * some_stuff[i]</span>
+</td>
+<td style="text-align:right;">
+47.17ms
+</td>
+<td style="text-align:right;">
+59.49ms
+</td>
+<td style="text-align:right;">
+209.93ms
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: green;">Good R</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">some_stuff^2</span>
+</td>
+<td style="text-align:right;">
+1.18us
+</td>
+<td style="text-align:right;">
+1.58us
+</td>
+<td style="text-align:right;">
+10.27us
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: black;">Python</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: black;">py_run_string(py_loop, convert = FALSE)</span>
+</td>
+<td style="text-align:right;">
+656.2us
+</td>
+<td style="text-align:right;">
+681.48us
+</td>
+<td style="text-align:right;">
+1.35ms
+</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>There are problems with this test. Are we <em>really</em> testing the same thing? Is running the Python code through an R’s <code>reticulate</code> <em>actually</em> fair?</p>
+<p>Well, is it less fair than, say, running <code>rpy2</code> in Python? After running all these tests, I’d certainly say it’s more fair.</p>
+<p>While some of these articles notify readers that the tests are lacking, some will sell the results as gospel anyways. Others dismiss the merits of rigor entirely. Le sigh.</p>
+<p>It’s concerning that, in a field referred to as “Data Science”, there are a mountain of articles discussing such poor metrics, along with plenty of practitioners that use them in explaining which language newcomers should learn. (The answer is both, BTW)</p>
+<p><img src="http://www.reactiongifs.com/r/bth.gif" style="display: block; margin: auto;" /></p>
+<p>With that in mind, what <em>would</em> an objective comparison look like?</p>
+<p>Here’s a barrage of tests applied to a task that’s both a) common in practice and b) common in these “language war” tests: reading a .csv file to a data frame. This is a task where many articles assert Python’s superiority, despite the evidence here and elsewhere.</p>
+<p>However, the <strong>real</strong> goal is to experiment with methods that can be used to make tests involving less trivial tasks more objective <em>and more useful to everyone</em>.</p>
+<p>That said, I thnk it’s a cool demonstration of some RStudio and {<code>reticulate</code>} sweetness. Hopefully, this spurs some interest in how awesome a multilingual workflow can be.</p>
+<p>If you want skip a pile of monotonous code, go ahead and jump to the <a href="#execution-times">results</a>.</p>
 <pre class="r"><code>library(bench)
 library(kableExtra); options(knitr.kable.NA = &quot;&quot;)
-library(reticulate); use_condaenv(&quot;r-reticulate&quot;, required = TRUE)
 library(scales)
 library(tidyverse)</code></pre>
+</div>
+<div id="reproducible-python-environment" class="section level1">
+<h1>Reproducible Python Environment</h1>
+<pre class="r"><code>library(reticulate)
+conda_create(&quot;r-py-benchmarks&quot;, c(&quot;python=3.6&quot;, &quot;numpy&quot;, &quot;pandas&quot;))</code></pre>
+<pre class="r"><code>use_condaenv(&quot;r-py-benchmarks&quot;, required = TRUE)</code></pre>
+</div>
 <div id="the-data" class="section level1">
 <h1>The Data</h1>
-<p>The initial .csv was obtained from <a href="https://blog.majestic.com/development/majestic-million-csv-daily/">Majestic Million CSV</a> <a href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img src="https://licensebuttons.net/l/by/3.0/88x31.png"></a>.</p>
+<p>The data come from a neutral third-party in the form of .csv, which can be obtained from <a href="https://blog.majestic.com/development/majestic-million-csv-daily/">Majestic Million CSV</a> <a href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img src="https://licensebuttons.net/l/by/3.0/88x31.png"></a>.</p>
+<div id="download-and-read-data-set" class="section level4">
+<h4>Download and Read Data Set</h4>
 <pre class="r"><code>file_url &lt;- &quot;http://downloads.majestic.com/majestic_million.csv&quot;
 temp_file &lt;- tempfile(fileext = &quot;.csv&quot;)
 
 download.file(file_url, destfile = temp_file)
 
 test_df &lt;- read_csv(temp_file)</code></pre>
+</div>
 <div id="quick-inspection" class="section level4">
 <h4>Quick Inspection</h4>
 <pre class="r"><code>glimpse(test_df)</code></pre>
@@ -56,34 +238,129 @@ test_df &lt;- read_csv(temp_file)</code></pre>
 ## $ PrevTldRank    &lt;int&gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,...
 ## $ PrevRefSubNets &lt;int&gt; 462861, 451086, 410676, 408692, 303296, 292918,...
 ## $ PrevRefIPs     &lt;int&gt; 2966284, 3049605, 2447455, 2549623, 1138675, 13...</code></pre>
-<pre class="r"><code>test_df</code></pre>
-<pre><code>## # A tibble: 1,000,000 x 12
-##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
-##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
-##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
-##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
-##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
-##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
-##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
-##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
-##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
-##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
-##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
-## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
-## # ... with 999,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
-## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
-<pre class="r"><code>test_df %&gt;%                          # 0 NAs anywhere
-  summarise_all(funs(sum(is.na(.))))</code></pre>
-<pre><code>## # A tibble: 1 x 12
-##   GlobalRank TldRank Domain   TLD RefSubNets RefIPs IDN_Domain IDN_TLD
-##        &lt;int&gt;   &lt;int&gt;  &lt;int&gt; &lt;int&gt;      &lt;int&gt;  &lt;int&gt;      &lt;int&gt;   &lt;int&gt;
-## 1          0       0      0     0          0      0          0       0
-## # ... with 4 more variables: PrevGlobalRank &lt;int&gt;, PrevTldRank &lt;int&gt;,
-## #   PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
+<pre class="r"><code>test_df %&gt;%
+  summarise_all(funs(sum(is.na(.)))) %&gt;% # where the NAs at?
+  gather(Variable, NAs) %&gt;% 
+  kable() %&gt;% 
+  kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+NAs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+GlobalRank
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TldRank
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Domain
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TLD
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RefSubNets
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RefIPs
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IDN_Domain
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IDN_TLD
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PrevGlobalRank
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PrevTldRank
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PrevRefSubNets
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PrevRefIPs
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="write-the-.csv" class="section level4">
+<h4>Write the .csv</h4>
 <pre class="r"><code>write_csv(test_df, path)</code></pre>
 </div>
 <div id="small" class="section level2">
 <h2>Small</h2>
+<p>The “small” .csv consists of the first 100 rows.</p>
 <pre class="r"><code>small_df &lt;- test_df %&gt;% 
   slice(1:100)
 
@@ -103,13 +380,14 @@ small_df</code></pre>
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
 ## # ... with 90 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
-<pre class="r"><code>(small_rows &lt;- nrow(small_df)) %&gt;% comma() %&gt;% paste(&quot;rows&quot;)</code></pre>
-<pre><code>## [1] &quot;100 rows&quot;</code></pre>
+<pre class="r"><code>(small_rows &lt;- nrow(small_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
+<pre><code>## 100 rows</code></pre>
 <pre class="r"><code>path_small_csv &lt;- &quot;test-data/small_csv.csv&quot;
 write_csv(small_df, path_small_csv)</code></pre>
 </div>
 <div id="medium" class="section level2">
 <h2>Medium</h2>
+<p>The “medium” .csv consists of the first 5,000 rows.</p>
 <pre class="r"><code>medium_df &lt;- test_df %&gt;% 
   slice(1:5000)
 
@@ -129,19 +407,20 @@ medium_df</code></pre>
 ## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
 ## # ... with 4,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
-<pre class="r"><code>(med_rows &lt;- nrow(medium_df ))%&gt;% comma() %&gt;% paste(&quot;rows&quot;)</code></pre>
-<pre><code>## [1] &quot;5,000 rows&quot;</code></pre>
+<pre class="r"><code>(med_rows &lt;- nrow(medium_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
+<pre><code>## 5,000 rows</code></pre>
 <pre class="r"><code>path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot;
 write_csv(medium_df, path_medium_csv)</code></pre>
 </div>
 <div id="big" class="section level2">
 <h2>Big</h2>
+<p>The “big” .csv stacks all 1,000,000 rows five times, creating a 5,000,000 row .csv.</p>
 <pre class="r"><code>big_df &lt;- test_df %&gt;% 
   rerun(.n = 5) %&gt;% 
   bind_rows()
 
-(big_rows &lt;- nrow(big_df)) %&gt;% comma() %&gt;% paste(&quot;rows&quot;)</code></pre>
-<pre><code>## [1] &quot;5,000,000 rows&quot;</code></pre>
+(big_rows &lt;- nrow(big_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
+<pre><code>## 5,000,000 rows</code></pre>
 <pre class="r"><code>path_big_csv &lt;- &quot;test-data/big_csv.csv&quot;
 write_csv(big_df, path_big_csv)</code></pre>
 </div>
@@ -153,7 +432,7 @@ write_csv(big_df, path_big_csv)</code></pre>
 <li>R and Python functions:
 <ol style="list-style-type: decimal">
 <li>File paths are assigned to a <code>&quot;*_csv.csv&quot;</code> variable.</li>
-<li>The column data types are identified ahead of time via a <code>*_col_specs</code> variable.
+<li>The column data types are identified ahead of time via a <code>*_col_specs</code> variable in order to maximize read speed. In future tests, it would be interesting to skip this step.
 <ul>
 <li>All “numeric” data are read as <code>double</code> via:
 <ul>
@@ -161,12 +440,17 @@ write_csv(big_df, path_big_csv)</code></pre>
 <li><code>readr::col_double()</code> for <code>readr::read_csv()</code></li>
 <li><code>float</code> for <code>pandas.read_csv()</code></li>
 </ul></li>
-<li>This is to standardize numeric usage as my understanding is that both R’s <code>double</code>s and Python’s <code>float</code>s are <code>double</code>s in the underlying C code.</li>
+<li>This is to standardize numeric usage as my understanding is that both R’s <code>double</code>s and Python’s <code>float</code>s are <code>double</code>s in the underlying C code. It also prevents the need to <code>import numpy</code> in every call to a Python script. If this is incorrect, don’t hesitate to say so.</li>
 </ul></li>
 <li>The function assigns the result to an internal <code>df</code> variable.</li>
 <li>The function explicitly <code>return()</code>s the data frame.</li>
 </ol></li>
-<li>.R and .py scripts:
+<li>.R and .py Script Execution:
+<ul>
+<li>.R scripts are called via <code>system()</code> instead of <code>source()</code> as <code>source()</code> appeared to offer a potentially unfair advantage.</li>
+<li>Similarly, .py scripts were tested via <code>system()</code>, <code>reticulate::py_run_file()</code>, and <code>reticulate::py_run_string()</code> instead of <code>reticulate::source_python()</code>, to minimize the amount of steps required for execution and minimize potential handicaps.</li>
+</ul></li>
+<li>.R and .py Script Code:
 <ol style="list-style-type: decimal">
 <li>Relevant package are loaded via R’s <code>library()</code> or Python’s <code>import</code>.</li>
 <li>File paths are assigned to a <code>&quot;*_csv.csv&quot;</code> variable.</li>
@@ -178,7 +462,9 @@ write_csv(big_df, path_big_csv)</code></pre>
 </ol></li>
 </ul>
 <pre class="r"><code>inspect_script &lt;- function(path) {
+  url_base &lt;-  &quot;https://github.com/syknapptic/syknapptic/tree/master/content/post/&quot;
   contents &lt;- read_lines(path)
+  cat(&quot;File available at&quot;, paste0(url_base, path), &quot;\n&quot;)
   cat(&quot;```\n&quot;)
   cat(&quot;# &quot;, path, &quot; &quot;, rep(&quot;=&quot;, (80 - nchar(path) - 2)), &quot;\n&quot;, sep = &quot;&quot;)
   contents %&gt;% walk(cat, &quot;\n&quot;)
@@ -188,8 +474,8 @@ write_csv(big_df, path_big_csv)</code></pre>
 <h2>R</h2>
 <div id="base---utilsread.csv" class="section level3">
 <h3>“Base” - <code>utils::read.csv()</code></h3>
-<div id="local-knitr-function" class="section level4">
-<h4>Local <code>knitr</code> Function</h4>
+<div id="local-r-function" class="section level4">
+<h4>Local R Function</h4>
 <pre class="r"><code>base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,
                     &quot;character&quot;, &quot;double&quot;, &quot;double&quot;,
                     &quot;character&quot;, &quot;character&quot;, &quot;double&quot;,
@@ -201,12 +487,11 @@ base_test &lt;- function(path) {
   return(df)
 }</code></pre>
 </div>
-<div id="scripts-to-source-via-system-calls" class="section level4">
-<h4>Scripts to Source via System Calls</h4>
-<pre class="r"><code>base_files &lt;- c(&quot;r/base_test_small.R&quot;, &quot;r/base_test_med.R&quot;, &quot;r/base_test_big.R&quot;)
-
-base_files %&gt;% 
+<div id="scripts-to-source-by-operating-system-via-system" class="section level4">
+<h4>Scripts to Source by Operating System via <code>system()</code></h4>
+<pre class="r"><code>c(&quot;r/base_test_small.R&quot;, &quot;r/base_test_med.R&quot;, &quot;r/base_test_big.R&quot;) %&gt;% 
   walk(inspect_script)</code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_small.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_small.R</a></p>
 <pre><code># r/base_test_small.R ===========================================================
 path_small_csv &lt;- &quot;test-data/small_csv.csv&quot; 
  
@@ -216,6 +501,7 @@ base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&q
                     &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
  
 df &lt;- read.csv(file = path_small_csv, colClasses = base_col_specs) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_med.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_med.R</a></p>
 <pre><code># r/base_test_med.R =============================================================
 path_medium_csv &lt;- &quot;test-data/medium_csv.csv&quot; 
  
@@ -225,6 +511,7 @@ base_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&q
                     &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
  
 df &lt;- read.csv(file = path_medium_csv, colClasses = base_col_specs) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_big.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/base_test_big.R</a></p>
 <pre><code># r/base_test_big.R =============================================================
 path_big_csv &lt;- &quot;test-data/big_csv.csv&quot; 
  
@@ -238,14 +525,14 @@ df &lt;- read.csv(file = path_big_csv, colClasses = base_col_specs) </code></pre
 </div>
 <div id="readrread_csv" class="section level3">
 <h3><code>readr::read_csv()</code></h3>
-<div id="local-knitr-function-1" class="section level4">
-<h4>Local <code>knitr</code> Function</h4>
+<div id="local-r-function-1" class="section level4">
+<h4>Local R Function</h4>
 <pre class="r"><code>library(readr)
 
-readr_col_specs &lt;- list(col_integer(), col_integer(), col_character(),
-                        col_character(), col_integer(), col_integer(),
-                        col_character(), col_character(), col_integer(),
-                        col_integer(), col_integer(), col_integer())
+readr_col_specs &lt;- list(col_double(), col_double(), col_character(),
+                        col_character(), col_double(), col_double(),
+                        col_character(), col_character(), col_double(),
+                        col_double(), col_double(), col_double())
 
 readr_test &lt;- function(path) {
   df &lt;- read_csv(file = path, col_types = readr_col_specs)
@@ -253,12 +540,11 @@ readr_test &lt;- function(path) {
   return(df)
 }</code></pre>
 </div>
-<div id="scripts-to-source-via-system-calls-1" class="section level4">
-<h4>Scripts to Source via System Calls</h4>
-<pre class="r"><code>readr_files &lt;- c(&quot;r/readr_test_small.R&quot;, &quot;r/readr_test_med.R&quot;, &quot;r/readr_test_big.R&quot;) 
-
-readr_files %&gt;% 
+<div id="scripts-to-source-by-operating-system-via-system-1" class="section level4">
+<h4>Scripts to Source by Operating System via <code>system()</code></h4>
+<pre class="r"><code>c(&quot;r/readr_test_small.R&quot;, &quot;r/readr_test_med.R&quot;, &quot;r/readr_test_big.R&quot;) %&gt;% 
   walk(inspect_script)</code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_small.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_small.R</a></p>
 <pre><code># r/readr_test_small.R ==========================================================
 library(readr) 
  
@@ -270,6 +556,7 @@ readr_col_specs &lt;- list(col_double(), col_double(), col_character(),
                         col_double(), col_double(), col_double()) 
  
 df &lt;- read_csv(file = path_small_csv, col_types = readr_col_specs) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_med.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_med.R</a></p>
 <pre><code># r/readr_test_med.R ============================================================
 library(readr) 
  
@@ -281,6 +568,7 @@ readr_col_specs &lt;- list(col_double(), col_double(), col_character(),
                         col_double(), col_double(), col_double()) 
  
 df &lt;- read_csv(file = path_medium_csv, col_types = readr_col_specs) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_big.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/readr_test_big.R</a></p>
 <pre><code># r/readr_test_big.R ============================================================
 library(readr) 
  
@@ -296,8 +584,8 @@ df &lt;- read_csv(file = path_big_csv, col_types = readr_col_specs) </code></pre
 </div>
 <div id="data.tablefread" class="section level3">
 <h3><code>data.table::fread()</code></h3>
-<div id="local-knitr-function-2" class="section level4">
-<h4>Local <code>knitr</code> Function</h4>
+<div id="local-r-function-2" class="section level4">
+<h4>Local R Function</h4>
 <pre class="r"><code>library(data.table)
 
 datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;character&quot;,
@@ -311,13 +599,11 @@ datatable_test &lt;- function(path) {
   return(df)
 }</code></pre>
 </div>
-<div id="scripts-to-source-via-system-calls-2" class="section level4">
-<h4>Scripts to Source via System Calls</h4>
-<pre class="r"><code>datatable_files &lt;- c(&quot;r/datatable_test_small.R&quot;, &quot;r/datatable_test_med.R&quot;,
-                     &quot;r/datatable_test_big.R&quot;) 
-
-datatable_files %&gt;% 
+<div id="scripts-to-source-by-operating-system-via-system-2" class="section level4">
+<h4>Scripts to Source by Operating System via <code>system()</code></h4>
+<pre class="r"><code>c(&quot;r/datatable_test_small.R&quot;, &quot;r/datatable_test_med.R&quot;, &quot;r/datatable_test_big.R&quot;) %&gt;% 
   walk(inspect_script)</code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_small.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_small.R</a></p>
 <pre><code># r/datatable_test_small.R ======================================================
 library(data.table) 
  
@@ -329,6 +615,7 @@ datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;charac
                          &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
  
 df &lt;- fread(file = path_small_csv, colClasses = datatable_col_specs) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_med.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_med.R</a></p>
 <pre><code># r/datatable_test_med.R ========================================================
 library(data.table) 
  
@@ -340,6 +627,7 @@ datatable_col_specs &lt;- c(&quot;double&quot;, &quot;double&quot;, &quot;charac
                          &quot;double&quot;, &quot;double&quot;, &quot;double&quot;) 
  
 df &lt;- fread(file = path_medium_csv, colClasses = datatable_col_specs) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_big.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/datatable_test_big.R</a></p>
 <pre><code># r/datatable_test_big.R ========================================================
 library(data.table) 
  
@@ -358,8 +646,8 @@ df &lt;- fread(file = path_big_csv, colClasses = datatable_col_specs) </code></p
 <h2>Python</h2>
 <div id="pandas.read_csv" class="section level3">
 <h3><code>pandas.read_csv()</code></h3>
-<div id="local-knitr-function-3" class="section level4">
-<h4>Local <code>knitr</code> Function</h4>
+<div id="local-python-function" class="section level4">
+<h4>Local Python Function</h4>
 <pre class="python"><code>import pandas
 path_small_csv = &#39;test-data/small_csv.csv&#39;
 path_medium_csv = &#39;test-data/medium_csv.csv&#39;
@@ -385,13 +673,11 @@ def pandas_test_big():
                 dtype = pandas_col_specs, low_memory = False)
   return(df)</code></pre>
 </div>
-<div id="scripts-to-source-via-system-calls-3" class="section level4">
-<h4>Scripts to Source via System Calls</h4>
-<pre class="r"><code>pandas_files &lt;- c(&quot;py/pandas_test_small.py&quot;, &quot;py/pandas_test_med.py&quot;,
-                  &quot;py/pandas_test_big.py&quot;)
-
-pandas_files %&gt;% 
+<div id="scripts-to-source-via-system-and-reticulatepy_run_file...-convert-false" class="section level4">
+<h4>Scripts to Source via <code>system()</code> and <code>reticulate::py_run_file(..., convert = FALSE)</code></h4>
+<pre class="r"><code>c(&quot;py/pandas_test_small.py&quot;, &quot;py/pandas_test_med.py&quot;, &quot;py/pandas_test_big.py&quot;) %&gt;% 
   walk(inspect_script)</code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_small.py" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_small.py</a></p>
 <pre><code># py/pandas_test_small.py =======================================================
 import pandas 
  
@@ -406,6 +692,7 @@ pandas_col_specs = {
  
 df = pandas.read_csv(filepath_or_buffer = path_small_csv, 
                      dtype = pandas_col_specs, low_memory = False) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_med.py" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_med.py</a></p>
 <pre><code># py/pandas_test_med.py =========================================================
 import pandas 
  
@@ -420,6 +707,7 @@ pandas_col_specs = {
  
 df = pandas.read_csv(filepath_or_buffer = path_medium_csv, 
                      dtype = pandas_col_specs, low_memory = False) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_big.py" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/py/pandas_test_big.py</a></p>
 <pre><code># py/pandas_test_big.py =========================================================
 import pandas 
  
@@ -435,8 +723,8 @@ pandas_col_specs = {
 df = pandas.read_csv(filepath_or_buffer = path_big_csv, 
                      dtype = pandas_col_specs, low_memory = False) </code></pre>
 </div>
-<div id="reticulatepy_run_stringpandas.read_csv...-convert-false" class="section level4">
-<h4><code>reticulate::py_run_string(&quot;pandas.read_csv(...)&quot;&quot;, convert = FALSE)</code></h4>
+<div id="reticulatepy_run_string...-convert-false" class="section level4">
+<h4><code>reticulate::py_run_string(..., convert = FALSE)</code></h4>
 <pre class="r"><code>py_run_string(
 &quot;
 import pandas
@@ -466,15 +754,33 @@ def retic_pandas_test_big():
   df = pandas.read_csv(filepath_or_buffer = path_big_csv,
                 dtype = pandas_col_specs, low_memory = False)
   return(df)
+
 &quot;, convert = FALSE
 )</code></pre>
 </div>
 </div>
 </div>
+<div id="dependencies-only" class="section level2">
+<h2>Dependencies Only</h2>
+<pre class="r"><code>c(&quot;r/test_load_readr.R&quot;, &quot;r/test_load_datatable.R&quot;, &quot;py/test_load_pandas.py&quot;) %&gt;% 
+  walk(inspect_script)</code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_readr.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_readr.R</a></p>
+<pre><code># r/test_load_readr.R ===========================================================
+library(readr) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_datatable.R" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/r/test_load_datatable.R</a></p>
+<pre><code># r/test_load_datatable.R =======================================================
+library(data.table) </code></pre>
+<p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py</a></p>
+<pre><code># py/test_load_pandas.py ========================================================
+import pandas </code></pre>
+</div>
 </div>
 <div id="the-test" class="section level1">
 <h1>The Test</h1>
+<p>100 iterations were run to provide a reasonable balance between rigor and compute time.</p>
 <pre class="r"><code>n_iterations &lt;- 100</code></pre>
+<p>All the code was tested via the {<code>bench</code>} package and its <code>bench::mark()</code> function. This package was only selected over others as a chance to take it for a test drive.</p>
+<p>The <code>convert</code> argument of <code>reticulate::py_run_string()</code> and <code>reticulate::py_run_file()</code> calls is set to <code>FALSE</code> to minimize any handicap.</p>
 <pre class="r"><code>results &lt;- mark(
   base_test(path_small_csv),
   readr_test(path_small_csv),
@@ -484,7 +790,8 @@ def retic_pandas_test_big():
   system(&quot;Rscript r/datatable_test_small.R&quot;),
   
   py$pandas_test_small(),
-  py_run_string(&quot;retic_pandas_test_small()&quot;),
+  py_run_string(&quot;retic_pandas_test_small()&quot;, convert = FALSE),
+  py_run_file(&quot;py/pandas_test_small.py&quot;, convert = FALSE),
   system(&quot;python py/pandas_test_small.py&quot;),
 
   base_test(path_medium_csv),
@@ -495,7 +802,8 @@ def retic_pandas_test_big():
   system(&quot;Rscript r/datatable_test_med.R&quot;),
   
   py$pandas_test_medium(),
-  py_run_string(&quot;retic_pandas_test_medium()&quot;),
+  py_run_string(&quot;retic_pandas_test_medium()&quot;, convert = FALSE),
+  py_run_file(&quot;py/pandas_test_med.py&quot;, convert = FALSE),
   system(&quot;python py/pandas_test_med.py&quot;),
 
   base_test(path_big_csv),
@@ -506,43 +814,78 @@ def retic_pandas_test_big():
   system(&quot;Rscript r/datatable_test_big.R&quot;),
 
   py$pandas_test_big(),
-  py_run_string(&quot;retic_pandas_test_big()&quot;),
+  py_run_string(&quot;retic_pandas_test_big()&quot;, convert = FALSE),
+  py_run_file(&quot;py/pandas_test_big.py&quot;, convert = FALSE),
   system(&quot;python py/pandas_test_big.py&quot;),
 
   check = FALSE, filter_gc = FALSE, iterations = n_iterations
   )</code></pre>
-</div>
-<div id="the-results" class="section level1">
-<h1>The Results</h1>
+<pre class="r"><code>package_results &lt;- mark(
+  system(&quot;Rscript r/test_load_readr.R&quot;),
+  system(&quot;Rscript r/test_load_datatable.R&quot;),
+  system(&quot;python py/test_load_pandas.py&quot;),
+  
+  check = FALSE, filter_gc = FALSE, iterations = n_iterations
+)</code></pre>
+<div id="initial-carpentry" class="section level2">
+<h2>Initial Carpentry</h2>
+<pre class="r"><code>package_results_df &lt;- package_results %&gt;% 
+  unnest() %&gt;% 
+  mutate(package = case_when(
+    str_detect(expression, &quot;datatable&quot;) ~ &quot;data.table&quot;,
+    str_detect(expression, &quot;readr&quot;) ~ &quot;readr&quot;,
+    str_detect(expression, &quot;pandas&quot;) ~ &quot;pandas&quot;
+  )) %&gt;% 
+  mutate(call = case_when(
+    package == &quot;data.table&quot; ~ &quot;library(data.table)&quot;,
+    package == &quot;readr&quot; ~ &quot;library(readr)&quot;,
+    package == &quot;pandas&quot; ~ &quot;import pandas&quot;
+  ))
+
+package_medians_df &lt;- package_results_df %&gt;% 
+  rename(median_package = median, min_package = min, max_package = max) %&gt;%
+  distinct(package, median_package, min_package, max_package) %&gt;% 
+  add_row(median_package = bench_time(0), package = &quot;utils&quot;)</code></pre>
 <pre class="r"><code>all_exprs &lt;- results$expression
 system_calls &lt;- all_exprs %&gt;% str_subset(&quot;^system\\(&quot;)
 local_r_fun_calls &lt;- all_exprs %&gt;% str_subset(&quot;^(base|readr|datatable)_test\\(&quot;)
 python_eng_calls &lt;- all_exprs %&gt;% str_subset(&quot;^py\\$&quot;)
-reticulate_calls &lt;- all_exprs %&gt;% str_subset(&quot;retic_&quot;)
+reticulate_calls &lt;- all_exprs %&gt;% str_subset(&quot;py_run&quot;)
 knitr_calls &lt;- c(local_r_fun_calls, python_eng_calls, reticulate_calls)
 
 results_df &lt;- results %&gt;%
   unnest() %&gt;%
+  mutate(package = case_when(
+    str_detect(expression, &quot;datatable&quot;) ~ &quot;data.table&quot;,
+    str_detect(expression, &quot;readr&quot;) ~ &quot;readr&quot;,
+    str_detect(expression, &quot;pandas&quot;) ~ &quot;pandas&quot;,
+    TRUE ~ &quot;utils&quot;
+  )) %&gt;% 
   mutate(call = case_when(
     str_detect(expression, &quot;base&quot;) ~ &quot;utils::read.csv()&quot;,
     str_detect(expression, &quot;readr&quot;) ~ &quot;readr::read_csv()&quot;,
     str_detect(expression, &quot;datatable&quot;) ~ &quot;data.table::fread()&quot;,
-    str_detect(expression, &quot;py_run&quot;) ~ &quot;reticulate::py_run_string()&quot;,
+    str_detect(expression, &quot;py_run_string&quot;) ~ &quot;reticulate::py_run_string()&quot;,
+    str_detect(expression, &quot;py_run_file&quot;) ~ &quot;reticulate::py_run_file()&quot;,
     str_detect(expression, &quot;pandas&quot;) ~ &quot;pandas.read_csv()&quot;
       ) %&gt;%
-      str_pad(max(nchar(.)), side = &quot;right&quot;) # enforce alignment in plots
+      str_pad(max(nchar(.)), side = &quot;right&quot;) # enforce left alignment in plots
     ) %&gt;%
   mutate(execution_type = case_when(
     expression %in% system_calls ~ &quot;Sourced Script&quot;,
     expression %in% knitr_calls ~ &quot;knitr Engine&quot;
     )) %&gt;%
+  mutate(dependency_status = case_when(
+    expression %in% system_calls ~ &quot;Dependencies Loaded on Execution (Sourced Script)&quot;,
+    expression %in% knitr_calls ~ &quot;Dependencies Pre-Loaded&quot;)) %&gt;% 
   mutate(lang = if_else(str_detect(expression, &quot;pandas&quot;), &quot;Python&quot;, &quot;R&quot;)) %&gt;%
   mutate(file_size = str_extract(expression, &quot;small|med|big&quot;)) %&gt;%
   mutate(rows = case_when(
     file_size == &quot;small&quot; ~ small_rows,
     file_size == &quot;med&quot; ~ med_rows,
     file_size == &quot;big&quot; ~ big_rows
-    ))
+    )) %&gt;% 
+  left_join(package_medians_df, by = &quot;package&quot;)
 
 gg_df &lt;- results_df %&gt;%
   arrange(rows) %&gt;%
@@ -558,764 +901,1017 @@ gg_df &lt;- results_df %&gt;%
   mutate(call = as_factor(call)) %&gt;%
   arrange(desc(lang)) %&gt;%
   mutate(lang = as_factor(lang))</code></pre>
+</div>
+</div>
+<div id="the-results" class="section level1">
+<h1>The Results</h1>
+<pre class="r"><code>theme_simple &lt;- function(pnl_ln_col = &quot;black&quot;, line_type = &quot;dotted&quot;, cap_size = 10, ...) {
+  theme_minimal(15, &quot;serif&quot;) +
+  theme(legend.title = element_blank(), 
+        legend.text = element_text(size = 12),
+        legend.position = &quot;top&quot;,
+        panel.grid.minor.x = element_blank(),
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(colour = pnl_ln_col, linetype = line_type),
+        legend.key.size = unit(1.5, &quot;lines&quot;), 
+        axis.text.y = element_text(&quot;mono&quot;, face = &quot;bold&quot;, hjust = 0, size = 12),
+        plot.caption = element_text(size = cap_size),
+        ...)
+}
+
+prep_lab &lt;- function(lab) {
+  lab &lt;- substitute(lab)
+  bquote(italic(paste(&quot;   &quot;, .(lab), &quot;   &quot;)))
+}
+
+t_R &lt;- prep_lab(t[R])
+t_Python &lt;- prep_lab(t[Python])
+t_import_pandas &lt;- prep_lab(t[Python]~-~max~group(&quot;(&quot;,t[import~~pandas],&quot;)&quot;))
+
+plot_times &lt;- function(df, ...) {
+  plot_init &lt;- df %&gt;%
+    ggplot(aes(call, time)) +
+    stat_ydensity(aes(fill = lang, color = lang), scale = &quot;width&quot;, bw = 0.01, trim = FALSE) +
+    scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;), labels = c(t_R, t_Python)) +
+    scale_color_manual(values = c(&quot;#BFC2C5&quot;, &quot;#4584b6&quot;), labels = c(t_R, t_Python)) +
+    coord_flip() +
+    theme_simple()
+    if(length(vars(...))) {
+      n_rows &lt;- sort(df$rows, decreasing = TRUE)[[1]]
+      plot_fin &lt;- plot_init + 
+        facet_wrap(vars(...), ncol = 1, scales = &quot;free&quot;) +
+        labs(x = NULL, y = &quot;Execution Time&quot;, 
+             title = str_glue(&quot;CSV to Data Frame: {comma(n_rows)}&quot;),
+             caption = str_glue(&quot;{n_iterations} iterations&quot;))
+    } else {
+      plot_fin &lt;- plot_init + 
+        labs(x = NULL, y = &quot;Execution Time&quot;, title = &quot;Dependency Load Times&quot;,
+             caption = str_glue(&quot;{n_iterations} iterations&quot;)) +
+        geom_text(aes(y = median, label = paste(&quot;Median Time:&quot;, median)), 
+                  color = &quot;darkgreen&quot;, nudge_x = 0.515)
+    }
+  
+  plot_fin
+}</code></pre>
+<div id="execution-times" class="section level2">
+<h2>Execution Times</h2>
+<p>At 100 rows, R is faster, with base R’s <code>utils::read.csv()</code> finishing first.</p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;small&quot;) %&gt;% 
+  plot_times(facet = dependency_status)</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-37-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p>At 5,000 rows, R is still faster. In the sourced scripts, <code>pandas.read_csv()</code> has nearly caught up with <code>utils::read.csv()</code>, but <code>data.table::fread()</code> has pulled away.</p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;med&quot;) %&gt;% 
+  plot_times(facet = dependency_status)</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-38-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<p>At 5,000,000 million rows, we’ve reached the area where time differences would <em>actually</em> be noticeable.</p>
+<p>The advantage of<code>utils::read.csv()</code>’s lack of dependencies has run its course and <code>pandas.read_csv()</code> is faster in nearly every case.</p>
+<p>That said, <code>readr::read_csv()</code> is still faster than <code>pandas.read_csv()</code> and, like most R users would expect, <code>data.table::fread()</code> is by far the fastest.</p>
+<pre class="r"><code>gg_df %&gt;%
+  filter(file_size == &quot;big&quot;) %&gt;% 
+  plot_times(facet = dependency_status)</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-39-1.png" width="3300" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="tldr" class="section level1">
+<h1><strong><em>tl;dr</em></strong></h1>
+<pre class="r"><code>gg_df %&gt;% 
+  mutate(dependency_status = dependency_status %&gt;% 
+           str_remove(&quot;\\s\\(.*$&quot;) %&gt;% 
+           str_replace(&quot;Loaded on&quot;, &quot;Loaded\non&quot;)
+         ) %&gt;% 
+  ggplot(aes(call, time)) +
+    stat_ydensity(aes(fill = lang, color = lang), scale = &quot;width&quot;, bw = 0.01, 
+                  trim = FALSE) +
+    scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;), labels = c(t_R, t_Python)) +
+    scale_color_manual(values = c(&quot;#BFC2C5&quot;, &quot;#4584b6&quot;), labels = c(t_R, t_Python)) +
+    coord_flip() +
+  theme_simple(pnl_ln_col = &quot;gray&quot;) +
+  theme(axis.text = element_text(size = 8), strip.text  = element_text(size = 12),
+        strip.text.y  = element_text(face = &quot;bold&quot;, size = 15),
+        panel.background = element_rect(fill = &quot;transparent&quot;, size = 0.5)) +
+  facet_grid(rows ~ dependency_status, scales = &quot;free&quot;, switch = &quot;y&quot;, space = &quot;free&quot;) +
+  labs(x = NULL, y = &quot;Time&quot;, title = &quot;R vs Python - CSV to Data Frame&quot;,
+       caption = &quot;12 columns, 100 iterations each&quot;)</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-40-1.png" width="3300" style="display: block; margin: auto;" /></p>
+</div>
+<div id="appendices" class="section level1">
+<h1>Appendices</h1>
+<div id="controlling-for-dependency-load-times" class="section level2">
+<h2>Controlling for Dependency Load Times</h2>
+<pre class="r"><code>package_results_df %&gt;%
+  mutate(lang = if_else(str_detect(expression, &quot;pandas&quot;), &quot;Python&quot;, &quot;R&quot;)) %&gt;% 
+  arrange(desc(lang)) %&gt;%
+  mutate(lang = as_factor(lang)) %&gt;% 
+  plot_times()</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-41-1.png" width="3300" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gg_df %&gt;% 
+  filter(dependency_status == &quot;Dependencies Loaded on Execution (Sourced Script)&quot;) %&gt;%  
+  filter(file_size == &quot;big&quot;) %&gt;% 
+  mutate(adjusted_time = if_else(lang == &quot;Python&quot;, time - max_package, NA_real_))  %&gt;% 
+  rename(original_time = time) %&gt;% 
+  gather(time_type, time, original_time, adjusted_time) %&gt;% 
+  drop_na(time) %&gt;% 
+  mutate(descrip = case_when(
+    lang == &quot;R&quot; ~ &quot;Original R Time&quot;,
+    lang == &quot;Python&quot; &amp; time_type == &quot;original_time&quot; ~ &quot;Original Python Time&quot;,
+    lang == &quot;Python&quot; &amp; time_type == &quot;adjusted_time&quot; ~ &quot;Adjusted Python Time&quot;
+    )) %&gt;% 
+  arrange(desc(descrip)) %&gt;% 
+  mutate(descrip = as_factor(descrip)) %&gt;% 
+  ggplot(aes(call, time, fill = descrip)) +
+  stat_ydensity(width = 1, size = 0, color = &quot;transparent&quot;, scale = &quot;width&quot;, bw = 0.01,
+                trim = FALSE) +
+  scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;, &quot;#ff9051&quot;), 
+                    labels = c(t_R, t_Python, t_import_pandas)) +
+  guides(fill = guide_legend(nrow = 3, label.hjust = 0)) +
+  coord_flip() +
+  theme_simple() +
+  labs(x = NULL, y = &quot;Execution Time&quot;,
+       title = &quot;Comparing Sourced Scripts with Adjusted Python Times&quot;,
+       caption = str_glue(&quot;CSV to Data Frame: {comma(big_rows)} Rows&quot;)
+      )</code></pre>
+<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png" width="3300" style="display: block; margin: auto;" /></p>
+</div>
+<div id="summary-tables" class="section level2">
+<h2>Summary Tables</h2>
 <pre class="r"><code>results_df %&gt;%
-  select(rows, lang, call, everything(), -expression, -n_itr,
-         -time, -gc, -file_size, -min, -max, -total_time, -starts_with(&quot;level&quot;)) %&gt;%
+  select(rows, lang, execution_type, call, mean, median, `itr/sec`, n_gc, mem_alloc) %&gt;% 
   distinct() %&gt;% 
   arrange(rows, desc(lang)) %&gt;%
-  rename(garbage_collections = n_gc, language = lang,
-         memory_allocated = mem_alloc) %&gt;%
+  mutate(rows = comma(rows), 
+         `itr/sec` = round(`itr/sec`, 2),
+         n_gc = ifelse(execution_type == &quot;Sourced Script&quot;, &quot;unknown&quot;, n_gc),
+         mem_alloc = ifelse(execution_type == &quot;Sourced Script&quot;, &quot;unknown&quot;, mem_alloc)) %&gt;% 
+  mutate_at(vars(-c(rows, lang)), 
+            funs(cell_spec(., background = ifelse(lang == &quot;R&quot;, &quot;#f2f2f2&quot;, &quot;#edf9ff&quot;),
+                              color = ifelse(lang == &quot;R&quot;, &quot;#002963&quot;, &quot;#809100&quot;))
+                )) %&gt;% 
+  mutate(lang = lang %&gt;% cell_spec(background = ifelse(lang == &quot;R&quot;, &quot;#f2f2f2&quot;, &quot;#edf9ff&quot;),
+                                   color = ifelse(lang == &quot;R&quot;, &quot;#002647&quot;, &quot;#809100&quot;))) %&gt;% 
+  mutate(n_gc = if_else(str_detect(n_gc, &quot;unknown&quot;), &quot;unknown&quot;, n_gc),
+         mem_alloc = if_else(str_detect(mem_alloc, &quot;unknown&quot;), &quot;unknown&quot;, mem_alloc)) %&gt;%
+  rename(garbage_collections = n_gc, language = lang, memory_allocated = mem_alloc) %&gt;%
   rename_all(funs(str_to_title(str_replace(., &quot;_&quot;, &quot; &quot;)))) %&gt;%
-  kable(digits = 2) %&gt;%
+  kable(caption = &quot;CSV to Data Frame Times&quot;, escape = FALSE, digits = 2) %&gt;%
   kable_styling(bootstrap_options = &quot;condensed&quot;, font_size = 12) %&gt;% 
-  collapse_rows(columns = 1:2, valign = &quot;top&quot;)</code></pre>
+  collapse_rows(columns = 1:3, valign = &quot;top&quot;)</code></pre>
 <table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-43">Table 2: </span>CSV to Data Frame Times
+</caption>
 <thead>
 <tr>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Rows
 </th>
 <th style="text-align:left;">
 Language
 </th>
 <th style="text-align:left;">
+Execution Type
+</th>
+<th style="text-align:left;">
 Call
 </th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Mean
 </th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Median
 </th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Itr/Sec
 </th>
-<th style="text-align:right;">
-Memory Allocated
-</th>
-<th style="text-align:right;">
+<th style="text-align:left;">
 Garbage Collections
 </th>
 <th style="text-align:left;">
-Execution Type
+Memory Allocated
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:right;vertical-align: top !important;" rowspan="9">
-1e+02
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
+100
 </td>
 <td style="text-align:left;vertical-align: top !important;" rowspan="6">
-R
+<span style="     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">R</span>
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">knitr Engine</span>
 </td>
 <td style="text-align:left;">
-utils::read.csv()
-</td>
-<td style="text-align:right;">
-847.76us
-</td>
-<td style="text-align:right;">
-837.93us
-</td>
-<td style="text-align:right;">
-1179.57
-</td>
-<td style="text-align:right;">
-355.61KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">utils::read.csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">891.85us</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">834.96us</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1121.26</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">364168</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-readr::read_csv()
-</td>
-<td style="text-align:right;">
-3.05ms
-</td>
-<td style="text-align:right;">
-2.94ms
-</td>
-<td style="text-align:right;">
-328.21
-</td>
-<td style="text-align:right;">
-102.79KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">readr::read_csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 3.05ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 2.9ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">327.96</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">143680</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-data.table::fread()
-</td>
-<td style="text-align:right;">
-1.39ms
-</td>
-<td style="text-align:right;">
-1.35ms
-</td>
-<td style="text-align:right;">
-719.44
-</td>
-<td style="text-align:right;">
-270.38KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">data.table::fread() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-utils::read.csv()
-</td>
-<td style="text-align:right;">
-200.5ms
-</td>
-<td style="text-align:right;">
-199.76ms
-</td>
-<td style="text-align:right;">
-4.99
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 1.4ms</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-readr::read_csv()
-</td>
-<td style="text-align:right;">
-509.99ms
-</td>
-<td style="text-align:right;">
-508.31ms
-</td>
-<td style="text-align:right;">
-1.96
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 1.36ms</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-data.table::fread()
-</td>
-<td style="text-align:right;">
-292.13ms
-</td>
-<td style="text-align:right;">
-289.25ms
-</td>
-<td style="text-align:right;">
-3.42
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">711.99</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">276896</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;vertical-align: top !important;" rowspan="3">
-Python
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">Sourced Script</span>
 </td>
 <td style="text-align:left;">
-pandas.read_csv()
-</td>
-<td style="text-align:right;">
-41.75ms
-</td>
-<td style="text-align:right;">
-36.24ms
-</td>
-<td style="text-align:right;">
-23.95
-</td>
-<td style="text-align:right;">
-1.24MB
-</td>
-<td style="text-align:right;">
-9
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">utils::read.csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">205.24ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">200.39ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">4.87</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-reticulate::py_run_string()
-</td>
-<td style="text-align:right;">
-2.64ms
-</td>
-<td style="text-align:right;">
-2.5ms
-</td>
-<td style="text-align:right;">
-378.58
-</td>
-<td style="text-align:right;">
-2.75KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">readr::read_csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">548.78ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">512.73ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1.82</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-pandas.read_csv()
-</td>
-<td style="text-align:right;">
-501.38ms
-</td>
-<td style="text-align:right;">
-499.77ms
-</td>
-<td style="text-align:right;">
-1.99
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">data.table::fread() </span>
 </td>
 <td style="text-align:left;">
-Sourced Script
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">322.13ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">295.43ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">3.1</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
-<td style="text-align:right;vertical-align: top !important;" rowspan="9">
-5e+03
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Python</span>
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">knitr Engine</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">pandas.read_csv() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 74.99ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 48.48ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">13.34</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">9</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">1298288</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">reticulate::py_run_string()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 5.02ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 3.75ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">199.04</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">1</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">2840</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">reticulate::py_run_file() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 5.78ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 3.75ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">173.05</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">9504</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Sourced Script</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">pandas.read_csv() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">559.01ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">530.84ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">1.79</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
+5,000
 </td>
 <td style="text-align:left;vertical-align: top !important;" rowspan="6">
-R
+<span style="     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">R</span>
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">knitr Engine</span>
 </td>
 <td style="text-align:left;">
-utils::read.csv()
-</td>
-<td style="text-align:right;">
-19.46ms
-</td>
-<td style="text-align:right;">
-18.46ms
-</td>
-<td style="text-align:right;">
-51.38
-</td>
-<td style="text-align:right;">
-1.88MB
-</td>
-<td style="text-align:right;">
-1
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">utils::read.csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 18.53ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 18.37ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">53.98</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1975368</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-readr::read_csv()
-</td>
-<td style="text-align:right;">
-9.15ms
-</td>
-<td style="text-align:right;">
-8.85ms
-</td>
-<td style="text-align:right;">
-109.34
-</td>
-<td style="text-align:right;">
-1.04MB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">readr::read_csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 10.17ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 9.75ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">98.3</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1621744</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-data.table::fread()
-</td>
-<td style="text-align:right;">
-5.15ms
-</td>
-<td style="text-align:right;">
-4.96ms
-</td>
-<td style="text-align:right;">
-194.34
-</td>
-<td style="text-align:right;">
-659.27KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">data.table::fread() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-utils::read.csv()
-</td>
-<td style="text-align:right;">
-219.34ms
-</td>
-<td style="text-align:right;">
-218.01ms
-</td>
-<td style="text-align:right;">
-4.56
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 5ms</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-readr::read_csv()
-</td>
-<td style="text-align:right;">
-517.84ms
-</td>
-<td style="text-align:right;">
-516.13ms
-</td>
-<td style="text-align:right;">
-1.93
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 4.73ms</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-data.table::fread()
-</td>
-<td style="text-align:right;">
-293.34ms
-</td>
-<td style="text-align:right;">
-292.14ms
-</td>
-<td style="text-align:right;">
-3.41
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">200.02</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">675120</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;vertical-align: top !important;" rowspan="3">
-Python
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">Sourced Script</span>
 </td>
 <td style="text-align:left;">
-pandas.read_csv()
-</td>
-<td style="text-align:right;">
-62.13ms
-</td>
-<td style="text-align:right;">
-56.31ms
-</td>
-<td style="text-align:right;">
-16.10
-</td>
-<td style="text-align:right;">
-2.92MB
-</td>
-<td style="text-align:right;">
-9
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">utils::read.csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">221.48ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">216.81ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">4.52</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-reticulate::py_run_string()
-</td>
-<td style="text-align:right;">
-16.06ms
-</td>
-<td style="text-align:right;">
-15.88ms
-</td>
-<td style="text-align:right;">
-62.27
-</td>
-<td style="text-align:right;">
-2.75KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">readr::read_csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">529.75ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">522.03ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1.89</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-pandas.read_csv()
-</td>
-<td style="text-align:right;">
-513.18ms
-</td>
-<td style="text-align:right;">
-511.93ms
-</td>
-<td style="text-align:right;">
-1.95
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-1
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">data.table::fread() </span>
 </td>
 <td style="text-align:left;">
-Sourced Script
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">296.08ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">294.28ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">3.38</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
-<td style="text-align:right;vertical-align: top !important;" rowspan="9">
-5e+06
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Python</span>
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">knitr Engine</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">pandas.read_csv() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 83.11ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 67.52ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">12.03</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">10</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">3058232</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">reticulate::py_run_string()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 24.05ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 24.31ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">41.58</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">2840</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">reticulate::py_run_file() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 22.14ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 21.67ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">45.16</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">2840</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Sourced Script</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">pandas.read_csv() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">577.44ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">552.81ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">1.73</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="10">
+5,000,000
 </td>
 <td style="text-align:left;vertical-align: top !important;" rowspan="6">
-R
+<span style="     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">R</span>
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">knitr Engine</span>
 </td>
 <td style="text-align:left;">
-utils::read.csv()
-</td>
-<td style="text-align:right;">
-19.18s
-</td>
-<td style="text-align:right;">
-19.08s
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-<td style="text-align:right;">
-1.91GB
-</td>
-<td style="text-align:right;">
-151
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">utils::read.csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 19.55s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 19.4s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0.05</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">168</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">2052818952</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-readr::read_csv()
-</td>
-<td style="text-align:right;">
-6.78s
-</td>
-<td style="text-align:right;">
-6.77s
-</td>
-<td style="text-align:right;">
-0.15
-</td>
-<td style="text-align:right;">
-996.51MB
-</td>
-<td style="text-align:right;">
-75
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">readr::read_csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 7.11s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 7.08s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0.14</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">107</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1567378576</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-data.table::fread()
-</td>
-<td style="text-align:right;">
-2.74s
-</td>
-<td style="text-align:right;">
-2.61s
-</td>
-<td style="text-align:right;">
-0.36
-</td>
-<td style="text-align:right;">
-634.8MB
-</td>
-<td style="text-align:right;">
-29
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">data.table::fread() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-utils::read.csv()
-</td>
-<td style="text-align:right;">
-23.47s
-</td>
-<td style="text-align:right;">
-23.26s
-</td>
-<td style="text-align:right;">
-0.04
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 2.73s</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-readr::read_csv()
-</td>
-<td style="text-align:right;">
-10.66s
-</td>
-<td style="text-align:right;">
-10.69s
-</td>
-<td style="text-align:right;">
-0.09
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 2.6s</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-data.table::fread()
-</td>
-<td style="text-align:right;">
-4.13s
-</td>
-<td style="text-align:right;">
-4.02s
-</td>
-<td style="text-align:right;">
-0.24
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0.37</span>
 </td>
 <td style="text-align:left;">
-Sourced Script
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">28</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">665639952</span>
 </td>
 </tr>
 <tr>
 <td style="text-align:left;vertical-align: top !important;" rowspan="3">
-Python
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">Sourced Script</span>
 </td>
 <td style="text-align:left;">
-pandas.read_csv()
-</td>
-<td style="text-align:right;">
-20.13s
-</td>
-<td style="text-align:right;">
-19.61s
-</td>
-<td style="text-align:right;">
-0.05
-</td>
-<td style="text-align:right;">
-1.79GB
-</td>
-<td style="text-align:right;">
-22
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">utils::read.csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 23.25s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 23.07s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0.04</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-reticulate::py_run_string()
-</td>
-<td style="text-align:right;">
-13.11s
-</td>
-<td style="text-align:right;">
-13.1s
-</td>
-<td style="text-align:right;">
-0.08
-</td>
-<td style="text-align:right;">
-2.75KB
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">readr::read_csv() </span>
 </td>
 <td style="text-align:left;">
-knitr Engine
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 10.06s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 10.05s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0.1</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-pandas.read_csv()
-</td>
-<td style="text-align:right;">
-13.6s
-</td>
-<td style="text-align:right;">
-13.57s
-</td>
-<td style="text-align:right;">
-0.07
-</td>
-<td style="text-align:right;">
-264B
-</td>
-<td style="text-align:right;">
-0
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">data.table::fread() </span>
 </td>
 <td style="text-align:left;">
-Sourced Script
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 3.78s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;"> 3.78s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">0.26</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+</tr>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="4">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Python</span>
+</td>
+<td style="text-align:left;vertical-align: top !important;" rowspan="3">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">knitr Engine</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">pandas.read_csv() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 20.23s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 19.67s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0.05</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">23</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">1921138232</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">reticulate::py_run_string()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 13.26s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 13.25s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0.08</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">2840</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">reticulate::py_run_file() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 13.26s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 13.26s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0.08</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">2840</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Sourced Script</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">pandas.read_csv() </span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 13.8s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;"> 13.77s</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">0.07</span>
+</td>
+<td style="text-align:left;">
+unknown
+</td>
+<td style="text-align:left;">
+unknown
 </td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>plot_times &lt;- function(df, plot_title = NULL) {
-  plot_init &lt;- df %&gt;% 
-    ggplot(aes(call, time, fill = lang, color = lang)) +
-    stat_ydensity(scale = &quot;width&quot;) +
-    scale_fill_manual(values = c(&quot;#165CAA&quot;, &quot;#ffde57&quot;), 
-                      labels = function(x) paste(&quot; &quot;, x, &quot;  &quot;)) +
-    scale_color_manual(values = c(&quot;#BFC2C5&quot;, &quot;#4584b6&quot;),
-                       labels = function(x) paste(&quot; &quot;, x, &quot;  &quot;)) +
-    guides(fill = guide_legend(nrow = 1)) +
-    coord_flip() +
-    theme_minimal(17, &quot;serif&quot;) +
-    theme(legend.title = element_blank(), 
-          legend.position = &quot;top&quot;,
-          legend.key.size = unit(1.5, &quot;lines&quot;),
-          axis.text.y = element_text(&quot;mono&quot;, face = &quot;bold&quot;, hjust = 0),
-          plot.caption = element_text(size = 10))
-  if(length(plot_title)) {
-    plot_fin &lt;- plot_init + 
-      facet_wrap(~ rows, nrow = 3, scales = &quot;free_x&quot;) +
-      labs(x = NULL, y = &quot;Time&quot;,
-         title = plot_title,
-         caption = str_glue(&quot;{n_iterations} runs per call.&quot;))
-  } else {
-    n_rows &lt;- sort(df$rows, decreasing = TRUE)[[1]]
-    plot_fin &lt;- plot_init + 
-      facet_wrap(~ execution_type, ncol = 1, scales = &quot;free&quot;) +
-      labs(x = NULL, y = &quot;Time&quot;, title = str_glue(&quot;CSV to Data Frame: {comma(n_rows)}&quot;),
-           caption = str_glue(&quot;{n_iterations} runs per call.&quot;))
-  }
-  
-  plot_fin
-}</code></pre>
-<div id="code-executed-by-knitrs-language-engine" class="section level2">
-<h2>Code Executed by <code>knitr</code>’s Language Engine</h2>
-<pre class="r"><code>gg_df %&gt;% 
-  filter(execution_type == &quot;knitr Engine&quot;) %&gt;% 
-  plot_times(&quot;knitr Engine&quot;)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-26-1.png" width="1056" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>package_results_df %&gt;% 
+  mutate(lang = if_else(str_detect(expression, &quot;\\.py&quot;), &quot;Python&quot;, &quot;R&quot;),
+         `itr/sec` = round(`itr/sec`, 2)) %&gt;% 
+  select(lang, call, min, mean, median, max, `itr/sec`) %&gt;% 
+  distinct() %&gt;% 
+  mutate_at(vars(-lang), 
+            funs(cell_spec(., background = ifelse(lang == &quot;R&quot;, &quot;#f2f2f2&quot;, &quot;#edf9ff&quot;),
+                              color = ifelse(lang == &quot;R&quot;, &quot;#002963&quot;, &quot;#809100&quot;))
+            )) %&gt;% 
+  mutate(lang = lang %&gt;% cell_spec(background = ifelse(lang == &quot;R&quot;, &quot;#f2f2f2&quot;, &quot;#edf9ff&quot;),
+                                   color = ifelse(lang == &quot;R&quot;, &quot;#002647&quot;, &quot;#809100&quot;))) %&gt;% 
+  rename(language = lang) %&gt;% 
+  rename_all(str_to_title) %&gt;% 
+  kable(caption = &quot;Dependency Load Times&quot;, escape = FALSE, digits = 2) %&gt;%
+  kable_styling(bootstrap_options = &quot;condensed&quot;, font_size = 12) %&gt;% 
+  collapse_rows(columns = 1, valign = &quot;top&quot;)</code></pre>
+<table class="table table-condensed" style="font-size: 12px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-44">Table 3: </span>Dependency Load Times
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Language
+</th>
+<th style="text-align:left;">
+Call
+</th>
+<th style="text-align:left;">
+Min
+</th>
+<th style="text-align:left;">
+Mean
+</th>
+<th style="text-align:left;">
+Median
+</th>
+<th style="text-align:left;">
+Max
+</th>
+<th style="text-align:left;">
+Itr/Sec
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;vertical-align: top !important;" rowspan="2">
+<span style="     color: #002647;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">R</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">library(readr)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">506ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">510ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">507ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">552ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">1.96</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">library(data.table)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">305ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">308ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">305ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">407ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #002963;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #f2f2f2;">3.25</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">Python</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">import pandas</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">569ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">611ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">607ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">911ms</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: #809100;border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: #edf9ff;">1.64</span>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="files-sourced-via-system-command" class="section level2">
-<h2>Files Sourced via System Command</h2>
-<pre class="r"><code>gg_df %&gt;% 
-  filter(execution_type == &quot;Sourced Script&quot;) %&gt;% 
-  plot_times(&quot;Files Sourced via System Command&quot;)</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-27-1.png" width="1056" style="display: block; margin: auto;" /></p>
 </div>
+<div id="environment" class="section level1">
+<h1>Environment</h1>
+<div id="ide" class="section level2">
+<h2>IDE</h2>
+<pre class="r"><code>rstudio_info &lt;- rstudioapi::versionInfo() # obtain in interactive session
+write_rds(rstudio_info, &quot;test-data/rstudio_info.rds&quot;)</code></pre>
+<pre class="r"><code>read_rds(&quot;test-data/rstudio_info.rds&quot;) %&gt;% 
+  as_tibble() %&gt;% 
+  select(mode, version) %&gt;% 
+  mutate(version = as.character(version)) %&gt;% 
+  kable(caption = &quot;RStudio Version&quot;) %&gt;% 
+  kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-46">Table 4: </span>RStudio Version
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+mode
+</th>
+<th style="text-align:left;">
+version
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+desktop
+</td>
+<td style="text-align:left;">
+1.1.453
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="tldr" class="section level1">
-<h1>tl;dr</h1>
-<pre class="r"><code>gg_df %&gt;%
-  filter(file_size == &quot;small&quot;) %&gt;%
-  plot_times()</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-1.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>gg_df %&gt;%
-  filter(file_size == &quot;med&quot;) %&gt;% 
-  plot_times()</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-2.png" width="1056" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>gg_df %&gt;%
-  filter(file_size == &quot;big&quot;) %&gt;% 
-  plot_times()</code></pre>
-<p><img src="/post/2018-07-03-reading-csv-files_files/figure-html/unnamed-chunk-28-3.png" width="1056" style="display: block; margin: auto;" /></p>
-</div>
-<div id="session-info" class="section level1">
-<h1>Session Info</h1>
 <div id="r-1" class="section level2">
 <h2>R</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
@@ -1339,7 +1935,7 @@ Sourced Script
 ##  [1] data.table_1.11.5     bindrcpp_0.2.2        forcats_0.3.0        
 ##  [4] stringr_1.3.1         dplyr_0.7.5           purrr_0.2.5          
 ##  [7] readr_1.1.1           tidyr_0.8.1           tibble_1.4.2         
-## [10] ggplot2_2.2.1.9000    tidyverse_1.2.1.9000  scales_0.5.0.9000    
+## [10] ggplot2_3.0.0         tidyverse_1.2.1.9000  scales_0.5.0.9000    
 ## [13] reticulate_1.8.0.9002 kableExtra_0.9.0      bench_1.0.1          
 ## 
 ## loaded via a namespace (and not attached):
@@ -1358,22 +1954,125 @@ Sourced Script
 ## [37] crayon_1.3.4      withr_2.1.2       grid_3.5.0       
 ## [40] nlme_3.1-137      jsonlite_1.5      gtable_0.2.0     
 ## [43] magrittr_1.5      cli_1.0.0         stringi_1.2.2    
-## [46] reshape2_1.4.3    xml2_1.2.0        htmldeps_0.1.0   
-## [49] tools_3.5.0       glue_1.2.0        hms_0.4.2        
-## [52] parallel_3.5.0    yaml_2.1.19       colorspace_1.3-2 
-## [55] rvest_0.3.2       knitr_1.20.7      bindr_0.1.1      
-## [58] haven_1.1.1</code></pre>
+## [46] profmem_0.5.0     reshape2_1.4.3    xml2_1.2.0       
+## [49] htmldeps_0.1.0    tools_3.5.0       glue_1.2.0       
+## [52] hms_0.4.2         parallel_3.5.0    yaml_2.1.19      
+## [55] colorspace_1.3-2  rvest_0.3.2       knitr_1.20.7     
+## [58] bindr_0.1.1       haven_1.1.1</code></pre>
 </div>
 <div id="python-1" class="section level2">
 <h2>Python</h2>
 <pre class="python"><code>import sys
 import numpy
-import pandas  
+import pandas
 print(sys.version)</code></pre>
-<pre><code>## 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]</code></pre>
+<pre><code>## 3.6.6 |Anaconda, Inc.| (default, Jun 28 2018, 11:27:44) [MSC v.1900 64 bit (AMD64)]</code></pre>
 <pre class="python"><code>print(numpy.__version__)</code></pre>
-<pre><code>## 1.12.1</code></pre>
+<pre><code>## 1.14.5</code></pre>
 <pre class="python"><code>print(pandas.__version__)</code></pre>
-<pre><code>## 0.22.0</code></pre>
+<pre><code>## 0.23.1</code></pre>
+</div>
+<div id="system" class="section level2">
+<h2>System</h2>
+<div id="cpu" class="section level4">
+<h4>CPU</h4>
+<pre class="r"><code>cat(&quot;CPU:\n&quot;, system(&quot;wmic cpu get name&quot;, intern = TRUE)[[2]])</code></pre>
+<pre><code>## CPU:
+##  Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz  </code></pre>
+</div>
+<div id="memory" class="section level4">
+<h4>Memory</h4>
+<pre class="r"><code>ram_df &lt;- system(&quot;wmic MEMORYCHIP get BankLabel, Capacity, Speed&quot;, intern = TRUE) %&gt;% 
+  str_trim() %&gt;% 
+  as_tibble() %&gt;% 
+  slice(2:3) %&gt;% 
+  separate(value, into = c(&quot;BankLabel&quot;, &quot;Capacity&quot;, &quot;Speed&quot;), sep = &quot;\\s{2,}&quot;)
+
+ram_df %&gt;% 
+  rename_all(str_replace, &quot;L&quot;, &quot; L&quot;) %&gt;% 
+  kable(caption = &quot;Memory Specs&quot;) %&gt;% 
+  kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-50">Table 5: </span>Memory Specs
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Bank Label
+</th>
+<th style="text-align:left;">
+Capacity
+</th>
+<th style="text-align:left;">
+Speed
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+DIMM A
+</td>
+<td style="text-align:left;">
+17179869184
+</td>
+<td style="text-align:left;">
+2400
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DIMM B
+</td>
+<td style="text-align:left;">
+17179869184
+</td>
+<td style="text-align:left;">
+2400
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>ram_df %&gt;% 
+  mutate(Capacity = as.numeric(Capacity) / 1e9,
+         Speed = as.numeric(Speed)) %&gt;% 
+  summarise(`Capacity in GB` = sum(Capacity),
+            `Speed in MHz` = unique(Speed)) %&gt;% 
+  kable(caption = &quot;Memory Summary&quot;) %&gt;% 
+  kable_styling(full_width = FALSE)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:unnamed-chunk-50">Table 5: </span>Memory Summary
+</caption>
+<thead>
+<tr>
+<th style="text-align:right;">
+Capacity in GB
+</th>
+<th style="text-align:right;">
+Speed in MHz
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+34.35974
+</td>
+<td style="text-align:right;">
+2400
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="storage" class="section level4">
+<h4>Storage</h4>
+<pre class="r"><code>cat(&quot;SSD:\n&quot;, system(&quot;wmic diskdrive get Model&quot;, intern = TRUE)[[2]])</code></pre>
+<pre><code>## SSD:
+##  PM951 NVMe SAMSUNG 512GB  </code></pre>
+<p><br> <br> <br></p>
+</div>
 </div>
 </div>

@@ -38,13 +38,14 @@
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/tags/benchmarking/</loc>
+    <loc>https://syknapptic.netlify.com/categories/benchmarking/</loc>
     <lastmod>2018-07-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://syknapptic.netlify.com/categories/</loc>
+    <lastmod>2018-07-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -56,7 +57,7 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/categories/data-science-from-scratch/</loc>
-    <lastmod>2018-07-04T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -98,13 +99,13 @@
   
   <url>
     <loc>https://syknapptic.netlify.com/categories/r-bloggers/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://syknapptic.netlify.com/tags/</loc>
-    <lastmod>2018-07-04T00:00:00+00:00</lastmod>
+    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

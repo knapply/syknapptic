@@ -6,20 +6,10 @@
     <description>Recent content in Data Science From Scratch on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 04 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://syknapptic.netlify.com/categories/data-science-from-scratch/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Reading .csv Files</title>
-      <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
-      <pubDate>Wed, 04 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
-      <description>library(bench)library(kableExtra); options(knitr.kable.NA = &amp;quot;&amp;quot;)library(reticulate); use_condaenv(&amp;quot;r-reticulate&amp;quot;, required = TRUE)library(scales)library(tidyverse)The DataThe initial .csv was obtained from Majestic Million CSV .
-file_url &amp;lt;- &amp;quot;http://downloads.majestic.com/majestic_million.csv&amp;quot;temp_file &amp;lt;- tempfile(fileext = &amp;quot;.csv&amp;quot;)download.file(file_url, destfile = temp_file)test_df &amp;lt;- read_csv(temp_file)Quick Inspectionglimpse(test_df)## Observations: 1,000,000## Variables: 12## $ GlobalRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ...## $ TldRank &amp;lt;int&amp;gt; 1, 2, 3, 4, 5, 6, 1, 7, 8, 9, 2, 10, 3, 11, 12,.</description>
-    </item>
     
     <item>
       <title>Variable Assignment</title>
