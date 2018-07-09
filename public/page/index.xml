@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on syknapptic</title>
-    <link>https://syknapptic.netlify.com/page/</link>
+    <link>/page/</link>
     <description>Recent content in Pages on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/page/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Data Science from Scratch</title>
-      <link>https://syknapptic.netlify.com/page/data-science-from-scratch/</link>
+      <link>/page/data-science-from-scratch/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/data-science-from-scratch/</guid>
+      <guid>/page/data-science-from-scratch/</guid>
       <description>ProgrammingStatisticsGraphsUnsupervised LearningSupervised Learning
 ProgrammingTopicRPythonC++EssentialsVariable AssignmentData TypesLogicCollectionsLoops
 StatisticsTopicRPythonC++Central TendencyMeanMedianModeDispersionStandard DeviationVarianceCorrelationPearson’sSpearman’sLinear ModelsSimple Linear RegressionLinear RegressionGeneralized Linear ModelsBinomialGaussianPoissonGraphsTopicRPythonC++RepresentationsAdjacency MatrixAdjacency ListEdge ListIncidence MatrixHigher DimensionsMultipartite GraphsMultiplex GraphsAlgorithmsShortest PathUnsupervised LearningTopicRPythonC++Clusteringk-meansPrincipal Component AnalysisDimensionality ReductionFactor AnalysisSupervised LearningTopicRPythonC++ClassificationNaive Bayesk-Nearest NeighborsSupport Vector MachineRandom ForestsRegressionSupport Vector MachineRandom Forests</description>
@@ -24,10 +24,10 @@ ProgrammingTopicRPythonC++EssentialsVariable Assignment
     
     <item>
       <title>My Shiny Apps</title>
-      <link>https://syknapptic.netlify.com/page/shiny/</link>
+      <link>/page/shiny/</link>
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/shiny/</guid>
+      <guid>/page/shiny/</guid>
       <description>recon : Really Convenient Spatial Data
  Search for locations by class or with a fuzzy name matching gazetteer.  Deep Learning Image Classifier
  TensorFlow-powered image classification.  North Korea Threat Finance Explorer
@@ -36,13 +36,23 @@ ProgrammingTopicRPythonC++EssentialsVariable Assignment
     
     <item>
       <title>Welcome</title>
-      <link>https://syknapptic.netlify.com/page/about/</link>
+      <link>/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/about/</guid>
+      <guid>/page/about/</guid>
       <description>body .main-container { max-width: 700px; }  Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in using data to develop evidence-based insights.
 I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I&amp;rsquo;m constantly exploring theories and methods that developed in other fields.
 In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.</description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>/page/bknapp-resume/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/page/bknapp-resume/</guid>
+      <description>Experience and Technical SkillsStatisticsData ScienceAnalytical DomainsParametric ModelsRStructure and UnstructuredLinear ModelsSQLNetworks/GraphsGeneralized Linear ModelsPythonText Mining and NLPFactor AnalysisGitVector and Raster Spatial AnalysisTime Series AnalysisPackage DevelopmentRemote SensingEDUCATIONMiddlebury Institute of International Studies, M.A. Nonproliferation and Terrorism Studies May 2018
+Middlebury Institute of International Studies, B.</description>
     </item>
     
   </channel>

@@ -2,66 +2,84 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on syknapptic</title>
-    <link>https://syknapptic.netlify.com/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Dplyr</title>
-      <link>https://syknapptic.netlify.com/tags/dplyr/</link>
+      <link>/tags/dplyr/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/dplyr/</guid>
+      <guid>/tags/dplyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Fileio</title>
-      <link>https://syknapptic.netlify.com/tags/fileio/</link>
+      <link>/tags/fileio/</link>
       <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/fileio/</guid>
+      <guid>/tags/fileio/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ggplot</title>
-      <link>https://syknapptic.netlify.com/tags/ggplot/</link>
+      <link>/tags/ggplot/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/ggplot/</guid>
+      <guid>/tags/ggplot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Math</title>
+      <link>/tags/math/</link>
+      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/math/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reticulated Python</title>
+      <link>/tags/reticulated-python/</link>
+      <pubDate>Mon, 09 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/reticulated-python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tidyr</title>
-      <link>https://syknapptic.netlify.com/tags/tidyr/</link>
+      <link>/tags/tidyr/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/tidyr/</guid>
+      <guid>/tags/tidyr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tidyverse</title>
-      <link>https://syknapptic.netlify.com/tags/tidyverse/</link>
+      <link>/tags/tidyverse/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/tidyverse/</guid>
+      <guid>/tags/tidyverse/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Variables</title>
-      <link>https://syknapptic.netlify.com/tags/variables/</link>
+      <link>/tags/variables/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/tags/variables/</guid>
+      <guid>/tags/variables/</guid>
       <description></description>
     </item>
     

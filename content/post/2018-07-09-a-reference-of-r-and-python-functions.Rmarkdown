@@ -1,0 +1,180 @@
+---
+title: A Field Guide to R-Python Translations
+draft: false
+author: Brendan Knapp
+date: '2018-07-09'
+slug: reticulated-python
+categories: 
+  - data-science-from-scratch
+tags:
+  - reticulated-python
+thumbnailImage: https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG
+metaAlignment: center
+summary: A work in progress.
+output:
+  # html_document:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      fig.width = 11, fig.height = 10, dpi = 300,
+                      fig.align = "center",
+                      message = FALSE, warning = FALSE)
+```
+
+```{r, echo = FALSE}
+library(tidyverse)
+library(reticulate)
+library(kableExtra); options(knitr.kable.NA = "")
+
+knitr::include_graphics("https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG")
+```
+
+# Types
+
+```{r}
+tribble(
+  ~type_py, ~ex_py,          ~type_r,             ~ex_r,            
+  "int",     1,              "integer",           "1L",            
+  "float",   3.14,           "numeric & double",   3.14,
+  "string", "'hi'",          "character",         '"hi"',
+  "bool",   "True",          "logical",           "TRUE"
+) %>% 
+  mutate(type_py = cell_spec(type_py, color = "red", monospace = TRUE)) %>% 
+  mutate(ex_py = cell_spec(ex_py, color = "red", monospace = TRUE)) %>% 
+  mutate(type_r = cell_spec(type_r, color = "blue", monospace = TRUE)) %>% 
+  mutate(ex_r = cell_spec(ex_r, color = "blue", monospace = TRUE))%>%
+  set_names(c("Python Type", "Python Example", "R Type", "R Example")) %>%
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+
+# Collections
+
+```{r}
+tribble(
+  ~type_py, ~ex_py,                  ~type_r,   ~ex_r,                      ~values,
+  "scalar",  1,                      "vector",   1,                         "homogeneous",
+  "list",   "[1, 1]",                "vector",   c(1, 2),                   "homogeneous",
+  "list",   "[1, 'string']",         "list",     list(1, "string"),         "heterogenous",
+  "tuple",  "(1, 'string']",         "list",     list(1, "string"),         "heterogenous",
+  "dict",   "{'a':1, 'b':'string'}", "list",     list(a = 1, b = "string"), "heterogenous",
+   NA,       NA,                     "vector",   c(a = 1, b = 2),           "homogeneous"
+) %>% 
+  mutate(type_py = cell_spec(type_py, color = "red", monospace = TRUE)) %>% 
+  mutate(ex_py = cell_spec(ex_py, color = "red", monospace = TRUE)) %>% 
+  mutate(type_r = cell_spec(type_r, color = "blue", monospace = TRUE)) %>% 
+  mutate(ex_r = cell_spec(ex_r, color = "blue", monospace = TRUE))%>% 
+  mutate(values = cell_spec(values, color = if_else(values == "homogeneous",
+                                                    "green", "purple"))) %>% 
+  mutate_all(funs(if_else(str_detect(., "NA"), NA_character_, .))) %>% 
+  set_names(c("Python Type", "Python Example", "R Type", "R Example", "Values")) %>%
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+
+# Comparisons
+
+```{r}
+tribble(
+  ~comp_py,             ~comp_r,                             ~meaning,             
+  "<",                  "<",                                 "less than",
+  ">",                  ">",                                 "greater than",
+  "<=",                 "<=",                                "less than or equal",
+  ">=",                 ">=",                                "greater than or equal",
+  "==",                 "==",                                "is equal",
+  "!=",                 "!=",                                "is not equal",
+  "is <SOMETHING>",     "is.<SOMETHING> | is_<SOMETHING>",   "is an object <SOMETHING>",
+  "is not <SOMETHING>", "!is.<SOMETHING> | !is_<SOMETHING>", "is an object not <SOMETHING>",
+  "and",                "&",                                 "and",
+  "or",                 "|",                                 "or"
+) %>% 
+  mutate(comp_py = cell_spec(comp_py, color = "red", monospace = TRUE)) %>% 
+  mutate(comp_r = cell_spec(comp_r, color = "blue", monospace = TRUE)) %>% 
+  mutate(meaning = cell_spec(meaning, color = "green")) %>% 
+  set_names(c("Python", "R", "Meaning")) %>% 
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+
+# Arithmetic
+
+```{r}
+tribble(
+  ~arith_py,            ~arith_r,  ~meaning,             
+  "x + y",              "x + x",   "x PLUS y",
+  "x - y",              "x - y",   "x MINUS y",
+  "x * y",              "x * y",   "x TIMES y",
+  "x / y",              "x / y",   "x DIVIDED BY y",
+  "x // y",             "x %/% y", "FLOORED QUOTIENT OF x DIVIDED BY y",
+  "x % y",              "x %% y",  "REMAINDER OF x DIVIDED BY y",
+  "-x",                 "-x",      "NEGATIVE x",
+  "x**y",               "x^y",     "x RAISED TO THE POWER OF y"
+) %>%
+  mutate(arith_py = cell_spec(arith_py, color = "red", monospace = TRUE)) %>% 
+  mutate(arith_r = cell_spec(arith_r, color = "blue", monospace = TRUE)) %>% 
+  mutate(meaning = meaning %>% 
+           text_spec(color = "green") %>% 
+           str_replace_all("[A-Z]", function(x) text_spec(x, bold = TRUE))
+           ) %>%
+  set_names(c("Python", "R", "Meaning")) %>% 
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+
+
+# Dates and Times
+
+```{r}
+tribble(
+  ~dt_py,                         ~dt_r,                 ~result,
+  "import datetime",              "library(lubridate)",  "relevant packages are imported",
+  "", "", "",
+  "right_now = datetime.today()", "right_now <- now()",  "current date and time",
+  "right_now.year",               "year(right_now)",     "current _year_",
+  "right_now.month",              "month(right_now)",    "_month_ of the year",
+  "right_now.isocalendar()[1]",   "week(right_now)",     "_week_ of the year",
+  "right_now.day",                "day(right_now)",      "_day_ of the month",
+  "right_now.hour",               "hour(right_now)",     "_hour_ of the day",
+  "right_now.minute",             "minute(right_now)",   "_minute_ of the hour",
+  "right_now.second",             "second(right_now)",   "_second_ of the minute"
+) %>%
+  mutate(dt_py = cell_spec(dt_py, color = "red", monospace = TRUE)) %>% 
+  mutate(dt_r = cell_spec(dt_r, color = "blue", monospace = TRUE)) %>% 
+  mutate(result = result %>% 
+           text_spec(color = "green") %>% 
+           str_replace_all("(?<=_).+(?=_)", function(x) text_spec(x, bold = TRUE)) %>% 
+           str_remove_all("_")
+           ) %>%
+  set_names(c("Python", "R", "Result")) %>% 
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+
+# URLs
+
+```{r}
+tribble(
+  ~url_py,                                  ~url_r,
+  "from urllib.request import urlretrieve", "_",
+  "", "",
+  "urlrequest(<url>, <destination>)",       "download.file(<url>, <destination>)"
+  
+) %>%
+  mutate(url_py = cell_spec(url_py, color = "red", monospace = TRUE)) %>% 
+  mutate(url_r = cell_spec(url_r, color = "blue", monospace = TRUE)) %>% 
+  # mutate(result = result %>% 
+  #          text_spec(color = "green") %>% 
+  #          str_replace_all("(?<=_).+(?=_)", function(x) text_spec(x, bold = TRUE)) %>% 
+  #          str_remove_all("_")
+  #          ) %>%
+  set_names(c("Python", "R")) %>% 
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+

@@ -2,66 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on syknapptic</title>
-    <link>https://syknapptic.netlify.com/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 08 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Benchmarking</title>
-      <link>https://syknapptic.netlify.com/categories/benchmarking/</link>
+      <link>/categories/benchmarking/</link>
       <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/categories/benchmarking/</guid>
+      <guid>/categories/benchmarking/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Carpentry</title>
-      <link>https://syknapptic.netlify.com/categories/data-carpentry/</link>
+      <link>/categories/data-carpentry/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/categories/data-carpentry/</guid>
+      <guid>/categories/data-carpentry/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Science From Scratch</title>
-      <link>https://syknapptic.netlify.com/categories/data-science-from-scratch/</link>
-      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
+      <link>/categories/data-science-from-scratch/</link>
+      <pubDate>Mon, 09 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/categories/data-science-from-scratch/</guid>
+      <guid>/categories/data-science-from-scratch/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://syknapptic.netlify.com/categories/r/</link>
+      <link>/categories/r/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/categories/r/</guid>
+      <guid>/categories/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Bloggers</title>
-      <link>https://syknapptic.netlify.com/categories/r-bloggers/</link>
+      <link>/categories/r-bloggers/</link>
       <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/categories/r-bloggers/</guid>
+      <guid>/categories/r-bloggers/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tutorial</title>
-      <link>https://syknapptic.netlify.com/categories/tutorial/</link>
+      <link>/categories/tutorial/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/categories/tutorial/</guid>
+      <guid>/categories/tutorial/</guid>
       <description></description>
     </item>
     

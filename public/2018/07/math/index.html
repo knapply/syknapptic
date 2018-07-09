@@ -1,0 +1,903 @@
+
+
+  
+    
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hugo 0.42.2 with theme Tranquilpeak 0.4.3-BETA">
+    <title>Essential Math</title>
+    <meta name="author" content="Brendan Knapp">
+    <meta name="keywords" content="">
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+    <meta name="description" content="Our Test ValuesRPythonC&#43;&#43;SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.">
+    <meta property="og:description" content="Our Test ValuesRPythonC&#43;&#43;SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Essential Math">
+    <meta property="og:url" content="/2018/07/math/">
+    <meta property="og:site_name" content="syknapptic">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="syknapptic">
+    <meta name="twitter:description" content="Our Test ValuesRPythonC&#43;&#43;SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.">
+    
+      <meta name="twitter:creator" content="@syknapptic">
+    
+    
+
+    
+    
+
+    
+      <meta property="og:image" content="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=640">
+    
+
+    
+      <meta property="og:image" content="https://png.pngtree.com/element_origin_min_pic/16/10/24/3a1a5ac4e9fede8d4e3c7e0569e156cf.jpg">
+    
+    
+    
+
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-jsjn0006wyhpyzivf6yceb31gvpjatbcs3qzjvlumobfnugccvobqwxnnaj8.min.css" />
+    
+    
+
+    
+      
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-115043043-2', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">syknapptic</a>
+  </div>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Brendan Knapp</h4>
+        
+          <h5 class="sidebar-profile-bio">Network, Spatial, and Text Analytics <br> R, Python <br> Data-Driven Intelligence</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/about/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/shiny/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-code"></i>
+      
+      <span class="sidebar-button-desc">Shiny Apps</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/syknapptic">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/syknapptic">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/7678928/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.linkedin.com/in/knappbrendan/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-linkedin"></i>
+      
+      <span class="sidebar-button-desc">LinkedIn</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/Data-Science-from-Scratch/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-line-chart"></i>
+      
+      <span class="sidebar-button-desc">Data Science</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaOut
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-center">
+  
+    <h1 class="post-title" itemprop="headline">
+      Essential Math
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-01T00:00:00Z">
+        
+  July 1, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="/categories/data-science-from-scratch">data-science-from-scratch</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <div id="TOC">
+<ul>
+<li><a href="#our-test-values">Our Test Values</a><ul>
+<li><a href="#r">R</a></li>
+<li><a href="#python">Python</a></li>
+<li><a href="#c">C++</a></li>
+</ul></li>
+<li><a href="#sum">Sum</a><ul>
+<li><a href="#r-1">R</a></li>
+<li><a href="#python-1">Python</a></li>
+</ul></li>
+<li><a href="#length">Length</a><ul>
+<li><a href="#r-2">R</a></li>
+<li><a href="#python-2">Python</a></li>
+</ul></li>
+<li><a href="#mean">Mean</a><ul>
+<li><a href="#r-3">R</a></li>
+<li><a href="#python-3">Python</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="our-test-values" class="section level1">
+<h1>Our Test Values</h1>
+<div id="r" class="section level2">
+<h2>R</h2>
+<p>Here’s a <code>numeric</code> <code>vector</code> for our R code.</p>
+<pre class="r"><code>x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+
+x_R</code></pre>
+<pre><code>## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90</code></pre>
+</div>
+<div id="python" class="section level2">
+<h2>Python</h2>
+<p>Here’s a <code>list</code> of <code>float</code>s for our Python code.</p>
+<pre class="python"><code>x_PY = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+print(x_PY)</code></pre>
+<pre><code>## [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]</code></pre>
+</div>
+<div id="c" class="section level2">
+<h2>C++</h2>
+<div id="rcpp" class="section level3">
+<h3>Rcpp</h3>
+<pre class="cpp"><code>#include &lt;Rcpp.h&gt;       // R to C++ to R interface
+// [[Rcpp::export]]
+
+void x_RCPP()
+{
+  float x_RCPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i &lt; 9; i++)
+    Rcpp::Rcout &lt;&lt; x_RCPP[i] &lt;&lt; &quot; &quot;;
+}</code></pre>
+<pre><code>## 1.5 2 3.25 4.9 5 6.1 7.39 8 9.9</code></pre>
+</div>
+<div id="pure-c" class="section level3">
+<h3>Pure C++</h3>
+<pre class="cpp"><code>#include &lt;iostream&gt;
+
+void x_CPP()
+{
+  float x_CPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i &lt; 9; i++)
+    std::cout &lt;&lt; x_CPP[i] &lt;&lt; &quot; &quot;;
+}</code></pre>
+</div>
+</div>
+</div>
+<div id="sum" class="section level1">
+<h1>Sum</h1>
+<div id="r-1" class="section level2">
+<h2>R</h2>
+<p>Manually implementing R’s <code>sum()</code></p>
+<pre class="r"><code>get_sum &lt;- function(values) {
+  the_sum &lt;- 0
+  
+  for(i in values) {
+    the_sum &lt;- the_sum + i
+  }
+  
+  return(the_sum)
+}</code></pre>
+<p>The result of our custom <code>get_sum()</code> function in R:</p>
+<pre class="r"><code>get_sum(x_R)</code></pre>
+<pre><code>## [1] 48.04</code></pre>
+<p>Which we can compare to R’s built-in <code>sum()</code> function:</p>
+<pre class="r"><code>sum(x_R)</code></pre>
+<pre><code>## [1] 48.04</code></pre>
+</div>
+<div id="python-1" class="section level2">
+<h2>Python</h2>
+<p>Manually implementing Python’s <code>sum()</code></p>
+<pre class="python"><code>def get_sum(values):
+  the_sum = 0
+  
+  for i in values:
+    the_sum += i
+    
+  return(the_sum)</code></pre>
+<p>The result of our custom <code>get_sum()</code> function in Python:</p>
+<pre class="python"><code>print(get_sum(x_PY))</code></pre>
+<pre><code>## 48.04</code></pre>
+<p>Which we can compare to Python’s built-in <code>sum()</code> function:</p>
+<pre class="python"><code>print(sum(x_PY))</code></pre>
+<pre><code>## 48.04</code></pre>
+</div>
+</div>
+<div id="length" class="section level1">
+<h1>Length</h1>
+<div id="r-2" class="section level2">
+<h2>R</h2>
+<p>Manually implementing R’s <code>length()</code></p>
+<pre class="r"><code>get_length &lt;- function(values) {
+  the_length &lt;- 0
+  
+  for(i in values) {
+    the_length &lt;- the_length + 1
+  }
+  
+  return(the_length)
+}</code></pre>
+<p>The result of our custom <code>get_length()</code> function in R:</p>
+<pre class="r"><code>get_length(x_R)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<p>Which we can compare to R’s built-in <code>length()</code> function:</p>
+<pre class="r"><code>length(x_R)</code></pre>
+<pre><code>## [1] 9</code></pre>
+</div>
+<div id="python-2" class="section level2">
+<h2>Python</h2>
+<p>Manually implementing Python’s <code>len()</code></p>
+<pre class="python"><code>def get_length(values):
+  the_length = 0
+  
+  for i in values:
+    the_length = the_length + 1
+    
+  return(the_length)</code></pre>
+<p>The result of our custom <code>get_length()</code> function in Python:</p>
+<pre class="python"><code>print(get_length(x_PY))</code></pre>
+<pre><code>## 9</code></pre>
+<p>Which we can compare to Python’s built-in <code>len()</code> function:</p>
+<pre class="python"><code>print(len(x_PY))</code></pre>
+<pre><code>## 9</code></pre>
+</div>
+</div>
+<div id="mean" class="section level1">
+<h1>Mean</h1>
+<div id="r-3" class="section level2">
+<h2>R</h2>
+<p>Manually implementing R’s <code>mean()</code></p>
+<pre class="r"><code>get_mean &lt;- function(values) {
+  the_mean &lt;- get_sum(values) / get_length(values)
+  
+  return(the_mean)
+}</code></pre>
+<p>The result of our custom <code>get_mean()</code> function in R:</p>
+<pre class="r"><code>get_mean(x_R)</code></pre>
+<pre><code>## [1] 5.337778</code></pre>
+<p>Which we can compare to R’s built-in <code>mean()</code> function:</p>
+<pre class="r"><code>mean(x_R)</code></pre>
+<pre><code>## [1] 5.337778</code></pre>
+</div>
+<div id="python-3" class="section level2">
+<h2>Python</h2>
+<p>Manually implementing Python’s <code>statistics.mean()</code></p>
+<pre class="python"><code>def get_mean(values):
+  the_mean = get_sum(values) / get_length(values)
+  
+  return(the_mean)</code></pre>
+<p>The result of our custom <code>get_mean()</code> function in Python:</p>
+<pre class="python"><code>print(get_mean(x_PY))</code></pre>
+<pre><code>## 5.337777777777777</code></pre>
+<p>Which we can compare to Python’s <code>statistics.mean()</code> function:</p>
+<pre class="python"><code>from statistics import mean
+print(mean(x_PY))</code></pre>
+<pre><code>## 5.337777777777778</code></pre>
+</div>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/math/">math</a>
+
+                  </div>
+                
+              
+            
+            
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/variable-assignment/" data-tooltip="Variable Assignment">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/yet-another-tidyverse-intro/" data-tooltip="Thoughts on Teaching R and Yet Another Tidyverse Intro">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/07/math/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/07/math/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/07/math/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2018 Brendan Knapp. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        
+  <div class="post-actions-wrap">
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/variable-assignment/" data-tooltip="Variable Assignment">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/03/yet-another-tidyverse-intro/" data-tooltip="Thoughts on Teaching R and Yet Another Tidyverse Intro">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2018/07/math/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2018/07/math/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2018/07/math/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2018%2F07%2Fmath%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2018%2F07%2Fmath%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2018%2F07%2Fmath%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="//www.gravatar.com/avatar/111099002394674943e63b5e4763ab71?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Brendan Knapp</h4>
+    
+      <div id="about-card-bio">Network, Spatial, and Text Analytics <br> R, Python <br> Data-Driven Intelligence</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Decision Enabler, Analyst, Data Scientist
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Monterey, California
+      </div>
+    
+  </div>
+</div>
+
+    <div id="algolia-search-modal" class="modal-container">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="close-button"><i class="fa fa-close"></i></span>
+      <a href="https://algolia.com" target="_blank" rel="noopener" class="searchby-algolia text-color-light link-unstyled">
+        <span class="searchby-algolia-text text-color-light text-small">by</span>
+        <img class="searchby-algolia-logo" src="https://www.algolia.com/static_assets/images/press/downloads/algolia-light.svg">
+      </a>
+      <i class="search-icon fa fa-search"></i>
+      <form id="algolia-search-form">
+        <input type="text" id="algolia-search-input" name="search"
+          class="form-control input--large search-input" placeholder="Search" />
+      </form>
+    </div>
+    <div class="modal-body">
+      <div class="no-result text-color-light text-center">no post found</div>
+      <div class="results">
+        
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/reticulated-python/">
+                <h3 class="media-heading">A Field Guide to R-Python Translations</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp; double  3.14    string  'hi'  character  "hi"    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, 'string']  list  list(1, "</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/reading-csv-files/">
+                <h3 class="media-heading">Establishing Meaningful Performance Comparisons between R and Python</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">R vs PythonReproducible Python EnvironmentThe DataSmallMediumBigThe CodeR“Base” - utils::read.csv()readr::read_csv()data.table::fread()Pythonpandas.read_csv()Dependencies OnlyThe TestInitial CarpentryThe ResultsExecution Timestl;drAppendicesDependency Load TimesSummary TablesEnvironmentIDERPythonSystemR vs PythonPerformance comparisons between R and Python suck.
+Most seem to be run in Jupyter Notebook and many are using Python’s rpy2 library to run poorly optimized R code.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/variable-assignment/">
+                <h3 class="media-heading">Variable Assignment</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">RPythonC++RcppRvar_R &lt;- 1var_R## [1] 1Pythonvar_PY = 1print(var_PY)## 1C++#include &lt;iostream&gt;int main() {int var_CPP = 1;std::cout &lt;&lt; var_CPP;return 0;}## 1Rcpp#include &lt;Rcpp.h&gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/math/">
+                <h3 class="media-heading">Essential Math</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">Our Test ValuesRPythonC++SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/03/yet-another-tidyverse-intro/">
+                <h3 class="media-heading">Thoughts on Teaching R and Yet Another Tidyverse Intro</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Mar 3, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">ContextReflectionResources Up Fronttibble%&gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
+
+Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
+ContextI recently had the opportunity to teach some R coding to colleagues and classmates in a series of workshops.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+      </div>
+    </div>
+    <div class="modal-footer">
+      <p class="results-count text-medium"
+         data-message-zero="no post found"
+         data-message-one="1 post found"
+         data-message-other="{n} posts found">
+         5 posts found
+      </p>
+    </div>
+  </div>
+</div>
+    
+  
+    
+    <div id="cover" style="background-image:url('http://res.cloudinary.com/syknapptic/image/upload/v1516051268/sidebar_nmse27.png');"></div>
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-qi9wbxp2ya2j6p7wx1i6tgavftewndznf4v0hy2gvivk1rxgc3lm7njqb6bz.min.js"></script>
+
+
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2018\/07\/math\/';
+          
+            this.page.identifier = '\/2018\/07\/math\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'syknapptic';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+<script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+    
+  </body>
+</html>
+

@@ -3,139 +3,165 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://syknapptic.netlify.com/2018/07/reading-csv-files/</loc>
+    <loc>/2018/07/reticulated-python/</loc>
+    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/07/reading-csv-files/</loc>
     <lastmod>2018-07-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/page/data-science-from-scratch/</loc>
+    <loc>/page/data-science-from-scratch/</loc>
     <lastmod>2018-07-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/2018/07/variable-assignment/</loc>
+    <loc>/2018/07/variable-assignment/</loc>
     <lastmod>2018-07-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</loc>
+    <loc>/2018/07/math/</loc>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/03/yet-another-tidyverse-intro/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/page/shiny/</loc>
+    <loc>/page/shiny/</loc>
     <lastmod>2018-03-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/page/about/</loc>
+    <loc>/page/about/</loc>
     <lastmod>2018-01-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/archives/</loc>
+    <loc>/archives/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/categories/benchmarking/</loc>
+    <loc>/categories/benchmarking/</loc>
     <lastmod>2018-07-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2018-07-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/categories/data-carpentry/</loc>
+    <loc>/categories/data-carpentry/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/categories/data-science-from-scratch/</loc>
+    <loc>/categories/data-science-from-scratch/</loc>
+    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/dplyr/</loc>
+    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/fileio/</loc>
+    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot/</loc>
+    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/math/</loc>
+    <lastmod>2018-07-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/page/</loc>
     <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/tags/dplyr/</loc>
+    <loc>/post/</loc>
+    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/tags/fileio/</loc>
+    <loc>/categories/r-bloggers/</loc>
     <lastmod>2018-07-08T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/tags/ggplot/</loc>
+    <loc>/page/bknapp-resume/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/reticulated-python/</loc>
+    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/page/</loc>
+    <loc>/tags/tidyr/</loc>
+    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tidyverse/</loc>
+    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/tutorial/</loc>
+    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/variables/</loc>
     <lastmod>2018-07-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://syknapptic.netlify.com/post/</loc>
-    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/categories/r/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/categories/r-bloggers/</loc>
-    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/tags/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/tags/tidyr/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/tags/tidyverse/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/categories/tutorial/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/tags/variables/</loc>
-    <lastmod>2018-07-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://syknapptic.netlify.com/</loc>
-    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -157,7 +157,7 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: blue;">normal_distibution^2</span>
 </td>
 <td style="text-align:right;">
-1.92us
+2.11us
 </td>
 <td style="text-align:right;">
 1.58us
@@ -168,13 +168,13 @@ median
 <span style="     color: green;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style=" font-weight: bold;  font-family: monospace;  color: green;">for i in normal_distibution_py:<br> py_append_results.append(i**2)<br></span>
+<span style=" font-weight: bold;  font-family: monospace;  color: green;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-991.8us
+1.07ms
 </td>
 <td style="text-align:right;">
-931.56us
+1.05ms
 </td>
 </tr>
 <tr>
@@ -182,13 +182,13 @@ median
 <span style="     color: orange;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style=" font-weight: bold;  font-family: monospace;  color: orange;">for i in range(len(normal_distibution_py)):<br> py_index_results[i] = normal_distibution_py[i]**2<br></span>
+<span style=" font-weight: bold;  font-family: monospace;  color: orange;">for i in normal_distibution_py:<br> py_append_results.append(i**2)<br></span>
 </td>
 <td style="text-align:right;">
-969.38us
+1.29ms
 </td>
 <td style="text-align:right;">
-947.75us
+1.11ms
 </td>
 </tr>
 <tr>
@@ -196,13 +196,13 @@ median
 <span style="     color: red;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style=" font-weight: bold;  font-family: monospace;  color: red;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
+<span style=" font-weight: bold;  font-family: monospace;  color: red;">for i in range(len(normal_distibution_py)):<br> py_index_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-1.14ms
+1.44ms
 </td>
 <td style="text-align:right;">
-1.07ms
+1.35ms
 </td>
 </tr>
 <tr>
@@ -213,10 +213,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: purple;">vapply(normal_distibution, function(x) x^2, numeric(1))</span>
 </td>
 <td style="text-align:right;">
-2.06ms
+2.39ms
 </td>
 <td style="text-align:right;">
-1.81ms
+1.83ms
 </td>
 </tr>
 <tr>
@@ -227,10 +227,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: black;">for (i in normal_distibution) bad_R[i] &lt;- normal_distibution[i] * normal…</span>
 </td>
 <td style="text-align:right;">
-56.75ms
+55.13ms
 </td>
 <td style="text-align:right;">
-52.35ms
+46.19ms
 </td>
 </tr>
 </tbody>
@@ -856,7 +856,24 @@ library(readr) </code></pre>
 library(data.table) </code></pre>
 <p>File available at <a href="https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py" class="uri">https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py</a></p>
 <pre><code># py/test_load_pandas.py ========================================================
-import pandas </code></pre>
+def square(x): 
+  return x**2 
+ 
+def evens(x): 
+  y = [] 
+  for i in x: 
+    if i // 2 == 0: 
+      y.append(i) 
+  return(y) 
+ 
+ 
+def ceci_nest_pas_une_pipe(args, *funs): 
+  for arg in args: 
+    for fun in funs: 
+      arg = fun(arg) 
+  return arg 
+ 
+ceci_nest_pas_une_pipe([1, 2, 3, 4], even) </code></pre>
 </div>
 </div>
 <div id="the-test" class="section level1">

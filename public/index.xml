@@ -2,22 +2,338 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>syknapptic</title>
-    <link>https://syknapptic.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://syknapptic.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>A Field Guide to R-Python Translations</title>
+      <link>/2018/07/reticulated-python/</link>
+      <pubDate>Mon, 09 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/reticulated-python/</guid>
+      <description>
+
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;types&#34;&gt;Types&lt;/h1&gt;
+
+&lt;table class=&#34;table&#34; style=&#34;font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python Type &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python Example &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R Type &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R Example &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;int&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;1&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;integer&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;1L&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;float&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;3.14&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;numeric &amp;amp; double&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;3.14&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;string&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&#39;hi&#39;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;character&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&#34;hi&#34;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;bool&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;True&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;logical&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;TRUE&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;collections&#34;&gt;Collections&lt;/h1&gt;
+
+&lt;table class=&#34;table&#34; style=&#34;font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python Type &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python Example &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R Type &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R Example &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Values &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;scalar&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;1&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;vector&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;1&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;homogeneous&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;list&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;[1, 1]&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;vector&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;c(1, 2)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;homogeneous&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;list&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;[1, &#39;string&#39;]&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;list&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;list(1, &#34;string&#34;)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: purple;&#34;&gt;heterogenous&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;tuple&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;(1, &#39;string&#39;]&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;list&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;list(1, &#34;string&#34;)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: purple;&#34;&gt;heterogenous&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;dict&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;{&#39;a&#39;:1, &#39;b&#39;:&#39;string&#39;}&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;list&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;list(a = 1, b = &#34;string&#34;)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: purple;&#34;&gt;heterogenous&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt;  &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt;  &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;vector&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;c(a = 1, b = 2)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;homogeneous&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;comparisons&#34;&gt;Comparisons&lt;/h1&gt;
+
+&lt;table class=&#34;table&#34; style=&#34;font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&amp;lt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&amp;lt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;less than&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&amp;gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&amp;gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;greater than&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;less than or equal&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&amp;gt;=&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;greater than or equal&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;==&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;==&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;is equal&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;!=&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;!=&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;is not equal&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;is &amp;lt;SOMETHING&amp;gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;is.&amp;lt;SOMETHING&amp;gt; | is_&amp;lt;SOMETHING&amp;gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;is an object &amp;lt;SOMETHING&amp;gt;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;is not &amp;lt;SOMETHING&amp;gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;!is.&amp;lt;SOMETHING&amp;gt; | !is_&amp;lt;SOMETHING&amp;gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;is an object not &amp;lt;SOMETHING&amp;gt;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;and&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&amp;amp;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;and&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;or&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;|&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;or&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;arithmetic&#34;&gt;Arithmetic&lt;/h1&gt;
+
+&lt;table class=&#34;table&#34; style=&#34;font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x + y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x + x&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;x &lt;span style=&#34; font-weight: bold;    &#34;&gt;P&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;L&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;U&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;S&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x - y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x - y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;x &lt;span style=&#34; font-weight: bold;    &#34;&gt;M&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;N&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;U&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;S&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x * y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x * y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;x &lt;span style=&#34; font-weight: bold;    &#34;&gt;T&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;M&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;S&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x / y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x / y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;x &lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;V&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;B&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;Y&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x // y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x %/% y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;F&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;L&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;R&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;Q&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;U&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;T&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;N&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;T&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;F&lt;/span&gt; x &lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;V&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;B&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;Y&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x % y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x %% y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;R&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;M&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;A&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;N&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;R&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;F&lt;/span&gt; x &lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;V&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;B&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;Y&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;-x&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;-x&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;N&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;G&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;A&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;T&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;V&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt; x&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;x**y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;x^y&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;x &lt;span style=&#34; font-weight: bold;    &#34;&gt;R&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;A&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;I&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;S&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;D&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;T&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;T&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;H&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;P&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;W&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;E&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;R&lt;/span&gt; &lt;span style=&#34; font-weight: bold;    &#34;&gt;O&lt;/span&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;F&lt;/span&gt; y&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;dates-and-times&#34;&gt;Dates and Times&lt;/h1&gt;
+
+&lt;table class=&#34;table&#34; style=&#34;font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Result &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;import datetime&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;library(lubridate)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;relevant packages are imported&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now = datetime.today()&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;right_now &amp;lt;- now()&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;current date and time&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.year&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;year(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;current &lt;span style=&#34; font-weight: bold;    &#34;&gt;year&lt;/span&gt;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.month&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;month(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;month&lt;/span&gt; of the year&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.isocalendar()[1]&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;week(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;week&lt;/span&gt; of the year&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.day&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;day(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;day&lt;/span&gt; of the month&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.hour&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;hour(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;hour&lt;/span&gt; of the day&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.minute&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;minute(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;minute&lt;/span&gt; of the hour&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;right_now.second&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;second(right_now)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;     color: green;&#34;&gt;&lt;span style=&#34; font-weight: bold;    &#34;&gt;second&lt;/span&gt; of the minute&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&#34;urls&#34;&gt;URLs&lt;/h1&gt;
+
+&lt;table class=&#34;table&#34; style=&#34;font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; Python &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; R &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;from urllib.request import urlretrieve&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;_&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: red;&#34;&gt;urlrequest(&amp;lt;url&amp;gt;, &amp;lt;destination&amp;gt;)&lt;/span&gt; &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; &lt;span style=&#34;   font-family: monospace;  color: blue;&#34;&gt;download.file(&amp;lt;url&amp;gt;, &amp;lt;destination&amp;gt;)&lt;/span&gt; &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Establishing Meaningful Performance Comparisons between R and Python</title>
-      <link>https://syknapptic.netlify.com/2018/07/reading-csv-files/</link>
+      <link>/2018/07/reading-csv-files/</link>
       <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/07/reading-csv-files/</guid>
-      <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+      <guid>/2018/07/reading-csv-files/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
@@ -152,7 +468,7 @@ median
 &lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: blue;&#34;&gt;normal_distibution^2&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-1.92us
+2.11us
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
 1.58us
@@ -163,13 +479,13 @@ median
 &lt;span style=&#34;     color: green;&#34;&gt;Python&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: green;&#34;&gt;for i in normal_distibution_py:&lt;br&gt; py_append_results.append(i**2)&lt;br&gt;&lt;/span&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: green;&#34;&gt;for i in range(len(normal_distibution_py)):&lt;br&gt; py_dict_results[i] = normal_distibution_py[i]**2&lt;br&gt;&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-991.8us
+1.07ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-931.56us
+1.05ms
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -177,13 +493,13 @@ median
 &lt;span style=&#34;     color: orange;&#34;&gt;Python&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: orange;&#34;&gt;for i in range(len(normal_distibution_py)):&lt;br&gt; py_index_results[i] = normal_distibution_py[i]**2&lt;br&gt;&lt;/span&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: orange;&#34;&gt;for i in normal_distibution_py:&lt;br&gt; py_append_results.append(i**2)&lt;br&gt;&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-969.38us
+1.29ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-947.75us
+1.11ms
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -191,13 +507,13 @@ median
 &lt;span style=&#34;     color: red;&#34;&gt;Python&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:left;&#34;&gt;
-&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: red;&#34;&gt;for i in range(len(normal_distibution_py)):&lt;br&gt; py_dict_results[i] = normal_distibution_py[i]**2&lt;br&gt;&lt;/span&gt;
+&lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: red;&#34;&gt;for i in range(len(normal_distibution_py)):&lt;br&gt; py_index_results[i] = normal_distibution_py[i]**2&lt;br&gt;&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-1.14ms
+1.44ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-1.07ms
+1.35ms
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -208,10 +524,10 @@ median
 &lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: purple;&#34;&gt;vapply(normal_distibution, function(x) x^2, numeric(1))&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-2.06ms
+2.39ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-1.81ms
+1.83ms
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
@@ -222,10 +538,10 @@ median
 &lt;span style=&#34; font-weight: bold;  font-family: monospace;  color: black;&#34;&gt;for (i in normal_distibution) bad_R[i] &amp;lt;- normal_distibution[i] * normal…&lt;/span&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-56.75ms
+55.13ms
 &lt;/td&gt;
 &lt;td style=&#34;text-align:right;&#34;&gt;
-52.35ms
+46.19ms
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -851,7 +1167,24 @@ library(readr) &lt;/code&gt;&lt;/pre&gt;
 library(data.table) &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;File available at &lt;a href=&#34;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py&#34; class=&#34;uri&#34;&gt;https://github.com/syknapptic/syknapptic/tree/master/content/post/py/test_load_pandas.py&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# py/test_load_pandas.py ========================================================
-import pandas &lt;/code&gt;&lt;/pre&gt;
+def square(x): 
+  return x**2 
+ 
+def evens(x): 
+  y = [] 
+  for i in x: 
+    if i // 2 == 0: 
+      y.append(i) 
+  return(y) 
+ 
+ 
+def ceci_nest_pas_une_pipe(args, *funs): 
+  for arg in args: 
+    for fun in funs: 
+      arg = fun(arg) 
+  return arg 
+ 
+ceci_nest_pas_une_pipe([1, 2, 3, 4], even) &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;the-test&#34; class=&#34;section level1&#34;&gt;
@@ -1038,19 +1371,19 @@ plot_times &amp;lt;- function(df, ...) {
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;small&amp;quot;) %&amp;gt;% 
   plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-42-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;At 5,000 rows, R is still faster. In the sourced scripts, &lt;code&gt;pandas.read_csv()&lt;/code&gt; has nearly caught up with &lt;code&gt;utils::read.csv()&lt;/code&gt;, but &lt;code&gt;data.table::fread()&lt;/code&gt; has pulled away.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;med&amp;quot;) %&amp;gt;% 
   plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-43-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;At 5,000,000 million rows, we’ve reached the size where time differences would &lt;em&gt;actually&lt;/em&gt; be noticeable.&lt;/p&gt;
 &lt;p&gt;The advantage of&lt;code&gt;utils::read.csv()&lt;/code&gt;’s lack of dependencies has run its course and &lt;code&gt;pandas.read_csv()&lt;/code&gt; is faster in nearly every case.&lt;/p&gt;
 &lt;p&gt;That said, &lt;code&gt;readr::read_csv()&lt;/code&gt; is still faster than &lt;code&gt;pandas.read_csv()&lt;/code&gt; and, like most R users would expect, &lt;code&gt;data.table::fread()&lt;/code&gt; is by far the fastest.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;%
   filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
   plot_times(facet = dependency_status)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-44-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-44-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;tldr&#34; class=&#34;section level1&#34;&gt;
@@ -1073,7 +1406,7 @@ plot_times &amp;lt;- function(df, ...) {
   facet_grid(rows ~ dependency_status, scales = &amp;quot;free&amp;quot;, switch = &amp;quot;y&amp;quot;, space = &amp;quot;free&amp;quot;) +
   labs(x = NULL, y = &amp;quot;Time&amp;quot;, title = &amp;quot;R vs Python - CSV to Data Frame&amp;quot;,
        caption = &amp;quot;12 columns, 100 iterations each&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-45-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;appendices&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Appendices&lt;/h1&gt;
@@ -1084,7 +1417,7 @@ plot_times &amp;lt;- function(df, ...) {
   arrange(desc(lang)) %&amp;gt;%
   mutate(lang = as_factor(lang)) %&amp;gt;% 
   plot_times()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-46-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-46-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gg_df %&amp;gt;% 
   filter(dependency_status == &amp;quot;Dependencies Loaded on Execution (Sourced Script)&amp;quot;) %&amp;gt;%  
   filter(file_size == &amp;quot;big&amp;quot;) %&amp;gt;% 
@@ -1111,7 +1444,7 @@ plot_times &amp;lt;- function(df, ...) {
        title = &amp;quot;Comparing Sourced Scripts with Adjusted Python Times&amp;quot;,
        caption = str_glue(&amp;quot;CSV to Data Frame: {comma(big_rows)} Rows&amp;quot;)
       )&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-47-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-07-08-reading-csv-files_files/figure-html/unnamed-chunk-47-1.png&#34; width=&#34;3300&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summary-tables&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Summary Tables&lt;/h2&gt;
@@ -2158,11 +2491,11 @@ Speed in MHz
     
     <item>
       <title>Data Science from Scratch</title>
-      <link>https://syknapptic.netlify.com/page/data-science-from-scratch/</link>
+      <link>/page/data-science-from-scratch/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/data-science-from-scratch/</guid>
-      <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+      <guid>/page/data-science-from-scratch/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
@@ -2202,7 +2535,7 @@ C++
 Essentials
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;a href=&#34;https://syknapptic.netlify.com/2018/07/variable-assignment/&#34;&gt;Variable Assignment&lt;/a&gt;
+&lt;a href=&#34;/2018/07/variable-assignment/&#34;&gt;Variable Assignment&lt;/a&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
@@ -2807,10 +3140,10 @@ Random Forests
     
     <item>
       <title>Variable Assignment</title>
-      <link>https://syknapptic.netlify.com/2018/07/variable-assignment/</link>
+      <link>/2018/07/variable-assignment/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/07/variable-assignment/</guid>
+      <guid>/2018/07/variable-assignment/</guid>
       <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
@@ -2864,12 +3197,201 @@ int RCPP_function() {
     </item>
     
     <item>
+      <title>Essential Math</title>
+      <link>/2018/07/math/</link>
+      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/math/</guid>
+      <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#our-test-values&#34;&gt;Our Test Values&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#c&#34;&gt;C++&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sum&#34;&gt;Sum&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r-1&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python-1&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#length&#34;&gt;Length&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r-2&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python-2&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mean&#34;&gt;Mean&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#r-3&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#python-3&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div id=&#34;our-test-values&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Our Test Values&lt;/h1&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;p&gt;Here’s a &lt;code&gt;numeric&lt;/code&gt; &lt;code&gt;vector&lt;/code&gt; for our R code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x_R &amp;lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)
+
+x_R&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Here’s a &lt;code&gt;list&lt;/code&gt; of &lt;code&gt;float&lt;/code&gt;s for our Python code.&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;x_PY = [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]
+print(x_PY)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;c&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;C++&lt;/h2&gt;
+&lt;div id=&#34;rcpp&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Rcpp&lt;/h3&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;Rcpp.h&amp;gt;       // R to C++ to R interface
+// [[Rcpp::export]]
+
+void x_RCPP()
+{
+  float x_RCPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i &amp;lt; 9; i++)
+    Rcpp::Rcout &amp;lt;&amp;lt; x_RCPP[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 1.5 2 3.25 4.9 5 6.1 7.39 8 9.9&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pure-c&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Pure C++&lt;/h3&gt;
+&lt;pre class=&#34;cpp&#34;&gt;&lt;code&gt;#include &amp;lt;iostream&amp;gt;
+
+void x_CPP()
+{
+  float x_CPP[9] = {1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9};
+
+  for (int i = 0; i &amp;lt; 9; i++)
+    std::cout &amp;lt;&amp;lt; x_CPP[i] &amp;lt;&amp;lt; &amp;quot; &amp;quot;;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sum&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sum&lt;/h1&gt;
+&lt;div id=&#34;r-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;p&gt;Manually implementing R’s &lt;code&gt;sum()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_sum &amp;lt;- function(values) {
+  the_sum &amp;lt;- 0
+  
+  for(i in values) {
+    the_sum &amp;lt;- the_sum + i
+  }
+  
+  return(the_sum)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of our custom &lt;code&gt;get_sum()&lt;/code&gt; function in R:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_sum(x_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 48.04&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which we can compare to R’s built-in &lt;code&gt;sum()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sum(x_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 48.04&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Manually implementing Python’s &lt;code&gt;sum()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def get_sum(values):
+  the_sum = 0
+  
+  for i in values:
+    the_sum += i
+    
+  return(the_sum)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of our custom &lt;code&gt;get_sum()&lt;/code&gt; function in Python:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(get_sum(x_PY))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 48.04&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which we can compare to Python’s built-in &lt;code&gt;sum()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(sum(x_PY))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 48.04&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;length&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Length&lt;/h1&gt;
+&lt;div id=&#34;r-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;p&gt;Manually implementing R’s &lt;code&gt;length()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_length &amp;lt;- function(values) {
+  the_length &amp;lt;- 0
+  
+  for(i in values) {
+    the_length &amp;lt;- the_length + 1
+  }
+  
+  return(the_length)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of our custom &lt;code&gt;get_length()&lt;/code&gt; function in R:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_length(x_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which we can compare to R’s built-in &lt;code&gt;length()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;length(x_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 9&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Manually implementing Python’s &lt;code&gt;len()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def get_length(values):
+  the_length = 0
+  
+  for i in values:
+    the_length = the_length + 1
+    
+  return(the_length)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of our custom &lt;code&gt;get_length()&lt;/code&gt; function in Python:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(get_length(x_PY))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which we can compare to Python’s built-in &lt;code&gt;len()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(len(x_PY))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 9&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mean&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Mean&lt;/h1&gt;
+&lt;div id=&#34;r-3&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;R&lt;/h2&gt;
+&lt;p&gt;Manually implementing R’s &lt;code&gt;mean()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_mean &amp;lt;- function(values) {
+  the_mean &amp;lt;- get_sum(values) / get_length(values)
+  
+  return(the_mean)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of our custom &lt;code&gt;get_mean()&lt;/code&gt; function in R:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;get_mean(x_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5.337778&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which we can compare to R’s built-in &lt;code&gt;mean()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(x_R)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5.337778&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;python-3&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Manually implementing Python’s &lt;code&gt;statistics.mean()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def get_mean(values):
+  the_mean = get_sum(values) / get_length(values)
+  
+  return(the_mean)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The result of our custom &lt;code&gt;get_mean()&lt;/code&gt; function in Python:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(get_mean(x_PY))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 5.337777777777777&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which we can compare to Python’s &lt;code&gt;statistics.mean()&lt;/code&gt; function:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;from statistics import mean
+print(mean(x_PY))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 5.337777777777778&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
-      <link>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</link>
+      <link>/2018/03/yet-another-tidyverse-intro/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</guid>
-      <description>&lt;script src=&#34;https://syknapptic.netlify.com/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+      <guid>/2018/03/yet-another-tidyverse-intro/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
 
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
@@ -5173,7 +5695,7 @@ Asia
   ggplot(aes(x = lifeExp)) +                  # x values: Aesthetics
   geom_histogram()                            # histogram: Geometries&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34; style=&#34;text-align: center&#34;&gt;&lt;span id=&#34;fig:unnamed-chunk-39&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
+&lt;img src=&#34;/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-39-1.png&#34; alt=&#34;Figure 1&#34; width=&#34;1056&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;
 Figure 1: Figure 1
 &lt;/p&gt;
@@ -6123,7 +6645,7 @@ Europe
   filter(continent == &amp;quot;Oceania&amp;quot;) %&amp;gt;%              # rows to keep: Data
   ggplot(aes(x = country, y = gdpPercap)) +       # x and y values: Aesthetics
   geom_boxplot()                                  # box plot: Geometries&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-48-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;mutate-columns&#34; class=&#34;section level1&#34;&gt;
@@ -7244,7 +7766,7 @@ Europe
   ggplot(aes(x = year, y = gdpPercap, color = country)) +
   geom_line() +
   labs(title = &amp;quot;GDP Over Time&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-56-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;arrange-rows&#34; class=&#34;section level1&#34;&gt;
@@ -8616,7 +9138,7 @@ Belgium
   geom_line() +
   labs(title = &amp;quot;Mean GDPs by Continent Over Time&amp;quot;,
        caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-67-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;summarize&#34; class=&#34;section level1&#34;&gt;
@@ -9050,7 +9572,7 @@ Oceania
   facet_wrap(~ continent) +
   labs(title = &amp;quot;Mean Continent Populations over Time&amp;quot;,
        caption = &amp;quot;Source: Free material from www.gapminder.org&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://syknapptic.netlify.com/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-03-15-tidyverse-getting-your-feet-wet_files/figure-html/unnamed-chunk-73-1.png&#34; width=&#34;1056&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;النهاية&lt;/strong&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## R version 3.5.0 (2018-04-23)
@@ -9104,10 +9626,10 @@ Oceania
     
     <item>
       <title>My Shiny Apps</title>
-      <link>https://syknapptic.netlify.com/page/shiny/</link>
+      <link>/page/shiny/</link>
       <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/shiny/</guid>
+      <guid>/page/shiny/</guid>
       <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://bknapp.shinyapps.io/recon/&#34;&gt;recon : Really Convenient Spatial Data&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
@@ -9136,10 +9658,10 @@ Oceania
     
     <item>
       <title>Welcome</title>
-      <link>https://syknapptic.netlify.com/page/about/</link>
+      <link>/page/about/</link>
       <pubDate>Mon, 15 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/page/about/</guid>
+      <guid>/page/about/</guid>
       <description>
 
 &lt;style&gt;
@@ -9193,6 +9715,92 @@ Oceania
 &lt;/ul&gt;
 
 &lt;hr /&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>/page/bknapp-resume/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/page/bknapp-resume/</guid>
+      <description>&lt;div id=&#34;experience-and-technical-skills&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Experience and Technical Skills&lt;/h1&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Statistics&lt;/th&gt;
+&lt;th&gt;Data Science&lt;/th&gt;
+&lt;th&gt;Analytical Domains&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Parametric Models&lt;/td&gt;
+&lt;td&gt;R&lt;/td&gt;
+&lt;td&gt;Structure and Unstructured&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Linear Models&lt;/td&gt;
+&lt;td&gt;SQL&lt;/td&gt;
+&lt;td&gt;Networks/Graphs&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Generalized Linear Models&lt;/td&gt;
+&lt;td&gt;Python&lt;/td&gt;
+&lt;td&gt;Text Mining and NLP&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;Factor Analysis&lt;/td&gt;
+&lt;td&gt;Git&lt;/td&gt;
+&lt;td&gt;Vector and Raster Spatial Analysis&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Time Series Analysis&lt;/td&gt;
+&lt;td&gt;Package Development&lt;/td&gt;
+&lt;td&gt;Remote Sensing&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;education&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;EDUCATION&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Middlebury Institute of International Studies&lt;/em&gt;, M.A. Nonproliferation and Terrorism Studies May 2018&lt;br /&gt;
+&lt;em&gt;Middlebury Institute of International Studies&lt;/em&gt;, B.A. International Studies December 2017&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;employment&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;EMPLOYMENT&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;Mixed-Methods Evaluation, Training and Analysis (META) Lab, Middlebury Institute:&lt;/strong&gt; &lt;em&gt;Monterey, CA&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Lead Analytic Coordinator&lt;/em&gt; January 2018–May 2018&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Graduate Research Analyst&lt;/em&gt; February 2017–December 2017&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Network Analysis Teaching Assistant&lt;/em&gt; September 2017–December 2017&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;James Martin Center for Nonproliferation Studies, Middlebury Institute:&lt;/strong&gt; &lt;em&gt;Monterey, CA&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Graduate Research Assistant&lt;/em&gt; May 2017–May 2018&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;U.S. Army, HHC 369th Sustainment BDE:&lt;/strong&gt; &lt;em&gt;Camp Smith, NY&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Intelligence Staff Section Manager&lt;/em&gt; (S2 NCOIC) May 2015–December 2015&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;U.S. Army, C Co. 229th Military Intelligence BN:&lt;/strong&gt; &lt;em&gt;Monterey, CA&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Military Skills Trainer and Class Leader&lt;/em&gt; April 2013–March 2015&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;U.S. Army, C Co. (MED) 427th BSB:&lt;/strong&gt; &lt;em&gt;Buffalo, NY; Camp Shelby, MS; Kandahar and Bagram, Afghanistan&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Emergency Medical Sergeant&lt;/em&gt; January 2012–September 2012&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;presentations-and-workshops&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;PRESENTATIONS AND WORKSHOPS&lt;/h1&gt;
+&lt;p&gt;&lt;em&gt;Presenter: “Data in the Wild, Text Mining, and Illuminating North Korean Threat Networks”&lt;/em&gt; April 2018&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Lead Instructor, “R for Data Carpentry and Analysis”&lt;/em&gt; March 2018&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Lead Instructor, “Programming with R and RStudio”&lt;/em&gt; September 2017&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Presenter, “Evaluating Institutional Coalescence with the Use of Exponential Random Graph Models”&lt;/em&gt; June 2017&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Lead Instructor, “Introduction to Python”&lt;/em&gt; March 2017&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Lead Instructor, “Understanding Hypovolemic Hypoperfusion”&lt;/em&gt; March 2012&lt;/p&gt;
+
+&lt;/div&gt;
 </description>
     </item>
     

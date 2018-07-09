@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Variables on syknapptic</title>
-    <link>https://syknapptic.netlify.com/tags/variables/</link>
+    <link>/tags/variables/</link>
     <description>Recent content in Variables on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/tags/variables/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/variables/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Variable Assignment</title>
-      <link>https://syknapptic.netlify.com/2018/07/variable-assignment/</link>
+      <link>/2018/07/variable-assignment/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/07/variable-assignment/</guid>
+      <guid>/2018/07/variable-assignment/</guid>
       <description>RPythonC++RcppRvar_R &amp;lt;- 1var_R## [1] 1Pythonvar_PY = 1print(var_PY)## 1C++#include &amp;lt;iostream&amp;gt;int main() {int var_CPP = 1;std::cout &amp;lt;&amp;lt; var_CPP;return 0;}## 1Rcpp#include &amp;lt;Rcpp.h&amp;gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</description>
     </item>
     

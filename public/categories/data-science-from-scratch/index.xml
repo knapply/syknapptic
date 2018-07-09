@@ -2,22 +2,42 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Data Science From Scratch on syknapptic</title>
-    <link>https://syknapptic.netlify.com/categories/data-science-from-scratch/</link>
+    <link>/categories/data-science-from-scratch/</link>
     <description>Recent content in Data Science From Scratch on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/categories/data-science-from-scratch/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/data-science-from-scratch/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>A Field Guide to R-Python Translations</title>
+      <link>/2018/07/reticulated-python/</link>
+      <pubDate>Mon, 09 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/reticulated-python/</guid>
+      <description>Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp;amp; double  3.14    string  &#39;hi&#39;  character  &#34;hi&#34;    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, &#39;string&#39;]  list  list(1, &#34;</description>
+    </item>
+    
+    <item>
       <title>Variable Assignment</title>
-      <link>https://syknapptic.netlify.com/2018/07/variable-assignment/</link>
+      <link>/2018/07/variable-assignment/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/07/variable-assignment/</guid>
+      <guid>/2018/07/variable-assignment/</guid>
       <description>RPythonC++RcppRvar_R &amp;lt;- 1var_R## [1] 1Pythonvar_PY = 1print(var_PY)## 1C++#include &amp;lt;iostream&amp;gt;int main() {int var_CPP = 1;std::cout &amp;lt;&amp;lt; var_CPP;return 0;}## 1Rcpp#include &amp;lt;Rcpp.h&amp;gt; // R to/from C++ interface// [[Rcpp::export]]int RCPP_function() {int var_RCPP = 1;return var_RCPP;}RCPP_function() # access the C++ function from R like any other function## [1] 1</description>
+    </item>
+    
+    <item>
+      <title>Essential Math</title>
+      <link>/2018/07/math/</link>
+      <pubDate>Sun, 01 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/math/</guid>
+      <description>Our Test ValuesRPythonC++SumRPythonLengthRPythonMeanRPythonOur Test ValuesRHere’s a numeric vector for our R code.
+x_R &amp;lt;- c(1.5, 2, 3.25, 4.9, 5, 6.1, 7.39, 8, 9.9)x_R## [1] 1.50 2.00 3.25 4.90 5.00 6.10 7.39 8.00 9.90PythonHere’s a list of floats for our Python code.
+x_PY = [1.</description>
     </item>
     
   </channel>

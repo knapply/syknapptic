@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tidyverse on syknapptic</title>
-    <link>https://syknapptic.netlify.com/tags/tidyverse/</link>
+    <link>/tags/tidyverse/</link>
     <description>Recent content in Tidyverse on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Mar 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://syknapptic.netlify.com/tags/tidyverse/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/tidyverse/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Thoughts on Teaching R and Yet Another Tidyverse Intro</title>
-      <link>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</link>
+      <link>/2018/03/yet-another-tidyverse-intro/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://syknapptic.netlify.com/2018/03/yet-another-tidyverse-intro/</guid>
+      <guid>/2018/03/yet-another-tidyverse-intro/</guid>
       <description>ContextReflectionResources Up Fronttibble%&amp;gt;%“Tidy” Dataselect() columnsfilter() Rowsmutate() Columnsarrange() Rowsgroup_by() for Grouped Datasummarize()Image credit to R Memes for Statistical Fiends
 
 Considering this is a blog post, I’m going to get all bloggy here before jumping into the code.
