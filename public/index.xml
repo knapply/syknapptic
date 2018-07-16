@@ -499,7 +499,8 @@ R
 
 for(i in seq_along(days)) {                   # a Python-style loop works...
   print(str_glue(&amp;#39;{i}. {days[[i]]}&amp;#39;))         # but it&amp;#39;s awkward in that you would probably
-}                                             # only ever do this to `plot()` or `print()`...&lt;/code&gt;&lt;/pre&gt;
+                                              # only ever do this to `plot()` or `print()`...
+}                                             # but we don&amp;#39;t explicitly `print()` much in R&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 1. Monday
 ## 2. Tuesday
 ## 3. Wednesday
@@ -507,10 +508,10 @@ for(i in seq_along(days)) {                   # a Python-style loop works...
 ## 5. Friday
 ## 6. Saturday
 ## 7. Sunday&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;                                              # but we don&amp;#39;t explicitly `print()` much in R&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In R, functions like &lt;code&gt;print()&lt;/code&gt; or &lt;code&gt;plot()&lt;/code&gt; “return” &lt;em&gt;side-effects&lt;/em&gt; rather than values.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;http://adv-r.had.co.nz/Functions.html?id=#return-values&#34;&gt;Advanced R - Functions: Return values)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://adv-r.had.co.nz/Functions.html?id=#return-values&#34;&gt;Advanced R - Functions: Return values&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;With that in mind, the best solution is to use &lt;code&gt;purrr::walk()&lt;/code&gt;, which is designed specifically to iterate over values calling a function for its side-effects.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;walk(days, ~ print(str_glue(&amp;quot;{match(.x, days)}. {.x}&amp;quot;))) # print() in R is a side-effect, &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## 1. Monday
 ## 2. Tuesday
 ## 3. Wednesday

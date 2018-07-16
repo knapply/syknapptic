@@ -123,17 +123,17 @@ days <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "S
 
 for(i in seq_along(days)) {                   # a Python-style loop works...
   print(str_glue('{i}. {days[[i]]}'))         # but it's awkward in that you would probably
-}                                             # only ever do this to `plot()` or `print()`...
-                                              # but we don't explicitly `print()` much in R
+                                              # only ever do this to `plot()` or `print()`...
+}                                             # but we don't explicitly `print()` much in R
 ```
 
 In R, functions like `print()` or `plot()` "return" _side-effects_ rather than values.
 
-[Advanced R - Functions: Return values)](http://adv-r.had.co.nz/Functions.html?id=#return-values)
+[Advanced R - Functions: Return values](http://adv-r.had.co.nz/Functions.html?id=#return-values)
 
 With that in mind, the best solution is to use `purrr::walk()`, which is designed specifically to iterate over values calling a function for its side-effects.
 
-```{r}
+```{r, echo=TRUE}
 walk(days, ~ print(str_glue("{match(.x, days)}. {.x}"))) # print() in R is a side-effect, 
 ```
 
