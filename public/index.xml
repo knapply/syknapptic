@@ -183,10 +183,11 @@
 &lt;li&gt;&lt;a href=&#34;#file-io&#34;&gt;File I/O&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#write-lines&#34;&gt;Write Lines&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#python-1&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-1&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#read-lines&#34;&gt;Read Lines&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#python-2&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#r-1&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-2&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;/ul&gt;
@@ -1102,6 +1103,9 @@ R
 &lt;pre class=&#34;python&#34;&gt;&lt;code&gt;to_write = &amp;#39;Here is\nsome\nexample text\nto write&amp;#39;
 with open(&amp;#39;test-data/example.txt&amp;#39;, mode=&amp;#39;w&amp;#39;) as file:
     file.writelines(to_write)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R&lt;/h3&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
 
 to_write &amp;lt;- &amp;#39;Here is\nsome\nexample text\nto write&amp;#39;
@@ -1112,10 +1116,17 @@ write_lines(to_write, path = &amp;quot;test-data/example.txt&amp;quot;)&lt;/code
 &lt;h2&gt;Read Lines&lt;/h2&gt;
 &lt;div id=&#34;python-2&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Python&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;with open(&amp;#39;test-data/example.txt&amp;#39;, &amp;#39;r&amp;#39;) as f:
+    text = f.readlines()
+text = [line.strip() for line in text]     # strip whitespace indicating &amp;quot;new line&amp;quot; (\n)
+print(text)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [&amp;#39;Here is&amp;#39;, &amp;#39;some&amp;#39;, &amp;#39;example text&amp;#39;, &amp;#39;to write&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;div id=&#34;r-1&#34; class=&#34;section level3&#34;&gt;
+&lt;div id=&#34;r-2&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;R&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(readr)
+
+read_lines(&amp;quot;test-data/example.txt&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Here is&amp;quot;      &amp;quot;some&amp;quot;         &amp;quot;example text&amp;quot; &amp;quot;to write&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;

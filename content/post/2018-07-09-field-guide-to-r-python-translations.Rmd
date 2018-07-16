@@ -305,6 +305,8 @@ with open('test-data/example.txt', mode='w') as file:
     file.writelines(to_write)
 ```
 
+### R
+
 ```{r, echo=TRUE}
 library(readr)
 
@@ -316,7 +318,7 @@ write_lines(to_write, path = "test-data/example.txt")
 
 ### Python
 
-```{python}
+```{python, echo=TRUE}
 with open('test-data/example.txt', 'r') as f:
     text = f.readlines()
 
@@ -326,7 +328,7 @@ print(text)
 
 ### R
 
-```{r}
+```{r, echo=TRUE}
 library(readr)
 
 read_lines("test-data/example.txt")

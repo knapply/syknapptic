@@ -41,10 +41,11 @@ editor_options:
 <li><a href="#file-io">File I/O</a><ul>
 <li><a href="#write-lines">Write Lines</a><ul>
 <li><a href="#python-1">Python</a></li>
+<li><a href="#r-1">R</a></li>
 </ul></li>
 <li><a href="#read-lines">Read Lines</a><ul>
 <li><a href="#python-2">Python</a></li>
-<li><a href="#r-1">R</a></li>
+<li><a href="#r-2">R</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -960,6 +961,9 @@ R
 <pre class="python"><code>to_write = &#39;Here is\nsome\nexample text\nto write&#39;
 with open(&#39;test-data/example.txt&#39;, mode=&#39;w&#39;) as file:
     file.writelines(to_write)</code></pre>
+</div>
+<div id="r-1" class="section level3">
+<h3>R</h3>
 <pre class="r"><code>library(readr)
 
 to_write &lt;- &#39;Here is\nsome\nexample text\nto write&#39;
@@ -970,10 +974,17 @@ write_lines(to_write, path = &quot;test-data/example.txt&quot;)</code></pre>
 <h2>Read Lines</h2>
 <div id="python-2" class="section level3">
 <h3>Python</h3>
+<pre class="python"><code>with open(&#39;test-data/example.txt&#39;, &#39;r&#39;) as f:
+    text = f.readlines()
+text = [line.strip() for line in text]     # strip whitespace indicating &quot;new line&quot; (\n)
+print(text)</code></pre>
 <pre><code>## [&#39;Here is&#39;, &#39;some&#39;, &#39;example text&#39;, &#39;to write&#39;]</code></pre>
 </div>
-<div id="r-1" class="section level3">
+<div id="r-2" class="section level3">
 <h3>R</h3>
+<pre class="r"><code>library(readr)
+
+read_lines(&quot;test-data/example.txt&quot;)</code></pre>
 <pre><code>## [1] &quot;Here is&quot;      &quot;some&quot;         &quot;example text&quot; &quot;to write&quot;</code></pre>
 </div>
 </div>
