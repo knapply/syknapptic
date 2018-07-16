@@ -30,15 +30,15 @@
     
 
     
-    <meta name="description" content="Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp; double  3.14    string  &#39;hi&#39;  character  &#34;hi&#34;    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, &#39;string&#39;]  list  list(1, &#34;">
-    <meta property="og:description" content="Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp; double  3.14    string  &#39;hi&#39;  character  &#34;hi&#34;    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, &#39;string&#39;]  list  list(1, &#34;">
+    <meta name="description" content="TypesCollections: Vectors, Lists, and DictionariesCommon TasksIterationPythonRSequencesComparisonsArithmeticDates and TimesURLsStrings and Regular ExpressionsFile I/OWrite LinesPythonRead LinesPythonRTypesPython TypePython ExampleR TypeR Exampleint1integer1Lfloat3.">
+    <meta property="og:description" content="TypesCollections: Vectors, Lists, and DictionariesCommon TasksIterationPythonRSequencesComparisonsArithmeticDates and TimesURLsStrings and Regular ExpressionsFile I/OWrite LinesPythonRead LinesPythonRTypesPython TypePython ExampleR TypeR Exampleint1integer1Lfloat3.">
     <meta property="og:type" content="blog">
     <meta property="og:title" content="A Field Guide to R-Python Translations">
     <meta property="og:url" content="/2018/07/reticulated-python/">
     <meta property="og:site_name" content="syknapptic">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="syknapptic">
-    <meta name="twitter:description" content="Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp; double  3.14    string  &#39;hi&#39;  character  &#34;hi&#34;    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, &#39;string&#39;]  list  list(1, &#34;">
+    <meta name="twitter:description" content="TypesCollections: Vectors, Lists, and DictionariesCommon TasksIterationPythonRSequencesComparisonsArithmeticDates and TimesURLsStrings and Regular ExpressionsFile I/OWrite LinesPythonRead LinesPythonRTypesPython TypePython ExampleR TypeR Exampleint1integer1Lfloat3.">
     
       <meta name="twitter:creator" content="@syknapptic">
     
@@ -295,313 +295,964 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              
+              <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#types">Types</a></li>
+<li><a href="#collections-vectors-lists-and-dictionaries">Collections: Vectors, Lists, and Dictionaries</a><ul>
+<li><a href="#common-tasks">Common Tasks</a></li>
+<li><a href="#iteration">Iteration</a><ul>
+<li><a href="#python">Python</a></li>
+<li><a href="#r">R</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#sequences">Sequences</a></li>
+<li><a href="#comparisons">Comparisons</a></li>
+<li><a href="#arithmetic">Arithmetic</a></li>
+<li><a href="#dates-and-times">Dates and Times</a></li>
+<li><a href="#urls">URLs</a></li>
+<li><a href="#strings-and-regular-expressions">Strings and Regular Expressions</a></li>
+<li><a href="#file-io">File I/O</a><ul>
+<li><a href="#write-lines">Write Lines</a><ul>
+<li><a href="#python-1">Python</a></li>
+</ul></li>
+<li><a href="#read-lines">Read Lines</a><ul>
+<li><a href="#python-2">Python</a></li>
+<li><a href="#r-1">R</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 
 <p><img src="https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG" style="display: block; margin: auto;" /></p>
-
-<h1 id="types">Types</h1>
-
+<div id="types" class="section level1">
+<h1>Types</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Python Type </th>
-   <th style="text-align:left;"> Python Example </th>
-   <th style="text-align:left;"> R Type </th>
-   <th style="text-align:left;"> R Example </th>
-  </tr>
- </thead>
+<thead>
+<tr>
+<th style="text-align:left;">
+Python Type
+</th>
+<th style="text-align:left;">
+Python Example
+</th>
+<th style="text-align:left;">
+R Type
+</th>
+<th style="text-align:left;">
+R Example
+</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">int</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">1</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">integer</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">1L</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">float</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">3.14</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">numeric &amp; double</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">3.14</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">string</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">'hi'</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">character</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">"hi"</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">bool</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">True</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">logical</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">TRUE</span> </td>
-  </tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">int</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">1</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">integer</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">1L</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">float</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">3.14</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">numeric &amp; double</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">3.14</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">string</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">‘hi’</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">character</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">“hi”</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">bool</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">True</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">logical</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">TRUE</span>
+</td>
+</tr>
 </tbody>
 </table>
-
-<h1 id="collections">Collections</h1>
-
+</div>
+<div id="collections-vectors-lists-and-dictionaries" class="section level1">
+<h1>Collections: Vectors, Lists, and Dictionaries</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Python Type </th>
-   <th style="text-align:left;"> Python Example </th>
-   <th style="text-align:left;"> R Type </th>
-   <th style="text-align:left;"> R Example </th>
-   <th style="text-align:left;"> Values </th>
-  </tr>
- </thead>
+<thead>
+<tr>
+<th style="text-align:left;">
+Python Type
+</th>
+<th style="text-align:left;">
+Python Example
+</th>
+<th style="text-align:left;">
+R Type
+</th>
+<th style="text-align:left;">
+R Example
+</th>
+<th style="text-align:left;">
+Values
+</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">scalar</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">1</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">vector</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">1</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">homogeneous</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">list</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">[1, 1]</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">vector</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">c(1, 2)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">homogeneous</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">list</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">[1, 'string']</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">list</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">list(1, "string")</span> </td>
-   <td style="text-align:left;"> <span style="     color: purple;">heterogenous</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">tuple</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">(1, 'string']</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">list</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">list(1, "string")</span> </td>
-   <td style="text-align:left;"> <span style="     color: purple;">heterogenous</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">dict</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">{'a':1, 'b':'string'}</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">list</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">list(a = 1, b = "string")</span> </td>
-   <td style="text-align:left;"> <span style="     color: purple;">heterogenous</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;">  </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">vector</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">c(a = 1, b = 2)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">homogeneous</span> </td>
-  </tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">scalar</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">1</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">vector</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">1</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">homogeneous</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">list</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">[1, 1]</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">vector</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">c(1, 2)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">homogeneous</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">list</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">[1, ‘string’]</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">list</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">list(1, “string”)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: purple;">heterogenous</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">tuple</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">(1, ‘string’]</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">list</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">list(1, “string”)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: purple;">heterogenous</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">dict</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">{‘a’:1, ‘b’:‘string’}</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">list</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">list(a = 1, b = “string”)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: purple;">heterogenous</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">vector</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">c(a = 1, b = 2)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">homogeneous</span>
+</td>
+</tr>
 </tbody>
 </table>
-
-<h1 id="comparisons">Comparisons</h1>
-
+<div id="common-tasks" class="section level2">
+<h2>Common Tasks</h2>
+<p>Python and R data types cannot be thought of as exact matches.</p>
+<p>A critical difference is that Python <code>list</code>s are not inherently homogeneous, which is the case for R <code>vector</code>s.</p>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Python </th>
-   <th style="text-align:left;"> R </th>
-   <th style="text-align:left;"> Meaning </th>
-  </tr>
- </thead>
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">&lt;</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">&lt;</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">less than</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">&gt;</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">&gt;</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">greater than</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">&lt;=</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">&lt;=</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">less than or equal</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">&gt;=</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">&gt;=</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">greater than or equal</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">==</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">==</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">is equal</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">!=</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">!=</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">is not equal</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">is &lt;SOMETHING&gt;</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">is.&lt;SOMETHING&gt; | is_&lt;SOMETHING&gt;</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">is an object &lt;SOMETHING&gt;</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">is not &lt;SOMETHING&gt;</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">!is.&lt;SOMETHING&gt; | !is_&lt;SOMETHING&gt;</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">is an object not &lt;SOMETHING&gt;</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">and</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">&amp;</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">and</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">or</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">|</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">or</span> </td>
-  </tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">list(zip(list1, list2))</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">mapply(c, vector1, vector2, SIMPLIFY = FALSE, USE.NAMES = FALSE)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">dict(zip(list1, list2))</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">names(vector1) &lt;- vector2</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">dict(zip(list1, list2))</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">setNames(vector1, vector2)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">enumerate(list1) &lt;generator&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">seq_along(list1)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">max(dict.items(), lambda x = x[1])</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">named_vector[named_vector == max(named_vector)]</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">library(purrr)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">list(zip(list1, list2))</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">map2(vector1, vector2, c)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">max(dict.items(), lambda x = x[1])</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">named_vector %&gt;% keep(~ .x == max(named_vector))</span>
+</td>
+</tr>
 </tbody>
 </table>
+</div>
+<div id="iteration" class="section level2">
+<h2>Iteration</h2>
+<div id="python" class="section level3">
+<h3>Python</h3>
+<pre><code>## 1. Monday
+## 2. Tuesday
+## 3. Wednesday
+## 4. Thursday
+## 5. Friday
+## 6. Saturday
+## 7. Sunday</code></pre>
+</div>
+<div id="r" class="section level3">
+<h3>R</h3>
+<pre class="r"><code>days &lt;- c(&quot;Monday&quot;, &quot;Tuesday&quot;, &quot;Wednesday&quot;, &quot;Thursday&quot;, &quot;Friday&quot;, &quot;Saturday&quot;, &quot;Sunday&quot;)
 
-<h1 id="arithmetic">Arithmetic</h1>
-
+for(i in seq_along(days)) {                   # a Python-style loop works...
+  print(str_glue(&#39;{i}. {days[[i]]}&#39;))         # but it&#39;s awkward in that you would probably
+}                                             # only ever do this to `plot()` or `print()`...</code></pre>
+<pre><code>## 1. Monday
+## 2. Tuesday
+## 3. Wednesday
+## 4. Thursday
+## 5. Friday
+## 6. Saturday
+## 7. Sunday</code></pre>
+<pre class="r"><code>                                              # but we don&#39;t explicitly `print()` much in R</code></pre>
+<p>In R, functions like <code>print()</code> or <code>plot()</code> “return” <em>side-effects</em> rather than values.</p>
+<p><a href="http://adv-r.had.co.nz/Functions.html?id=#return-values">Advanced R - Functions: Return values)</a></p>
+<p>With that in mind, the best solution is to use <code>purrr::walk()</code>, which is designed specifically to iterate over values calling a function for its side-effects.</p>
+<pre><code>## 1. Monday
+## 2. Tuesday
+## 3. Wednesday
+## 4. Thursday
+## 5. Friday
+## 6. Saturday
+## 7. Sunday</code></pre>
+<p>Underneath the hood, <code>walk()</code> is literally just a <code>for()</code> loop, but it’s <em>consistent</em> with a family of functions from {<code>purrr</code>} that provide powerful iteration tools and solutions to complicated tasks involving <code>vector</code>s, <code>list</code>s, and <code>data.frame</code>s.</p>
+</div>
+</div>
+</div>
+<div id="sequences" class="section level1">
+<h1>Sequences</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Python </th>
-   <th style="text-align:left;"> R </th>
-   <th style="text-align:left;"> Meaning </th>
-  </tr>
- </thead>
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x + y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x + x</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">x <span style=" font-weight: bold;    ">P</span><span style=" font-weight: bold;    ">L</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">S</span> y</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x - y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x - y</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">x <span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">S</span> y</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x * y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x * y</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">x <span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">S</span> y</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x / y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x / y</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">x <span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">B</span><span style=" font-weight: bold;    ">Y</span> y</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x // y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x %/% y</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">F</span><span style=" font-weight: bold;    ">L</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">R</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">Q</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">T</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> x <span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">B</span><span style=" font-weight: bold;    ">Y</span> y</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x % y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x %% y</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">R</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">R</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> x <span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">B</span><span style=" font-weight: bold;    ">Y</span> y</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">-x</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">-x</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">G</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">E</span> x</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">x**y</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">x^y</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">x <span style=" font-weight: bold;    ">R</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">S</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">O</span> <span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">H</span><span style=" font-weight: bold;    ">E</span> <span style=" font-weight: bold;    ">P</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">W</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">R</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> y</span> </td>
-  </tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">range(0, 20, 2) *generator</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">seq(from = 0, to = 18, by = 2)</span>
+</td>
+</tr>
 </tbody>
 </table>
-
-<h1 id="dates-and-times">Dates and Times</h1>
-
+</div>
+<div id="comparisons" class="section level1">
+<h1>Comparisons</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Python </th>
-   <th style="text-align:left;"> R </th>
-   <th style="text-align:left;"> Result </th>
-  </tr>
- </thead>
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+<th style="text-align:left;">
+Meaning
+</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">import datetime</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">library(lubridate)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">relevant packages are imported</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;"></span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;"></span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"></span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now = datetime.today()</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">right_now &lt;- now()</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">current date and time</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.year</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">year(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;">current <span style=" font-weight: bold;    ">year</span></span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.month</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">month(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">month</span> of the year</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.isocalendar()[1]</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">week(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">week</span> of the year</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.day</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">day(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">day</span> of the month</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.hour</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">hour(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">hour</span> of the day</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.minute</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">minute(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">minute</span> of the hour</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">right_now.second</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">second(right_now)</span> </td>
-   <td style="text-align:left;"> <span style="     color: green;"><span style=" font-weight: bold;    ">second</span> of the minute</span> </td>
-  </tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">&lt;</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">&lt;</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">less than</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">greater than</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">&lt;=</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">&lt;=</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">less than or equal</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">&gt;=</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">&gt;=</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">greater than or equal</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">==</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">==</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">is equal</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">!=</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">!=</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">is not equal</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">is &lt;SOMETHING&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">is.&lt;SOMETHING&gt; | is_&lt;SOMETHING&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">is an object &lt;SOMETHING&gt;</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">is not &lt;SOMETHING&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">!is.&lt;SOMETHING&gt; | !is_&lt;SOMETHING&gt;</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">is an object not &lt;SOMETHING&gt;</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">and</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">&amp;</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">and</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">or</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">|</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">or</span>
+</td>
+</tr>
 </tbody>
 </table>
-
-<h1 id="urls">URLs</h1>
-
+</div>
+<div id="arithmetic" class="section level1">
+<h1>Arithmetic</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Python </th>
-   <th style="text-align:left;"> R </th>
-  </tr>
- </thead>
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+<th style="text-align:left;">
+Meaning
+</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">from urllib.request import urlretrieve</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">_</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;"></span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;"></span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: red;">urlrequest(&lt;url&gt;, &lt;destination&gt;)</span> </td>
-   <td style="text-align:left;"> <span style="   font-family: monospace;  color: blue;">download.file(&lt;url&gt;, &lt;destination&gt;)</span> </td>
-  </tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x + y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x + x</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">x <span style=" font-weight: bold;    ">P</span><span style=" font-weight: bold;    ">L</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">S</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x - y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x - y</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">x <span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">S</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x * y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x * y</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">x <span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">S</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x / y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x / y</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">x <span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">B</span><span style=" font-weight: bold;    ">Y</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x // y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x %/% y</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">F</span><span style=" font-weight: bold;    ">L</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">R</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">Q</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">T</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> x <span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">B</span><span style=" font-weight: bold;    ">Y</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x % y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x %% y</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">R</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">R</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> x <span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">D</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">B</span><span style=" font-weight: bold;    ">Y</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">-x</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">-x</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">G</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">E</span> x</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">x**y</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">x^y</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">x <span style=" font-weight: bold;    ">R</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">S</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">D</span> <span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">O</span> <span style=" font-weight: bold;    ">T</span><span style=" font-weight: bold;    ">H</span><span style=" font-weight: bold;    ">E</span> <span style=" font-weight: bold;    ">P</span><span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">W</span><span style=" font-weight: bold;    ">E</span><span style=" font-weight: bold;    ">R</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">sum([x, y])</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">sum(c(x, y))</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">S</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">M</span> <span style=" font-weight: bold;    ">O</span><span style=" font-weight: bold;    ">F</span> x, y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">min([x, y])</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">min(c(x, y))</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">M</span> <span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">L</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">E</span> <span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span> x, y</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">max([x, y])</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">max(c(x, y))</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">X</span><span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">M</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">M</span> <span style=" font-weight: bold;    ">V</span><span style=" font-weight: bold;    ">A</span><span style=" font-weight: bold;    ">L</span><span style=" font-weight: bold;    ">U</span><span style=" font-weight: bold;    ">E</span> <span style=" font-weight: bold;    ">I</span><span style=" font-weight: bold;    ">N</span> x, y</span>
+</td>
+</tr>
 </tbody>
 </table>
+</div>
+<div id="dates-and-times" class="section level1">
+<h1>Dates and Times</h1>
+<table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+<th style="text-align:left;">
+Result
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">import datetime</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">library(lubridate)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">relevant packages are imported</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;"></span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now = datetime.today()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">right_now &lt;- now()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">current date and time</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.year</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">year(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">current <span style=" font-weight: bold;    ">year</span></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.month</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">month(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">month</span> of the year</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.isocalendar()[1]</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">week(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">week</span> of the year</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.day</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">day(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">day</span> of the month</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.hour</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">hour(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">hour</span> of the day</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.minute</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">minute(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">minute</span> of the hour</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">right_now.second</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">second(right_now)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"><span style=" font-weight: bold;    ">second</span> of the minute</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="urls" class="section level1">
+<h1>URLs</h1>
+<table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">from urllib.request import urlretrieve</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">_</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;"></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">urlrequest(&lt;url&gt;, &lt;destination&gt;)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">download.file(&lt;url&gt;, &lt;destination&gt;)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="strings-and-regular-expressions" class="section level1">
+<h1>Strings and Regular Expressions</h1>
+<table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">import re</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">library(stringr)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;"></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">‘string for list’.split()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">strsplit(“string for list”, “\s”)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.search(pattern, string)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_detect(string, pattern)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.search(pattern, string).group()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_extract(string, pattern)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.split(pattern, string)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_split(string, pattern)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.findall(pattern, string)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_extract_all(string, pattern)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">string.replace(pattern, repl)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_replace(string, pattern, repl)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.sub(pattern, repl, string)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_replace(string, pattern, repl)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.sub(pattern, &lt;foo&gt;, string)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">str_replace_all(string, pattern, &lt;foo&gt;)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">re.compile(pattern)</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">regex(pattern)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="file-io" class="section level1">
+<h1>File I/O</h1>
+<div id="write-lines" class="section level2">
+<h2>Write Lines</h2>
+<div id="python-1" class="section level3">
+<h3>Python</h3>
+<pre class="python"><code>to_write = &#39;Here is\nsome\nexample text\nto write&#39;
+with open(&#39;test-data/example.txt&#39;, mode=&#39;w&#39;) as file:
+    file.writelines(to_write)</code></pre>
+<pre class="r"><code>library(readr)
+
+to_write &lt;- &#39;Here is\nsome\nexample text\nto write&#39;
+write_lines(to_write, path = &quot;test-data/example.txt&quot;)</code></pre>
+</div>
+</div>
+<div id="read-lines" class="section level2">
+<h2>Read Lines</h2>
+<div id="python-2" class="section level3">
+<h3>Python</h3>
+<pre><code>## [&#39;Here is&#39;, &#39;some&#39;, &#39;example text&#39;, &#39;to write&#39;]</code></pre>
+</div>
+<div id="r-1" class="section level3">
+<h3>R</h3>
+<pre><code>## [1] &quot;Here is&quot;      &quot;some&quot;         &quot;example text&quot; &quot;to write&quot;</code></pre>
+</div>
+</div>
+</div>
 
               
             </div>
@@ -627,7 +1278,7 @@ if (!doNotTrack) {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/bubble-sort/" data-tooltip="Bubble Sort">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -713,7 +1364,7 @@ if (!doNotTrack) {
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--disabled">
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2018/07/bubble-sort/" data-tooltip="Bubble Sort">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
@@ -854,6 +1505,23 @@ if (!doNotTrack) {
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/bubble-sort/">
+                <h3 class="media-heading">Bubble Sort</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">PythonUnsorted listBubble Sort FunctionResultRUnsorted vectorBubble Sort FunctionResultEnvironmentPythonUnsorted listunsorted = [9, 2, 8, 3, 7, 4, 6, 5, 1]Bubble Sort Functiondef bubble_sort(unsorted_sequence):sorted_sequence = unsorted_sequencefor iteration, _ in enumerate(sorted_sequence):for i, _ in enumerate(sorted_sequence):if i + 1 &lt;= len(sorted_sequence) - 1:current_value = sorted_sequence[i]next_value = sorted_sequence[i + 1]if current_value &gt; next_value:sorted_sequence[i] = next_valuesorted_sequence[i + 1] = current_valueprint(f&#39;Iteration #{iteration + 1}: {&quot;, &quot;.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/07/reticulated-python/">
                 <h3 class="media-heading">A Field Guide to R-Python Translations</h3>
               </a>
@@ -862,7 +1530,7 @@ if (!doNotTrack) {
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp; double  3.14    string  'hi'  character  "hi"    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, 'string']  list  list(1, "</div>
+              <div class="media-content hide-xs font-merryweather">TypesCollections: Vectors, Lists, and DictionariesCommon TasksIterationPythonRSequencesComparisonsArithmeticDates and TimesURLsStrings and Regular ExpressionsFile I/OWrite LinesPythonRead LinesPythonRTypesPython TypePython ExampleR TypeR Exampleint1integer1Lfloat3.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -942,6 +1610,26 @@ ContextI recently had the opportunity to teach some R coding to colleagues and 
             <hr>
           </div>
         
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/">
+                <h3 class="media-heading">GDELT, Missiles, and Image Collection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”.
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
+See also:
+My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
       </div>
     </div>
     <div class="modal-footer">
@@ -949,7 +1637,7 @@ ContextI recently had the opportunity to teach some R coding to colleagues and 
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         5 posts found
+         7 posts found
       </p>
     </div>
   </div>

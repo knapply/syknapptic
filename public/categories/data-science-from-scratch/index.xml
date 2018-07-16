@@ -6,10 +6,19 @@
     <description>Recent content in Data Science From Scratch on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/data-science-from-scratch/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bubble Sort</title>
+      <link>/2018/07/bubble-sort/</link>
+      <pubDate>Mon, 16 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/bubble-sort/</guid>
+      <description>PythonUnsorted listBubble Sort FunctionResultRUnsorted vectorBubble Sort FunctionResultEnvironmentPythonUnsorted listunsorted = [9, 2, 8, 3, 7, 4, 6, 5, 1]Bubble Sort Functiondef bubble_sort(unsorted_sequence):sorted_sequence = unsorted_sequencefor iteration, _ in enumerate(sorted_sequence):for i, _ in enumerate(sorted_sequence):if i + 1 &amp;lt;= len(sorted_sequence) - 1:current_value = sorted_sequence[i]next_value = sorted_sequence[i + 1]if current_value &amp;gt; next_value:sorted_sequence[i] = next_valuesorted_sequence[i + 1] = current_valueprint(f&amp;#39;Iteration #{iteration + 1}: {&amp;quot;, &amp;quot;.</description>
+    </item>
     
     <item>
       <title>A Field Guide to R-Python Translations</title>
@@ -17,7 +26,7 @@
       <pubDate>Mon, 09 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/07/reticulated-python/</guid>
-      <description>Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp;amp; double  3.14    string  &#39;hi&#39;  character  &#34;hi&#34;    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, &#39;string&#39;]  list  list(1, &#34;</description>
+      <description>TypesCollections: Vectors, Lists, and DictionariesCommon TasksIterationPythonRSequencesComparisonsArithmeticDates and TimesURLsStrings and Regular ExpressionsFile I/OWrite LinesPythonRead LinesPythonRTypesPython TypePython ExampleR TypeR Exampleint1integer1Lfloat3.</description>
     </item>
     
     <item>

@@ -55,7 +55,7 @@ Most seem to be run in Jupyter Notebook and many are using Python’s rpy2 libra
     
 
     
-      <meta property="og:image" content="http://i0.kym-cdn.com/photos/images/facebook/001/124/028/5c2.jpg">
+      <meta property="og:image" content="http://res.cloudinary.com/syknapptic/image/upload/v1531757457/UnconsciousNeglectedBug-size_restricted_fss6ju.gif">
     
     
     
@@ -344,7 +344,7 @@ if (!doNotTrack) {
 
 <div id="r-vs-python" class="section level1">
 <h1>R vs Python</h1>
-<p><img src="http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif" style="display: block; margin: auto;" /></p>
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1531757493/robert-downey-jr-eye-roll-gif-3_xa3fmd.gif" style="display: block; margin: auto;" /></p>
 <p>Performance comparisons between R and Python suck.</p>
 <p>Most seem to be run in Jupyter Notebook and many are using Python’s <code>rpy2</code> library to run poorly optimized R code. I’m not an anti-<code>for()</code> loop Nazi (yes, you <em>can</em> use them effectively in R), but thanks to the <code>base::*apply()</code> family and their beautiful <code>purrr::map*()</code> children, there are <em>usually</em> better solutions.</p>
 <p>Unfortunately, some of these comparisons arbitrarily test loops in R where you would <em>never, ever</em> do so.</p>
@@ -362,7 +362,7 @@ for(i in normal_distibution) {
 
 identical(bad_R, not_so_good_R)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>… but it’s still ignoring the fact that <code>normal_distibution</code> is a homogeneous collection of <code>atomic</code> values: a <code>vector</code>.</p>
+<p>… but it’s still taking advantage of the fact that <code>normal_distibution</code> is a homogeneous collection of <code>atomic</code> values: a <code>vector</code>.</p>
 <pre class="r"><code>all(is.vector(normal_distibution), is.atomic(normal_distibution))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>With that in mind, just do this…</p>
@@ -394,7 +394,13 @@ py_loop_append &lt;- (
 py_loop_dict &lt;- (
 &quot;for i in range(len(normal_distibution_py)):
   py_dict_results[i] =  normal_distibution_py[i]**2
-&quot;)</code></pre>
+&quot;)
+
+py_list_comp &lt;- (
+&quot;
+[x**2 for x in normal_distibution_py]
+&quot;
+)</code></pre>
 <p>… but what runs fastest?</p>
 <pre class="r"><code>speeds &lt;- mark(
   for(i in normal_distibution) bad_R[i] &lt;- normal_distibution[i] * normal_distibution[i],
@@ -404,6 +410,7 @@ py_loop_dict &lt;- (
   py_run_string(py_loop_index, convert = FALSE),
   py_run_string(py_loop_append, convert = FALSE),
   py_run_string(py_loop_dict, convert = FALSE),
+  py_run_string(py_list_comp),
   
   check = FALSE, iterations = 100
   ) </code></pre>
@@ -435,10 +442,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: blue;">normal_distibution^2</span>
 </td>
 <td style="text-align:right;">
-2.11us
+2.43us
 </td>
 <td style="text-align:right;">
-1.58us
+1.98us
 </td>
 </tr>
 <tr>
@@ -446,13 +453,13 @@ median
 <span style="     color: green;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style=" font-weight: bold;  font-family: monospace;  color: green;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
+<span style=" font-weight: bold;  font-family: monospace;  color: green;"><br>[x**2 for x in normal_distibution_py]<br></span>
 </td>
 <td style="text-align:right;">
-1.07ms
+768us
 </td>
 <td style="text-align:right;">
-1.05ms
+654.22us
 </td>
 </tr>
 <tr>
@@ -463,10 +470,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: orange;">for i in normal_distibution_py:<br> py_append_results.append(i**2)<br></span>
 </td>
 <td style="text-align:right;">
-1.29ms
+936.4us
 </td>
 <td style="text-align:right;">
-1.11ms
+847.21us
 </td>
 </tr>
 <tr>
@@ -477,10 +484,24 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: red;">for i in range(len(normal_distibution_py)):<br> py_index_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-1.44ms
+1.01ms
 </td>
 <td style="text-align:right;">
-1.35ms
+910.02us
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="     color: darkred;">Python</span>
+</td>
+<td style="text-align:left;">
+<span style=" font-weight: bold;  font-family: monospace;  color: darkred;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
+</td>
+<td style="text-align:right;">
+1.12ms
+</td>
+<td style="text-align:right;">
+1ms
 </td>
 </tr>
 <tr>
@@ -491,10 +512,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: purple;">vapply(normal_distibution, function(x) x^2, numeric(1))</span>
 </td>
 <td style="text-align:right;">
-2.39ms
+1.84ms
 </td>
 <td style="text-align:right;">
-1.83ms
+1.78ms
 </td>
 </tr>
 <tr>
@@ -505,10 +526,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: black;">for (i in normal_distibution) bad_R[i] &lt;- normal_distibution[i] * normal…</span>
 </td>
 <td style="text-align:right;">
-55.13ms
+60.69ms
 </td>
 <td style="text-align:right;">
-46.19ms
+56.64ms
 </td>
 </tr>
 </tbody>
@@ -715,18 +736,18 @@ PrevRefIPs
 <pre class="r"><code>(small_df &lt;- test_df %&gt;% 
   slice(1:100))</code></pre>
 <pre><code>## # A tibble: 100 x 12
-##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
-##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
-##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
-##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
-##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
-##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
-##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
-##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
-##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
-##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
-##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
-## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+##    GlobalRank TldRank Domain TLD   RefSubNets RefIPs IDN_Domain IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;  
+##  1          1       1 googl~ com       463232 2.96e6 google.com com    
+##  2          2       2 faceb~ com       451237 3.05e6 facebook.~ com    
+##  3          3       3 youtu~ com       410764 2.44e6 youtube.c~ com    
+##  4          4       4 twitt~ com       409068 2.55e6 twitter.c~ com    
+##  5          5       5 micro~ com       303679 1.14e6 microsoft~ com    
+##  6          6       6 linke~ com       292966 1.35e6 linkedin.~ com    
+##  7          7       1 wikip~ org       287420 1.24e6 wikipedia~ org    
+##  8          8       7 plus.~ com       284103 1.46e6 plus.goog~ com    
+##  9          9       8 insta~ com       277145 1.37e6 instagram~ com    
+## 10         10       9 apple~ com       276152 1.05e6 apple.com  com    
 ## # ... with 90 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
 <pre class="r"><code>(small_rows &lt;- nrow(small_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
@@ -740,18 +761,18 @@ write_csv(small_df, path_small_csv)</code></pre>
 <pre class="r"><code>(medium_df &lt;- test_df %&gt;% 
   slice(1:5000))</code></pre>
 <pre><code>## # A tibble: 5,000 x 12
-##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
-##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
-##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
-##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
-##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
-##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
-##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
-##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
-##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
-##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
-##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
-## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+##    GlobalRank TldRank Domain TLD   RefSubNets RefIPs IDN_Domain IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;  
+##  1          1       1 googl~ com       463232 2.96e6 google.com com    
+##  2          2       2 faceb~ com       451237 3.05e6 facebook.~ com    
+##  3          3       3 youtu~ com       410764 2.44e6 youtube.c~ com    
+##  4          4       4 twitt~ com       409068 2.55e6 twitter.c~ com    
+##  5          5       5 micro~ com       303679 1.14e6 microsoft~ com    
+##  6          6       6 linke~ com       292966 1.35e6 linkedin.~ com    
+##  7          7       1 wikip~ org       287420 1.24e6 wikipedia~ org    
+##  8          8       7 plus.~ com       284103 1.46e6 plus.goog~ com    
+##  9          9       8 insta~ com       277145 1.37e6 instagram~ com    
+## 10         10       9 apple~ com       276152 1.05e6 apple.com  com    
 ## # ... with 4,990 more rows, and 4 more variables: PrevGlobalRank &lt;int&gt;,
 ## #   PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;, PrevRefIPs &lt;int&gt;</code></pre>
 <pre class="r"><code>(med_rows &lt;- nrow(medium_df)) %&gt;% comma() %&gt;% cat(&quot;rows&quot;)</code></pre>
@@ -766,18 +787,18 @@ write_csv(medium_df, path_medium_csv)</code></pre>
   rerun(.n = 5) %&gt;% 
   bind_rows())</code></pre>
 <pre><code>## # A tibble: 5,000,000 x 12
-##    GlobalRank TldRank Domain   TLD   RefSubNets RefIPs IDN_Domain  IDN_TLD
-##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;  
-##  1          1       1 google.~ com       463232 2.96e6 google.com  com    
-##  2          2       2 faceboo~ com       451237 3.05e6 facebook.c~ com    
-##  3          3       3 youtube~ com       410764 2.44e6 youtube.com com    
-##  4          4       4 twitter~ com       409068 2.55e6 twitter.com com    
-##  5          5       5 microso~ com       303679 1.14e6 microsoft.~ com    
-##  6          6       6 linkedi~ com       292966 1.35e6 linkedin.c~ com    
-##  7          7       1 wikiped~ org       287420 1.24e6 wikipedia.~ org    
-##  8          8       7 plus.go~ com       284103 1.46e6 plus.googl~ com    
-##  9          9       8 instagr~ com       277145 1.37e6 instagram.~ com    
-## 10         10       9 apple.c~ com       276152 1.05e6 apple.com   com    
+##    GlobalRank TldRank Domain TLD   RefSubNets RefIPs IDN_Domain IDN_TLD
+##         &lt;int&gt;   &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;      &lt;int&gt;  &lt;int&gt; &lt;chr&gt;      &lt;chr&gt;  
+##  1          1       1 googl~ com       463232 2.96e6 google.com com    
+##  2          2       2 faceb~ com       451237 3.05e6 facebook.~ com    
+##  3          3       3 youtu~ com       410764 2.44e6 youtube.c~ com    
+##  4          4       4 twitt~ com       409068 2.55e6 twitter.c~ com    
+##  5          5       5 micro~ com       303679 1.14e6 microsoft~ com    
+##  6          6       6 linke~ com       292966 1.35e6 linkedin.~ com    
+##  7          7       1 wikip~ org       287420 1.24e6 wikipedia~ org    
+##  8          8       7 plus.~ com       284103 1.46e6 plus.goog~ com    
+##  9          9       8 insta~ com       277145 1.37e6 instagram~ com    
+## 10         10       9 apple~ com       276152 1.05e6 apple.com  com    
 ## # ... with 4,999,990 more rows, and 4 more variables:
 ## #   PrevGlobalRank &lt;int&gt;, PrevTldRank &lt;int&gt;, PrevRefSubNets &lt;int&gt;,
 ## #   PrevRefIPs &lt;int&gt;</code></pre>
@@ -1267,6 +1288,7 @@ results_df &lt;- results %&gt;%
   left_join(package_medians_df, by = &quot;package&quot;)
 
 gg_df &lt;- results_df %&gt;%
+  mutate(n_rows = rows) %&gt;% 
   arrange(rows) %&gt;%
   mutate(rows = rows %&gt;%
            comma() %&gt;%
@@ -1284,7 +1306,8 @@ gg_df &lt;- results_df %&gt;%
 </div>
 <div id="the-results" class="section level1">
 <h1>The Results</h1>
-<pre class="r"><code>theme_simple &lt;- function(pnl_ln_col = &quot;black&quot;, line_type = &quot;dotted&quot;, cap_size = 10, ...) {
+<pre class="r"><code>theme_simple &lt;- function(pnl_ln_col = &quot;black&quot;, line_type = &quot;dotted&quot;, cap_size = 10,
+                         facet = NULL, ...) {
   theme_minimal(15, &quot;serif&quot;) +
   theme(legend.title = element_blank(), 
         legend.text = element_text(size = 12),
@@ -1316,11 +1339,11 @@ plot_times &lt;- function(df, ...) {
     coord_flip() +
     theme_simple()
     if(length(vars(...))) {
-      n_rows &lt;- sort(df$rows, decreasing = TRUE)[[1]]
+      n_rows &lt;- sort(df$n_rows, decreasing = TRUE)[[1]]
       plot_fin &lt;- plot_init + 
         facet_wrap(vars(...), ncol = 1, scales = &quot;free&quot;) +
         labs(x = NULL, y = &quot;Execution Time&quot;, 
-             title = str_glue(&quot;CSV to Data Frame: {comma(n_rows)}&quot;),
+             title = str_glue(&quot;CSV to Data Frame: {comma(n_rows)} Rows&quot;),
              caption = str_glue(&quot;{n_iterations} iterations&quot;))
     } else {
       plot_fin &lt;- plot_init + 
@@ -2298,7 +2321,7 @@ desktop
 <div id="r-1" class="section level2">
 <h2>R</h2>
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>## R version 3.5.0 (2018-04-23)
+<pre><code>## R version 3.5.1 (2018-07-02)
 ## Platform: x86_64-w64-mingw32/x64 (64-bit)
 ## Running under: Windows 10 x64 (build 17134)
 ## 
@@ -2316,32 +2339,32 @@ desktop
 ## 
 ## other attached packages:
 ##  [1] data.table_1.11.5     bindrcpp_0.2.2        forcats_0.3.0        
-##  [4] stringr_1.3.1         dplyr_0.7.5           purrr_0.2.5          
-##  [7] readr_1.1.1           tidyr_0.8.1           tibble_1.4.2         
-## [10] ggplot2_3.0.0         tidyverse_1.2.1.9000  scales_0.5.0.9000    
-## [13] reticulate_1.8.0.9002 kableExtra_0.9.0      bench_1.0.1          
+##  [4] stringr_1.3.1         dplyr_0.7.6           purrr_0.2.5          
+##  [7] readr_1.1.1           tidyr_0.8.1           tibble_1.4.2.9004    
+## [10] ggplot2_3.0.0.9000    tidyverse_1.2.1.9000  scales_0.5.0.9000    
+## [13] reticulate_1.9.0.9001 kableExtra_0.9.0      bench_1.0.1          
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] Rcpp_0.12.17      lubridate_1.7.4   lattice_0.20-35  
-##  [4] utf8_1.1.4        assertthat_0.2.0  rprojroot_1.3-2  
-##  [7] digest_0.6.15     psych_1.8.4       R6_2.2.2         
-## [10] cellranger_1.1.0  plyr_1.8.4        backports_1.1.2  
-## [13] evaluate_0.10.1   highr_0.7         httr_1.3.1       
-## [16] blogdown_0.6.14   pillar_1.2.3      rlang_0.2.0.9001 
-## [19] lazyeval_0.2.1    readxl_1.1.0      rstudioapi_0.7   
-## [22] Matrix_1.2-14     rmarkdown_1.10.3  selectr_0.4-1    
-## [25] foreign_0.8-70    munsell_0.5.0     broom_0.4.4      
-## [28] compiler_3.5.0    modelr_0.1.2      xfun_0.2.7       
-## [31] pkgconfig_2.0.1   mnormt_1.5-5      htmltools_0.3.6  
-## [34] tidyselect_0.2.4  bookdown_0.7      viridisLite_0.3.0
-## [37] crayon_1.3.4      withr_2.1.2       grid_3.5.0       
-## [40] nlme_3.1-137      jsonlite_1.5      gtable_0.2.0     
-## [43] magrittr_1.5      cli_1.0.0         stringi_1.2.2    
-## [46] profmem_0.5.0     reshape2_1.4.3    xml2_1.2.0       
-## [49] htmldeps_0.1.0    tools_3.5.0       glue_1.2.0       
-## [52] hms_0.4.2         parallel_3.5.0    yaml_2.1.19      
-## [55] colorspace_1.3-2  rvest_0.3.2       knitr_1.20.7     
-## [58] bindr_0.1.1       haven_1.1.1</code></pre>
+##  [4] utf8_1.1.4        assertthat_0.2.0  digest_0.6.15    
+##  [7] psych_1.8.4       R6_2.2.2          cellranger_1.1.0 
+## [10] plyr_1.8.4        evaluate_0.10.1   highr_0.7        
+## [13] httr_1.3.1        blogdown_0.7.1    pillar_1.3.0.9000
+## [16] rlang_0.2.1       lazyeval_0.2.1    readxl_1.1.0     
+## [19] rstudioapi_0.7    Matrix_1.2-14     rmarkdown_1.10.6 
+## [22] selectr_0.4-1     foreign_0.8-70    munsell_0.5.0    
+## [25] broom_0.4.5       compiler_3.5.1    modelr_0.1.2     
+## [28] xfun_0.3          pkgconfig_2.0.1   mnormt_1.5-5     
+## [31] htmltools_0.3.6   tidyselect_0.2.4  bookdown_0.7     
+## [34] fansi_0.2.3       viridisLite_0.3.0 crayon_1.3.4     
+## [37] withr_2.1.2       grid_3.5.1        nlme_3.1-137     
+## [40] jsonlite_1.5      gtable_0.2.0      magrittr_1.5     
+## [43] cli_1.0.0         stringi_1.2.3     profmem_0.5.0    
+## [46] reshape2_1.4.3    xml2_1.2.0        htmldeps_0.1.0   
+## [49] tools_3.5.1       glue_1.2.0        hms_0.4.2        
+## [52] parallel_3.5.1    yaml_2.1.19       colorspace_1.3-2 
+## [55] rvest_0.3.2       knitr_1.20.8      bindr_0.1.1      
+## [58] haven_1.1.2</code></pre>
 </div>
 <div id="python-1" class="section level2">
 <h2>Python</h2>
@@ -2705,6 +2728,23 @@ Speed in MHz
           <div class="media">
             
             <div class="media-body">
+              <a class="link-unstyled" href="/2018/07/bubble-sort/">
+                <h3 class="media-heading">Bubble Sort</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jul 7, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">PythonUnsorted listBubble Sort FunctionResultRUnsorted vectorBubble Sort FunctionResultEnvironmentPythonUnsorted listunsorted = [9, 2, 8, 3, 7, 4, 6, 5, 1]Bubble Sort Functiondef bubble_sort(unsorted_sequence):sorted_sequence = unsorted_sequencefor iteration, _ in enumerate(sorted_sequence):for i, _ in enumerate(sorted_sequence):if i + 1 &lt;= len(sorted_sequence) - 1:current_value = sorted_sequence[i]next_value = sorted_sequence[i + 1]if current_value &gt; next_value:sorted_sequence[i] = next_valuesorted_sequence[i + 1] = current_valueprint(f&#39;Iteration #{iteration + 1}: {&quot;, &quot;.</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
+          <div class="media">
+            
+            <div class="media-body">
               <a class="link-unstyled" href="/2018/07/reticulated-python/">
                 <h3 class="media-heading">A Field Guide to R-Python Translations</h3>
               </a>
@@ -2713,7 +2753,7 @@ Speed in MHz
                   Jul 7, 2018
                 </span>
               </span>
-              <div class="media-content hide-xs font-merryweather">Types   Python Type  Python Example  R Type  R Example      int  1  integer  1L    float  3.14  numeric &amp; double  3.14    string  'hi'  character  "hi"    bool  True  logical  TRUE     Collections   Python Type  Python Example  R Type  R Example  Values      scalar  1  vector  1  homogeneous    list  [1, 1]  vector  c(1, 2)  homogeneous    list  [1, 'string']  list  list(1, "</div>
+              <div class="media-content hide-xs font-merryweather">TypesCollections: Vectors, Lists, and DictionariesCommon TasksIterationPythonRSequencesComparisonsArithmeticDates and TimesURLsStrings and Regular ExpressionsFile I/OWrite LinesPythonRead LinesPythonRTypesPython TypePython ExampleR TypeR Exampleint1integer1Lfloat3.</div>
             </div>
             <div style="clear:both;"></div>
             <hr>
@@ -2793,6 +2833,26 @@ ContextI recently had the opportunity to teach some R coding to colleagues and 
             <hr>
           </div>
         
+          <div class="media">
+            
+            <div class="media-body">
+              <a class="link-unstyled" href="/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/">
+                <h3 class="media-heading">GDELT, Missiles, and Image Collection</h3>
+              </a>
+              <span class="media-meta">
+                <span class="media-date text-small">
+                  Jan 1, 2018
+                </span>
+              </span>
+              <div class="media-content hide-xs font-merryweather">The Global Database of Events, Language, and Tone, or GDELT, is “a realtime network diagram and database of global human society for open research”.
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database’s capabilities are notably absent…
+See also:
+My hasty walkthrough from November 2017, Evaluating GDELT: Syrian ConflictLet’s see how well we can scoop up a set of ballistic missile images using a combination of packages:</div>
+            </div>
+            <div style="clear:both;"></div>
+            <hr>
+          </div>
+        
       </div>
     </div>
     <div class="modal-footer">
@@ -2800,7 +2860,7 @@ ContextI recently had the opportunity to teach some R coding to colleagues and 
          data-message-zero="no post found"
          data-message-one="1 post found"
          data-message-other="{n} posts found">
-         5 posts found
+         7 posts found
       </p>
     </div>
   </div>

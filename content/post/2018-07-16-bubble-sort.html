@@ -1,0 +1,160 @@
+---
+title: Bubble Sort
+author: Brendan Knapp
+date: '2018-07-16'
+slug: bubble-sort
+categories:
+  - data-science-from-scratch
+tags:
+  - algorithms
+  - programming
+  - computer-science
+thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1531752863/BubbleSort_Avg_case_ovrcui.gif
+metaAlignment: center
+coverMeta: out
+summary: Iterate through a sequence of values, compare each's neighboring values, and reorder them so that larger values "bubble" to the the top.
+output:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#python">Python</a><ul>
+<li><a href="#unsorted-list">Unsorted <code>list</code></a></li>
+<li><a href="#bubble-sort-function">Bubble Sort Function</a></li>
+<li><a href="#result">Result</a></li>
+</ul></li>
+<li><a href="#r">R</a><ul>
+<li><a href="#unsorted-vector">Unsorted <code>vector</code></a></li>
+<li><a href="#bubble-sort-function-1">Bubble Sort Function</a></li>
+<li><a href="#result-1">Result</a></li>
+</ul></li>
+<li><a href="#environment">Environment</a></li>
+</ul>
+</div>
+
+<p><img src="http://res.cloudinary.com/syknapptic/image/upload/v1531752863/BubbleSort_Avg_case_ovrcui.gif" style="display: block; margin: auto;" /></p>
+<div id="python" class="section level1">
+<h1>Python</h1>
+<div id="unsorted-list" class="section level2">
+<h2>Unsorted <code>list</code></h2>
+<pre class="python"><code>unsorted = [9, 2, 8, 3, 7, 4, 6, 5, 1]</code></pre>
+</div>
+<div id="bubble-sort-function" class="section level2">
+<h2>Bubble Sort Function</h2>
+<pre class="python"><code>def bubble_sort(unsorted_sequence):
+    sorted_sequence = unsorted_sequence
+    
+    for iteration, _ in enumerate(sorted_sequence):
+    
+        for i, _ in enumerate(sorted_sequence):
+            if i + 1 &lt;= len(sorted_sequence) - 1:
+                current_value = sorted_sequence[i]
+                next_value = sorted_sequence[i + 1]
+                
+                if current_value &gt; next_value:
+                    sorted_sequence[i] = next_value
+                    sorted_sequence[i + 1] = current_value
+        print(f&#39;Iteration #{iteration + 1}:    {&quot;, &quot;.join(list(map(str, sorted_sequence)))}&#39;)
+                    
+    return sorted_sequence</code></pre>
+</div>
+<div id="result" class="section level2">
+<h2>Result</h2>
+<pre class="python"><code>bubble_sort(unsorted)</code></pre>
+<pre><code>## Iteration #1:    2, 8, 3, 7, 4, 6, 5, 1, 9
+## Iteration #2:    2, 3, 7, 4, 6, 5, 1, 8, 9
+## Iteration #3:    2, 3, 4, 6, 5, 1, 7, 8, 9
+## Iteration #4:    2, 3, 4, 5, 1, 6, 7, 8, 9
+## Iteration #5:    2, 3, 4, 1, 5, 6, 7, 8, 9
+## Iteration #6:    2, 3, 1, 4, 5, 6, 7, 8, 9
+## Iteration #7:    2, 1, 3, 4, 5, 6, 7, 8, 9
+## Iteration #8:    1, 2, 3, 4, 5, 6, 7, 8, 9
+## Iteration #9:    1, 2, 3, 4, 5, 6, 7, 8, 9</code></pre>
+</div>
+</div>
+<div id="r" class="section level1">
+<h1>R</h1>
+<pre class="r"><code>library(stringr)</code></pre>
+<div id="unsorted-vector" class="section level2">
+<h2>Unsorted <code>vector</code></h2>
+<pre class="r"><code>unsorted &lt;- c(9, 2, 8, 3, 7, 4, 6, 5, 1)</code></pre>
+</div>
+<div id="bubble-sort-function-1" class="section level2">
+<h2>Bubble Sort Function</h2>
+<pre class="r"><code>bubble_sort &lt;- function(unsorted_sequence) {
+  sorted_sequence &lt;- unsorted_sequence
+  
+  for(iteration in seq_along(sorted_sequence)) {
+    
+    for(i in seq_along(sorted_sequence)) {
+      if(i + 1 &lt;= length(sorted_sequence)) {
+        current_value &lt;- sorted_sequence[[i]]
+        next_value &lt;- sorted_sequence[[i + 1]]
+        
+        if(current_value &gt; next_value) {
+          sorted_sequence[[i]] &lt;- next_value
+          sorted_sequence[[i + 1]] &lt;- current_value
+        }
+      }
+    }
+    print(str_glue(&quot;Iteration #{iteration}:    {str_flatten(sorted_sequence, &#39;, &#39;)}&quot;))
+  }
+
+  sorted_sequence
+}</code></pre>
+</div>
+<div id="result-1" class="section level2">
+<h2>Result</h2>
+<pre class="r"><code>bubble_sort(unsorted)</code></pre>
+<pre><code>## Iteration #1:    2, 8, 3, 7, 4, 6, 5, 1, 9
+## Iteration #2:    2, 3, 7, 4, 6, 5, 1, 8, 9
+## Iteration #3:    2, 3, 4, 6, 5, 1, 7, 8, 9
+## Iteration #4:    2, 3, 4, 5, 1, 6, 7, 8, 9
+## Iteration #5:    2, 3, 4, 1, 5, 6, 7, 8, 9
+## Iteration #6:    2, 3, 1, 4, 5, 6, 7, 8, 9
+## Iteration #7:    2, 1, 3, 4, 5, 6, 7, 8, 9
+## Iteration #8:    1, 2, 3, 4, 5, 6, 7, 8, 9
+## Iteration #9:    1, 2, 3, 4, 5, 6, 7, 8, 9</code></pre>
+<pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+</div>
+</div>
+<div id="environment" class="section level1">
+<h1>Environment</h1>
+<pre class="python"><code>print(sys.version)</code></pre>
+<pre><code>## 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] stringr_1.3.1
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17          bookdown_0.7          lattice_0.20-35      
+##  [4] crayon_1.3.4          digest_0.6.15         grid_3.5.1           
+##  [7] jsonlite_1.5          magrittr_1.5          evaluate_0.10.1      
+## [10] blogdown_0.7.1        stringi_1.2.3         Matrix_1.2-14        
+## [13] reticulate_1.9.0.9001 rmarkdown_1.10.6      htmldeps_0.1.0       
+## [16] tools_3.5.1           glue_1.2.0            xfun_0.3             
+## [19] yaml_2.1.19           compiler_3.5.1        htmltools_0.3.6      
+## [22] knitr_1.20.8</code></pre>
+</div>

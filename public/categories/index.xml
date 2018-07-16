@@ -32,9 +32,18 @@
     <item>
       <title>Data Science From Scratch</title>
       <link>/categories/data-science-from-scratch/</link>
-      <pubDate>Mon, 09 Jul 2018 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 16 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/categories/data-science-from-scratch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Image Analysis</title>
+      <link>/categories/image-analysis/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/image-analysis/</guid>
       <description></description>
     </item>
     

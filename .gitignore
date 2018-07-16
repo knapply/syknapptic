@@ -10,6 +10,5 @@ content/post/test-data/
 public/post/test-data/
 public/post/data/*
 /content/post/*.dll
-ignore/
-tidy-tuesday/
-/blogdown/post/*_cache
+/ignore
+/blogdown/post

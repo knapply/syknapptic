@@ -6,6 +6,8 @@ output:
   blogdown::html_page:
     toc: true
     toc_depth: 2
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -23,15 +25,16 @@ uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
 
 <br>
 
-# Programming
+# Programming and Computer Science
 
 ```{r}
-prog_groups <- c("Essentials")
+prog_groups <- c(rep("Essentials", 5), rep("Algorithms", 1))
 prog_topics <- c("Variable Assignment",
                  "Data Types",
                  "Logic",
                  "Collections",
-                 "Loops")
+                 "Loops",
+                 "Bubble Sort")
 
 tibble(` ` = prog_groups, Topic = prog_topics) %>% 
   mutate(R = case_when(
@@ -39,30 +42,22 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
     Topic == "Data Types" ~ uncheck_box,
     Topic == "Logic" ~ uncheck_box,
     Topic == "Collections" ~ uncheck_box,
-    Topic == "Loops" ~ uncheck_box
+    Topic == "Loops" ~ uncheck_box,
+    Topic == "Bubble Sort" ~ check_box
     )) %>% 
   mutate(Python = case_when(
     Topic == "Variable Assignment" ~ check_box,
     Topic == "Data Types" ~ uncheck_box,
     Topic == "Logic" ~ uncheck_box,
     Topic == "Collections" ~ uncheck_box,
-    Topic == "Loops" ~ uncheck_box
+    Topic == "Loops" ~ uncheck_box,
+    Topic == "Bubble Sort" ~ check_box
   )) %>% 
-  mutate(`C++` = case_when(
-    Topic == "Variable Assignment" ~ check_box,
-    Topic == "Data Types" ~ uncheck_box,
-    Topic == "Logic" ~ uncheck_box,
-    Topic == "Collections" ~ uncheck_box,
-    Topic == "Loops" ~ uncheck_box
-  )) %>% 
-  # mutate(Rcpp = case_when(
-  #   Topic == "Variable Assignment" ~ check_box,
-  #   Topic == "Data Types" ~ uncheck_box,
-  #   Topic == "Collections" ~ uncheck_box
-  # )) %>% 
   mutate(Topic = case_when(
     Topic == "Variable Assignment" ~ 
       "<a href=/2018/07/variable-assignment/>Variable Assignment</a>",
+    Topic == "Bubble Sort" ~
+      "<a href=/2018/07/bubble-sort/>Bubble Sort</a>",
     TRUE ~ Topic
     )) %>% 
   kable(escape = FALSE, align = "c") %>% 
@@ -96,7 +91,7 @@ stat_topics <- c("Mean", "Median", "Mode",
 tibble(` ` = stat_groups, Topic = stat_topics) %>% 
   mutate(R = uncheck_box) %>% 
   mutate(Python = uncheck_box) %>% 
-  mutate(`C++` = uncheck_box) %>% 
+  # mutate(`C++` = uncheck_box) %>% 
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
@@ -123,7 +118,7 @@ graph_topics <- c("Adjacency Matrix",
 tibble(` ` = graph_groups, Topic = graph_topics) %>% 
   mutate(R = uncheck_box) %>% 
   mutate(Python = uncheck_box) %>% 
-  mutate(`C++` = uncheck_box) %>% 
+  # mutate(`C++` = uncheck_box) %>% 
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
@@ -145,7 +140,7 @@ unsup_topics <- c("k-means",
 tibble(` ` = unsup_groups, Topic = unsup_topics) %>% 
   mutate(R = uncheck_box) %>% 
   mutate(Python = uncheck_box) %>% 
-  mutate(`C++` = uncheck_box) %>% 
+  # mutate(`C++` = uncheck_box) %>% 
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%
@@ -171,7 +166,7 @@ sup_topics <- c("Naive Bayes",
 tibble(` ` = sup_groups, Topic = sup_topics) %>% 
   mutate(R = uncheck_box) %>% 
   mutate(Python = uncheck_box) %>% 
-  mutate(`C++` = uncheck_box) %>% 
+  # mutate(`C++` = uncheck_box) %>% 
   # mutate(Rcpp = uncheck_box) %>% 
   # mutate(Details = stat_details) %>% 
   kable(escape = FALSE, align = "c") %>%

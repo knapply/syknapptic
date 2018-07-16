@@ -25,6 +25,7 @@ elapsed_sapply <- lapply(seq_len(n_elements), function(i) {
 
 x = rnorm(1e6)
 
+
 loop <- function(x) {
   vec <- vector(mode = mode(x), length = length(x))
   for(i in x) {

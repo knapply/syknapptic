@@ -1,0 +1,289 @@
+---
+title: GDELT, Missiles, and Image Collection
+draft: false
+author: Brendan Knapp
+date: '2018-01-23'
+slug: collecting-a-data-set-of-missile-images-with-gdelt
+categories:
+  - R-bloggers
+  - image analysis
+tags:
+  - GDELT
+  - purrr
+  - imager
+thumbnailImagePosition: left
+thumbnailImage: https://hadoopi.files.wordpress.com/2014/09/screen-shot-2014-09-24-at-20-55-34.png
+metaAlignment: center
+coverMeta: out
+summary: Exploring automated, bulk collection of missile images through GDELT.
+---
+
+The Global Database of Events, Language, and Tone, or [GDELT](https://www.gdeltproject.org/2), is "a realtime network diagram and database of global human society for open research".
+
+The potential for a firehose stream of global data has tantalizing possibilities for research, but concrete examples of work beyond simple evaluations of the database's capabilities are notably absent...
+
+See also:
+
+* My __hasty__ walkthrough from November 2017, [_Evaluating GDELT: Syrian Conflict_](http://rpubs.com/BrendanKnapp/GDELT_Syrian_Conflict)
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE,
+                      cache = TRUE)
+```
+
+Let's see how well we can scoop up a set of ballistic missile images using a combination of packages:
+
+* `gdeltr2`: a package that is decidedly buggy, but works for these purposes
+* `tidyverse` suite:
+    + `dplyr` for data carpentry
+    + `stringr` for string processing
+    + `purrr` for functional enhancements and simplified error-handling
+* `knitr` for nicely rendered tabular data
+* `imager` for slick image processing tools
+
+```{r}
+library(gdeltr2)       # devtools::install_github("abresler/gdeltr2")
+library(tidyverse)     # install.packages("tidyverse")
+library(knitr)
+library(imager)        # install.packages("tidyverse")
+```
+
+Before we start extracting any data, let's refine our search as much as possible by assigning a handful of variables that we can use in the API call.
+
+GDELT uses a set of codebooks that can be referenced with `get_gdelt_codebook_ft_api()`.
+
+# Query Variables
+
+## Languages
+
+`gdeltr2` will only query English articles by default, but we don't really care about the language of the article or even the article text
+
+We'll `pull()` all the languages from `code_book = "languages"` into a `vector` variable that we can use as a search argument like so:
+
+```{r}
+langs <- get_gdelt_codebook_ft_api(code_book = "languages") %>%
+  pull(value)
+
+langs
+```
+
+## Image Tags
+
+Since we're looking specifically for imagery, we can query the relevant codebooks with `code_book = "imagetags"` and `code_book = "imageweb"` like so:
+
+```{r}
+get_gdelt_codebook_ft_api(code_book = "imagetags") %>%
+  head() %>%
+  kable()
+
+get_gdelt_codebook_ft_api(code_book = "imageweb") %>%
+  head() %>%
+  kable()
+```
+
+We'll `filter()` the tags to retain only those that explicitly reference "missile" with a regex.
+
+We also want to handle a bug in `gdeltr2`'s query functions where sometimes a a large amount of incorrect information makes it into tag lists. Fortunately, we can omit that by excluding results containing blocks of multiple digits.
+
+```{r}
+tag_regex <- "\\b[Mm]issile\\b"
+
+bind_rows(
+  get_gdelt_codebook_ft_api(code_book = "imagetags") %>%
+    filter(str_detect(idImageTag, tag_regex),
+           !str_detect(idImageTag, "\\d{2,}")),
+  
+  get_gdelt_codebook_ft_api(code_book = "imageweb") %>%
+    filter(str_detect(idImageWeb, tag_regex),
+           !str_detect(idImageWeb, "\\d{2,}"))
+  ) %>%
+  head() %>%
+  kable()
+```
+
+We'll refine our results by excluding some of the tags that have a tendency to return less relevant images.
+
+* vehicle terms tend to emphasize the vehicle itself, rather than weapon systems
+    + `"boat"`
+    + `"submarine"`
+    + `"tank"`
+    + `"destroyer"`
+* _Missile `"defense"`_ emphasizes politics over hardware
+* specific `"system"` tags are all in reference to surface-to-air platforms
+    + _S-300 missile system_
+    + _S-400 missile system_
+    + _Buk missile system_
+* generalized _Surface-to-`"air"`_ doesn't seem fuzzy enough to ever reference ballistic missiles
+
+We'll use another regex to omit those tags, including the multiple digit regex used to exclude the buggy data that may leak into our results.
+
+### Junk Tag Filtering
+
+```{r}
+junk_tag_regex <- c("boat", "[Ss]ubmarine", "tank", "destroyer",
+                    "defense",
+                    "system",
+                    "air") %>%
+  paste0("\\b", ., "\\b") %>%
+  str_c(collapse = "|") %>%
+  paste0("|\\d{2,}")
+
+junk_tag_regex
+```
+
+With some parameters in mind and filtering variables assigned, let's `pull()` the desired tags from each codebook into a pair of variables which we will use to query GDELT's API.
+
+```{r}
+image_tags <- get_gdelt_codebook_ft_api(code_book = "imagetags") %>%
+  filter(str_detect(idImageTag, tag_regex),
+         !str_detect(idImageTag, junk_tag_regex)) %>%
+  pull(idImageTag)
+
+imageweb_tags <- get_gdelt_codebook_ft_api(code_book = "imageweb") %>%
+  filter(str_detect(idImageWeb, tag_regex),
+         !str_detect(idImageWeb, junk_tag_regex)) %>%
+  pull(idImageWeb)
+
+combine(image_tags, imageweb_tags)
+```
+
+## Dates
+
+We'll specify a time period using `gdeltr2::generate_dates()`. For this example, we'll select September 22-23 of 2017 to see if we can capture coverage of an Iranian military parade.
+
+```{r}
+target_dates <- generate_dates(start_date = "2017-09-22",
+                               end_date = "2017-09-23")
+```
+
+# API Call
+
+With all of our query variables prepared, we'll call GDELT's API using `get_data_ft_v2_api()`. As duplicate articles are commonly published in many venues, we'll omit results to only include `distinct()` `titleArticle`s.
+
+```{r eval=FALSE}
+articles_df <- get_data_ft_v2_api(images_tag = image_tags,
+                                  images_web_tag = imageweb_tags,
+                                  search_language = langs,
+                                  dates = target_dates, 
+                                  visualize_results = FALSE) %>%
+  distinct(titleArticle, .keep_all = TRUE)
+```
+
+
+```{r include=FALSE}
+articles_df <- read_rds("data/GDELT_iran_parade.rds")
+```
+
+## Query Results
+
+Here's a summary of what we get back.
+
+```{r}
+articles_df %>% 
+  glimpse()
+```
+
+# Extracting Images
+
+Now that we have a data frame of articles that includes a column of image URLs, we can download the data.
+
+## Directory
+
+Let's assign a variable for our `dir`ectory.
+
+```{r}
+dir <- "data/missile_images/"
+```
+
+Then we'll actually create the `dir`ectory.
+
+```{r eval=FALSE}
+dir.create(dir)
+```
+
+## Workflow
+
+We're going to take advantage of the magic of the `purrr` package in several ways to stabilize our workflow.
+
+### Error Handling
+
+The Internet is littered with broken links and webpages, which becomes more likely the further back in time we go. We'll use one of `purrr`'s adverbs, `safely()`, to handle the inevitable download errors that will occur by creating a new function called `safe_download()`.
+
+```{r eval=FALSE}
+safe_download <- safely(download.file)
+```
+
+We're also going to create safe versions of functions we'll use for loading and plotting images. Although most of the valid URLs will link to clean images, it's not uncommon for otherwise successful downloads to actually come from already corrupted sources.
+
+To handle this, we'll create `safe_image()` and `safe_plot()`.
+
+```{r}
+safe_image <- safely(load.image)
+safe_plot <- safely(plot)
+```
+
+## Download Images
+
+1. `filter()`  images using a regex that confirms either a .jpg or .png extension and simultaneously validates a URL sequence that we can use for each image's eventual file path.
+2. select a sample of 100 random rows `sample_n(100)`
+3. `pull()` the `urlImage` column into a vector
+4. iterate through each item of the vector with `walk()`
+    + `safe_download()` each image's binary format (`mode = "wb"`)
+        + and write it to `dir` using its match to `valid_path_regex`
+
+```{r eval=FALSE}
+valid_path_regex <- "/[A-z0-9-_]+\\.(jpg|png)$"
+
+articles_df %>%
+  filter(str_detect(urlImage, valid_path_regex)) %>%
+  sample_n(100) %>%
+  pull(urlImage) %>%
+  walk(~
+         safe_download(.x,
+                       paste0(dir, 
+                              str_extract(.x, valid_path_regex)),
+                       mode = "wb")
+         )
+```
+
+## Inspect Images
+
+Let's insepct a sample of the downloaded images.
+
+Clearly the results are not perfect. There are images without anything resembling a missile as well as several duplicate or near-duplicate images. That said, manual renaming of files will allow filtering of useless images.
+
+This is a quick proof of concept that sets us up well for enhancing data sets established through other methods.
+
+More importantly,it demonstrates a basic workflow for bulk image processing that can be easily expanded to iteratively prepare a large dataset for many kinds of analyis.
+
+We can take a look at our results with the following:
+
+1. `list.files()` the full paths of all the files in `dir`
+2. iterate through the resulting `vector`, reading each file with `safe_image()` and `map()`ping the results to a `list`
+3. remove a layer of the `list` hierarchy by `flatten()`ing it
+4. omit any resulting `NULL` values by `compact()`ing the list
+5. subset a `sample()` of half the images, just for demonstration
+5. `walk()` through the list, plotting each image
+
+```{r fig.height=20, fig.width=12}
+par(mfrow = c(5, 2))
+
+list.files(dir, full.names = TRUE) %>%
+  map(safe_image) %>%
+  flatten() %>%
+  compact() %>%
+  sample(50) %>%
+  walk(~ 
+         safe_plot(.x, 
+                   axes = FALSE, ann = FALSE)
+       )
+```
+
+```{r}
+sessionInfo()
+```
+
+
+
+

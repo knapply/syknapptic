@@ -6,13 +6,15 @@ output:
   blogdown::html_page:
     toc: true
     toc_depth: 2
+editor_options: 
+  chunk_output_type: console
 ---
 
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#programming">Programming</a></li>
+<li><a href="#programming-and-computer-science">Programming and Computer Science</a></li>
 <li><a href="#statistics">Statistics</a></li>
 <li><a href="#graphs">Graphs</a></li>
 <li><a href="#unsupervised-learning">Unsupervised Learning</a></li>
@@ -21,8 +23,8 @@ output:
 </div>
 
 <p><br></p>
-<div id="programming" class="section level1">
-<h1>Programming</h1>
+<div id="programming-and-computer-science" class="section level1">
+<h1>Programming and Computer Science</h1>
 <table class="table table-hover table-responsive" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -37,9 +39,6 @@ R
 <th style="text-align:center;">
 Python
 </th>
-<th style="text-align:center;">
-C++
-</th>
 </tr>
 </thead>
 <tbody>
@@ -49,9 +48,6 @@ Essentials
 </td>
 <td style="text-align:center;">
 <a href="/2018/07/variable-assignment/">Variable Assignment</a>
-</td>
-<td style="text-align:center;">
-<input type="checkbox" checked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" checked onclick="return false;">
@@ -70,16 +66,10 @@ Data Types
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Logic
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -98,9 +88,6 @@ Collections
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
@@ -112,8 +99,19 @@ Loops
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight: bold;">
+Algorithms
+</td>
 <td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
+<a href="/2018/07/bubble-sort/">Bubble Sort</a>
+</td>
+<td style="text-align:center;">
+<input type="checkbox" checked onclick="return false;">
+</td>
+<td style="text-align:center;">
+<input type="checkbox" checked onclick="return false;">
 </td>
 </tr>
 </tbody>
@@ -136,9 +134,6 @@ R
 <th style="text-align:center;">
 Python
 </th>
-<th style="text-align:center;">
-C++
-</th>
 </tr>
 </thead>
 <tbody>
@@ -148,9 +143,6 @@ Central Tendency
 </td>
 <td style="text-align:center;">
 Mean
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -169,16 +161,10 @@ Median
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Mode
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -200,16 +186,10 @@ Standard Deviation
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Variance
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -231,16 +211,10 @@ Pearson’s
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Spearman’s
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -262,16 +236,10 @@ Simple Linear Regression
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Linear Regression
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -293,9 +261,6 @@ Binomial
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
@@ -307,16 +272,10 @@ Gaussian
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Poisson
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -344,9 +303,6 @@ R
 <th style="text-align:center;">
 Python
 </th>
-<th style="text-align:center;">
-C++
-</th>
 </tr>
 </thead>
 <tbody>
@@ -356,9 +312,6 @@ Representations
 </td>
 <td style="text-align:center;">
 Adjacency Matrix
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -377,9 +330,6 @@ Adjacency List
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
@@ -391,16 +341,10 @@ Edge List
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Incidence Matrix
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -422,16 +366,10 @@ Multipartite Graphs
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Multiplex Graphs
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -446,9 +384,6 @@ Algorithms
 </td>
 <td style="text-align:center;">
 Shortest Path
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -476,9 +411,6 @@ R
 <th style="text-align:center;">
 Python
 </th>
-<th style="text-align:center;">
-C++
-</th>
 </tr>
 </thead>
 <tbody>
@@ -488,9 +420,6 @@ Clustering
 </td>
 <td style="text-align:center;">
 k-means
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -509,9 +438,6 @@ Principal Component Analysis
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;font-weight: bold;">
@@ -519,9 +445,6 @@ Dimensionality Reduction
 </td>
 <td style="text-align:center;">
 Factor Analysis
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -549,9 +472,6 @@ R
 <th style="text-align:center;">
 Python
 </th>
-<th style="text-align:center;">
-C++
-</th>
 </tr>
 </thead>
 <tbody>
@@ -561,9 +481,6 @@ Classification
 </td>
 <td style="text-align:center;">
 Naive Bayes
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -582,9 +499,6 @@ k-Nearest Neighbors
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
@@ -596,16 +510,10 @@ Support Vector Machine
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Random Forests
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
@@ -627,16 +535,10 @@ Support Vector Machine
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">
 </td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
-</td>
 </tr>
 <tr>
 <td style="text-align:center;">
 Random Forests
-</td>
-<td style="text-align:center;">
-<input type="checkbox" unchecked onclick="return false;">
 </td>
 <td style="text-align:center;">
 <input type="checkbox" unchecked onclick="return false;">

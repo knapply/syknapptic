@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/07/bubble-sort/</loc>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/07/reticulated-python/</loc>
     <lastmod>2018-07-09T00:00:00+00:00</lastmod>
   </url>
@@ -38,8 +43,19 @@
   </url>
   
   <url>
+    <loc>/2018/01/collecting-a-data-set-of-missile-images-with-gdelt/</loc>
+    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/page/about/</loc>
     <lastmod>2018-01-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/algorithms/</loc>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -60,6 +76,12 @@
   </url>
   
   <url>
+    <loc>/tags/computer-science/</loc>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/data-carpentry/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -67,7 +89,7 @@
   
   <url>
     <loc>/categories/data-science-from-scratch/</loc>
-    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -84,8 +106,26 @@
   </url>
   
   <url>
+    <loc>/tags/gdelt/</loc>
+    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/ggplot/</loc>
     <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/image-analysis/</loc>
+    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/imager/</loc>
+    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -103,7 +143,19 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/programming/</loc>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/purrr/</loc>
+    <lastmod>2018-01-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -131,7 +183,7 @@
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2018-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -161,7 +213,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2018-07-09T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

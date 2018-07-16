@@ -9,7 +9,7 @@ categories:
   - r-bloggers
 tags: 
   - fileIO
-thumbnailImage: http://i0.kym-cdn.com/photos/images/facebook/001/124/028/5c2.jpg
+thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1531757457/UnconsciousNeglectedBug-size_restricted_fss6ju.gif
 metaAlignment: center
 coverMeta: out
 summary: Comparing performance of R and Python in reading .csv files to data frames through multiple, reproducible methods. The intent is to establish a meaningful standard to compare R and Python benchmarks.
@@ -28,7 +28,6 @@ knitr::opts_chunk$set(echo = TRUE,
                       fig.align = "center",
                       message = FALSE, warning = FALSE)
 
-
 library(bench)
 library(kableExtra); options(knitr.kable.NA = "")
 library(reticulate)
@@ -40,7 +39,7 @@ library(reticulate); use_condaenv("r-py-benchmarks", required = TRUE)
 # R vs Python
 
 ```{r, height=5, echo=FALSE}
-knitr::include_graphics("http://gifimage.net/wp-content/uploads/2017/08/robert-downey-jr-eye-roll-gif-3.gif")
+knitr::include_graphics("http://res.cloudinary.com/syknapptic/image/upload/v1531757493/robert-downey-jr-eye-roll-gif-3_xa3fmd.gif")
 ```
 
 Performance comparisons between R and Python suck.
@@ -74,7 +73,7 @@ not_so_good_R <- vapply(normal_distibution, function(x) x^2, numeric(1))
 identical(bad_R, not_so_good_R)
 ```
 
-... but it's still ignoring the fact that `normal_distibution` is a homogeneous collection of `atomic` values: a `vector`.
+... but it's still taking advantage of the fact that `normal_distibution` is a homogeneous collection of `atomic` values: a `vector`.
 
 ```{r}
 all(is.vector(normal_distibution), is.atomic(normal_distibution))
@@ -115,6 +114,12 @@ py_loop_dict <- (
 "for i in range(len(normal_distibution_py)):
   py_dict_results[i] =  normal_distibution_py[i]**2
 ")
+
+py_list_comp <- (
+"
+[x**2 for x in normal_distibution_py]
+"
+)
 ```
 
 ... but what runs fastest?
@@ -132,6 +137,7 @@ speeds <- mark(
   py_run_string(py_loop_index, convert = FALSE),
   py_run_string(py_loop_append, convert = FALSE),
   py_run_string(py_loop_dict, convert = FALSE),
+  py_run_string(py_list_comp),
   
   check = FALSE, iterations = 100
   ) 
@@ -150,6 +156,7 @@ speeds %>%
     str_detect(expression, "py_loop_index") ~ py_loop_index,
     str_detect(expression, "py_loop_append") ~ py_loop_append,
     str_detect(expression, "py_loop_dict") ~ py_loop_dict,
+    str_detect(expression, "py_list_comp") ~ py_list_comp,
     TRUE ~ expression
   )) %>% 
   mutate(type = cell_spec(
@@ -157,16 +164,18 @@ speeds %>%
                             row_number() == 2 ~ "green",
                             row_number() == 3 ~ "orange",
                             row_number() == 4 ~ "red",
-                            row_number() == 5 ~ "purple",
-                            row_number() == 6 ~ "black")
+                            row_number() == 5 ~ "darkred",
+                            row_number() == 6 ~ "purple",
+                            row_number() == 7 ~ "black")
     )) %>% 
   mutate(expression = cell_spec(
     expression, color = case_when(row_number() == 1 ~ "blue",
                                   row_number() == 2 ~ "green",
                                   row_number() == 3 ~ "orange",
                                   row_number() == 4 ~ "red",
-                                  row_number() == 5 ~ "purple",
-                                  row_number() == 6 ~ "black"),
+                                  row_number() == 5 ~ "darkred",
+                                  row_number() == 6 ~ "purple",
+                                  row_number() == 7 ~ "black"),
     bold = TRUE,
     monospace = TRUE
     )) %>% 
@@ -672,6 +681,7 @@ results_df <- results %>%
   left_join(package_medians_df, by = "package")
 
 gg_df <- results_df %>%
+  mutate(n_rows = rows) %>% 
   arrange(rows) %>%
   mutate(rows = rows %>%
            comma() %>%
@@ -690,7 +700,8 @@ gg_df <- results_df %>%
 # The Results
 
 ```{r}
-theme_simple <- function(pnl_ln_col = "black", line_type = "dotted", cap_size = 10, ...) {
+theme_simple <- function(pnl_ln_col = "black", line_type = "dotted", cap_size = 10,
+                         facet = NULL, ...) {
   theme_minimal(15, "serif") +
   theme(legend.title = element_blank(), 
         legend.text = element_text(size = 12),
@@ -722,11 +733,11 @@ plot_times <- function(df, ...) {
     coord_flip() +
     theme_simple()
     if(length(vars(...))) {
-      n_rows <- sort(df$rows, decreasing = TRUE)[[1]]
+      n_rows <- sort(df$n_rows, decreasing = TRUE)[[1]]
       plot_fin <- plot_init + 
         facet_wrap(vars(...), ncol = 1, scales = "free") +
         labs(x = NULL, y = "Execution Time", 
-             title = str_glue("CSV to Data Frame: {comma(n_rows)}"),
+             title = str_glue("CSV to Data Frame: {comma(n_rows)} Rows"),
              caption = str_glue("{n_iterations} iterations"))
     } else {
       plot_fin <- plot_init + 
