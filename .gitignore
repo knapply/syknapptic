@@ -11,4 +11,4 @@ public/post/test-data/
 public/post/data/*
 /content/post/*.dll
 /ignore
-/blogdown/post/
+/blogdown/post/*_cache
