@@ -164,7 +164,7 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: blue;">normal_distibution^2</span>
 </td>
 <td style="text-align:right;">
-2.43us
+2.02us
 </td>
 <td style="text-align:right;">
 1.98us
@@ -178,10 +178,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: green;"><br>[x**2 for x in normal_distibution_py]<br></span>
 </td>
 <td style="text-align:right;">
-768us
+675.43us
 </td>
 <td style="text-align:right;">
-654.22us
+595.75us
 </td>
 </tr>
 <tr>
@@ -192,10 +192,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: orange;">for i in normal_distibution_py:<br> py_append_results.append(i**2)<br></span>
 </td>
 <td style="text-align:right;">
-936.4us
+935.9us
 </td>
 <td style="text-align:right;">
-847.21us
+864.79us
 </td>
 </tr>
 <tr>
@@ -203,13 +203,13 @@ median
 <span style="     color: red;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style=" font-weight: bold;  font-family: monospace;  color: red;">for i in range(len(normal_distibution_py)):<br> py_index_results[i] = normal_distibution_py[i]**2<br></span>
+<span style=" font-weight: bold;  font-family: monospace;  color: red;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-1.01ms
+1.2ms
 </td>
 <td style="text-align:right;">
-910.02us
+1.11ms
 </td>
 </tr>
 <tr>
@@ -217,13 +217,13 @@ median
 <span style="     color: darkred;">Python</span>
 </td>
 <td style="text-align:left;">
-<span style=" font-weight: bold;  font-family: monospace;  color: darkred;">for i in range(len(normal_distibution_py)):<br> py_dict_results[i] = normal_distibution_py[i]**2<br></span>
+<span style=" font-weight: bold;  font-family: monospace;  color: darkred;">for i in range(len(normal_distibution_py)):<br> py_index_results[i] = normal_distibution_py[i]**2<br></span>
 </td>
 <td style="text-align:right;">
-1.12ms
+1.37ms
 </td>
 <td style="text-align:right;">
-1ms
+1.16ms
 </td>
 </tr>
 <tr>
@@ -234,10 +234,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: purple;">vapply(normal_distibution, function(x) x^2, numeric(1))</span>
 </td>
 <td style="text-align:right;">
-1.84ms
+2.18ms
 </td>
 <td style="text-align:right;">
-1.78ms
+1.79ms
 </td>
 </tr>
 <tr>
@@ -248,10 +248,10 @@ median
 <span style=" font-weight: bold;  font-family: monospace;  color: black;">for (i in normal_distibution) bad_R[i] &lt;- normal_distibution[i] * normal…</span>
 </td>
 <td style="text-align:right;">
-60.69ms
+55.08ms
 </td>
 <td style="text-align:right;">
-56.64ms
+49.69ms
 </td>
 </tr>
 </tbody>
@@ -2073,7 +2073,7 @@ desktop
 ## [10] plyr_1.8.4        evaluate_0.10.1   highr_0.7        
 ## [13] httr_1.3.1        blogdown_0.7.1    pillar_1.3.0.9000
 ## [16] rlang_0.2.1       lazyeval_0.2.1    readxl_1.1.0     
-## [19] rstudioapi_0.7    Matrix_1.2-14     rmarkdown_1.10.6 
+## [19] rstudioapi_0.7    Matrix_1.2-14     rmarkdown_1.10.7 
 ## [22] selectr_0.4-1     foreign_0.8-70    munsell_0.5.0    
 ## [25] broom_0.4.5       compiler_3.5.1    modelr_0.1.2     
 ## [28] xfun_0.3          pkgconfig_2.0.1   mnormt_1.5-5     
