@@ -3321,555 +3321,6 @@ Speed in MHz
     </item>
     
     <item>
-      <title>Data Science from Scratch</title>
-      <link>/page/data-science-from-scratch/</link>
-      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/page/data-science-from-scratch/</guid>
-      <description>&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
-
-&lt;div id=&#34;TOC&#34;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#programming-and-computer-science&#34;&gt;Programming and Computer Science&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#statistics&#34;&gt;Statistics&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#graphs&#34;&gt;Graphs&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#unsupervised-learning&#34;&gt;Unsupervised Learning&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#supervised-learning&#34;&gt;Supervised Learning&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;div id=&#34;programming-and-computer-science&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Programming and Computer Science&lt;/h1&gt;
-&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Topic
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-R
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Python
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;5&#34;&gt;
-Essentials
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;a href=&#34;/2018/07/variable-assignment/&#34;&gt;Variable Assignment&lt;/a&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Data Types
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Logic
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Collections
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Loops
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
-Algorithms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;a href=&#34;/2018/07/bubble-sort/&#34;&gt;Bubble Sort&lt;/a&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;statistics&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Statistics&lt;/h1&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Topic
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-R
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Python
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
-Central Tendency
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Mean
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Median
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Mode
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Dispersion
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Standard Deviation
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Variance
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Correlation
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Pearson’s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Spearman’s
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Linear Models
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Simple Linear Regression
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Linear Regression
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
-Generalized Linear Models
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Binomial
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Gaussian
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Poisson
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;graphs&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Graphs&lt;/h1&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Topic
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-R
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Python
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
-Representations
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Adjacency Matrix
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Adjacency List
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Edge List
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Incidence Matrix
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Higher Dimensions
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Multipartite Graphs
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Multiplex Graphs
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
-Algorithms
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Shortest Path
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Topic
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-R
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Python
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Clustering
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-k-means
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Principal Component Analysis
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
-Dimensionality Reduction
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Factor Analysis
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Supervised Learning&lt;/h1&gt;
-&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Topic
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-R
-&lt;/th&gt;
-&lt;th style=&#34;text-align:center;&#34;&gt;
-Python
-&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
-Classification
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Naive Bayes
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-k-Nearest Neighbors
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Support Vector Machine
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Random Forests
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
-Regression
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Support Vector Machine
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Random Forests
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Variable Assignment</title>
       <link>/2018/07/variable-assignment/</link>
       <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
@@ -10909,6 +10360,555 @@ list.files(dir, full.names = TRUE) %&amp;gt;%
 &lt;/ul&gt;
 
 &lt;hr /&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Data Science from Scratch</title>
+      <link>/page/data-science-from-scratch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/page/data-science-from-scratch/</guid>
+      <description>&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#programming-and-computer-science&#34;&gt;Programming and Computer Science&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#statistics&#34;&gt;Statistics&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#graphs&#34;&gt;Graphs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#unsupervised-learning&#34;&gt;Unsupervised Learning&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#supervised-learning&#34;&gt;Supervised Learning&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div id=&#34;programming-and-computer-science&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Programming and Computer Science&lt;/h1&gt;
+&lt;table class=&#34;table table-hover table-responsive&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;5&#34;&gt;
+Essentials
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/variable-assignment/&#34;&gt;Variable Assignment&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Data Types
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Logic
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Collections
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Loops
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
+Algorithms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/bubble-sort/&#34;&gt;Bubble Sort&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;statistics&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Statistics&lt;/h1&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Central Tendency
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Mean
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Median
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Mode
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Dispersion
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Standard Deviation
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Variance
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Correlation
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Pearson’s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Spearman’s
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Linear Models
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Simple Linear Regression
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Linear Regression
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;3&#34;&gt;
+Generalized Linear Models
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Binomial
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Gaussian
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Poisson
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;graphs&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Graphs&lt;/h1&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+Representations
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Adjacency Matrix
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Adjacency List
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Edge List
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Incidence Matrix
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Higher Dimensions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Multipartite Graphs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Multiplex Graphs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
+Algorithms
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Shortest Path
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Clustering
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+k-means
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Principal Component Analysis
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;&#34;&gt;
+Dimensionality Reduction
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Factor Analysis
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Supervised Learning&lt;/h1&gt;
+&lt;table class=&#34;table&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Topic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+R
+&lt;/th&gt;
+&lt;th style=&#34;text-align:center;&#34;&gt;
+Python
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;4&#34;&gt;
+Classification
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Naive Bayes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+k-Nearest Neighbors
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Support Vector Machine
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Random Forests
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;2&#34;&gt;
+Regression
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Support Vector Machine
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+Random Forests
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
 </description>
     </item>
     

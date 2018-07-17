@@ -1,7 +1,8 @@
 ---
 title: "Data Science from Scratch"
 draft: false
-date: '2018-07-02'
+showMeta:       false
+showActions:    false
 output:
   blogdown::html_page:
     toc: true

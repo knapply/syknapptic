@@ -59,16 +59,16 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   url = "/page/about/"
 [[menu.main]]
   weight = 3
+  identifier = "shiny"
+  name = "Projects & Apps"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-code\"></i>"
+  url = "/page/shiny/"
+[[menu.main]]
+  weight = 4
   identifier = "categories"
   name = "Categories"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-bookmark\"></i>"
   url = "/categories"
-[[menu.main]]
-  weight = 4
-  identifier = "tags"
-  name = "Tags"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-tags\"></i>"
-  url = "/tags"
 [[menu.main]]
   weight = 5
   identifier = "archives"
@@ -76,27 +76,26 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-archive\"></i>"
   url = "/archives"
 
-
 [[menu.links]]
   weight = 1
-  identifier = "shiny"
-  name = "Shiny Apps"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-code\"></i>"
-  url = "/page/shiny/"
+  identifier = "datasciencefromscratch"
+  name = "Data Science from Scratch"
+  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-line-chart\"></i>"
+  url = "page/Data-Science-from-Scratch/"
 [[menu.links]]
-  weight = 1
+  weight = 2
   identifier = "twitter"
   name = "Twitter"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-twitter\"></i>"
   url = "https://twitter.com/syknapptic"
 [[menu.links]]
-  weight = 2
+  weight = 3
   identifier = "github"
   name = "GitHub"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-github\"></i>"
   url = "https://github.com/syknapptic"
 [[menu.links]]
-  weight = 3
+  weight = 4
   identifier = "stackoverflow"
   name = "Stack Overflow"
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-stack-overflow\"></i>"
@@ -108,12 +107,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   pre = "<i class=\"sidebar-button-icon fa fa-lg fa-linkedin\"></i>"
   url = "https://www.linkedin.com/in/knappbrendan/"
 
-[[menu.misc]]
-  weight = 1
-  identifier = "datasciencefromscratch"
-  name = "Data Science"
-  pre = "<i class=\"sidebar-button-icon fa fa-lg fa-line-chart\"></i>"
-  url = "page/Data-Science-from-Scratch/"
+
 [[menu.misc]]
   weight = 1
   identifier = "rss"
@@ -156,7 +150,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
   # If false it will flat categories.
   hierarchicalCategories = true
 
-  description = "A blog on R, OSINT, and Applied Data Science."
+  description = "A blog on R, Python, OSINT, and Applied Data Science."
   
   summary_length = 100
 
@@ -240,6 +234,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     name = "Google+"
     icon = "fa-google-plus"
     url = "https://plus.google.com/share?url=%s"
+    
+  [params.header.rightLink]
+    class = "open-algolia-search"
+    icon = "search"
+    url = "/#search"
     
     
   #[params.header.rightLink]

@@ -6,20 +6,10 @@
     <description>Recent content in Pages on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 02 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 15 Mar 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/page/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Data Science from Scratch</title>
-      <link>/page/data-science-from-scratch/</link>
-      <pubDate>Mon, 02 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/page/data-science-from-scratch/</guid>
-      <description>Programming and Computer ScienceStatisticsGraphsUnsupervised LearningSupervised Learning
-Programming and Computer ScienceTopicRPythonEssentialsVariable AssignmentData TypesLogicCollectionsLoopsAlgorithmsBubble Sort</description>
-    </item>
     
     <item>
       <title>My Shiny Apps</title>
@@ -42,6 +32,16 @@ Programming and Computer ScienceTopicRPythonEssentialsVariable A
       <description>body .main-container { max-width: 700px; }  Hi, I&amp;rsquo;m Brendan. I&amp;rsquo;m interested in using data to develop evidence-based insights.
 I primarily focus on conflict and security issues, which is work that I characterize as being wildly interdisciplinary. The result is that I&amp;rsquo;m constantly exploring theories and methods that developed in other fields.
 In the past, I worked as a security manager, combat medic, noncommissioned officer, linguist, and herder of cats.</description>
+    </item>
+    
+    <item>
+      <title>Data Science from Scratch</title>
+      <link>/page/data-science-from-scratch/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/page/data-science-from-scratch/</guid>
+      <description>Programming and Computer ScienceStatisticsGraphsUnsupervised LearningSupervised Learning
+Programming and Computer ScienceTopicRPythonEssentialsVariable AssignmentData TypesLogicCollectionsLoopsAlgorithmsBubble Sort</description>
     </item>
     
     <item>
