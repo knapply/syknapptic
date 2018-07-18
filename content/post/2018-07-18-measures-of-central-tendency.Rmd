@@ -1,6 +1,6 @@
 ---
 title: Measures of Central Tendency
-draft: true
+draft: false
 author: Brendan Knapp
 date: '2018-07-18'
 slug: central-tendency
@@ -9,6 +9,8 @@ categories:
   - R-bloggers
 tags:
   - statistics
+  - data-science-from-scratch
+  - R-bloggers
 thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1531921800/cent-tend.png
 metaAlignment: center
 coverMeta: out

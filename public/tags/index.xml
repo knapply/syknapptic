@@ -30,6 +30,15 @@
     </item>
     
     <item>
+      <title>Data Science From Scratch</title>
+      <link>/tags/data-science-from-scratch/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/data-science-from-scratch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Dplyr</title>
       <link>/tags/dplyr/</link>
       <pubDate>Sat, 17 Mar 2018 00:00:00 +0000</pubDate>
@@ -98,6 +107,15 @@
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/purrr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Bloggers</title>
+      <link>/tags/r-bloggers/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r-bloggers/</guid>
       <description></description>
     </item>
     

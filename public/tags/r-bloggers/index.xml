@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Bloggers on syknapptic</title>
+    <link>/tags/r-bloggers/</link>
+    <description>Recent content in R Bloggers on syknapptic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 18 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/r-bloggers/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Measures of Central Tendency</title>
+      <link>/2018/07/central-tendency/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/central-tendency/</guid>
+      <description>Toy ValuesPython listR vectorLengthPython’s len()R’s length()Unique ValuesPython’s set()R’s unique()MaxPython’s max()R’s max()MinPython’s min()R’s min()SumPython’s sum()R’s sum()MeanPython’s statistics.mean()R’s mean()ModePython’s statistics.mode()R’s modeMedianPythonREnvironmentRather than letting R and Python do all the work for us (i.</description>
+    </item>
+    
+  </channel>
+</rss>
