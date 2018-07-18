@@ -6,11 +6,11 @@ date: '2018-07-18'
 slug: central-tendency
 categories:
   - data-science-from-scratch
-  - R-bloggers
+  - R
 tags:
   - statistics
   - data-science-from-scratch
-  - R-bloggers
+  - R
 thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1531921800/cent-tend.png
 metaAlignment: center
 coverMeta: out
