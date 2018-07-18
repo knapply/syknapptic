@@ -18,10 +18,15 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```{r}
 library(dplyr)
 library(kableExtra)
+library(stringr)
 
 check_box <- '<input type="checkbox" checked onclick="return false;">'
 
 uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
+
+build_link <- function(url, Topic) {
+  as.character(str_glue("<a href={url}>{Topic}</a>"))
+}
 ```
 
 <br>
@@ -29,13 +34,20 @@ uncheck_box <- '<input type="checkbox" unchecked onclick="return false;">'
 # Programming and Computer Science
 
 ```{r}
-prog_groups <- c(rep("Essentials", 5), rep("Algorithms", 1))
+prog_groups <- c(rep("First Steps", 5), rep("Algorithms", 1),
+                 rep("Essential Tasks", 5))
+
 prog_topics <- c("Variable Assignment",
                  "Data Types",
                  "Logic",
                  "Collections",
                  "Loops",
-                 "Bubble Sort")
+                 "Bubble Sort",
+                 "Length of Values",
+                 "Unique Values",
+                 "Maximum",
+                 "Minimum",
+                 "Sum")
 
 tibble(` ` = prog_groups, Topic = prog_topics) %>% 
   mutate(R = case_when(
@@ -44,7 +56,12 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
     Topic == "Logic" ~ uncheck_box,
     Topic == "Collections" ~ uncheck_box,
     Topic == "Loops" ~ uncheck_box,
-    Topic == "Bubble Sort" ~ check_box
+    Topic == "Bubble Sort" ~ check_box,
+    Topic == "Length of Values" ~ check_box,
+    Topic == "Unique Values" ~ check_box,
+    Topic == "Maximum" ~ check_box,
+    Topic == "Minimum" ~ check_box,
+    Topic == "Sum" ~ check_box
     )) %>% 
   mutate(Python = case_when(
     Topic == "Variable Assignment" ~ check_box,
@@ -52,13 +69,22 @@ tibble(` ` = prog_groups, Topic = prog_topics) %>%
     Topic == "Logic" ~ uncheck_box,
     Topic == "Collections" ~ uncheck_box,
     Topic == "Loops" ~ uncheck_box,
-    Topic == "Bubble Sort" ~ check_box
+    Topic == "Bubble Sort" ~ check_box,
+    Topic == "Length of Values" ~ check_box,
+    Topic == "Unique Values" ~ check_box,
+    Topic == "Maximum" ~ check_box,
+    Topic == "Minimum" ~ check_box,
+    Topic == "Sum" ~ check_box
   )) %>% 
   mutate(Topic = case_when(
     Topic == "Variable Assignment" ~ 
-      "<a href=/2018/07/variable-assignment/>Variable Assignment</a>",
-    Topic == "Bubble Sort" ~
-      "<a href=/2018/07/bubble-sort/>Bubble Sort</a>",
+      build_link("/2018/07/variable-assignment/", Topic),
+    Topic == "Bubble Sort" ~ build_link("/2018/07/bubble-sort/", Topic),
+    Topic == "Length of Values" ~ build_link("/2018/07/central-tendency/#length", Topic),
+    Topic == "Unique Values" ~ build_link("/2018/07/central-tendency/#unique-values", Topic),
+    Topic == "Maximum" ~ build_link("/2018/07/central-tendency/#max", Topic),
+    Topic == "Minimum" ~ build_link("/2018/07/central-tendency/#min", Topic),
+    Topic == "Sum" ~ build_link("/2018/07/central-tendency/#sum", Topic),
     TRUE ~ Topic
     )) %>% 
   kable(escape = FALSE, align = "c") %>% 
@@ -90,11 +116,24 @@ stat_topics <- c("Mean", "Median", "Mode",
                  "Poisson")
 
 tibble(` ` = stat_groups, Topic = stat_topics) %>% 
-  mutate(R = uncheck_box) %>% 
-  mutate(Python = uncheck_box) %>% 
-  # mutate(`C++` = uncheck_box) %>% 
-  # mutate(Rcpp = uncheck_box) %>% 
-  # mutate(Details = stat_details) %>% 
+  mutate(R = case_when(
+    Topic == "Mean" ~ check_box,
+    Topic == "Mode" ~ check_box,
+    Topic == "Median" ~ check_box,
+    TRUE ~ uncheck_box
+    )) %>% 
+  mutate(Python = case_when(
+    Topic == "Mean" ~ check_box,
+    Topic == "Mode" ~ check_box,
+    Topic == "Median" ~ check_box,
+    TRUE ~ uncheck_box
+    )) %>% 
+  mutate(Topic = case_when(
+    Topic == "Mean" ~ build_link("/2018/07/central-tendency/#mean", Topic),
+    Topic == "Mode" ~ build_link("/2018/07/central-tendency/#mode", Topic),
+    Topic == "Median" ~ build_link("/2018/07/central-tendency/#median", Topic),
+    TRUE ~ Topic
+    )) %>% 
   kable(escape = FALSE, align = "c") %>%
   kable_styling() %>% 
   column_spec(1, bold = TRUE) %>% 

@@ -6,10 +6,447 @@
     <description>Recent content on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 16 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 18 Jul 2018 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Measures of Central Tendency</title>
+      <link>/2018/07/central-tendency/</link>
+      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/central-tendency/</guid>
+      <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#toy-values&#34;&gt;Toy Values&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#python-list&#34;&gt;Python &lt;code&gt;list&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r-vector&#34;&gt;R &lt;code&gt;vector&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#length&#34;&gt;Length&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-len&#34;&gt;Python’s &lt;code&gt;len()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-length&#34;&gt;R’s &lt;code&gt;length()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#unique-values&#34;&gt;Unique Values&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-set&#34;&gt;Python’s &lt;code&gt;set()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-unique&#34;&gt;R’s &lt;code&gt;unique()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#max&#34;&gt;Max&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-max&#34;&gt;Python’s &lt;code&gt;max()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-max&#34;&gt;R’s &lt;code&gt;max()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#min&#34;&gt;Min&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-min&#34;&gt;Python’s &lt;code&gt;min()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-min&#34;&gt;R’s &lt;code&gt;min()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sum&#34;&gt;Sum&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-sum&#34;&gt;Python’s &lt;code&gt;sum()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-sum&#34;&gt;R’s &lt;code&gt;sum()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mean&#34;&gt;Mean&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-statistics.mean&#34;&gt;Python’s &lt;code&gt;statistics.mean()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-mean&#34;&gt;R’s &lt;code&gt;mean()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#mode&#34;&gt;Mode&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#pythons-statistics.mode&#34;&gt;Python’s &lt;code&gt;statistics.mode()&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rs-mode&#34;&gt;R’s mode&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#median&#34;&gt;Median&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#python&#34;&gt;Python&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#r&#34;&gt;R&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#environment&#34;&gt;Environment&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Rather than letting R and Python do all the work for us (i.e. cheating, as a no-nonsense former professor would call it), the best way to understand what any calculation actually means is to walk through the steps. I doubt I’m the only one who wishes they started to code this way.&lt;/p&gt;
+&lt;p&gt;With that in mind, here’s a collection of “from scratch” functions implemented in both R and Python that provide &lt;em&gt;minimal&lt;/em&gt; hand-holding.&lt;/p&gt;
+&lt;p&gt;This should (hopefully) also serve as a handy reference for useRs and Pythonistas curious about the greenness of the grass on the other side. My goal here is to lay a foundation before writing similar walkthroughs covering more complicated workflows, statistical models, and machine learning.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;A quick note:&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;In R, experience has taught me to use &lt;code&gt;[[&lt;/code&gt; instead of &lt;code&gt;[&lt;/code&gt; &lt;em&gt;whenever it’s possible to obtain the desired results with &lt;code&gt;[[&lt;/code&gt;&lt;/em&gt;. With that in mind, I try to use &lt;code&gt;[[&lt;/code&gt; in the R examples (unless swapping between R and Python messed me up).&lt;/p&gt;
+&lt;p&gt;Clearly, &lt;a href=&#34;https://stackoverflow.com/questions/1169456/the-difference-between-and-notations-for-accessing-the-elements-of-a-lis&#34;&gt;useRs have an assortment of opinions&lt;/a&gt; on how to use &lt;code&gt;[[&lt;/code&gt; and &lt;code&gt;[&lt;/code&gt;, but this is probably as simple an explanation as you can get:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://i.stack.imgur.com/6Vwry.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br&gt; &lt;br&gt;&lt;/p&gt;
+&lt;p&gt;All that said, let’s get to it.&lt;/p&gt;
+&lt;div id=&#34;toy-values&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Toy Values&lt;/h1&gt;
+&lt;p&gt;We’ll use the same values for &lt;code&gt;x&lt;/code&gt; throughout:&lt;/p&gt;
+&lt;div id=&#34;python-list&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python &lt;code&gt;list&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;x = [25.88, 37.05, 38.46, 76.78, 76.78, 71.97, 33.99, 73.29, 2.53, 76.78, 
+     74.94, 73.4, 64.87, 57.8, 42.82, 76.78, 7.95, 60.26, 2.14, 59.51]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r-vector&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R &lt;code&gt;vector&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- c(25.88, 37.05, 38.46, 76.78, 76.78, 71.97, 33.99, 73.29, 2.53, 76.78,
+       74.94, 73.4, 64.87, 57.8, 42.82, 76.78, 7.95, 60.26, 2.14, 59.51)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The first thing we need to do is define some helper functions. In order to calculate mean, median, and mode, we will also need to find the:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;length of the sequence: &lt;code&gt;my_length()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;unique values in a sequence: &lt;code&gt;my_unique()&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;maximum value in a sequence: &lt;code&gt;my_max()&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;my_min()&lt;/code&gt; is also included for reference&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;sum of values in a sequence: &lt;code&gt;my_sum()&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;length&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Length&lt;/h1&gt;
+&lt;div id=&#34;pythons-len&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;len()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_length(x):          # `def`ine the function, which takes the parameter `x`
+  length = 0               # declare a `length` variable that initially equals `0`
+  
+  for item in x:           # `for` each `item` in `x`
+    length += 1            # add `1` to `length` (same as `length = length + 1`)
+  
+  return length            # finally, `return` the calculated `length`&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_length(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 20&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(len(x) == my_length(x)) # does our custom function give the same result as Python&amp;#39;s built-in?&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-length&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s &lt;code&gt;length()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_length &amp;lt;- function(x) {  # declare the `function`, which takes the parameter `x`
+  length &amp;lt;- 0L              # declare a `length` variable that initially equals `0L`...
+                            # ... in R, numbers are treated as `double`s unless we...
+                            # ... specifiy them to be `integer`s. `0L` is the same as...
+                            # ... `as.integer(0)`.
+                            # `length` doesn&amp;#39;t NEED to be an `integer`, but if we&amp;#39;re ... 
+                            # ... careful about types early, we&amp;#39;ll save headaches later.
+
+  for(item in x) {          # `for` each `item` in `x`
+    length &amp;lt;- length + 1L   # add `1L` to length
+  }
+  
+  length                    # finally, return the calculated `length`...
+                            # we can use `return(length)`, but `return` in R is best used ...
+                            # ... only when you&amp;#39;re breaking from a function early
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_length(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 20&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;                       # does our custom function give the same result as R&amp;#39;s built-in?
+length(x) == my_length(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;unique-values&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Unique Values&lt;/h1&gt;
+&lt;div id=&#34;pythons-set&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;set()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_unique(x):               # `def`ine the function, which takes the parameter `x`
+  unique_x = []                 # declare an empty `list` named `unique_x`
+  
+  for item in x:                # for each `item` in `x`
+    if item not in unique_x:    # if the `item` is not in `unique_x`
+      unique_x.append(item)     # `append` the `item` to `unique_x`
+      
+  return unique_x               # finally, `return` the list of `unique_x`&amp;#39;s values&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_unique(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [25.88, 37.05, 38.46, 76.78, 71.97, 33.99, 73.29, 2.53, 74.94, 73.4, 64.87, 57.8, 42.82, 7.95, 60.26, 2.14, 59.51]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In order to test Python’s &lt;code&gt;my_unique()&lt;/code&gt;, we need to use a loop as Python &lt;code&gt;set()&lt;/code&gt;s are not ordered.&lt;/p&gt;
+&lt;p&gt;Here, we’ll use a “list-comprehension”.&lt;/p&gt;
+&lt;p&gt;In Python, we &lt;em&gt;can&lt;/em&gt; do this…&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;matches = []
+for item in my_unique(x):
+  matches.append(item in set(x))
+  
+print(all(matches))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… but it’s considered more “Pythonic” to use a list-comprehension in this scenario…&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;matches = [item in set(x) for item in my_unique(x)]
+print(all(matches))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;… which we can wrap up in a one-liner…&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(all([item in set(x) for item in my_unique(x)]))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1531937508/2e99mn_s5lxip.jpg&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Jokes aside, list-comprehensions are generally faster. Considering “pure” Python isn’t vectorized like R, they are quite handy.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-unique&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s &lt;code&gt;unique()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_unique &amp;lt;- function(x) {           # declare the `function`, which takes the parameter `x`
+  unique_x &amp;lt;- vector(mode = mode(x)) # declare an empty `vector` with the same `mode` as `x`...
+                                     # ... in R, it&amp;#39;s a good habit to enforce data types ...
+                                     # ... to maximize performance. In a perfect world, we
+                                     # ... would also want to set `unique_x`&amp;#39;s `length`.
+  for(item in x) {
+    if(!item %in% unique_x) {       # in R, `%in%` is a vectorized match that returns a `logical` vector
+      unique_x &amp;lt;- c(unique_x, item)
+    }
+  }
+  
+  unique_x
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_unique(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] 25.88 37.05 38.46 76.78 71.97 33.99 73.29  2.53 74.94 73.40 64.87
+## [12] 57.80 42.82  7.95 60.26  2.14 59.51&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;                         # does our custom function give the same result as R&amp;#39;s built-in?
+all(unique(x) == my_unique(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;max&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Max&lt;/h1&gt;
+&lt;div id=&#34;pythons-max&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;max()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_max(x):
+  max = x[0]
+  for item in x:
+    if item &amp;gt; max:
+      max = item
+  
+  return max&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_max(x))
+                 # does our custom function give the same result as Pythons&amp;#39;s built-in?&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 76.78&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(max(x) == my_max(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-max&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s &lt;code&gt;max()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_max &amp;lt;- function(x) {
+  max &amp;lt;- x[[1]]
+  
+  for(item in x) {
+    if(item &amp;gt; max) {
+      max &amp;lt;- item
+    }
+  }
+  max
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_max(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 76.78&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;                 # does our custom function give the same result as R&amp;#39;s built-in?
+max(x) == my_max(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;min&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Min&lt;/h1&gt;
+&lt;div id=&#34;pythons-min&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;min()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_min(x):
+  min = x[0]        # Python indexing starts at `0`, so `min` starts as the first item in `x`
+  
+  for item in x:
+    if item &amp;lt; min:
+      min = item
+  
+  return min&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_min(x))
+                 # does our custom function give the same result as Python&amp;#39;s built-in?&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 2.14&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(min(x) == my_min(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-min&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s &lt;code&gt;min()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_min &amp;lt;- function(x) {
+  min &amp;lt;- x[[1]]     # R indexing starts at `1`, so `min` starts as the first item in `x`
+  
+  for(item in x) {
+    if(item &amp;lt; min) {
+      min &amp;lt;- item
+    }
+  }
+  min
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_min(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2.14&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;                 # does our custom function give the same result as Python&amp;#39;s built-in?
+min(x) == my_min(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sum&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sum&lt;/h1&gt;
+&lt;div id=&#34;pythons-sum&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;sum()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_sum(x):     # `def`ine the function, which takes the parameter `x`
+  sum = 0          # declare a `sum` variable that initially equals `0`
+  for item in x:   # `for` each `item` in `x`
+    sum += item    # add the `item`&amp;#39;s value to `sum`
+  
+  return sum       # finally, return the calculated `sum`&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_sum(x))
+                 # does our custom function give the same result as Python&amp;#39;s built-in?&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 1033.98&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(sum(x) == my_sum(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-sum&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s &lt;code&gt;sum()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_sum &amp;lt;- function(x) { # declare the `function`, which takes the parameter `x`
+  sum &amp;lt;- 0              # declare a `sum` variable that initially equals `0`...
+  
+  for(item in x) {      # `for` each `item` in x
+    sum &amp;lt;- sum + item   # add the `item` to `sum`
+  }
+  
+  sum                   # finally, call `sum` to return its value
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sum(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1033.98&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;                 # does our custom function give the same result as R&amp;#39;s built-in?
+sum(x) == my_sum(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;br&gt; &lt;br&gt; &lt;br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Now that we’ve built our helper functions, let’s take on the measures of central tendency.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;http://res.cloudinary.com/syknapptic/image/upload/v1531921800/cent-tend.png&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mean&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Mean&lt;/h1&gt;
+&lt;div id=&#34;pythons-statistics.mean&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;statistics.mean()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_mean(x):
+  return float(my_sum(x) / my_length(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_mean(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 51.699&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics          # in Python, `mean()` is kept in the `statistics` module, which ...
+                           # ... we `import` like this
+                            
+                           # does our custom function give the same result as &amp;#39;s built-in?
+print(statistics.mean(x) == my_mean(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-mean&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s &lt;code&gt;mean()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_mean &amp;lt;- function(x) {
+  my_sum(x) / my_length(x)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_mean(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 51.699&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(x) == my_mean(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mode&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Mode&lt;/h1&gt;
+&lt;div id=&#34;pythons-statistics.mode&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python’s &lt;code&gt;statistics.mode()&lt;/code&gt;&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_mode(x):
+  unique_x = my_unique(x)
+  occurrences = {}         # create and empty `dict()` to which we will be adding items
+  
+  for item in unique_x:
+    count = my_length([value for value in x if value == item]) # count up the occurrences of each `item`
+    occurrences.update({item: count})    # add the count to the the `occurrences` `dict()`
+  
+  keys = list(occurrences.keys())     # `dict()`s are unordered, so we make a list of `keys`...
+  values = list(occurrences.values()) # ... and a list of `values`
+  
+  return keys[values.index(my_max(values))]  # get the index of the max value and select that key&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_mode(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 76.78&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics
+print(statistics.mode(x) == my_mode(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rs-mode&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R’s mode&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_mode &amp;lt;- function(x) {
+  unique_x &amp;lt;- my_unique(x)
+  occurences &amp;lt;- vector(mode = mode(unique_x), length = length(unique_x))
+
+  for(item in unique_x) {
+    count &amp;lt;- c(item = my_length(x[x == item])) # because we&amp;#39;re dealing with vectors in R we can... 
+                                               # ... boolean mask with `[]` instead  of using a loop
+    names(count) &amp;lt;- item                       # we turn `count` into a named `vector`...
+                                               # but this coerces the `names` to `character`
+    occurences &amp;lt;- c(occurences, count)
+  }
+  as.numeric(names(occurences[occurences == my_max(occurences)]))  # convert the `names` back to `numeric`
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_mode(x) # R doesn&amp;#39;t have a built-in function for a statistical mode&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 76.78&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;median&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Median&lt;/h1&gt;
+&lt;p&gt;For &lt;code&gt;median()&lt;/code&gt;, we need to be able to sort the list. We’re just going to use built-in functions, but you can see how a bubble sort is performed &lt;a href=&#34;https://syknapptic.netlify.com/2018/07/bubble-sort/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;python&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Python&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;def my_median(x):
+  sorted_x = sorted(x)
+  length_x = my_length(x)
+  middle_index = (length_x - 1) // 2  # `//` is Python&amp;#39;s operator for integer division
+                                      # `%` is Python&amp;#39;s operator for remainder
+  if length_x % 2:                    # if `x`&amp;#39;s length is an odd value
+    median = sorted_x[middle_index]
+  if not length_x % 2:                # if `x`&amp;#39;s length is an even value
+    median = my_mean([sorted_x[middle_index], sorted_x[middle_index + 1]])
+  return median&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(my_median(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 59.885&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import statistics
+print(statistics.median(x) == my_median(x))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;r&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;R&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_median &amp;lt;- function(x) {
+  sorted_x &amp;lt;- sort(x)
+  length_x &amp;lt;- my_length(x)
+  middle_index &amp;lt;- length_x %/% 2 # `%/%` is R&amp;#39;s operator for integer division
+  
+  if(length_x %% 2) {            # `%%` is R&amp;#39;s operator for remainder
+    median = sorted_x[[middle_index]]
+  }
+  if(!length_x %% 2) {
+    median = my_mean(c(sorted_x[[middle_index]], sorted_x[[middle_index + 1]]))
+  }
+
+  median
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;my_median(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 59.885&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;median(x) == my_median(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] TRUE&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;النهاية&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;environment&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Environment&lt;/h1&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(sys.version)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 3.6.5 |Anaconda, Inc.| (default, Mar 29 2018, 13:32:41) [MSC v.1900 64 bit (AMD64)]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 17134)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_0.12.17          bookdown_0.7          lattice_0.20-35      
+##  [4] digest_0.6.15         grid_3.5.1            jsonlite_1.5         
+##  [7] magrittr_1.5          evaluate_0.10.1       blogdown_0.7.1       
+## [10] stringi_1.2.3         Matrix_1.2-14         reticulate_1.9.0.9001
+## [13] rmarkdown_1.10.7      htmldeps_0.1.0        tools_3.5.1          
+## [16] stringr_1.3.1         xfun_0.3              yaml_2.1.19          
+## [19] compiler_3.5.1        htmltools_0.3.6       knitr_1.20.8&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Bubble Sort</title>
@@ -10403,7 +10840,7 @@ Python
 &lt;tbody&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;5&#34;&gt;
-Essentials
+First Steps
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
 &lt;a href=&#34;/2018/07/variable-assignment/&#34;&gt;Variable Assignment&lt;/a&gt;
@@ -10473,6 +10910,64 @@ Algorithms
 &lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;font-weight: bold;vertical-align: top !important;&#34; rowspan=&#34;5&#34;&gt;
+Essential Tasks
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/central-tendency/#length&#34;&gt;Length of Values&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/central-tendency/#unique-values&#34;&gt;Unique Values&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/central-tendency/#max&#34;&gt;Maximum&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/central-tendency/#min&#34;&gt;Minimum&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/central-tendency/#sum&#34;&gt;Sum&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;&lt;br&gt;&lt;/p&gt;
@@ -10501,35 +10996,35 @@ Python
 Central Tendency
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-Mean
+&lt;a href=&#34;/2018/07/central-tendency/#mean&#34;&gt;Mean&lt;/a&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-Median
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
-&lt;/td&gt;
-&lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-Mode
+&lt;a href=&#34;/2018/07/central-tendency/#median&#34;&gt;Median&lt;/a&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;td style=&#34;text-align:center;&#34;&gt;
-&lt;input type=&#34;checkbox&#34; unchecked onclick=&#34;return false;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;a href=&#34;/2018/07/central-tendency/#mode&#34;&gt;Mode&lt;/a&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:center;&#34;&gt;
+&lt;input type=&#34;checkbox&#34; checked onclick=&#34;return false;&#34;&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
