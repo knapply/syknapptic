@@ -432,7 +432,7 @@ def my_median(x):
                                       # `%` is Python's operator for remainder
   if length_x % 2:                    # if `x`'s length is an odd value
     median = sorted_x[middle_index]
-  if not length_x % 2:                # if `x`'s length is an even value
+  elif not length_x % 2:                # if `x`'s length is an even value
     median = my_mean([sorted_x[middle_index], sorted_x[middle_index + 1]])
 
   return median
@@ -456,7 +456,7 @@ my_median <- function(x) {
   if(length_x %% 2) {            # `%%` is R's operator for remainder
     median = sorted_x[[middle_index]]
   }
-  if(!length_x %% 2) {
+  else if(!length_x %% 2) {
     median = my_mean(c(sorted_x[[middle_index]], sorted_x[[middle_index + 1]]))
   }
 

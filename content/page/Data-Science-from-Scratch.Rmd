@@ -1,8 +1,8 @@
 ---
 title: "Data Science from Scratch"
 draft: false
-showMeta:       false
-showActions:    false
+showMeta: false
+showActions: false
 output:
   blogdown::html_page:
     toc: true
@@ -140,80 +140,82 @@ tibble(` ` = stat_groups, Topic = stat_topics) %>%
   collapse_rows(columns = 1, valign = "top")
 ```
 
-# Graphs
+<br>
 
-```{r}
-graph_groups <- c(rep("Representations", 4),
-                  rep("Higher Dimensions", 2),
-                  "Algorithms")
+<!-- # Graphs -->
 
-graph_topics <- c("Adjacency Matrix",
-                  "Adjacency List",
-                  "Edge List",
-                  "Incidence Matrix",
-                  "Multipartite Graphs",
-                  "Multiplex Graphs",
-                  "Shortest Path")
+<!-- ```{r} -->
+<!-- graph_groups <- c(rep("Representations", 4), -->
+<!--                   rep("Higher Dimensions", 2), -->
+<!--                   "Algorithms") -->
 
-tibble(` ` = graph_groups, Topic = graph_topics) %>% 
-  mutate(R = uncheck_box) %>% 
-  mutate(Python = uncheck_box) %>% 
-  # mutate(`C++` = uncheck_box) %>% 
-  # mutate(Rcpp = uncheck_box) %>% 
-  # mutate(Details = stat_details) %>% 
-  kable(escape = FALSE, align = "c") %>%
-  kable_styling() %>% 
-  column_spec(1, bold = TRUE) %>% 
-  collapse_rows(columns = 1, valign = "top")
-```
+<!-- graph_topics <- c("Adjacency Matrix", -->
+<!--                   "Adjacency List", -->
+<!--                   "Edge List", -->
+<!--                   "Incidence Matrix", -->
+<!--                   "Multipartite Graphs", -->
+<!--                   "Multiplex Graphs", -->
+<!--                   "Shortest Path") -->
 
-# Unsupervised Learning
+<!-- tibble(` ` = graph_groups, Topic = graph_topics) %>%  -->
+<!--   mutate(R = uncheck_box) %>%  -->
+<!--   mutate(Python = uncheck_box) %>%  -->
+<!--   # mutate(`C++` = uncheck_box) %>%  -->
+<!--   # mutate(Rcpp = uncheck_box) %>%  -->
+<!--   # mutate(Details = stat_details) %>%  -->
+<!--   kable(escape = FALSE, align = "c") %>% -->
+<!--   kable_styling() %>%  -->
+<!--   column_spec(1, bold = TRUE) %>%  -->
+<!--   collapse_rows(columns = 1, valign = "top") -->
+<!-- ``` -->
 
-```{r}
-unsup_groups <- c(rep("Clustering", 2),
-                  "Dimensionality Reduction")
+<!-- # Unsupervised Learning -->
 
-unsup_topics <- c("k-means", 
-                  "Principal Component Analysis", 
-                  "Factor Analysis")
+<!-- ```{r} -->
+<!-- unsup_groups <- c(rep("Clustering", 2), -->
+<!--                   "Dimensionality Reduction") -->
 
-tibble(` ` = unsup_groups, Topic = unsup_topics) %>% 
-  mutate(R = uncheck_box) %>% 
-  mutate(Python = uncheck_box) %>% 
-  # mutate(`C++` = uncheck_box) %>% 
-  # mutate(Rcpp = uncheck_box) %>% 
-  # mutate(Details = stat_details) %>% 
-  kable(escape = FALSE, align = "c") %>%
-  kable_styling() %>% 
-  column_spec(1, bold = TRUE) %>% 
-  collapse_rows(columns = 1, valign = "top")
-```
+<!-- unsup_topics <- c("k-means",  -->
+<!--                   "Principal Component Analysis",  -->
+<!--                   "Factor Analysis") -->
+
+<!-- tibble(` ` = unsup_groups, Topic = unsup_topics) %>%  -->
+<!--   mutate(R = uncheck_box) %>%  -->
+<!--   mutate(Python = uncheck_box) %>%  -->
+<!--   # mutate(`C++` = uncheck_box) %>%  -->
+<!--   # mutate(Rcpp = uncheck_box) %>%  -->
+<!--   # mutate(Details = stat_details) %>%  -->
+<!--   kable(escape = FALSE, align = "c") %>% -->
+<!--   kable_styling() %>%  -->
+<!--   column_spec(1, bold = TRUE) %>%  -->
+<!--   collapse_rows(columns = 1, valign = "top") -->
+<!-- ``` -->
 
 
-# Supervised Learning
+<!-- # Supervised Learning -->
 
-```{r}
-sup_groups <- c(rep("Classification", 4),
-                rep("Regression", 2))
+<!-- ```{r} -->
+<!-- sup_groups <- c(rep("Classification", 4), -->
+<!--                 rep("Regression", 2)) -->
 
-sup_topics <- c("Naive Bayes", 
-                "k-Nearest Neighbors", 
-                "Support Vector Machine",
-                "Random Forests",
-                "Support Vector Machine",
-                "Random Forests")
+<!-- sup_topics <- c("Naive Bayes",  -->
+<!--                 "k-Nearest Neighbors",  -->
+<!--                 "Support Vector Machine", -->
+<!--                 "Random Forests", -->
+<!--                 "Support Vector Machine", -->
+<!--                 "Random Forests") -->
 
-tibble(` ` = sup_groups, Topic = sup_topics) %>% 
-  mutate(R = uncheck_box) %>% 
-  mutate(Python = uncheck_box) %>% 
-  # mutate(`C++` = uncheck_box) %>% 
-  # mutate(Rcpp = uncheck_box) %>% 
-  # mutate(Details = stat_details) %>% 
-  kable(escape = FALSE, align = "c") %>%
-  kable_styling() %>% 
-  column_spec(1, bold = TRUE) %>% 
-  collapse_rows(columns = 1, valign = "top")
-```
+<!-- tibble(` ` = sup_groups, Topic = sup_topics) %>%  -->
+<!--   mutate(R = uncheck_box) %>%  -->
+<!--   mutate(Python = uncheck_box) %>%  -->
+<!--   # mutate(`C++` = uncheck_box) %>%  -->
+<!--   # mutate(Rcpp = uncheck_box) %>%  -->
+<!--   # mutate(Details = stat_details) %>%  -->
+<!--   kable(escape = FALSE, align = "c") %>% -->
+<!--   kable_styling() %>%  -->
+<!--   column_spec(1, bold = TRUE) %>%  -->
+<!--   collapse_rows(columns = 1, valign = "top") -->
+<!-- ``` -->
 
 
 

@@ -32,7 +32,7 @@
     <item>
       <title>Data Science From Scratch</title>
       <link>/categories/data-science-from-scratch/</link>
-      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/categories/data-science-from-scratch/</guid>
       <description></description>
@@ -48,9 +48,18 @@
     </item>
     
     <item>
+      <title>Python</title>
+      <link>/categories/python/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Wed, 18 Jul 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/categories/r/</guid>
       <description></description>

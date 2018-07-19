@@ -141,7 +141,7 @@ if (!doNotTrack) {
 
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="/page/shiny/">
+      <a class="sidebar-button-link " href="/page/projects/">
     
       <i class="sidebar-button-icon fa fa-lg fa-code"></i>
       
@@ -156,6 +156,16 @@ if (!doNotTrack) {
       <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
       
       <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
     </a>
   </li>
 
@@ -180,6 +190,16 @@ if (!doNotTrack) {
       <i class="sidebar-button-icon fa fa-lg fa-line-chart"></i>
       
       <span class="sidebar-button-desc">Data Science from Scratch</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/page/r-python-thesaurus/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-terminal"></i>
+      
+      <span class="sidebar-button-desc">R-Python Thesaurus</span>
     </a>
   </li>
 
@@ -229,21 +249,21 @@ if (!doNotTrack) {
       
   <li class="sidebar-button">
     
-      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
-    
-      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
-      
-      <span class="sidebar-button-desc">R-bloggers</span>
-    </a>
-  </li>
-
-  <li class="sidebar-button">
-    
       <a class="sidebar-button-link " href="/index.xml">
     
       <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
       
       <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.r-bloggers.com/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-th"></i>
+      
+      <span class="sidebar-button-desc">R-bloggers</span>
     </a>
   </li>
 
@@ -270,6 +290,10 @@ if (!doNotTrack) {
 
             <section>
               
+                <a class="tag tag--primary tag--small" href="#statistics-list" data-tag="statistics">
+                  statistics
+                </a>
+              
                 <a class="tag tag--primary tag--small" href="#algorithms-list" data-tag="algorithms">
                   algorithms
                 </a>
@@ -280,6 +304,10 @@ if (!doNotTrack) {
               
                 <a class="tag tag--primary tag--small" href="#data-science-from-scratch-list" data-tag="data-science-from-scratch">
                   data-science-from-scratch
+                </a>
+              
+                <a class="tag tag--primary tag--small" href="#dispersion-list" data-tag="dispersion">
+                  dispersion
                 </a>
               
                 <a class="tag tag--primary tag--small" href="#dplyr-list" data-tag="dplyr">
@@ -322,10 +350,6 @@ if (!doNotTrack) {
                   reticulated-python
                 </a>
               
-                <a class="tag tag--primary tag--small" href="#statistics-list" data-tag="statistics">
-                  statistics
-                </a>
-              
                 <a class="tag tag--primary tag--small" href="#tidyr-list" data-tag="tidyr">
                   tidyr
                 </a>
@@ -334,12 +358,45 @@ if (!doNotTrack) {
                   tidyverse
                 </a>
               
+                <a class="tag tag--primary tag--small" href="#tutorial-list" data-tag="tutorial">
+                  tutorial
+                </a>
+              
                 <a class="tag tag--primary tag--small" href="#variables-list" data-tag="variables">
                   variables
                 </a>
               
             </section>
             <section class="boxes">
+              
+                <div id="statistics-list" class="archive box" data-tag="statistics">
+                  <h4 class="archive-title">
+                    <a class="link-unstyled" href="statistics">
+                      statistics (2)
+                    </a>
+                  </h4>
+                  <ul class="archive-posts">
+                    
+                      <li class="archive-post">
+                        <a class="archive-post-title" href="/2018/07/central-tendency/">
+                          Measures of Central Tendency
+                        </a>
+                        <span class="archive-post-date"> - 
+  July 18, 2018
+</span>
+                      </li>
+                    
+                      <li class="archive-post">
+                        <a class="archive-post-title" href="/2018/07/measures-of-dispersion/">
+                          Measures of Dispersion
+                        </a>
+                        <span class="archive-post-date"> - 
+  July 19, 2018
+</span>
+                      </li>
+                    
+                  </ul>
+                </div>
               
                 <div id="algorithms-list" class="archive box" data-tag="algorithms">
                   <h4 class="archive-title">
@@ -395,6 +452,26 @@ if (!doNotTrack) {
                         </a>
                         <span class="archive-post-date"> - 
   July 18, 2018
+</span>
+                      </li>
+                    
+                  </ul>
+                </div>
+              
+                <div id="dispersion-list" class="archive box" data-tag="dispersion">
+                  <h4 class="archive-title">
+                    <a class="link-unstyled" href="dispersion">
+                      dispersion (1)
+                    </a>
+                  </h4>
+                  <ul class="archive-posts">
+                    
+                      <li class="archive-post">
+                        <a class="archive-post-title" href="/2018/07/measures-of-dispersion/">
+                          Measures of Dispersion
+                        </a>
+                        <span class="archive-post-date"> - 
+  July 19, 2018
 </span>
                       </li>
                     
@@ -590,31 +667,11 @@ if (!doNotTrack) {
                   <ul class="archive-posts">
                     
                       <li class="archive-post">
-                        <a class="archive-post-title" href="/2018/07/reticulated-python/">
-                          A Field Guide to R-Python Translations
+                        <a class="archive-post-title" href="/page/r-python-thesaurus/">
+                          R-Python Thesaurus
                         </a>
                         <span class="archive-post-date"> - 
   July 9, 2018
-</span>
-                      </li>
-                    
-                  </ul>
-                </div>
-              
-                <div id="statistics-list" class="archive box" data-tag="statistics">
-                  <h4 class="archive-title">
-                    <a class="link-unstyled" href="statistics">
-                      statistics (1)
-                    </a>
-                  </h4>
-                  <ul class="archive-posts">
-                    
-                      <li class="archive-post">
-                        <a class="archive-post-title" href="/2018/07/central-tendency/">
-                          Measures of Central Tendency
-                        </a>
-                        <span class="archive-post-date"> - 
-  July 18, 2018
 </span>
                       </li>
                     
@@ -655,6 +712,26 @@ if (!doNotTrack) {
                         </a>
                         <span class="archive-post-date"> - 
   March 17, 2018
+</span>
+                      </li>
+                    
+                  </ul>
+                </div>
+              
+                <div id="tutorial-list" class="archive box" data-tag="tutorial">
+                  <h4 class="archive-title">
+                    <a class="link-unstyled" href="tutorial">
+                      tutorial (1)
+                    </a>
+                  </h4>
+                  <ul class="archive-posts">
+                    
+                      <li class="archive-post">
+                        <a class="archive-post-title" href="/2018/07/measures-of-dispersion/">
+                          Measures of Dispersion
+                        </a>
+                        <span class="archive-post-date"> - 
+  July 19, 2018
 </span>
                       </li>
                     

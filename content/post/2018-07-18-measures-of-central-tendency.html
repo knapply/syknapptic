@@ -389,7 +389,7 @@ print(statistics.mode(x) == my_mode(x))</code></pre>
                                       # `%` is Python&#39;s operator for remainder
   if length_x % 2:                    # if `x`&#39;s length is an odd value
     median = sorted_x[middle_index]
-  if not length_x % 2:                # if `x`&#39;s length is an even value
+  elif not length_x % 2:                # if `x`&#39;s length is an even value
     median = my_mean([sorted_x[middle_index], sorted_x[middle_index + 1]])
   return median</code></pre>
 <pre class="python"><code>print(my_median(x))</code></pre>
@@ -408,7 +408,7 @@ print(statistics.median(x) == my_median(x))</code></pre>
   if(length_x %% 2) {            # `%%` is R&#39;s operator for remainder
     median = sorted_x[[middle_index]]
   }
-  if(!length_x %% 2) {
+  else if(!length_x %% 2) {
     median = my_mean(c(sorted_x[[middle_index]], sorted_x[[middle_index + 1]]))
   }
 

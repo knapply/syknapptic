@@ -1,16 +1,20 @@
 ---
-title: A Field Guide to R-Python Translations
+title: R-Python Thesaurus
 draft: false
+showMeta: false
 author: Brendan Knapp
 date: '2018-07-09'
-slug: reticulated-python
+slug: r-python-thesaurus
 categories: 
   - data-science-from-scratch
 tags:
   - reticulated-python
 thumbnailImage: https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG
+header:
+  image: "https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG"
+  caption: "A Field Guide to R-Python Translations."
 metaAlignment: center
-summary: A work in progress.
+summary: A Field Guide to R-Python Translations.
 output:
   # html_document:
   blogdown::html_page:
@@ -21,7 +25,7 @@ editor_options:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, cache = TRUE,
+knitr::opts_chunk$set(echo = FALSE,
                       fig.width = 11, fig.height = 10, dpi = 300,
                       fig.align = "center",
                       message = FALSE, warning = FALSE)
@@ -65,7 +69,7 @@ tribble(
   "list",   "[1, 'string']",         "list",     list(1, "string"),         "heterogenous",
   "tuple",  "(1, 'string']",         "list",     list(1, "string"),         "heterogenous",
   "dict",   "{'a':1, 'b':'string'}", "list",     list(a = 1, b = "string"), "heterogenous",
-   NA,       NA,                     "vector",   c(a = 1, b = 2),           "homogeneous"
+   "",       "",                     "vector",   c(a = 1, b = 2),           "homogeneous"
   ) %>% 
   mutate(type_py = cell_spec(type_py, color = "red", monospace = TRUE)) %>% 
   mutate(ex_py = cell_spec(ex_py, color = "red", monospace = TRUE)) %>% 
@@ -76,7 +80,14 @@ tribble(
   mutate_all(funs(if_else(str_detect(., "NA"), NA_character_, .))) %>% 
   set_names(c("Python Type", "Python Example", "R Type", "R Example", "Values")) %>%
   kable(escape = FALSE) %>% 
-  kable_styling(full_width = FALSE, font_size = 14)
+  kable_styling(full_width = FALSE, font_size = 14) %>% 
+  footnote(general = str_glue(
+    "{text_spec('dict', monospace = TRUE, color = 'red')}s are not ordered.<br>
+     {text_spec('scalar', monospace = TRUE, color = 'red')}s are roughly equivalent to
+     {text_spec('vector', monospace = TRUE, color = 'blue')}s of length 1
+    "
+    ),
+    escape = FALSE)
 ```
 
 ## Common Tasks
@@ -92,7 +103,7 @@ tribble(
   "list(zip(list1, list2))",            "mapply(c, vector1, vector2, SIMPLIFY = FALSE, USE.NAMES = FALSE)",       
   "dict(zip(list1, list2))",            "names(vector1) <- vector2",
   "dict(zip(list1, list2))",            "setNames(vector1, vector2)",
-  "enumerate(list1) <generator>",       "seq_along(list1)",
+  "enumerate(list1)",       "seq_along(list1)",
   "max(dict.items(), lambda x = x[1])", "named_vector[named_vector == max(named_vector)]",
   "",                                   "library(purrr)",
   "list(zip(list1, list2))",            "map2(vector1, vector2, c)",
@@ -102,14 +113,17 @@ tribble(
   mutate(iter_r = cell_spec(iter_r, color = "blue", monospace = TRUE)) %>% 
   set_names(c("Python", "R")) %>% 
   kable(escape = FALSE) %>% 
-  kable_styling(full_width = FALSE, font_size = 14)
+  kable_styling(full_width = FALSE, font_size = 14) %>% 
+  footnote(general = str_glue(
+    "{text_spec('enumerate()', monospace = TRUE, color = 'red')} returns a generator."), 
+    escape = FALSE)
 ```
 
 ## Iteration
 
 ### Python
 
-```{python}
+```{python, echo=TRUE}
 days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
 for i, day in enumerate(days, start = 1):
@@ -131,7 +145,7 @@ In R, functions like `print()` or `plot()` "return" _side-effects_ rather than v
 
 [Advanced R - Functions: Return values](http://adv-r.had.co.nz/Functions.html?id=#return-values)
 
-With that in mind, the best solution is to use `purrr::walk()`, which is designed specifically to iterate over values calling a function for its side-effects.
+With that in mind, the best solution is probably `purrr::walk()`, which is designed specifically to iterate over values while calling a function for its side-effects.
 
 ```{r, echo=TRUE}
 walk(days, ~ print(str_glue("{match(.x, days)}. {.x}"))) # print() in R is a side-effect, 
@@ -144,14 +158,17 @@ Underneath the hood, `walk()` is literally just a `for()` loop, but it's _consis
 ```{r}
 tribble(
   ~seq_py,                                 ~seq_r,
-  "range(0, 20, 2) *generator",           "seq(from = 0, to = 18, by = 2)"
+  "range(0, 20, 2)",           "seq(from = 0, to = 18, by = 2)"
   ) %>% 
   mutate(seq_py = cell_spec(seq_py, color = "red", monospace = TRUE)) %>% 
   mutate(seq_r = cell_spec(seq_r, color = "blue", monospace = TRUE)) %>% 
   # mutate(meaning = cell_spec(meaning, color = "green")) %>% 
   set_names(c("Python", "R")) %>% 
   kable(escape = FALSE) %>% 
-  kable_styling(full_width = FALSE, font_size = 14)
+  kable_styling(full_width = FALSE, font_size = 14) %>% 
+  footnote(str_glue(
+    "{text_spec('range()', monospace = TRUE, color = 'red')} returns a generator"
+    ), escape = FALSE)
 ```
 
 
@@ -210,6 +227,34 @@ tribble(
   kable_styling(full_width = FALSE, font_size = 14)
 ```
 
+# Statistics
+
+```{r}
+tribble(
+  ~stat_py,                   ~stat_r,                          ~meaning,       
+  "import numpy",             "",                               "",
+  "numpy.mean()",             "mean()",                         "mean",
+  "numpy.median()",           "median()",                       "median",
+  "numpy.std",                "sd()",                           "standard deviation",
+  "numpy.var()",              "var()",                          "variance",
+  "numpy.cov()",              "cov()",                          "covariance",
+  "numpy.corrcoef()",         "cor()",                          "Pearson's correlation",
+  "",                         "",                               "",
+  "import scipy",             "library(Hmisc)",                 "",
+  "scipy.stats.pearsonr()",   "rcorr()",                        "Pearson's correlation w/ p-values",
+  "scipy.stats.spearmanr()",  'rcorr(..., type = "spearman")',  "Spearman's correlation w/ p-values"
+  ) %>%      
+  mutate(stat_py = cell_spec(stat_py, color = "red", monospace = TRUE)) %>% 
+  mutate(stat_r = cell_spec(stat_r, color = "blue", monospace = TRUE)) %>% 
+  mutate(meaning = meaning %>% 
+           text_spec(color = "green") #%>% 
+           # str_replace_all("[A-Z]", function(x) text_spec(x, bold = TRUE))
+           ) %>%
+  set_names(c("Python", "R", "Meaning")) %>% 
+  kable(escape = FALSE) %>% 
+  kable_styling(full_width = FALSE, font_size = 14)
+```
+
 
 # Dates and Times
 
@@ -237,27 +282,6 @@ tribble(
            str_remove_all("_")
            ) %>%
   set_names(c("Python", "R", "Result")) %>% 
-  kable(escape = FALSE) %>% 
-  kable_styling(full_width = FALSE, font_size = 14)
-```
-
-# URLs
-
-```{r}
-tribble(
-  ~url_py,                                  ~url_r,
-  "from urllib.request import urlretrieve", "_",
-  "", "",
-  "urlrequest(<url>, <destination>)",       "download.file(<url>, <destination>)"
-  ) %>%
-  mutate(url_py = cell_spec(url_py, color = "red", monospace = TRUE)) %>% 
-  mutate(url_r = cell_spec(url_r, color = "blue", monospace = TRUE)) %>% 
-  # mutate(result = result %>% 
-  #          text_spec(color = "green") %>% 
-  #          str_replace_all("(?<=_).+(?=_)", function(x) text_spec(x, bold = TRUE)) %>% 
-  #          str_remove_all("_")
-  #          ) %>%
-  set_names(c("Python", "R")) %>% 
   kable(escape = FALSE) %>% 
   kable_styling(full_width = FALSE, font_size = 14)
 ```
@@ -301,7 +325,7 @@ tribble(
 ```{python, echo=TRUE}
 to_write = 'Here is\nsome\nexample text\nto write'
 
-with open('test-data/example.txt', mode='w') as file:
+with open('data/example.txt', mode='w') as file:
     file.writelines(to_write)
 ```
 
@@ -311,7 +335,7 @@ with open('test-data/example.txt', mode='w') as file:
 library(readr)
 
 to_write <- 'Here is\nsome\nexample text\nto write'
-write_lines(to_write, path = "test-data/example.txt")
+write_lines(to_write, path = "data/example.txt")
 ```
 
 ## Read Lines
@@ -319,7 +343,7 @@ write_lines(to_write, path = "test-data/example.txt")
 ### Python
 
 ```{python, echo=TRUE}
-with open('test-data/example.txt', 'r') as f:
+with open('data/example.txt', 'r') as f:
     text = f.readlines()
 
 text = [line.strip() for line in text]     # strip whitespace indicating "new line" (\n)
@@ -331,7 +355,7 @@ print(text)
 ```{r, echo=TRUE}
 library(readr)
 
-read_lines("test-data/example.txt")
+read_lines("data/example.txt")
 ```
 
 

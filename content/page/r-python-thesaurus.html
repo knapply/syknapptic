@@ -1,16 +1,20 @@
 ---
-title: A Field Guide to R-Python Translations
+title: R-Python Thesaurus
 draft: false
+showMeta: false
 author: Brendan Knapp
 date: '2018-07-09'
-slug: reticulated-python
+slug: r-python-thesaurus
 categories: 
   - data-science-from-scratch
 tags:
   - reticulated-python
 thumbnailImage: https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG
+header:
+  image: "https://raw.githubusercontent.com/syknapptic/RversusPython/master/README_image.JPG"
+  caption: "A Field Guide to R-Python Translations."
 metaAlignment: center
-summary: A work in progress.
+summary: A Field Guide to R-Python Translations.
 output:
   # html_document:
   blogdown::html_page:
@@ -35,8 +39,8 @@ editor_options:
 <li><a href="#sequences">Sequences</a></li>
 <li><a href="#comparisons">Comparisons</a></li>
 <li><a href="#arithmetic">Arithmetic</a></li>
+<li><a href="#statistics">Statistics</a></li>
 <li><a href="#dates-and-times">Dates and Times</a></li>
-<li><a href="#urls">URLs</a></li>
 <li><a href="#strings-and-regular-expressions">Strings and Regular Expressions</a></li>
 <li><a href="#file-io">File I/O</a><ul>
 <li><a href="#write-lines">Write Lines</a><ul>
@@ -241,8 +245,10 @@ Values
 </tr>
 <tr>
 <td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
 </td>
 <td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
 </td>
 <td style="text-align:left;">
 <span style="   font-family: monospace;  color: blue;">vector</span>
@@ -255,6 +261,18 @@ Values
 </td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span style="   font-family: monospace;  color: red;">dict</span>s are not ordered.<br> <span style="   font-family: monospace;  color: red;">scalar</span>s are roughly equivalent to <span style="   font-family: monospace;  color: blue;">vector</span>s of length 1
+</td>
+</tr>
+</tfoot>
 </table>
 <div id="common-tasks" class="section level2">
 <h2>Common Tasks</h2>
@@ -298,7 +316,7 @@ R
 </tr>
 <tr>
 <td style="text-align:left;">
-<span style="   font-family: monospace;  color: red;">enumerate(list1) &lt;generator&gt;</span>
+<span style="   font-family: monospace;  color: red;">enumerate(list1)</span>
 </td>
 <td style="text-align:left;">
 <span style="   font-family: monospace;  color: blue;">seq_along(list1)</span>
@@ -337,12 +355,27 @@ R
 </td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span style="   font-family: monospace;  color: red;">enumerate()</span> returns a generator.
+</td>
+</tr>
+</tfoot>
 </table>
 </div>
 <div id="iteration" class="section level2">
 <h2>Iteration</h2>
 <div id="python" class="section level3">
 <h3>Python</h3>
+<pre class="python"><code>days = [&#39;Monday&#39;, &#39;Tuesday&#39;, &#39;Wednesday&#39;, &#39;Thursday&#39;, &#39;Friday&#39;, &#39;Saturday&#39;, &#39;Sunday&#39;]
+for i, day in enumerate(days, start = 1):
+  print(f&#39;{i}. {day}&#39;)</code></pre>
 <pre><code>## 1. Monday
 ## 2. Tuesday
 ## 3. Wednesday
@@ -368,7 +401,7 @@ for(i in seq_along(days)) {                   # a Python-style loop works...
 ## 7. Sunday</code></pre>
 <p>In R, functions like <code>print()</code> or <code>plot()</code> “return” <em>side-effects</em> rather than values.</p>
 <p><a href="http://adv-r.had.co.nz/Functions.html?id=#return-values">Advanced R - Functions: Return values</a></p>
-<p>With that in mind, the best solution is to use <code>purrr::walk()</code>, which is designed specifically to iterate over values calling a function for its side-effects.</p>
+<p>With that in mind, the best solution is probably <code>purrr::walk()</code>, which is designed specifically to iterate over values while calling a function for its side-effects.</p>
 <pre class="r"><code>walk(days, ~ print(str_glue(&quot;{match(.x, days)}. {.x}&quot;))) # print() in R is a side-effect, </code></pre>
 <pre><code>## 1. Monday
 ## 2. Tuesday
@@ -397,13 +430,25 @@ R
 <tbody>
 <tr>
 <td style="text-align:left;">
-<span style="   font-family: monospace;  color: red;">range(0, 20, 2) *generator</span>
+<span style="   font-family: monospace;  color: red;">range(0, 20, 2)</span>
 </td>
 <td style="text-align:left;">
 <span style="   font-family: monospace;  color: blue;">seq(from = 0, to = 18, by = 2)</span>
 </td>
 </tr>
 </tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<span style="font-style: italic;">Note: </span>
+</td>
+</tr>
+<tr>
+<td style="padding: 0; border: 0;" colspan="100%">
+<sup></sup> <span style="   font-family: monospace;  color: red;">range()</span> returns a generator
+</td>
+</tr>
+</tfoot>
 </table>
 </div>
 <div id="comparisons" class="section level1">
@@ -677,6 +722,147 @@ Meaning
 </tbody>
 </table>
 </div>
+<div id="statistics" class="section level1">
+<h1>Statistics</h1>
+<table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Python
+</th>
+<th style="text-align:left;">
+R
+</th>
+<th style="text-align:left;">
+Meaning
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">import numpy</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;"></span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">numpy.mean()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">mean()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">mean</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">numpy.median()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">median()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">median</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">numpy.std</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">sd()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">standard deviation</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">numpy.var()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">var()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">variance</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">numpy.cov()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">cov()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">covariance</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">numpy.corrcoef()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">cor()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">Pearson’s correlation</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;"></span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;"></span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">import scipy</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">library(Hmisc)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;"></span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">scipy.stats.pearsonr()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">rcorr()</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">Pearson’s correlation w/ p-values</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: red;">scipy.stats.spearmanr()</span>
+</td>
+<td style="text-align:left;">
+<span style="   font-family: monospace;  color: blue;">rcorr(…, type = “spearman”)</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: green;">Spearman’s correlation w/ p-values</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="dates-and-times" class="section level1">
 <h1>Dates and Times</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
@@ -807,47 +993,6 @@ Result
 </tbody>
 </table>
 </div>
-<div id="urls" class="section level1">
-<h1>URLs</h1>
-<table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Python
-</th>
-<th style="text-align:left;">
-R
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-<span style="   font-family: monospace;  color: red;">from urllib.request import urlretrieve</span>
-</td>
-<td style="text-align:left;">
-<span style="   font-family: monospace;  color: blue;">_</span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span style="   font-family: monospace;  color: red;"></span>
-</td>
-<td style="text-align:left;">
-<span style="   font-family: monospace;  color: blue;"></span>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<span style="   font-family: monospace;  color: red;">urlrequest(&lt;url&gt;, &lt;destination&gt;)</span>
-</td>
-<td style="text-align:left;">
-<span style="   font-family: monospace;  color: blue;">download.file(&lt;url&gt;, &lt;destination&gt;)</span>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <div id="strings-and-regular-expressions" class="section level1">
 <h1>Strings and Regular Expressions</h1>
 <table class="table" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
@@ -960,7 +1105,7 @@ R
 <div id="python-1" class="section level3">
 <h3>Python</h3>
 <pre class="python"><code>to_write = &#39;Here is\nsome\nexample text\nto write&#39;
-with open(&#39;test-data/example.txt&#39;, mode=&#39;w&#39;) as file:
+with open(&#39;data/example.txt&#39;, mode=&#39;w&#39;) as file:
     file.writelines(to_write)</code></pre>
 </div>
 <div id="r-1" class="section level3">
@@ -968,14 +1113,14 @@ with open(&#39;test-data/example.txt&#39;, mode=&#39;w&#39;) as file:
 <pre class="r"><code>library(readr)
 
 to_write &lt;- &#39;Here is\nsome\nexample text\nto write&#39;
-write_lines(to_write, path = &quot;test-data/example.txt&quot;)</code></pre>
+write_lines(to_write, path = &quot;data/example.txt&quot;)</code></pre>
 </div>
 </div>
 <div id="read-lines" class="section level2">
 <h2>Read Lines</h2>
 <div id="python-2" class="section level3">
 <h3>Python</h3>
-<pre class="python"><code>with open(&#39;test-data/example.txt&#39;, &#39;r&#39;) as f:
+<pre class="python"><code>with open(&#39;data/example.txt&#39;, &#39;r&#39;) as f:
     text = f.readlines()
 text = [line.strip() for line in text]     # strip whitespace indicating &quot;new line&quot; (\n)
 print(text)</code></pre>
@@ -985,7 +1130,7 @@ print(text)</code></pre>
 <h3>R</h3>
 <pre class="r"><code>library(readr)
 
-read_lines(&quot;test-data/example.txt&quot;)</code></pre>
+read_lines(&quot;data/example.txt&quot;)</code></pre>
 <pre><code>## [1] &quot;Here is&quot;      &quot;some&quot;         &quot;example text&quot; &quot;to write&quot;</code></pre>
 </div>
 </div>

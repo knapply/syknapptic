@@ -1,0 +1,120 @@
+---
+title: Measures of Dispersion
+draft: true
+author: Brendan Knapp
+date: '2018-07-19'
+slug: measures-of-dispersion
+categories:
+  - data-science-from-scratch
+  - R
+  - Python
+tags:
+  - statistics
+  - dispersion
+  - tutorial
+thumbnailImage: http://res.cloudinary.com/syknapptic/image/upload/v1532014959/640px-Normal_distribution_pdf_deezlq.png
+metaAlignment: center
+coverMeta: out
+header:
+  image: "http://res.cloudinary.com/syknapptic/image/upload/v1532019606/download_lkrhtu.png"
+  caption: "Measures of dispersion (from scratch!) in both R and Python."
+summary: Measures of dispersion (from scratch!) in both R and Python.
+output:
+  # html_document:
+  blogdown::html_page:
+    toc: true
+    toc_depth: 3
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#data">Data</a></li>
+<li><a href="#standard-deviation">Standard Deviation</a><ul>
+<li><a href="#purpose">Purpose</a></li>
+<li><a href="#equations">Equations</a></li>
+<li><a href="#calculation">Calculation</a><ul>
+<li><a href="#example">Example</a></li>
+</ul></li>
+<li><a href="#interpretation">Interpretation</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="data" class="section level1">
+<h1>Data</h1>
+<pre class="r"><code>set.seed(123)
+norm_vec &lt;- rnorm(1000)</code></pre>
+<pre class="r"><code>library(tidyverse)
+
+norm_df &lt;- tibble(val = norm_vec)</code></pre>
+<pre class="r"><code>ggplot(norm_df, aes(x = val)) +
+  geom_density(fill = &quot;pink&quot;, color = NA, alpha = 0.5) +
+  geom_vline(aes(xintercept = mean(val)), color = &quot;darkgreen&quot;) +
+  geom_text(aes(x = mean(val), y = 0.5, label = &quot;mean&quot;), size = 7, family = &quot;serif&quot;) +
+  
+  geom_vline(aes(xintercept = mean(val) + sd(val)), color = &quot;darkblue&quot;) +
+  geom_text(aes(x = mean(val) + sd(val), y = 0.45, label = &quot;+1 SD&quot;), family = &quot;serif&quot;) +
+  geom_vline(aes(xintercept = mean(val) - sd(val)), color = &quot;darkred&quot;) +
+  geom_text(aes(x = mean(val) - sd(val), y = 0.45, label = &quot;-1 SD&quot;), family = &quot;serif&quot;) +
+  
+  geom_vline(aes(xintercept = mean(val) + sd(val) * 2), color = &quot;blue&quot;) +
+  geom_text(aes(x = mean(val) + sd(val) * 2, y = 0.4, label = &quot;+2 SD&quot;), family = &quot;serif&quot;) +
+  geom_vline(aes(xintercept = mean(val) - sd(val) * 2), color = &quot;red&quot;) +
+  geom_text(aes(x = mean(val) - sd(val) * 2, y = 0.4, label = &quot;-2 SD&quot;), family = &quot;serif&quot;) +
+  
+  theme_minimal(base_size = 14, base_family = &quot;serif&quot;) +
+  labs(y = &quot;Denisty&quot;, x = &quot;Values&quot;) +
+  NULL</code></pre>
+<p><img src="/post/2018-07-19-measures-of-dispersion_files/figure-html/unnamed-chunk-3-1.png" width="864" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>mpg &lt;- mtcars$mpg</code></pre>
+</div>
+<div id="standard-deviation" class="section level1">
+<h1>Standard Deviation</h1>
+<div id="purpose" class="section level2">
+<h2>Purpose</h2>
+<p>Quantify amount of variation/spread/dispersion of values.</p>
+</div>
+<div id="equations" class="section level2">
+<h2>Equations</h2>
+<ul>
+<li>Sample <span class="math display">\[s_x = \sqrt{ \frac{\sum(x - \bar{x})^2} {n-1} }\]</span></li>
+<li>Population <span class="math display">\[\sigma_x = \sqrt{ \frac{\sum(x - \mu_x)^2} {N-1} }\]</span></li>
+</ul>
+</div>
+<div id="calculation" class="section level2">
+<h2>Calculation</h2>
+<pre class="r"><code>my_sd &lt;- function(values){
+  numerator &lt;- sum((values - mean(values))^2)
+
+  denominator &lt;- length(values) - 1
+
+  quotient &lt;- numerator / denominator
+
+  standard_deviation &lt;- sqrt(quotient)
+  
+  standard_deviation
+}</code></pre>
+<div id="example" class="section level3">
+<h3>Example</h3>
+<pre class="r"><code>my_sd(mpg)</code></pre>
+<pre><code>## [1] 6.026948</code></pre>
+<div id="verify" class="section level4">
+<h4>Verify</h4>
+<pre class="r"><code>sd(mpg)</code></pre>
+<pre><code>## [1] 6.026948</code></pre>
+<pre class="r"><code>all.equal(my_sd(mpg), sd(mpg))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+</div>
+</div>
+<div id="interpretation" class="section level2">
+<h2>Interpretation</h2>
+<ul>
+<li>A low standard deviation indicates that the data points tend to be cloese to the mean (expectted value) of the set.</li>
+<li>A high standard deviation indicates that data points are spread out over a wider range of values.</li>
+</ul>
+</div>
+</div>

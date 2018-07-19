@@ -6,10 +6,19 @@
     <description>Recent content in R on syknapptic</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Jul 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Measures of Dispersion</title>
+      <link>/2018/07/measures-of-dispersion/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/measures-of-dispersion/</guid>
+      <description>DataStandard DeviationPurposeEquationsCalculationExampleInterpretationDataset.seed(123)norm_vec &amp;lt;- rnorm(1000)library(tidyverse)norm_df &amp;lt;- tibble(val = norm_vec)ggplot(norm_df, aes(x = val)) +geom_density(fill = &amp;quot;pink&amp;quot;, color = NA, alpha = 0.5) +geom_vline(aes(xintercept = mean(val)), color = &amp;quot;darkgreen&amp;quot;) +geom_text(aes(x = mean(val), y = 0.5, label = &amp;quot;mean&amp;quot;), size = 7, family = &amp;quot;serif&amp;quot;) +geom_vline(aes(xintercept = mean(val) + sd(val)), color = &amp;quot;darkblue&amp;quot;) +geom_text(aes(x = mean(val) + sd(val), y = 0.</description>
+    </item>
     
     <item>
       <title>Measures of Central Tendency</title>

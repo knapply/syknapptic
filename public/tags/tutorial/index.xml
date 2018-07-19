@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tutorial on syknapptic</title>
+    <link>/tags/tutorial/</link>
+    <description>Recent content in Tutorial on syknapptic</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Measures of Dispersion</title>
+      <link>/2018/07/measures-of-dispersion/</link>
+      <pubDate>Thu, 19 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/07/measures-of-dispersion/</guid>
+      <description>DataStandard DeviationPurposeEquationsCalculationExampleInterpretationDataset.seed(123)norm_vec &amp;lt;- rnorm(1000)library(tidyverse)norm_df &amp;lt;- tibble(val = norm_vec)ggplot(norm_df, aes(x = val)) +geom_density(fill = &amp;quot;pink&amp;quot;, color = NA, alpha = 0.5) +geom_vline(aes(xintercept = mean(val)), color = &amp;quot;darkgreen&amp;quot;) +geom_text(aes(x = mean(val), y = 0.5, label = &amp;quot;mean&amp;quot;), size = 7, family = &amp;quot;serif&amp;quot;) +geom_vline(aes(xintercept = mean(val) + sd(val)), color = &amp;quot;darkblue&amp;quot;) +geom_text(aes(x = mean(val) + sd(val), y = 0.</description>
+    </item>
+    
+  </channel>
+</rss>
